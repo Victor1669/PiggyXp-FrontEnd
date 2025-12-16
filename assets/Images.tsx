@@ -1,6 +1,5 @@
 const GlobalImages = {
   bau: require("./Bau.png"),
-  coin: require("./Coin.png"),
   mainLogo: require("./Logo.png"),
   porco: require("./Porco.png"),
 
