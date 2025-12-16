@@ -14,22 +14,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Configurações Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: pnpm
 
-      - name: Permitir o corepack para usar o PNPM
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
+      - name: Configurações pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+          run_install: false
 
       - name: Instalar dependências
         run: pnpm install
 
-      - name: Rodar os teste
+      - name: Rodar testes
         run: pnpm test
 
-      - name: Build no Android
+      - name: Prebuild do Android
         run: pnpm expo prebuild --platform android
