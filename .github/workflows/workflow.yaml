@@ -1,23 +1,33 @@
-name: "CI do FrontEnd"
+name: CI do FrontEnd
 
-on: [pull_request, push]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [20.x, 22.x, 24.x]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Using Node.js
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
-      - run: |
-          pnpm install
-          pnpm test
-          pnpm expo dev
+          cache: pnpm
+
+      - name: Permitir o corepack para usar o PNPM
+        run: corepack enable
+
+      - name: Instalar dependências
+        run: pnpm install
+
+      - name: Rodar os teste
+        run: pnpm test
+
+      - name: Build no Android
+        run: pnpm expo prebuild --platform android
