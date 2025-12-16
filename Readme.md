@@ -68,6 +68,8 @@ Desenvolvimento
 
 #### Essa convenção serve para organização dos commits
 
+(Todos em minúsculo na hora de criar as branchs)
+
 - Main: A branch de "produção", onde o conteúdo só irá ser adicionado após testes e correções do conteúdo
 - Feature: Voltada para adição de conteúdo
 - HotFix: Caso a Main ou a Feature tenham problemas, essa serve para correção do código
