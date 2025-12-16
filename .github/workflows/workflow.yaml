@@ -21,7 +21,9 @@ jobs:
           cache: pnpm
 
       - name: Permitir o corepack para usar o PNPM
-        run: corepack enable
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
 
       - name: Instalar dependências
         run: pnpm install
