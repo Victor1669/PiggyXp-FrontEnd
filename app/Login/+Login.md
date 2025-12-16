@@ -1,0 +1,1 @@
+Essa vai ser a página de Login, onde o usuário vai digitar email e senha, se for válido, será recebido um token que será guardado na Secure Store (biblioteca), e esse token será guardado em cache que será usado para sessões/autenticação
