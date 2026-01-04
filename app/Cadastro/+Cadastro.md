@@ -1,1 +1,0 @@
-Essa vai ser a tela de Cadastro do usuário, onde será validada as informações, se não existe nenhum usuário com o email digitado, caso esteja tudo certo, o usuário será redirecionado a tela de login, onde ele vai poder acessar a nova conta

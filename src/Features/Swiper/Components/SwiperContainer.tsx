@@ -34,7 +34,13 @@ export default function SwiperContainer() {
             <View style={SwiperStyles.slide}>
               <Image source={item.image} />
               <Text style={SwiperStyles.text}>{item.text}</Text>
-              {item.id === 3 && <Link href="/Login">Login</Link>}
+              {item.id === 3 && (
+                <>
+                  <Link href="/Login">Login</Link>
+                  <Link href="/Cadastro">Cadastro</Link>
+                  <Link href="/Content">Conteúdo</Link>
+                </>
+              )}
             </View>
           )}
           horizontal
@@ -42,7 +48,6 @@ export default function SwiperContainer() {
           showsHorizontalScrollIndicator={false}
           onScroll={onScroll}
           scrollEventThrottle={16}
-          style={{ flexGrow: 0 }}
         />
 
         <View style={SwiperStyles.dotsContainer}>
