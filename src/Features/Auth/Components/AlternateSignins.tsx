@@ -7,12 +7,14 @@ const {
 } = AuthImages;
 
 interface AlternateSigninsTypes {
+  text: string;
   onGoogleClick: () => {};
   onFacebookClick: () => {};
   bottom: number;
 }
 
 export default function AlternateSignins({
+  text,
   onGoogleClick,
   onFacebookClick,
   bottom,
@@ -28,7 +30,7 @@ export default function AlternateSignins({
       }}
     >
       <Text style={{ color: "#fff", fontSize: 18, marginBottom: 20 }}>
-        Logar com
+        {text}
       </Text>
 
       <View style={{ flexDirection: "row" }}>

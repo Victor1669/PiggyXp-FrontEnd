@@ -52,6 +52,7 @@ export default function LoginForm() {
       <NaoTemContaText />
 
       <AlternateSignins
+        text="Logar com"
         onFacebookClick={handleFacebookLogin}
         onGoogleClick={handleGoogleLogin}
         bottom={-340}

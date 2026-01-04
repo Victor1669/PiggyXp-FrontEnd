@@ -47,15 +47,14 @@ export default function CadastroForm() {
           { nomeCampo: "Senha", validation: CadastroSchema.Senha },
         ]}
         onSubmit={handleSubmit}
-        buttonText="Entrar"
-        forgotPasswordText="Esqueceu a senha?"
-        forgotPasswordHREF="/EsqueceuSenha"
+        buttonText="Criar Conta"
       />
       <JaTemContaText />
       <AlternateSignins
+        text="Criar conta com"
         onGoogleClick={handleGoogleSignIn}
         onFacebookClick={handleFabebookSignIn}
-        bottom={-235}
+        bottom={-250}
       />
     </View>
   );
