@@ -1,11 +1,18 @@
-import { Link } from "expo-router";
-import { View, Text, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { GlobalColors } from "../../assets/Colors";
+import CadastroForm from "../../src/Features/Auth/Components/CadastroForm";
 
 export default function Cadastro() {
   return (
-    <View>
-      <Text>Cadastro</Text>
-      <Link href="/Login">Login</Link>
+    <View style={CadastroStyles.container}>
+      <CadastroForm />
     </View>
   );
 }
+const CadastroStyles = StyleSheet.create({
+  container: {
+    backgroundColor: GlobalColors.contentBackColor.Dark,
+    flex: 1,
+    paddingTop: 100,
+  },
+});

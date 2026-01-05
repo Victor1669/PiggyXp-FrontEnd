@@ -1,17 +1,10 @@
-import { Link } from "expo-router";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import LoginForm from "../../src/Features/Auth/Components/LoginForm";
+import { GlobalColors } from "../../assets/Colors";
 
 export default function LoginContainer() {
   return (
     <View style={LoginStyles.container}>
-      <Text style={LoginStyles.title}>Login</Text>
-      <Link style={LoginStyles.links} href="/Cadastro">
-        Cadastro
-      </Link>
-      <Link style={LoginStyles.links} href="/Content">
-        Entrar
-      </Link>
       <LoginForm />
     </View>
   );
@@ -19,14 +12,8 @@ export default function LoginContainer() {
 
 const LoginStyles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: GlobalColors.contentBackColor.Dark,
     flex: 1,
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 40,
-  },
-  links: {
-    fontSize: 30,
+    paddingTop: 100,
   },
 });

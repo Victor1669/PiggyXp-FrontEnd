@@ -2,17 +2,17 @@ import { render, screen } from "@testing-library/react-native";
 
 import { AuthProvider } from "../Contexts/useAuth";
 
-import LoginForm from "../Components/LoginForm";
+import CadastroForm from "../Components/CadastroForm";
 
 describe("LoginForm", () => {
   it("Deve renderizar", () => {
     render(
       <AuthProvider>
-        <LoginForm />
+        <CadastroForm />
       </AuthProvider>
     );
 
-    const TesteText = screen.getByText("Logar com");
+    const TesteText = screen.getByText("Criar conta com");
 
     expect(TesteText).toBeTruthy();
   });

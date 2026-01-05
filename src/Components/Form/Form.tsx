@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity } from "react-native";
-
+import { View, Text } from "react-native";
+import { Link } from "expo-router";
 import {
   Controller,
   FormProvider,
@@ -7,15 +7,17 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import { TextInput } from "react-native-paper";
+import Button from "../Button/Button";
+import Input from "../AnimatedInput";
 
-import { FieldGlobalStyles, FormGlobalStyles } from "./Form.css";
 import { FieldProps, FormProps } from "./FormTypes";
+import { FieldGlobalStyles, FormGlobalStyles } from "./Form.css";
 
 export default function Form({
   formFields,
-  title,
   buttonText,
+  forgotPasswordText,
+  forgotPasswordHREF = "",
   onSubmit,
   // É UM OBJETO CUJAS CHAVES POSSUEM O MESMO NOME QUE O CAMPO
   defaultValues,
@@ -29,53 +31,61 @@ export default function Form({
   return (
     <FormProvider {...methods}>
       <View style={FormGlobalStyles.form}>
-        <Text style={FormGlobalStyles.title}>{title}</Text>
-        <View>
-          {formFields.map((field) => (
-            <Field
-              key={field.nome}
-              nome={field.nome}
-              validation={field.validation}
-            />
-          ))}
-        </View>
-        <TouchableOpacity
+        {formFields.map((field) => (
+          <Field
+            key={field.nomeCampo}
+            nomeCampo={field.nomeCampo}
+            validation={field.validation}
+          />
+        ))}
+        {forgotPasswordText ? (
+          <Link
+            style={FormGlobalStyles.forgotPassword}
+            href={forgotPasswordHREF}
+          >
+            {forgotPasswordText}
+          </Link>
+        ) : (
+          <></>
+        )}
+        <Button
           style={FormGlobalStyles.button}
           onPress={methods.handleSubmit(onSubmit)}
         >
-          <Text>{buttonText}</Text>
-        </TouchableOpacity>
+          {buttonText}
+        </Button>
       </View>
     </FormProvider>
   );
 }
 
-export function Field({ nome, validation }: FieldProps) {
+export function Field({ nomeCampo, validation }: FieldProps) {
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
   return (
-    <View>
+    <View style={FieldGlobalStyles.field}>
       <Controller
         control={control}
-        name={nome}
+        name={nomeCampo}
         rules={validation}
         render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={FieldGlobalStyles.input}
-            label={nome}
-            mode="outlined"
-            onChangeText={onChange}
+          <Input
+            inputStyle={FieldGlobalStyles.input}
+            labelStyle={FieldGlobalStyles.label}
+            testID={nomeCampo}
+            label={nomeCampo}
+            onChange={onChange}
             onBlur={onBlur}
             value={value}
           />
         )}
       />
 
-      <Text style={FieldGlobalStyles.error}>
-        {errors[nome]?.message as string}
+      <Text testID={nomeCampo + "-Error"} style={FieldGlobalStyles.error}>
+        {errors[nomeCampo]?.message as string}
       </Text>
     </View>
   );

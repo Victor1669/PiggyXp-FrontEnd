@@ -1,15 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
-import { useRouter } from "expo-router";
 
-import { Animate } from "../Utils/Animate";
+import { Animate } from "../../../Utils/Animate";
 
 import { GlobalImages } from "../../../../assets/Images";
 import { SplashStyles } from "../Styles/SplashScreen.css";
 
 export default function Splash() {
-  const router = useRouter();
-
   const logoScale = useRef(new Animated.Value(0.5)).current;
   const titleOpacity = useRef(new Animated.Value(0)).current;
 
@@ -18,14 +15,25 @@ export default function Splash() {
   }, []);
 
   async function SplashAnimation() {
-    await Animate(logoScale, 1.1, 1200, 100);
-    await Animate(logoScale, 1, 200);
-    await Animate(titleOpacity, 1, 200, 100);
-
-    setTimeout(() => {
-      router.push("/Swiper");
-    }, 1000);
+    await Animate({
+      animatedValue: logoScale,
+      toValue: 1.1,
+      duration: 1200,
+      delay: 100,
+    });
+    await Animate({
+      animatedValue: logoScale,
+      toValue: 1,
+      duration: 200,
+    });
+    await Animate({
+      animatedValue: titleOpacity,
+      toValue: 1,
+      duration: 200,
+      delay: 100,
+    });
   }
+
   return (
     <View style={SplashStyles.container}>
       <Animated.Image

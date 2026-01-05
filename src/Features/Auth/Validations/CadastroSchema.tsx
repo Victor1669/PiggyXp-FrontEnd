@@ -1,6 +1,16 @@
 import { RegisterOptions } from "react-hook-form";
 
-export const LoginSchema: Record<string, RegisterOptions> = {
+export const CadastroSchema: Record<string, RegisterOptions> = {
+  Nome: {
+    required: {
+      value: true,
+      message: "O nome é obrigatório!",
+    },
+    minLength: {
+      value: 4,
+      message: "O nome deve possuir no mínimo 4 caracteres!",
+    },
+  },
   Email: {
     required: {
       value: true,

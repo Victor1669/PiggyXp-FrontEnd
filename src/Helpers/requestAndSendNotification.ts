@@ -45,8 +45,6 @@ async function setAndroidNotificationChannelConfiguration() {
   await Notifications.setNotificationChannelAsync("default", {
     name: "Notificação",
     importance: Notifications.AndroidImportance.MAX,
-    vibrationPattern: [0, 400, 200, 400],
-    enableVibrate: true,
   });
 }
 

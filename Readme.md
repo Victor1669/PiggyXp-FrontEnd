@@ -32,9 +32,14 @@ Para instalar as dependências: execute o seguinte comando dentro do projeto:
 | pnpm install |
 | ------------- |
 
+Para criar as pastas "android" e "ios", execute este comando:
+| pnpm expo prebuild |
+| ------------- |
+
 Para rodar a aplicação, execute o seguinte comando (é necessário conectar o celular no computador):
 | pnpm expo run:android |
 | ------------- |
+AVISO: Na primeira vez executanto depois de criar as pastas, demora minutos para configurar tudo, inclusive em algumas partes vai exigir mais do processamento
 
 O Expo Go não será usado porque ele não tem suporte para configurações, fora que a development build do Android oferece várias vantagens, como hot-reload mais rápido, e um teste mais próximo da produção.
 
@@ -45,9 +50,12 @@ Normais
 
 - axios:                            Requisições e Interceptadores
 - react-hook-form                   Formulários dinâmicos
-- react-native-paper                Elementos animados
 - expo-router                       Roteamento das telas
 - expo-notifications                Notificações no celular
+- react-native-toast-message        Feedbacks interativos
+- expo-secure-store                 Armazenamento criptografado de credenciais
+- react-native-fbsdk-next           Autenticação com Facebook
+- expo-auth-session                 Autenticações no geral (usado com Google nessa aplicação)
 
 Desenvolvimento
 
@@ -79,7 +87,7 @@ Desenvolvimento
 
 #### Essa convenção não se aplica a arquivos de configuração, ela serve pra melhorar a experiência no desenvolvimento do código.
 
-- .js: Arquivos de configurações de rota
+- .js: Arquivos de configurações
 - .jsx: Arquivos que representam as telas
 - .ts: Services e Hooks
 - .css.ts: Arquivos de estilização (JAMAIS CRIE UM DESSES DENTRO DE app/)
@@ -96,7 +104,13 @@ O arquivo .env precisa estar na raiz do projeto
 
 ### Variáveis usadas:
 
-- VITE_BACKEND_URL -> URL onde o BackEnd está hospedado/rodando
+```
+- EXPO_PUBLIC_BACKEND_URL                   URL onde o BackEnd está hospedado/rodando
+- EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID      ID do cliente android no Google Cloud
+- EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID          ID do cliente iOS no Google Cloud
+- EXPO_PUBLIC_FACEBOOK_APP_ID               ID do app no Meta Developers
+- EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN         Token de cliente do app
+```
 
 ## 🗃️ Arquitetura do projeto (esboço):
 
@@ -113,14 +127,15 @@ O arquivo .env precisa estar na raiz do projeto
 │   └── 📁 Services     -> Conexão com o BackEnd
 │   └── 📁 Contexts     -> Gerenciamento de estado avançado
 │   └── 📁 Styles       -> Estilização
-│   └── 📁 Utils        -> Funções simples que fazem algo em específico (Ex: uma função que converte a data em um certo formato)
+│   └── 📁 Utils        -> Funções simples que podem ser usadas independentemente do projeto (Ex: uma função que converte a data em um certo formato)
+│   └── 📁 Helpers      -> Funções específicas reutilizáveis feitas pro projeto/regra de negócios
 │   └── 📁 Tests        -> Testes unitários pro CI/CD
 │   └── 📁 Validations  -> Validações para formulários
 │   └── 📁 Types        -> Tipos personalizados comuns
 ├── ⚙️ .gitignore       -> Arquivo que lista o que NÃO deve ir pro repositório na hora do git push
 ├── 📝 Readme.md        -> Arquivo com informações do projeto (O que você está lendo agora)
 ├── 📝 TODO.md          -> Lista de tarefas para documentar o que vai ser feito na versão
-├── ⚙️ app.json         -> Configurações do Mobile
+├── ⚙️ app.config.js    -> Configurações do Mobile
 |
 |   ARQUIVOS ESSENCIAIS PARA INSTALAÇÃO DE DEPENDÊNCIAS, NÃO MEXA!!!
 ├── ⚙️ package.json
