@@ -1,41 +1,37 @@
-import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useGoogleAuth } from "../Hooks/useGoogleAuth";
-import { useFacebookAuth } from "../Hooks/useFacebookAuth";
 import { useAuth } from "../Contexts/useAuth";
+
+import { UserRegister } from "../Services/UserServices";
 
 import Form from "../../../Components/Form/Form";
 import AlternateSignins from "./AlternateSignins";
+
 import { CadastroSchema } from "../Validations/CadastroSchema";
 import { CadastroFormStyles } from "../Styles/CadastroForm.css";
 
 export default function CadastroForm() {
   const router = useRouter();
-  const { login } = useAuth();
-  const { signIn: googleSignIn, user: googleUser } = useGoogleAuth();
-  const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
+  const { updateTemporaryImageToken } = useAuth();
 
-  async function handleSubmit(data: any) {
-    console.log(data);
-  }
+  async function handleSubmit(formData: any) {
+    const { Nome: name, Email: email, Senha: password } = formData;
 
-  async function handleGoogleSignIn() {
-    await googleSignIn();
-  }
+    const { data, status } = await UserRegister({ name, email, password });
 
-  async function handleFabebookSignIn() {
-    await facebookSignIn();
-  }
-
-  useEffect(() => {
-    if (Object.keys(facebookUser).length) {
-      login(facebookUser);
-      router.replace("/Content");
+    if (!data) {
+      console.log("Erro no cadastro:", data);
+      return;
     }
-    if (Object.keys(googleUser).length) login(googleUser);
-  }, [googleUser, facebookUser]);
+
+    const { token } = data;
+
+    if (status < 300) {
+      updateTemporaryImageToken(token ?? "");
+      router.replace("/DefinirFoto");
+    }
+  }
 
   return (
     <View>
@@ -46,16 +42,16 @@ export default function CadastroForm() {
           { nomeCampo: "Email", validation: CadastroSchema.Email },
           { nomeCampo: "Senha", validation: CadastroSchema.Senha },
         ]}
+        defaultValues={{
+          Nome: "Victor",
+          Email: "victorfernandes1669@gmail.com",
+          Senha: "@Vi09112001",
+        }}
         onSubmit={handleSubmit}
         buttonText="Criar Conta"
       />
       <JaTemContaText />
-      <AlternateSignins
-        text="Criar conta com"
-        onGoogleClick={handleGoogleSignIn}
-        onFacebookClick={handleFabebookSignIn}
-        bottom={-250}
-      />
+      <AlternateSignins text="Criar conta com" bottom={-250} />
     </View>
   );
 }

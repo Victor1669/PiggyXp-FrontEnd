@@ -1,6 +1,14 @@
+import { useEffect } from "react";
 import { Text, View } from "react-native";
+
+import { useAuth } from "../Contexts/useAuth";
+import { useGoogleAuth } from "../Hooks/useGoogleAuth";
+import { useFacebookAuth } from "../Hooks/useFacebookAuth";
+
 import { AuthImages } from "../Assets/AuthImages";
+
 import ImageButton from "./ImageButton";
+import { useRouter } from "expo-router";
 
 const {
   logos: { google, facebook },
@@ -8,17 +16,34 @@ const {
 
 interface AlternateSigninsTypes {
   text: string;
-  onGoogleClick: () => {};
-  onFacebookClick: () => {};
   bottom: number;
 }
 
 export default function AlternateSignins({
   text,
-  onGoogleClick,
-  onFacebookClick,
   bottom,
 }: AlternateSigninsTypes) {
+  const router = useRouter();
+  const { login } = useAuth();
+  const { signIn: googleSignIn, user: googleUser } = useGoogleAuth();
+  const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
+
+  async function handleGoogleSignIn() {
+    await googleSignIn();
+  }
+
+  async function handleFabebookSignIn() {
+    await facebookSignIn();
+  }
+
+  useEffect(() => {
+    if (Object.keys(facebookUser).length) {
+      login(facebookUser);
+      router.replace("/Content");
+    }
+    if (Object.keys(googleUser).length) login(googleUser);
+  }, [googleUser, facebookUser]);
+
   return (
     <View
       style={{
@@ -34,10 +59,14 @@ export default function AlternateSignins({
       </Text>
 
       <View style={{ flexDirection: "row" }}>
-        <ImageButton size={50} onPress={onGoogleClick} imageSource={google} />
         <ImageButton
           size={50}
-          onPress={onFacebookClick}
+          onPress={handleGoogleSignIn}
+          imageSource={google}
+        />
+        <ImageButton
+          size={50}
+          onPress={handleFabebookSignIn}
           imageSource={facebook}
         />
       </View>

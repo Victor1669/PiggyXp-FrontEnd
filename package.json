@@ -24,6 +24,8 @@
     "axios": "^1.13.2",
     "expo": "~54.0.30",
     "expo-auth-session": "^7.0.10",
+    "expo-file-system": "^19.0.21",
+    "expo-image-picker": "^17.0.10",
     "expo-notifications": "~0.32.15",
     "expo-router": "^6.0.21",
     "expo-secure-store": "^15.0.8",

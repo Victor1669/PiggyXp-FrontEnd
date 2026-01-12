@@ -5,6 +5,7 @@ const AuthImages = {
     google: require("./Logo-Google.png"),
   },
   upload: require("./Upload.png"),
+  uploadPhoto: require("./Upload-Photo.png"),
 };
 
 export { AuthImages };

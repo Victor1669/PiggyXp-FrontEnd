@@ -12,7 +12,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function requestAndSendNotification() {
+export async function notifications() {
   // Verifica permissão atual
   const { status } = await Notifications.getPermissionsAsync();
 
