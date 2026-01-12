@@ -1,23 +1,48 @@
 import axios from "axios";
 
-// const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 type useFetchProps = {
   method: "get" | "post" | "delete" | "put";
   rota: string;
   body?: object;
+  token?: string;
 };
 
-export async function useFetch({ method, rota, body }: useFetchProps) {
+export async function useFetch({
+  method,
+  rota,
+  body,
+  token = "",
+}: useFetchProps) {
   try {
-    const res = await axios[method](`${""}/${rota}`, body, {
+    const config = {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : undefined,
       },
-    });
+    };
 
-    return { status: res.status, message: res.data.res };
-  } catch (res: any) {
-    return { status: res.status, message: res.response.data.res };
+    let res;
+
+    if (method === "get" || method === "delete") {
+      res = await axios[method](`${BASE_URL}/${rota}`, config);
+    } else {
+      res = await axios[method](`${BASE_URL}/${rota}`, body, config);
+    }
+
+    return {
+      status: res.status,
+      data: res.data,
+    };
+  } catch (err: any) {
+    console.log("ERRO COMPLETO:", err);
+
+    console.log("STATUS:", err.response?.status);
+    console.log("DATA:", err.response?.data);
+
+    return {
+      status: err.response?.status ?? 500,
+      data: err.response?.data ?? { message: "Erro desconhecido" },
+    };
   }
 }
