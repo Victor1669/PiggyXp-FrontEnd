@@ -1,10 +1,51 @@
+import "dotenv/config";
+
+/**
+ * Validação obrigatória (build-time)
+ */
+if (!process.env.EXPO_PUBLIC_FACEBOOK_APP_ID) {
+  throw new Error("EXPO_PUBLIC_FACEBOOK_APP_ID não definido");
+}
+
+if (!process.env.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN) {
+  throw new Error("EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN não definido");
+}
+
+/**
+ * Detecta o profile do EAS
+ */
+const profile = process.env.EAS_BUILD_PROFILE ?? "production";
+
+const isDev = profile === "development";
+const isPreview = profile === "preview";
+
+const appName = isDev
+  ? "PiggyXp (Dev)"
+  : isPreview
+  ? "PiggyXp (Preview)"
+  : "PiggyXp";
+
+const androidPackage = isDev
+  ? "com.victor1669.piggyxp.dev"
+  : isPreview
+  ? "com.victor1669.piggyxp.preview"
+  : "com.victor1669.piggyxp";
+
+const iosBundleId = androidPackage; // Os dois tem o mesmo nome
+
 export default {
   expo: {
-    name: "PiggyXp",
+    name: appName,
     slug: "PiggyXp-FrontEnd",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/Porco.png",
+
+    icon: isDev
+      ? "./assets/Logo-dev.png"
+      : isPreview
+      ? "./assets/Logo-preview.png"
+      : "./assets/Logo.png",
+
     scheme: "com.victor1669.piggyxp",
     userInterfaceStyle: "light",
     newArchEnabled: true,
@@ -17,11 +58,11 @@ export default {
 
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.victor1669.piggyxp",
+      bundleIdentifier: iosBundleId,
     },
 
     android: {
-      package: "com.victor1669.piggyxp",
+      package: androidPackage,
       adaptiveIcon: {
         foregroundImage: "./assets/Porco.png",
         backgroundColor: "#ffffff",
@@ -46,7 +87,7 @@ export default {
         {
           appID: process.env.EXPO_PUBLIC_FACEBOOK_APP_ID,
           clientToken: process.env.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
-          displayName: "PiggyXp",
+          displayName: appName,
           scheme: `fb${process.env.EXPO_PUBLIC_FACEBOOK_APP_ID}`,
         },
       ],
@@ -54,8 +95,9 @@ export default {
 
     extra: {
       facebookAppId: process.env.EXPO_PUBLIC_FACEBOOK_APP_ID,
+      buildProfile: profile,
       eas: {
-        projectId: "1492c372-380f-444a-a967-b44dd76a431c",
+        projectId: "b18f3c9f-62e6-4427-baa3-efe71bd4ea09",
       },
     },
   },

@@ -15,12 +15,8 @@ Este é o repositório do FrontEnd do nosso projeto de TCC, o PiggyXp.
 
 Esse projeto precisa de:
 
-- Node atualizado
+- Node atualizado (Versões 20.x, 22.x e 24.x são garantidas por causa do workflow)
 - Gerenciador de pacotes PNPM
-- Opções de desenvolvedor ativadas no celular
-- Android SDK, SDK Platform, Android SDK Build-Tools e ADB (Android Debug Bridge)
-
-Esses últimos são obtidos baixando o Android Studio
 
 ## 📦 Gerenciador de pacotes: PNPM
 
@@ -33,15 +29,23 @@ Para instalar as dependências: execute o seguinte comando dentro do projeto:
 | ------------- |
 
 Para criar as pastas "android" e "ios", execute este comando:
-| pnpm expo prebuild |
+| pnpm run prebuild |
 | ------------- |
 
-Para rodar a aplicação, execute o seguinte comando (é necessário conectar o celular no computador):
-| pnpm expo run:android |
-| ------------- |
-AVISO: Na primeira vez executanto depois de criar as pastas, demora minutos para configurar tudo, inclusive em algumas partes vai exigir mais do processamento
+### 📱 RODANDO O APLICATIVO
 
-O Expo Go não será usado porque ele não tem suporte para configurações, fora que a development build do Android oferece várias vantagens, como hot-reload mais rápido, e um teste mais próximo da produção.
+Para rodar a aplicação, basta baixar o APK do aplicativo (O link será enviado)
+
+Depois, execute a aplicação com:
+| pnpm run start |
+| ------------- |
+
+O Expo Go não será usado devido à limitações técnicas, tais como:
+
+- Não suporta notificações push
+- Não suporta autenticação com o Facebook (Exige SDK nativo)
+- Hot-Reload limitado, podendo ser lento ou simplesmente não funcionar
+- Risco da aplicação se comportar diferente na produção, causando problemas
 
 ### 📖 Bibliotecas:
 
@@ -49,20 +53,19 @@ O Expo Go não será usado porque ele não tem suporte para configurações, for
 Normais
 
 - axios:                            Requisições e Interceptadores
-- react-hook-form                   Formulários dinâmicos
+- expo-auth-session                 Autenticações no geral (usado com Google nessa aplicação)
 - expo-router                       Roteamento das telas
 - expo-notifications                Notificações no celular
-- react-native-toast-message        Feedbacks interativos
 - expo-secure-store                 Armazenamento criptografado de credenciais
+- expo-dev-client                   Para executar a aplicação nativamente
+- react-native-toast-message        Feedbacks interativos
+- react-hook-form                   Formulários dinâmicos
 - react-native-fbsdk-next           Autenticação com Facebook
-- expo-auth-session                 Autenticações no geral (usado com Google nessa aplicação)
 
 Desenvolvimento
 
 - typescript                        Aplicação mais robusta
-- react-dom + react-native-web      Testes no navegador
-- jest                              Testes unitários
-- @testing-library                  Complemento ao Jest
+- jest e complementos               Testes unitários
 ```
 
 ## 🏪 Convenções:

@@ -11,9 +11,26 @@ const discovery = {
   revocationEndpoint: "https://oauth2.googleapis.com/revoke",
 };
 
+// VARIÁVEIS DE AMBIENTE
+const {
+  EAS_BUILD_PROFILE,
+  EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID,
+} = process.env;
+
+// VARIÁVEIS DO ANDROID
+const androidClientId =
+  EAS_BUILD_PROFILE === "development"
+    ? EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID
+    : EAS_BUILD_PROFILE === "preview"
+    ? EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID
+    : EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID;
+
+// VALIDAR PLATAFORMA
 const clientID =
   Platform.OS === "android"
-    ? process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID
+    ? androidClientId
     : Platform.OS === "ios"
     ? process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID
     : "";

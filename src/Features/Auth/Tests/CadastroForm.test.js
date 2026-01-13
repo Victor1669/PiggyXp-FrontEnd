@@ -4,15 +4,15 @@ import { AuthProvider } from "../Contexts/useAuth";
 
 import CadastroForm from "../Components/CadastroForm";
 
-describe("LoginForm", () => {
-  it("Deve renderizar", () => {
+describe("CadastroForm", () => {
+  it("Deve renderizar", async () => {
     render(
       <AuthProvider>
         <CadastroForm />
       </AuthProvider>
     );
 
-    const TesteText = screen.getByText("Criar conta com");
+    const TesteText = screen.findByText("Criar conta com");
 
     expect(TesteText).toBeTruthy();
   });
