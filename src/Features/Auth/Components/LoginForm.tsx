@@ -2,30 +2,26 @@ import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useGoogleAuth } from "../Hooks/useGoogleAuth";
-import { useFacebookAuth } from "../Hooks/useFacebookAuth";
 import { useAuth } from "../Contexts/useAuth";
 
 import Form from "../../../Components/Form/Form";
-import AlternateSignins from "./AlternateSignins";
 import { LoginSchema } from "../Validations/LoginSchema";
 import { LoginFormStyles } from "../Styles/LoginForm.css";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  googleUser: object;
+  facebookUser: object;
+}
+
+export default function LoginForm({
+  googleUser,
+  facebookUser,
+}: LoginFormProps) {
   const router = useRouter();
   const { login } = useAuth();
-  const { signIn: googleSignIn, user: googleUser } = useGoogleAuth();
-  const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
 
   async function handleSubmit(data: any) {
     console.log(data);
-  }
-
-  async function handleGoogleLogin() {
-    await googleSignIn();
-  }
-  async function handleFacebookLogin() {
-    await facebookSignIn();
   }
 
   useEffect(() => {
@@ -50,13 +46,6 @@ export default function LoginForm() {
         forgotPasswordHREF="/EsqueceuSenha"
       />
       <NaoTemContaText />
-
-      <AlternateSignins
-        text="Logar com"
-        onFacebookClick={handleFacebookLogin}
-        onGoogleClick={handleGoogleLogin}
-        bottom={-340}
-      />
     </View>
   );
 }

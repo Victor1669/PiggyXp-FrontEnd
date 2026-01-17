@@ -1,20 +1,32 @@
 import "dotenv/config";
 
+const {
+  EXPO_PUBLIC_FACEBOOK_APP_ID,
+  EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
+  EXPO_PUBLIC_EAS_BUILD_PROFILE,
+
+  EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+} = process.env;
+
 /**
  * Validação obrigatória (build-time)
  */
-if (!process.env.EXPO_PUBLIC_FACEBOOK_APP_ID) {
+if (!EXPO_PUBLIC_FACEBOOK_APP_ID) {
   throw new Error("EXPO_PUBLIC_FACEBOOK_APP_ID não definido");
 }
 
-if (!process.env.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN) {
+if (!EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN) {
   throw new Error("EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN não definido");
+}
+
+if (!EXPO_PUBLIC_EAS_BUILD_PROFILE) {
+  throw new Error("EXPO_PUBLIC_EAS_BUILD_PROFILE não definido");
 }
 
 /**
  * Detecta o profile do EAS
  */
-const profile = process.env.EAS_BUILD_PROFILE ?? "production";
+const profile = EXPO_PUBLIC_EAS_BUILD_PROFILE ?? "production";
 
 const isDev = profile === "development";
 const isPreview = profile === "preview";
@@ -25,13 +37,13 @@ const appName = isDev
   ? "PiggyXp (Preview)"
   : "PiggyXp";
 
-const androidPackage = isDev
-  ? "com.victor1669.piggyxp.dev"
+const appIcon = isDev
+  ? "./assets/Logo-dev.png"
   : isPreview
-  ? "com.victor1669.piggyxp.preview"
-  : "com.victor1669.piggyxp";
+  ? "./assets/Logo-preview.png"
+  : "./assets/Logo.png";
 
-const iosBundleId = androidPackage; // Os dois tem o mesmo nome
+const androidPackage = "com.victor1669.piggyxp";
 
 export default {
   expo: {
@@ -40,62 +52,63 @@ export default {
     version: "1.0.0",
     orientation: "portrait",
 
-    icon: isDev
-      ? "./assets/Logo-dev.png"
-      : isPreview
-      ? "./assets/Logo-preview.png"
-      : "./assets/Logo.png",
+    icon: appIcon,
 
     scheme: "com.victor1669.piggyxp",
     userInterfaceStyle: "light",
     newArchEnabled: true,
 
     splash: {
-      image: "./assets/Porco.png",
+      image: appIcon,
       resizeMode: "contain",
       backgroundColor: "#ffffff",
-    },
-
-    ios: {
-      supportsTablet: true,
-      bundleIdentifier: iosBundleId,
     },
 
     android: {
       package: androidPackage,
       adaptiveIcon: {
-        foregroundImage: "./assets/Porco.png",
+        foregroundImage: appIcon,
         backgroundColor: "#ffffff",
       },
       edgeToEdgeEnabled: true,
     },
 
     web: {
-      favicon: "./assets/Porco.png",
+      favicon: appIcon,
     },
 
     plugins: [
       [
         "expo-notifications",
         {
-          icon: "./assets/Porco.png",
+          icon: appIcon,
           color: "#ffffff",
         },
       ],
       [
         "react-native-fbsdk-next",
         {
-          appID: process.env.EXPO_PUBLIC_FACEBOOK_APP_ID,
-          clientToken: process.env.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
+          appID: EXPO_PUBLIC_FACEBOOK_APP_ID,
+          clientToken: EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
           displayName: appName,
-          scheme: `fb${process.env.EXPO_PUBLIC_FACEBOOK_APP_ID}`,
+          scheme: `fb${EXPO_PUBLIC_FACEBOOK_APP_ID}`,
         },
       ],
     ],
 
+    updates: {
+      url: "https://u.expo.dev/b18f3c9f-62e6-4427-baa3-efe71bd4ea09",
+    },
+
+    runtimeVersion: {
+      policy: "appVersion",
+    },
+
     extra: {
-      facebookAppId: process.env.EXPO_PUBLIC_FACEBOOK_APP_ID,
       buildProfile: profile,
+      google: {
+        androidClientId: EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+      },
       eas: {
         projectId: "b18f3c9f-62e6-4427-baa3-efe71bd4ea09",
       },
