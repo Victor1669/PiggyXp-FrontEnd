@@ -8,7 +8,7 @@ import AlternateSignins from "../../src/Features/Auth/Components/AlternateSignin
 
 import { GlobalColors } from "../../assets/Colors";
 
-export default function LoginContainer() {
+export default function Login() {
   const { signIn: googleSignIn, user: googleUser } = useGoogleAuth();
   const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
 
