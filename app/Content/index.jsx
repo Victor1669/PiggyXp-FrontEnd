@@ -4,13 +4,13 @@ import Toast from "react-native-toast-message";
 
 import { useAuth } from "../../src/Features/Auth/Contexts/useAuth";
 
-import { requestAndSendNotification } from "../../src/Helpers/requestAndSendNotification";
+import { notifications } from "../../src/Services/notifications";
 
 import { GlobalImages } from "../../assets/Images";
 
 export default function Home() {
-  const { user, logout } = useAuth();
   const router = useRouter();
+  const { user, logout } = useAuth();
 
   const { name, email, picture } = user;
 
@@ -18,7 +18,7 @@ export default function Home() {
     <View style={HomeStyles.container}>
       <TouchableOpacity
         onPress={() => {
-          requestAndSendNotification();
+          notifications();
         }}
       >
         <Text>Enviar notificação</Text>
