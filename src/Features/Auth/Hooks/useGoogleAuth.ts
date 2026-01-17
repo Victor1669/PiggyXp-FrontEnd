@@ -15,8 +15,8 @@ const clientID =
   Platform.OS === "android"
     ? process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID
     : Platform.OS === "ios"
-    ? process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID
-    : "";
+      ? process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID
+      : "";
 
 export function useGoogleAuth() {
   const [user, setUser] = useState<object>({});
@@ -27,7 +27,7 @@ export function useGoogleAuth() {
       scopes: ["openid", "profile", "email"],
       redirectUri: makeRedirectUri({ scheme: "com.victor1669.piggyxp" }),
     },
-    discovery
+    discovery,
   );
 
   useEffect(() => {
