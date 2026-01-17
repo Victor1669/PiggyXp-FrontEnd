@@ -39,6 +39,7 @@ export default function SwiperContainer() {
                   <Link href="/Login">Login</Link>
                   <Link href="/Cadastro">Cadastro</Link>
                   <Link href="/Content">Conteúdo</Link>
+                  <Link href="/DefinirFoto">Definir foto</Link>
                 </>
               )}
             </View>

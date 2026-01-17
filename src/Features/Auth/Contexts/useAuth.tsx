@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
-//import { Platform } from "react-native";
+import {
+  deleteSecureStoreItem,
+  getSecureStoreItem,
+  setSecureStoreItem,
+} from "../../../Services/securestore";
 
 interface AuthProviderTypes {
   children: React.ReactNode;
@@ -11,6 +14,8 @@ type AuthProviderValues = {
   user: any;
   login: (newUser: object) => void;
   logout: () => void;
+  updateTemporaryImageToken: (token: string) => Promise<void>;
+  getTemporaryImageToken: () => Promise<string>;
 };
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
@@ -23,19 +28,33 @@ function AuthProvider({ children }: AuthProviderTypes) {
 
   async function login(newUser: object) {
     if (Platform.OS === "web") return;
-    await SecureStore.setItemAsync("user", JSON.stringify(newUser));
+    await setSecureStoreItem({
+      itemName: "USER",
+      newValue: JSON.stringify(newUser),
+    });
     setUser(newUser);
   }
 
   async function logout() {
-    await SecureStore.deleteItemAsync("user");
+    await deleteSecureStoreItem({ itemName: "USER" });
     setUser({});
+  }
+
+  async function updateTemporaryImageToken(token: string) {
+    setSecureStoreItem({
+      itemName: "TEMPORARY_IMAGE_TOKEN",
+      newValue: token,
+    });
+  }
+
+  async function getTemporaryImageToken() {
+    return await getSecureStoreItem({ itemName: "TEMPORARY_IMAGE_TOKEN" });
   }
 
   useEffect(() => {
     async function carregarDados() {
       if (Platform.OS === "web") return;
-      const storedUser = (await SecureStore.getItemAsync("user")) ?? "";
+      const storedUser = await getSecureStoreItem({ itemName: "USER" });
 
       setUser(storedUser.length ? JSON.parse(storedUser) : {});
     }
@@ -46,13 +65,15 @@ function AuthProvider({ children }: AuthProviderTypes) {
     user,
     login,
     logout,
+    updateTemporaryImageToken,
+    getTemporaryImageToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 /**
- * Hook para o usuário poder acessar os dados do contexto de autenticação.
+ * Hook para manutenção de dados do usuário.
  */
 function useAuth() {
   const context = useContext(AuthContext);

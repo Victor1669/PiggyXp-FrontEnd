@@ -71,6 +71,7 @@ export default {
         backgroundColor: "#ffffff",
       },
       edgeToEdgeEnabled: true,
+      usesCleartextTraffic: true,
     },
 
     web: {

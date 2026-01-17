@@ -5,7 +5,7 @@ import { useState } from "react";
 interface ButtonProps {
   children: string;
   onPress: any;
-  style: RN.StyleProp<RN.TextStyle>;
+  style?: RN.StyleProp<any>;
 }
 
 export default function Button({ onPress, children, style }: ButtonProps) {
@@ -19,7 +19,7 @@ export default function Button({ onPress, children, style }: ButtonProps) {
       style={[
         style,
         {
-          width: "100%",
+          width: style?.width ? style?.width : "100%",
           alignItems: "center",
           padding: 12,
           borderRadius: 15,

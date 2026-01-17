@@ -32,7 +32,7 @@ export function useGoogleAuth() {
       scopes: ["openid", "profile", "email"],
       redirectUri,
     },
-    discovery
+    discovery,
   );
 
   useEffect(() => {

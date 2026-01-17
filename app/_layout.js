@@ -14,6 +14,7 @@ export default function RootLayout() {
             //transform: [{ rotate: "180deg" }],
           },
         }}
+        key={Date.now().toString()}
       />
       <Toast
         position="top"
