@@ -1,16 +1,19 @@
 import { render, screen } from "@testing-library/react-native";
-import { AuthProvider } from "../Contexts/useAuth";
-import LoginForm from "../Components/LoginForm";
 
-describe("LoginForm", () => {
+import { AuthProvider } from "../Contexts/useAuth";
+
+import Cadastro from "../../../../app/Cadastro";
+
+describe("CadastroForm", () => {
   it("Deve renderizar", async () => {
     render(
       <AuthProvider>
-        <LoginForm />
+        <Cadastro />
       </AuthProvider>
     );
 
-    const testeText = await screen.findByText("Logar com");
-    expect(testeText).toBeTruthy();
+    const TesteText = screen.findByText("Criar conta com");
+
+    expect(TesteText).toBeTruthy();
   });
 });

@@ -2,31 +2,26 @@ import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useGoogleAuth } from "../Hooks/useGoogleAuth";
-import { useFacebookAuth } from "../Hooks/useFacebookAuth";
 import { useAuth } from "../Contexts/useAuth";
 
 import Form from "../../../Components/Form/Form";
-import AlternateSignins from "./AlternateSignins";
 import { CadastroSchema } from "../Validations/CadastroSchema";
 import { CadastroFormStyles } from "../Styles/CadastroForm.css";
 
-export default function CadastroForm() {
+interface CadastroFormProps {
+  googleUser: object;
+  facebookUser: object;
+}
+
+export default function CadastroForm({
+  googleUser,
+  facebookUser,
+}: CadastroFormProps) {
   const router = useRouter();
   const { login } = useAuth();
-  const { signIn: googleSignIn, user: googleUser } = useGoogleAuth();
-  const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
 
   async function handleSubmit(data: any) {
     console.log(data);
-  }
-
-  async function handleGoogleSignIn() {
-    await googleSignIn();
-  }
-
-  async function handleFabebookSignIn() {
-    await facebookSignIn();
   }
 
   useEffect(() => {
@@ -50,12 +45,6 @@ export default function CadastroForm() {
         buttonText="Criar Conta"
       />
       <JaTemContaText />
-      <AlternateSignins
-        text="Criar conta com"
-        onGoogleClick={handleGoogleSignIn}
-        onFacebookClick={handleFabebookSignIn}
-        bottom={-250}
-      />
     </View>
   );
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
+import { Alert } from "react-native";
+import { useAuthRequest } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
-import { Platform } from "react-native";
+
+import { env } from "../../../Config/env";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -11,29 +13,14 @@ const discovery = {
   revocationEndpoint: "https://oauth2.googleapis.com/revoke",
 };
 
-// VARIÁVEIS DE AMBIENTE
-const {
-  EAS_BUILD_PROFILE,
-  EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID,
-  EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID,
-  EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID,
-} = process.env;
+const clientID = env.androidClientId;
+const buildProfile = env.buildProfile;
 
-// VARIÁVEIS DO ANDROID
-const androidClientId =
-  EAS_BUILD_PROFILE === "development"
-    ? EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID
-    : EAS_BUILD_PROFILE === "preview"
-    ? EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID
-    : EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID;
+if (!clientID) {
+  throw new Error("Google Client ID não definido para este ambiente");
+}
 
-// VALIDAR PLATAFORMA
-const clientID =
-  Platform.OS === "android"
-    ? androidClientId
-    : Platform.OS === "ios"
-    ? process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID
-    : "";
+const redirectUri = `com.victor1669.piggyxp://`;
 
 export function useGoogleAuth() {
   const [user, setUser] = useState<object>({});
@@ -41,13 +28,15 @@ export function useGoogleAuth() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: clientID,
+
       scopes: ["openid", "profile", "email"],
-      redirectUri: makeRedirectUri({ scheme: "com.victor1669.piggyxp" }),
+      redirectUri,
     },
     discovery
   );
 
   useEffect(() => {
+    Alert.alert("Perfil: " + buildProfile + "; ClientId: " + clientID);
     if (response?.type === "success") {
       const { code } = response.params;
 
@@ -78,42 +67,29 @@ export function useGoogleAuth() {
 }
 
 async function exchangeCodeForToken(code: string, codeVerifier?: string) {
-  if (!codeVerifier) {
-    console.error("code_verifier ausente!");
-    return null;
-  }
+  if (!codeVerifier) return null;
 
-  try {
-    const res = await fetch("https://oauth2.googleapis.com/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        code,
-        client_id: clientID!,
-        redirect_uri: "com.victor1669.piggyxp://",
-        grant_type: "authorization_code",
-        code_verifier: codeVerifier,
-      }).toString(),
-    });
+  const res = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      code,
+      client_id: clientID!,
+      redirect_uri: redirectUri,
+      grant_type: "authorization_code",
+      code_verifier: codeVerifier,
+    }).toString(),
+  });
 
-    return await res.json();
-  } catch (err) {
-    console.error("Erro ao trocar code por token:", err);
-    return null;
-  }
+  return res.json();
 }
 
 async function fetchUserInfo(accessToken: string) {
-  try {
-    const res = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const res = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-    return await res.json();
-  } catch (error) {
-    console.error("Erro ao buscar dados do usuário:", error);
-    return null;
-  }
+  return res.json();
 }

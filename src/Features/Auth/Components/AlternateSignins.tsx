@@ -6,26 +6,24 @@ const {
   logos: { google, facebook },
 } = AuthImages;
 
-interface AlternateSigninsTypes {
+interface AlternateSigninsProps {
   text: string;
   onGoogleClick: () => {};
   onFacebookClick: () => {};
-  bottom: number;
 }
 
 export default function AlternateSignins({
   text,
   onGoogleClick,
   onFacebookClick,
-  bottom,
-}: AlternateSigninsTypes) {
+}: AlternateSigninsProps) {
   return (
     <View
       style={{
         position: "absolute",
         left: 0,
         right: 0,
-        bottom,
+        bottom: 100,
         alignItems: "center",
       }}
     >
