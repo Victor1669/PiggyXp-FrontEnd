@@ -2,7 +2,7 @@ import * as FileSystem from "expo-file-system/legacy";
 
 import { useFetch } from "../../../Hooks/useFetch";
 
-export { UserRegister, UserUploadPhoto };
+export { UserRegister, UserUploadPhoto, UserLogin };
 
 import { env } from "../../../Config/env";
 
@@ -43,6 +43,16 @@ async function UserUploadPhoto(imageLocation: string, token: string) {
       },
     },
   );
+
+  return response;
+}
+
+async function UserLogin(userData: any) {
+  const response = await useFetch({
+    body: userData,
+    rota: "api/login",
+    method: "post",
+  });
 
   return response;
 }
