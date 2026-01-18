@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { useGoogleAuth } from "../../src/Features/Auth/Hooks/useGoogleAuth";
 import { useFacebookAuth } from "../../src/Features/Auth/Hooks/useFacebookAuth";
 
-import LoginForm from "../../src/Features/Auth/Components/LoginForm";
+import LoginForm from "../../src/Features/Auth/use-cases/Login/LoginForm";
 import AlternateSignins from "../../src/Features/Auth/Components/AlternateSignins";
 
 import { GlobalColors } from "../../assets/Colors";

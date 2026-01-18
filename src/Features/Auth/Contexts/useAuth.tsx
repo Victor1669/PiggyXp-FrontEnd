@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Platform } from "react-native";
+import { jwtDecode } from "jwt-decode";
+
 import {
   deleteSecureStoreItem,
   getSecureStoreItem,
@@ -12,10 +14,11 @@ interface AuthProviderTypes {
 
 type AuthProviderValues = {
   user: any;
-  login: (newUser: object) => void;
+  login: (userData: object) => Promise<void>;
   logout: () => void;
   updateTemporaryImageToken: (token: string) => Promise<void>;
   getTemporaryImageToken: () => Promise<string>;
+  decodeUserDataToken: (token: string) => any;
 };
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
@@ -26,13 +29,15 @@ const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 function AuthProvider({ children }: AuthProviderTypes) {
   const [user, setUser] = useState<object>({});
 
-  async function login(newUser: object) {
+  async function login(userData: object) {
     if (Platform.OS === "web") return;
+
     await setSecureStoreItem({
       itemName: "USER",
-      newValue: JSON.stringify(newUser),
+      newValue: JSON.stringify(userData),
     });
-    setUser(newUser);
+
+    setUser(userData);
   }
 
   async function logout() {
@@ -51,6 +56,10 @@ function AuthProvider({ children }: AuthProviderTypes) {
     return await getSecureStoreItem({ itemName: "TEMPORARY_IMAGE_TOKEN" });
   }
 
+  function decodeUserDataToken(token: string) {
+    return jwtDecode(token);
+  }
+
   useEffect(() => {
     async function carregarDados() {
       if (Platform.OS === "web") return;
@@ -67,6 +76,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
     logout,
     updateTemporaryImageToken,
     getTemporaryImageToken,
+    decodeUserDataToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

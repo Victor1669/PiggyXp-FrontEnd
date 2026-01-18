@@ -3,16 +3,16 @@ import { Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
-import { useAuth } from "../../Contexts/useAuth";
-import { UserUploadPhoto } from "../../Services/UserServices";
+import { useAuth } from "../../Auth/Contexts/useAuth";
+import { DefinePhotoService } from "./DefinePhotoService";
 
-import { DefinirFotoFormStyles } from "../../Styles/DefinirFotoForm.css";
+import { DefinePhotoFormStyles } from "./DefinePhotoForm.css";
 
-import Button from "../../../../Components/Button/Button";
+import Button from "../../../Components/Button/Button";
 import { ImageContainer } from "./ImageContainer";
 import { ImageUploaderButton } from "./ImageUploaderButton";
 
-const { container, title, subtitle } = DefinirFotoFormStyles;
+const { container, title, subtitle } = DefinePhotoFormStyles;
 
 export default function DefinirFotoForm() {
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function DefinirFotoForm() {
     if (imageLocation) {
       const token = await getTemporaryImageToken();
 
-      const { body, status } = await UserUploadPhoto(imageLocation, token);
+      const { body, status } = await DefinePhotoService(imageLocation, token);
 
       /**
        * TASK: Adicionar feedback do toastify
