@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useAuth } from "../Contexts/useAuth";
-import { UserLogin } from "../Services/UserServices";
+import { useAuth } from "../../Contexts/useAuth";
+import { UserLogin } from "./LoginService";
+import { GetUserInfo } from "../../Services/UserServices";
 
-import Form from "../../../Components/Form/Form";
-import { LoginSchema } from "../Validations/LoginSchema";
-import { LoginFormStyles } from "../Styles/LoginForm.css";
+import Form from "../../../../Components/Form/Form";
+import { LoginSchema } from "./LoginSchema";
+import { LoginFormStyles } from "./LoginForm.css";
 
 interface LoginFormProps {
   googleUser: object;
@@ -19,18 +20,31 @@ export default function LoginForm({
   facebookUser,
 }: LoginFormProps) {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, decodeUserDataToken } = useAuth();
 
-  async function handleSubmit(userData: any) {
-    const { Email: email, Senha: password } = userData;
-    const { data, status } = await UserLogin({ email, password });
+  async function handleSubmit(data: any) {
+    const { Email: email, Senha: password } = data;
+    const { data: loginData, status: loginStatus } = await UserLogin({
+      email,
+      password,
+    });
 
-    if (status < 300) {
+    if (loginStatus < 300) {
       /**
        * TASK: Adicionar feedback do toastify
        */
-      router.replace("/Content");
-      console.log(data);
+      const { message, refreshToken, token } = loginData;
+
+      const { userId } = decodeUserDataToken(token);
+
+      const { data: userData, status: userDataStatus } =
+        await GetUserInfo(userId);
+
+      if (userDataStatus < 300) {
+        login(userData);
+
+        router.replace("/Content");
+      }
     }
   }
 

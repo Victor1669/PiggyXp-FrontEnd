@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { GlobalFontColors } from "../../../../assets/Colors";
+import { GlobalFontColors } from "../../../../../assets/Colors";
 
 export const CadastroFormStyles = StyleSheet.create({
   title: {

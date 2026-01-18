@@ -1,9 +1,8 @@
 import { Image, View } from "react-native";
-import { AuthImages } from "../../Assets/AuthImages";
-import { DefinirFotoFormStyles } from "../../Styles/DefinirFotoForm.css";
 
-const { uploadPhoto } = AuthImages;
-const { uploadImageContainer } = DefinirFotoFormStyles;
+import { DefinePhotoFormStyles } from "./DefinePhotoForm.css";
+
+const { uploadImageContainer } = DefinePhotoFormStyles;
 
 const IMAGE_CONTAINER_PADDING = 30;
 const IMAGE_SIZE = 150;
@@ -33,7 +32,9 @@ export function ImageContainer({ image }: ImageContainerTypes) {
           height: hasImage ? TOTAL_CONTAINER_SIZE : IMAGE_SIZE,
           borderRadius: hasImage ? 100 : 0,
         }}
-        source={hasImage ? { uri: image } : uploadPhoto}
+        source={
+          hasImage ? { uri: image } : require("./Assets/Upload-Photo.png")
+        }
       />
     </View>
   );
