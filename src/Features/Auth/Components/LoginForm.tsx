@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
 import { useAuth } from "../Contexts/useAuth";
+import { UserLogin } from "../Services/UserServices";
 
 import Form from "../../../Components/Form/Form";
 import { LoginSchema } from "../Validations/LoginSchema";
@@ -20,8 +21,17 @@ export default function LoginForm({
   const router = useRouter();
   const { login } = useAuth();
 
-  async function handleSubmit(data: any) {
-    console.log(data);
+  async function handleSubmit(userData: any) {
+    const { Email: email, Senha: password } = userData;
+    const { data, status } = await UserLogin({ email, password });
+
+    if (status < 300) {
+      /**
+       * TASK: Adicionar feedback do toastify
+       */
+      router.replace("/Content");
+      console.log(data);
+    }
   }
 
   useEffect(() => {
@@ -40,6 +50,10 @@ export default function LoginForm({
           { nomeCampo: "Email", validation: LoginSchema.Email },
           { nomeCampo: "Senha", validation: LoginSchema.Senha },
         ]}
+        defaultValues={{
+          Email: "victorfernandes1669@gmail.com",
+          Senha: "@Ar09112001",
+        }}
         onSubmit={handleSubmit}
         buttonText="Entrar"
         forgotPasswordText="Esqueceu a senha?"
