@@ -2,9 +2,9 @@ import * as FileSystem from "expo-file-system/legacy";
 
 import { useFetch } from "../../../Hooks/useFetch";
 
-export { UserRegister, UserUploadPhoto, UserLogin };
-
 import { env } from "../../../Config/env";
+
+export { UserRegister, UserUploadPhoto, UserLogin };
 
 const BACKEND_URL = env.backEndUrl;
 
