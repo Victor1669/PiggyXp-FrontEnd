@@ -32,7 +32,7 @@ Para criar as pastas "android" e "ios", execute este comando:
 | pnpm run prebuild |
 | ------------- |
 
-### 📱 RODANDO O APLICATIVO
+## 📱 RODANDO O APLICATIVO
 
 Para rodar a aplicação, basta baixar o APK do aplicativo (O link será enviado)
 
@@ -47,7 +47,7 @@ O Expo Go não será usado devido à limitações técnicas, tais como:
 - Hot-Reload limitado, podendo ser lento ou simplesmente não funcionar
 - Risco da aplicação se comportar diferente na produção, causando problemas
 
-### 📖 Bibliotecas:
+## 📖 Bibliotecas:
 
 ```
 Normais
@@ -105,7 +105,7 @@ Desenvolvimento
 
 NUNCA coloque os arquivos do projeto em alguma máquina que não seja sua, apenas em último caso com real necessidade
 
-## Variáveis de ambiente:
+## ⚠ Variáveis de ambiente:
 
 O arquivo .env precisa estar na raiz do projeto
 
@@ -128,9 +128,8 @@ O arquivo .env precisa estar na raiz do projeto
 ├── 📁 assets           -> Pasta principal de imagens
 ├── 📁 src              -> Pasta onde a maioria do conteúdo vai estar
 │   ├── 📁 Components   -> Pedaços de interface
-|   |   └── 📄 *.css.ts  -> Arquivo com a estilização da página
+|   |   └── 📄 *.css.ts   -> Arquivo com a estilização da página
 │   ├── 📁 Features     -> Cada feature estará aqui
-│   └── 📁 Config       -> Configurações
 │   └── 📁 Hooks        -> Lógica reutilizável
 │   └── 📁 Services     -> Conexão com o BackEnd
 │   └── 📁 Contexts     -> Gerenciamento de estado avançado

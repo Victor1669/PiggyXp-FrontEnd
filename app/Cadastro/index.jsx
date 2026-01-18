@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { useGoogleAuth } from "../../src/Features/Auth/Hooks/useGoogleAuth";
 import { useFacebookAuth } from "../../src/Features/Auth/Hooks/useFacebookAuth";
 
-import CadastroForm from "../../src/Features/Auth/Components/CadastroForm";
+import CadastroForm from "../../src/Features/Auth/use-cases/Cadastro/CadastroForm";
 import AlternateSignins from "../../src/Features/Auth/Components/AlternateSignins";
 
 import { GlobalColors } from "../../assets/Colors";
