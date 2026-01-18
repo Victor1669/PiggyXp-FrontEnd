@@ -56,9 +56,9 @@ export default function DefinirFotoForm() {
        */
       if (status < 300) {
         console.log("Erro: " + body);
-        router.replace("/Login");
       }
     }
+    router.replace("/Login");
   }
 
   return (
