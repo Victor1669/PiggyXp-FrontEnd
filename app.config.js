@@ -4,7 +4,7 @@ const {
   EXPO_PUBLIC_FACEBOOK_APP_ID,
   EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
   EXPO_PUBLIC_EAS_BUILD_PROFILE,
-
+  // EXPO_PUBLIC_BACKEND_URL
   EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
 } = process.env;
 
@@ -34,14 +34,14 @@ const isPreview = profile === "preview";
 const appName = isDev
   ? "PiggyXp (Dev)"
   : isPreview
-  ? "PiggyXp (Preview)"
-  : "PiggyXp";
+    ? "PiggyXp (Preview)"
+    : "PiggyXp";
 
 const appIcon = isDev
   ? "./assets/Logo-dev.png"
   : isPreview
-  ? "./assets/Logo-preview.png"
-  : "./assets/Logo.png";
+    ? "./assets/Logo-preview.png"
+    : "./assets/Logo.png";
 
 const androidPackage = "com.victor1669.piggyxp";
 
@@ -107,6 +107,7 @@ export default {
 
     extra: {
       buildProfile: profile,
+      // backEndUrl: EXPO_PUBLIC_BACKEND_URL,
       google: {
         androidClientId: EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
       },
