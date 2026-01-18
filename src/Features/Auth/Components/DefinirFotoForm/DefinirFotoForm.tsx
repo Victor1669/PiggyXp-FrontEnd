@@ -49,13 +49,16 @@ export default function DefinirFotoForm() {
     if (imageLocation) {
       const token = await getTemporaryImageToken();
 
-      const { body } = await UserUploadPhoto(imageLocation, token);
+      const { body, status } = await UserUploadPhoto(imageLocation, token);
 
-      // TERÁ UM FEEDBACK FUTURAMENTE
-      console.log(body);
+      /**
+       * TASK: Adicionar feedback do toastify
+       */
+      if (status < 300) {
+        console.log("Erro: " + body);
+        router.replace("/Login");
+      }
     }
-
-    router.replace("/Login");
   }
 
   return (

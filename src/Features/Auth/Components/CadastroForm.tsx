@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
 import { useAuth } from "../Contexts/useAuth";
+import { UserRegister } from "../Services/UserServices";
 
 import Form from "../../../Components/Form/Form";
 import { CadastroSchema } from "../Validations/CadastroSchema";
@@ -18,10 +19,24 @@ export default function CadastroForm({
   facebookUser,
 }: CadastroFormProps) {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, updateTemporaryImageToken } = useAuth();
 
-  async function handleSubmit(data: any) {
-    console.log(data);
+  async function handleSubmit(formData: any) {
+    const { Nome: name, Email: email, Senha: password } = formData;
+
+    const { data, status } = await UserRegister({ name, email, password });
+
+    if (!data) {
+      console.log("Erro no cadastro:", data);
+      return;
+    }
+
+    const { token } = data;
+
+    if (status < 300) {
+      updateTemporaryImageToken(token ?? "");
+      router.replace("/DefinirFoto");
+    }
   }
 
   useEffect(() => {
@@ -41,6 +56,11 @@ export default function CadastroForm({
           { nomeCampo: "Email", validation: CadastroSchema.Email },
           { nomeCampo: "Senha", validation: CadastroSchema.Senha },
         ]}
+        defaultValues={{
+          Nome: "Victor",
+          Email: "victorfernandes1669@gmail.com",
+          Senha: "@Ar09112001",
+        }}
         onSubmit={handleSubmit}
         buttonText="Criar Conta"
       />

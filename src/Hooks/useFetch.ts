@@ -1,6 +1,7 @@
 import axios from "axios";
+import { env } from "../Config/env";
 
-const BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
+const BASE_URL = env.backEndUrl;
 
 type useFetchProps = {
   method: "get" | "post" | "delete" | "put";
