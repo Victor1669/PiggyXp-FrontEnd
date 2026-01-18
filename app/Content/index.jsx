@@ -12,7 +12,9 @@ export default function Home() {
   const router = useRouter();
   const { user, logout } = useAuth();
 
-  const { name, email, picture } = user;
+  const { difficulty, name, email, user_img } = user;
+
+  console.log(user);
 
   return (
     <View style={HomeStyles.container}>
@@ -36,14 +38,15 @@ export default function Home() {
       <Image
         style={{ width: 100, height: 100 }}
         source={
-          picture
+          user_img
             ? {
-                uri: picture,
+                uri: user_img,
               }
             : GlobalImages.porco
         }
       />
       <Text>{name}</Text>
+      <Text>Dificuldade: {difficulty}</Text>
       <Text>{email}</Text>
       <TouchableOpacity
         onPress={() => {

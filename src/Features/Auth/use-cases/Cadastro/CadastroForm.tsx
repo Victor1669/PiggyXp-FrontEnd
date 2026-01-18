@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useAuth } from "../Contexts/useAuth";
-import { UserRegister } from "../Services/UserServices";
+import { useAuth } from "../../Contexts/useAuth";
+import { UserRegister } from "./CadastroService";
 
-import Form from "../../../Components/Form/Form";
-import { CadastroSchema } from "../Validations/CadastroSchema";
-import { CadastroFormStyles } from "../Styles/CadastroForm.css";
+import Form from "../../../../Components/Form/Form";
+import { CadastroSchema } from "./CadastroSchema";
+import { CadastroFormStyles } from "./CadastroForm.css";
 
 interface CadastroFormProps {
   googleUser: object;
