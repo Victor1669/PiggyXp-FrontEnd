@@ -55,6 +55,10 @@ Normais
 - axios:                            Requisições e Interceptadores
 - expo-auth-session                 Autenticações no geral (usado com Google nessa aplicação)
 - expo-router                       Roteamento das telas
+- expo-file-system:                 Manipulação de arquivos no dispositivo
+- expo-image-picker:                Acesso à câmera e galeria do dispositivo
+- expo-updates:                     Atualizações OTA da aplicação
+- expo-dev-client:                  Execução da aplicação nativamente fora do Expo Go
 - expo-notifications                Notificações no celular
 - expo-secure-store                 Armazenamento criptografado de credenciais
 - expo-dev-client                   Para executar a aplicação nativamente
@@ -124,8 +128,9 @@ O arquivo .env precisa estar na raiz do projeto
 ├── 📁 assets           -> Pasta principal de imagens
 ├── 📁 src              -> Pasta onde a maioria do conteúdo vai estar
 │   ├── 📁 Components   -> Pedaços de interface
-|   |   └── 📄 *.css.ts   -> Arquivo com a estilização da página
+|   |   └── 📄 *.css.ts  -> Arquivo com a estilização da página
 │   ├── 📁 Features     -> Cada feature estará aqui
+│   └── 📁 Config       -> Configurações
 │   └── 📁 Hooks        -> Lógica reutilizável
 │   └── 📁 Services     -> Conexão com o BackEnd
 │   └── 📁 Contexts     -> Gerenciamento de estado avançado
