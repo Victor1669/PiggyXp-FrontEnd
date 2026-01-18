@@ -11,7 +11,7 @@
 4.5- Feedback pro usuário após a requisição (Fernandes)
 
 5- Tela de Login (Fernandes) FEITO
-5.25- Conexão com o BackEnd (Fernandes)
+5.25- Conexão com o BackEnd (Fernandes) FEITO
 5.5- Testes unitários do formulário (Fernandes)
 5.75- Feedback pro usuário após a requisição (Fernandes)
 

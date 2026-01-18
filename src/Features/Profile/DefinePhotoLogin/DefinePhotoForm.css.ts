@@ -4,7 +4,7 @@ import { GlobalColors } from "../../../../assets/Colors";
 
 const { contentBackColor } = GlobalColors;
 
-export const DefinirFotoFormStyles = StyleSheet.create({
+export const DefinePhotoFormStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: contentBackColor.Dark,

@@ -1,11 +1,8 @@
 import { Image, Pressable, Text } from "react-native";
 
-import { AuthImages } from "../../Assets/AuthImages";
+import { DefinePhotoFormStyles } from "./DefinePhotoForm.css";
 
-import { DefinirFotoFormStyles } from "../../Styles/DefinirFotoForm.css";
-
-const { upload } = AuthImages;
-const { uploadButton } = DefinirFotoFormStyles;
+const { uploadButton } = DefinePhotoFormStyles;
 
 interface ImageUploaderButtonTypes {
   onPress: () => Promise<void>;
@@ -17,7 +14,7 @@ export function ImageUploaderButton({ onPress }: ImageUploaderButtonTypes) {
       onPress={onPress}
       style={({ pressed }) => [{ opacity: pressed ? 0.8 : 1 }, uploadButton]}
     >
-      <Image source={upload} />
+      <Image source={require("./Assets/Upload.png")} />
       <Text>Upload da sua foto</Text>
     </Pressable>
   );
