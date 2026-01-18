@@ -4,7 +4,9 @@ import { useFetch } from "../../../Hooks/useFetch";
 
 export { UserRegister, UserUploadPhoto };
 
-const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
+import { env } from "../../../Config/env";
+
+const BACKEND_URL = env.backEndUrl;
 
 async function UserRegister(userData: any) {
   const response = await useFetch({
@@ -16,6 +18,18 @@ async function UserRegister(userData: any) {
 }
 
 async function UserUploadPhoto(imageLocation: string, token: string) {
+  const mimeType = imageLocation.endsWith(".png")
+    ? "image/png"
+    : imageLocation.endsWith(".jpg") || imageLocation.endsWith(".jpeg")
+      ? "image/jpeg"
+      : "invalid";
+
+  if (mimeType === "invalid") {
+    /**
+     * TASK: Adicionar feedback do toastify
+     *  */
+    throw new Error("Tipo inválido");
+  }
   const response = await FileSystem.uploadAsync(
     `${BACKEND_URL}/api/upload-user-img`,
     imageLocation,
@@ -23,10 +37,11 @@ async function UserUploadPhoto(imageLocation: string, token: string) {
       httpMethod: "POST",
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       fieldName: "image",
+      mimeType,
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
   return response;
