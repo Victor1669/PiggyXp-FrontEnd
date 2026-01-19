@@ -1,4 +1,4 @@
-import RN, { Text, TouchableOpacity } from "react-native";
+import RN, { Text, TouchableOpacity, useWindowDimensions } from "react-native";
 import { GlobalColors } from "../../../assets/Colors";
 import { useState } from "react";
 
@@ -10,6 +10,8 @@ interface ButtonProps {
 
 export default function Button({ onPress, children, style }: ButtonProps) {
   const [buttonHeight, setButtonHeight] = useState(4);
+
+  const { width } = useWindowDimensions();
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -19,7 +21,7 @@ export default function Button({ onPress, children, style }: ButtonProps) {
       style={[
         style,
         {
-          width: style?.width ? style?.width : "100%",
+          width: style?.width ? style.width : width - 40,
           alignItems: "center",
           padding: 12,
           borderRadius: 15,

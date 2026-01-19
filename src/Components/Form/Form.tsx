@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
 import { Link } from "expo-router";
 import {
   Controller,
@@ -65,8 +65,10 @@ export function Field({ nomeCampo, validation }: FieldProps) {
     formState: { errors },
   } = useFormContext();
 
+  const { width } = useWindowDimensions();
+
   return (
-    <View style={FieldGlobalStyles.field}>
+    <View style={[FieldGlobalStyles.field, { width: width - 40 }]}>
       <Controller
         control={control}
         name={nomeCampo}
