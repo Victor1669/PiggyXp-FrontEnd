@@ -5,6 +5,7 @@ import * as Updates from "expo-updates";
 import Toast, { BaseToast } from "react-native-toast-message";
 
 import { AuthProvider } from "../src/Features/Auth/Contexts/useAuth";
+import { env } from "../src/Config/env";
 
 export default function RootLayout() {
   async function checkUpdate() {
@@ -19,7 +20,12 @@ export default function RootLayout() {
     }
   }
   useEffect(() => {
-    checkUpdate();
+    setTimeout(() => {
+      checkUpdate();
+      setTimeout(() => {
+        Alert.alert("O Backend deverá rodar em: " + env.backEndUrl);
+      }, 1000);
+    }, 100);
   }, []);
   return (
     <AuthProvider>
