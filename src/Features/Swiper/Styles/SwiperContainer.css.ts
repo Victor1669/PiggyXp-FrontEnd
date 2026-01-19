@@ -8,7 +8,7 @@ const DOTS_SECTION_HEIGHT = 150;
 export const SwiperStyles = StyleSheet.create({
   container: {
     height,
-    backgroundColor: "#97d98E",
+    backgroundColor: GlobalColors.splashBackColor,
     justifyContent: "center",
   },
   content: {
@@ -17,14 +17,26 @@ export const SwiperStyles = StyleSheet.create({
   slide: {
     width,
     height: height - DOTS_SECTION_HEIGHT,
-    backgroundColor: "#97d98E",
+    backgroundColor: GlobalColors.splashBackColor,
 
     alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    height: 200,
+    marginBottom: 20,
+  },
+  title: {
+    width: width - 20,
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: 22,
   },
   text: {
+    width: "70%",
+    height: 60,
     color: "#000000",
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 15,
     textAlign: "center",
     marginTop: 50,
     paddingHorizontal: 20,
@@ -32,19 +44,21 @@ export const SwiperStyles = StyleSheet.create({
   dotsContainer: {
     width,
     height: DOTS_SECTION_HEIGHT,
-    backgroundColor: "#97d98E",
+    backgroundColor: GlobalColors.splashBackColor,
 
     flexDirection: "row",
+    alignItems: "flex-end",
     justifyContent: "center",
   },
   dot: {
     width: 10,
     height: 10,
-    borderRadius: 5,
-    backgroundColor: "#000000",
+    borderRadius: 50,
     marginHorizontal: 5,
     marginVertical: 110,
   },
-  
-
+  skipLink: {
+    marginVertical: 25,
+    marginHorizontal: 15,
+  },
 });
