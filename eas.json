@@ -20,7 +20,10 @@
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_EAS_BUILD_PROFILE": "production"
+      }
     }
   },
   "submit": {

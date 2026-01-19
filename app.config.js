@@ -5,7 +5,9 @@ const {
   EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
   EXPO_PUBLIC_EAS_BUILD_PROFILE,
   // EXPO_PUBLIC_BACKEND_URL
-  EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID,
 } = process.env;
 
 /**
@@ -43,7 +45,17 @@ const appIcon = isDev
     ? "./assets/Logo-preview.png"
     : "./assets/Logo.png";
 
-const androidPackage = "com.victor1669.piggyxp";
+const androidPackage = isDev
+  ? "com.victor1669.piggyxp.dev"
+  : isPreview
+    ? "com.victor1669.piggyxp.preview"
+    : "com.victor1669.piggyxp";
+
+const androidClientId = isDev
+  ? EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID
+  : isPreview
+    ? EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID
+    : EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID;
 
 export default {
   expo: {
@@ -107,9 +119,10 @@ export default {
 
     extra: {
       buildProfile: profile,
+      androidPackage: androidPackage,
       // backEndUrl: EXPO_PUBLIC_BACKEND_URL,
       google: {
-        androidClientId: EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+        androidClientId: androidClientId,
       },
       eas: {
         projectId: "b18f3c9f-62e6-4427-baa3-efe71bd4ea09",
