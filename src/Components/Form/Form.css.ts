@@ -2,10 +2,6 @@ import { StyleSheet } from "react-native";
 
 export { FormGlobalStyles, FieldGlobalStyles };
 
-/*
-  AQUI É A ESTILIZAÇÃO GLOBAL DOS FORMUÁRIOS,
-*/
-
 const FormGlobalStyles = StyleSheet.create({
   form: {
     width: 380,
@@ -25,7 +21,6 @@ const FormGlobalStyles = StyleSheet.create({
 
 const FieldGlobalStyles = StyleSheet.create({
   field: {
-    width: "100%",
     marginTop: 40,
   },
   label: {

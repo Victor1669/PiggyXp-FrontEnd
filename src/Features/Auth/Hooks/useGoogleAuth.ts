@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { useAuthRequest } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 
@@ -14,13 +15,14 @@ const discovery = {
 
 const clientID = env.androidClientId;
 
-if (!clientID) {
-  throw new Error("Google Client ID não definido para este ambiente");
-}
-
-const redirectUri = `com.victor1669.piggyxp://`;
+const redirectUri = `${env.androidPackage}://`;
 
 export function useGoogleAuth() {
+  if (!clientID) {
+    Alert.alert(
+      "Google Client ID não definido para este ambiente: " + clientID,
+    );
+  }
   const [user, setUser] = useState<object>({});
 
   const [request, response, promptAsync] = useAuthRequest(
