@@ -8,13 +8,13 @@ import { SwiperStyles } from "../Styles/SwiperContainer.css";
 const { width } = Dimensions.get("window");
 
 // cada variável dessa é uma imagem
-const { dinheiro, estudando, livros } = SplashScreenImages;
+const { caminhos, estudante,entendendoDinheiro } = SplashScreenImages;
 
 export default function SwiperContainer() {
   const slides = [
-    { id: 1, text: "Slide 1", image: "Colocar variável de imagem aqui" },
-    { id: 2, text: "Slide 2", image: "Colocar variável de imagem aqui" },
-    { id: 3, text: "Slide 3", image: "Colocar variável de imagem aqui" },
+    { id: 1, text: "Aprender é transformar. Pequenos conhecimentos geram grandes mudanças nas suas escolhas e no seu futuro", image:estudante},
+    { id: 2, text: "Conhecimento muda escolhas. Quando você aprende, suas escolhas ficam mais inteligentes.", image:  caminhos},
+    { id: 3, text: "Conhecimento muda escolhas. Quando você aprende, suas escolhas ficam mais inteligentes.", image: entendendoDinheiro  },
   ];
 
   const [index, setIndex] = useState(0);

@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { GlobalColors } from "../../../../assets/Colors";
 
 const { width, height } = Dimensions.get("window");
 
@@ -7,28 +8,31 @@ const DOTS_SECTION_HEIGHT = 150;
 export const SwiperStyles = StyleSheet.create({
   container: {
     height,
-    backgroundColor: "#0f0",
+    backgroundColor: "#97d98E",
     justifyContent: "center",
   },
   content: {
-    height: height * 0.8,
+    height: height * 0.9,
   },
   slide: {
     width,
     height: height - DOTS_SECTION_HEIGHT,
-    backgroundColor: "#3498db",
+    backgroundColor: "#97d98E",
 
     alignItems: "center",
   },
   text: {
-    color: "#fff",
-    fontSize: 28,
+    color: "#000000",
+    fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 50,
+    paddingHorizontal: 20,
   },
   dotsContainer: {
     width,
     height: DOTS_SECTION_HEIGHT,
-    backgroundColor: "#f00",
+    backgroundColor: "#97d98E",
 
     flexDirection: "row",
     justifyContent: "center",
@@ -37,8 +41,10 @@ export const SwiperStyles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: "#3498db",
+    backgroundColor: "#000000",
     marginHorizontal: 5,
-    marginVertical: 5,
+    marginVertical: 110,
   },
+  
+
 });
