@@ -1,10 +1,10 @@
 import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native";
 import { useRouter } from "expo-router";
-import Toast from "react-native-toast-message";
 
 import { useAuth } from "../../src/Features/Auth/Contexts/useAuth";
 
 import { notifications } from "../../src/Services/notifications";
+import { toastMessage } from "../../src/Services/toast";
 
 import { GlobalImages } from "../../assets/Images";
 
@@ -13,8 +13,6 @@ export default function Home() {
   const { user, logout } = useAuth();
 
   const { difficulty, name, email, user_img } = user;
-
-  console.log(user);
 
   return (
     <View style={HomeStyles.container}>
@@ -27,16 +25,13 @@ export default function Home() {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          Toast.show({
-            type: "customSuccess",
-            text1: "Teste",
-          });
+          toastMessage({ type: "error", text: `Olá, ${name}` });
         }}
       >
         <Text>Mensagem Toast</Text>
       </TouchableOpacity>
       <Image
-        style={{ width: 100, height: 100 }}
+        style={{ width: 100, height: 100, borderRadius: 50 }}
         source={
           user_img
             ? {

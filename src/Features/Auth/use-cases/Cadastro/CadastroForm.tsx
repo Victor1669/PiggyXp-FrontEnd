@@ -4,6 +4,7 @@ import { Link, useRouter } from "expo-router";
 
 import { useAuth } from "../../Contexts/useAuth";
 import { UserRegister } from "./CadastroService";
+import { toastMessage } from "../../../../Services/toast";
 
 import Form from "../../../../Components/Form/Form";
 import { CadastroSchema } from "./CadastroSchema";
@@ -26,17 +27,13 @@ export default function CadastroForm({
 
     const { data, status } = await UserRegister({ name, email, password });
 
-    if (!data) {
-      console.log("Erro no cadastro:", data);
-      return;
-    }
-
     const { token } = data;
 
     if (status < 300) {
-      updateTemporaryImageToken(token ?? "");
+      toastMessage({ type: "success", text: data.message });
+      updateTemporaryImageToken(token);
       router.replace("/DefinirFoto");
-    }
+    } else toastMessage({ type: "error", text: data.message });
   }
 
   useEffect(() => {
