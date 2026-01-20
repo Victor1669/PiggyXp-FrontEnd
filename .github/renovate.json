@@ -24,7 +24,13 @@
     {
       "matchUpdateTypes": ["major"],
       "enabled": false
+    },
+    "packageRules": [
+    {
+      "matchPackageNames": ["react"],
+      "allowedVersions": "19.1.0"
     }
+  ]
   ],
 
   "platformAutomerge": true,
