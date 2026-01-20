@@ -7,11 +7,10 @@ import { env } from "../src/Config/env";
 import { ToastContainer, toastMessage } from "../src/Services/toast";
 
 import { AuthProvider } from "../src/Features/Auth/Contexts/useAuth";
-import { env } from "../src/Config/env";
 
 export default function RootLayout() {
   async function checkUpdate() {
-    if (process.env.EXPO_PUBLIC_EAS_BUILD_PROFILE === "development") return;
+    if (env.buildProfile === "preview") return;
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
