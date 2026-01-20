@@ -1,19 +1,20 @@
 import { useEffect } from "react";
-import { Alert } from "react-native";
 import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
-import Toast, { BaseToast } from "react-native-toast-message";
+
+import { env } from "../src/Config/env";
+
+import { ToastContainer, toastMessage } from "../src/Services/toast";
 
 import { AuthProvider } from "../src/Features/Auth/Contexts/useAuth";
-import { env } from "../src/Config/env";
 
 export default function RootLayout() {
   async function checkUpdate() {
-    if (process.env.EXPO_PUBLIC_EAS_BUILD_PROFILE === "development") return;
+    if (env.buildProfile === "preview") return;
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        Alert.alert("Nova atualização disponível");
+        toastMessage({ type: "info", text: "Nova atualização disponível" });
       }
     } catch (e) {
       console.log(e);
@@ -22,8 +23,12 @@ export default function RootLayout() {
   useEffect(() => {
     setTimeout(() => {
       checkUpdate();
+      if (env.buildProfile === "preview") return;
       setTimeout(() => {
-        Alert.alert("O Backend deverá rodar em: " + env.backEndUrl);
+        toastMessage({
+          type: "info",
+          text: "O Backend está em: " + env.backEndUrl,
+        });
       }, 1000);
     }, 100);
   }, []);
@@ -38,18 +43,7 @@ export default function RootLayout() {
         }}
         key={Date.now().toString()}
       />
-      <Toast
-        position="top"
-        swipeable={true}
-        config={{
-          customSuccess: (props) => (
-            <BaseToast
-              {...props}
-              text1Style={{ color: "#f00", fontSize: 30 }}
-            />
-          ),
-        }}
-      />
+      <ToastContainer />
     </AuthProvider>
   );
 }

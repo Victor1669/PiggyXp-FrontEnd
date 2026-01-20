@@ -1,7 +1,4 @@
-import axios from "axios";
-import { env } from "../Config/env";
-
-const BASE_URL = env.backEndUrl;
+import { api } from "../Config/axios";
 
 type useFetchProps = {
   method: "get" | "post" | "delete" | "put";
@@ -26,9 +23,9 @@ export async function useFetch({
     let res;
 
     if (method === "get" || method === "delete") {
-      res = await axios[method](`${BASE_URL}/${rota}`, config);
+      res = await api[method](`/${rota}`, config);
     } else {
-      res = await axios[method](`${BASE_URL}/${rota}`, body, config);
+      res = await api[method](`/${rota}`, body, config);
     }
 
     return {
@@ -36,14 +33,14 @@ export async function useFetch({
       data: res.data,
     };
   } catch (err: any) {
-    console.log("ERRO COMPLETO:", err);
+    console.log("ERRO: ", err);
 
     console.log("STATUS:", err.response?.status);
     console.log("DATA:", err.response?.data);
 
     return {
       status: err.response?.status ?? 500,
-      data: err.response?.data ?? { message: "Erro desconhecido" },
+      data: err.response?.data ?? err.message,
     };
   }
 }
