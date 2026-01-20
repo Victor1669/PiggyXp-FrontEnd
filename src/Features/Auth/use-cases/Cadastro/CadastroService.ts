@@ -6,5 +6,6 @@ export async function UserRegister(userData: any) {
     rota: "api/register",
     body: userData,
   });
+  console.log(response)
   return response;
 }
