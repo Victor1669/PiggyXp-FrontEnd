@@ -1,0 +1,32 @@
+{
+  "extends": ["config:recommended"],
+
+  "labels": ["dependencies"],
+  "dependencyDashboard": true,
+
+  "commitMessagePrefix": "deps",
+
+  "schedule": ["before 6am on monday"],
+
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "devDependencies"
+    },
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
+  ],
+
+  "platformAutomerge": true,
+  "rebaseWhen": "conflicted"
+}
