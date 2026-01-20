@@ -3,8 +3,10 @@ import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
 import { useAuth } from "../../Contexts/useAuth";
+
 import { UserLogin } from "./LoginService";
 import { GetUserInfo } from "../../Services/UserServices";
+import { toastMessage } from "../../../../Services/toast";
 
 import Form from "../../../../Components/Form/Form";
 import { LoginSchema } from "./LoginSchema";
@@ -30,9 +32,7 @@ export default function LoginForm({
     });
 
     if (loginStatus < 300) {
-      /**
-       * TASK: Adicionar feedback do toastify
-       */
+      toastMessage({ type: "success", text: loginData.message });
       const { message, refreshToken, token } = loginData;
 
       const { userId } = decodeUserDataToken(token);
@@ -44,7 +44,9 @@ export default function LoginForm({
         login(userData);
 
         router.replace("/Content");
-      }
+      } else toastMessage({ type: "error", text: userData.message });
+    } else {
+      toastMessage({ type: "error", text: loginData?.error ?? loginData });
     }
   }
 
