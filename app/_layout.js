@@ -7,6 +7,7 @@ import { env } from "../src/Config/env";
 import { ToastContainer, toastMessage } from "../src/Services/toast";
 
 import { AuthProvider } from "../src/Features/Auth/Contexts/useAuth";
+import { env } from "../src/Config/env";
 
 export default function RootLayout() {
   async function checkUpdate() {
