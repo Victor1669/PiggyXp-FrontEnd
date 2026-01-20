@@ -28,6 +28,10 @@
     {
       "matchPackageNames": ["react"],
       "allowedVersions": "19.1.0"
+    },
+    {
+      "matchPackageNames": ["react-native-screens"],
+      "allowedVersions": "4.16.0"
     }
   ],
 
