@@ -7,7 +7,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import Button from "../Button/Button";
+import Button from "../Button";
 import Input from "../AnimatedInput";
 
 import { FieldProps, FormProps } from "./FormTypes";
