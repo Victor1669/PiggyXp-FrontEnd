@@ -1,5 +1,4 @@
 import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native";
-import { useRouter } from "expo-router";
 
 import { useAuth } from "../../src/Features/Auth/Contexts/useAuth";
 
@@ -9,8 +8,7 @@ import { toastMessage } from "../../src/Services/toast";
 import { GlobalImages } from "../../assets/Images";
 
 export default function Home() {
-  const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   const { difficulty, name, email, user_img } = user;
 
@@ -43,14 +41,6 @@ export default function Home() {
       <Text>{name}</Text>
       <Text>Dificuldade: {difficulty}</Text>
       <Text>{email}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          logout();
-          router.replace("/Login");
-        }}
-      >
-        <Text>Logout</Text>
-      </TouchableOpacity>
     </View>
   );
 }
