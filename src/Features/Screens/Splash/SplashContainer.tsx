@@ -4,7 +4,7 @@ import { Animated, View } from "react-native";
 import { Animate } from "../../../Utils/Animate";
 
 import { GlobalImages } from "../../../../assets/Images";
-import { SplashStyles } from "../Styles/SplashScreen.css";
+import { SplashStyles } from "./SplashScreen.css";
 
 export default function Splash() {
   const logoScale = useRef(new Animated.Value(0.5)).current;
