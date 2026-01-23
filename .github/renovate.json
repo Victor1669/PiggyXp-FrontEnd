@@ -24,6 +24,18 @@
     {
       "matchUpdateTypes": ["major"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["react"],
+      "ignoreVersions": ["19.1.0"]
+    },
+    {
+      "matchPackageNames": ["react-native-screens"],
+      "ignoreVersions": ["4.16.0"]
+    },
+    {
+      "matchPackageNames": ["react-native"],
+      "ignoreVersions": ["0.81.5"]
     }
   ],
 

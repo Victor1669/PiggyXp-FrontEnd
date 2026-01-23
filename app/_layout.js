@@ -10,7 +10,7 @@ import { AuthProvider } from "../src/Features/Auth/Contexts/useAuth";
 
 export default function RootLayout() {
   async function checkUpdate() {
-    if (env.buildProfile === "preview") return;
+    if (env.buildProfile === "development") return;
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
