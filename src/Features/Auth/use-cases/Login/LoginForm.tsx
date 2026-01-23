@@ -32,22 +32,31 @@ export default function LoginForm({
     });
 
     if (loginStatus < 300) {
-      toastMessage({ type: "success", text: loginData.message });
-      const { message, refreshToken, token } = loginData;
-
-      const { userId } = decodeUserDataToken(token);
-
-      const { data: userData, status: userDataStatus } =
-        await GetUserInfo(userId);
-
-      if (userDataStatus < 300) {
-        login(userData);
-
-        router.replace("/Content");
-      } else toastMessage({ type: "error", text: userData.message });
+      loginSuccess(loginData);
     } else {
       toastMessage({ type: "error", text: loginData?.error ?? loginData });
     }
+  }
+
+  async function loginSuccess(loginData: any) {
+    const { message, refreshToken, token } = loginData;
+
+    console.log(message);
+
+    const { userId } = decodeUserDataToken(token);
+
+    const { data: userData, status: userDataStatus } =
+      await GetUserInfo(userId);
+
+    if (userDataStatus < 300) {
+      getUserDataSuccess(loginData, userData);
+    } else toastMessage({ type: "error", text: userData.message });
+  }
+
+  function getUserDataSuccess(loginData: any, userData: any) {
+    login(userData);
+    router.replace("/Content");
+    toastMessage({ type: "success", text: loginData.message });
   }
 
   useEffect(() => {
@@ -76,6 +85,9 @@ export default function LoginForm({
         forgotPasswordHREF="/EsqueceuSenha"
       />
       <NaoTemContaText />
+      <Link style={{ color: "#fff", fontSize: 40, margin: 25 }} href="/Content">
+        Conteúdo
+      </Link>
     </View>
   );
 }

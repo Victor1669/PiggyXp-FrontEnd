@@ -25,15 +25,26 @@ export default function CadastroForm({
   async function handleSubmit(formData: any) {
     const { Nome: name, Email: email, Senha: password } = formData;
 
-    const { data, status } = await UserRegister({ name, email, password });
+    const { data: registerData, status: registerStatus } = await UserRegister({
+      name,
+      email,
+      password,
+    });
 
-    const { token } = data;
+    if (registerStatus < 300) {
+      registerSuccess(registerData);
+    } else
+      toastMessage({
+        type: "error",
+        text: registerData?.error ?? registerData,
+      });
+  }
 
-    if (status < 300) {
-      toastMessage({ type: "success", text: data.message });
-      updateTemporaryImageToken(token);
-      router.replace("/DefinirFoto");
-    } else toastMessage({ type: "error", text: data.message });
+  function registerSuccess(registerData: any) {
+    const { token } = registerData;
+    updateTemporaryImageToken(token);
+    router.replace("/DefinirFoto");
+    toastMessage({ type: "success", text: registerData.message });
   }
 
   useEffect(() => {
