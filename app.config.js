@@ -86,6 +86,10 @@ export default {
       usesCleartextTraffic: true,
     },
 
+    ios: {
+      bundleIdentifier: androidPackage,
+    },
+
     web: {
       favicon: appIcon,
     },
