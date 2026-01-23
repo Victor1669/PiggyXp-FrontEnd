@@ -3,7 +3,7 @@ import { GlobalColors } from "../../../../assets/Colors";
 
 const { width, height } = Dimensions.get("window");
 
-const DOTS_SECTION_HEIGHT = 150;
+const DOTS_SECTION_HEIGHT = 50;
 
 export const SwiperStyles = StyleSheet.create({
   container: {
@@ -17,7 +17,6 @@ export const SwiperStyles = StyleSheet.create({
   slide: {
     width,
     height: height - DOTS_SECTION_HEIGHT,
-    backgroundColor: GlobalColors.splashBackColor,
 
     alignItems: "center",
     justifyContent: "center",
@@ -39,6 +38,7 @@ export const SwiperStyles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     marginTop: 50,
+    marginBottom: 50,
     paddingHorizontal: 20,
   },
   dotsContainer: {
@@ -47,7 +47,7 @@ export const SwiperStyles = StyleSheet.create({
     backgroundColor: GlobalColors.splashBackColor,
 
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
     justifyContent: "center",
   },
   dot: {
@@ -55,7 +55,7 @@ export const SwiperStyles = StyleSheet.create({
     height: 10,
     borderRadius: 50,
     marginHorizontal: 5,
-    marginVertical: 110,
+    marginVertical: 10,
   },
   skipLink: {
     marginVertical: 25,

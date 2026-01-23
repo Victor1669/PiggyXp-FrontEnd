@@ -8,13 +8,13 @@ import { DefinePhotoService } from "./DefinePhotoService";
 
 import { DefinePhotoFormStyles } from "./DefinePhotoForm.css";
 
-import Button from "../../../Components/Button/Button";
+import Button from "../../../Components/Button";
 import { ImageContainer } from "./ImageContainer";
 import { ImageUploaderButton } from "./ImageUploaderButton";
 
 const { container, title, subtitle } = DefinePhotoFormStyles;
 
-export default function DefinirFotoForm() {
+export default function DefinePhotoForm() {
   const router = useRouter();
   const { getTemporaryImageToken } = useAuth();
 

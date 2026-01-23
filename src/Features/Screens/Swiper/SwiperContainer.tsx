@@ -2,8 +2,8 @@ import { useState } from "react";
 import RN, { View, Text, Dimensions, Image, FlatList } from "react-native";
 import { Link } from "expo-router";
 
-import { SplashScreenImages } from "../Assets/Images";
-import { SwiperStyles } from "../Styles/SwiperContainer.css";
+import { SplashScreenImages } from "./Assets/Images";
+import { SwiperStyles } from "./SwiperContainer.css";
 
 const { width } = Dimensions.get("window");
 
@@ -66,8 +66,8 @@ export default function SwiperContainer() {
           scrollEventThrottle={16}
         />
         <DotsContainer array={slides} index={index} />
-        <Link style={SwiperStyles.skipLink} href="/Login">
-          <Text>{index < 2 ? "Pular > > >" : "Ir para tela de login"}</Text>
+        <Link style={SwiperStyles.skipLink} href="/Welcome" replace>
+          <Text>{"Pular > > >"}</Text>
         </Link>
       </View>
     </View>

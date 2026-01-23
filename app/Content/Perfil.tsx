@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 
 import { useAuth } from "../../src/Features/Auth/Contexts/useAuth";
 
-import Button from "../../src/Components/Button/Button";
+import Button from "../../src/Components/Button";
 
 export default function Perfil() {
   const router = useRouter();
