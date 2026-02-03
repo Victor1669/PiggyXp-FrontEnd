@@ -16,9 +16,7 @@
       "distribution": "internal",
       "channel": "preview",
       "android": {
-        "buildType": "apk",
-        "package": "com.victor1669.piggyxp",
-        "applicationId": "Piggy Xp"
+        "buildType": "apk"
       },
       "env": {
         "EXPO_PUBLIC_EAS_BUILD_PROFILE": "preview"
