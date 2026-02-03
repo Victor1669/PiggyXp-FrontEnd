@@ -7,11 +7,13 @@ interface envTypes {
   androidClientId: string;
   androidPackage: string;
   backEndUrl: string;
+  webClientId: string;
 }
 
 export const env: envTypes = {
   buildProfile: extra?.buildProfile,
   androidClientId: extra?.google?.androidClientId,
+  webClientId: extra?.google?.webClientId,
   androidPackage: extra?.androidPackage,
   // backEndUrl: extra?.backEndUrl,
   backEndUrl: "http://192.168.1.6:3000",

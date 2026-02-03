@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
@@ -12,15 +11,7 @@ import Form from "../../../../Components/Form/Form";
 import { LoginSchema } from "./LoginSchema";
 import { LoginFormStyles } from "./LoginForm.css";
 
-interface LoginFormProps {
-  googleUser: object;
-  facebookUser: object;
-}
-
-export default function LoginForm({
-  googleUser,
-  facebookUser,
-}: LoginFormProps) {
+export default function LoginForm() {
   const router = useRouter();
   const { login, decodeUserDataToken } = useAuth();
 
@@ -58,14 +49,6 @@ export default function LoginForm({
     router.replace("/Content");
     toastMessage({ type: "success", text: loginData.message });
   }
-
-  useEffect(() => {
-    if (Object.keys(facebookUser).length) {
-      login(facebookUser);
-      router.replace("/Content");
-    }
-    if (Object.keys(googleUser).length) login(googleUser);
-  }, [googleUser, facebookUser]);
 
   return (
     <View>

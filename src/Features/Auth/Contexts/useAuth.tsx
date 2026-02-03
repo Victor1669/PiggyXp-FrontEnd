@@ -21,6 +21,12 @@ type AuthProviderValues = {
   decodeUserDataToken: (token: string) => any;
 };
 
+export interface User {
+  name: string;
+  email: string;
+  picture: string;
+}
+
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 
 /**
