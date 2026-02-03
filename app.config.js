@@ -8,21 +8,25 @@ const {
   EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID,
   EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID,
   EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID,
 } = process.env;
 
 /**
  * Validação obrigatória (build-time)
  */
 if (!EXPO_PUBLIC_FACEBOOK_APP_ID) {
-  throw new Error("EXPO_PUBLIC_FACEBOOK_APP_ID não definido");
+  throw new Error("EXPO_PUBLIC_FACEBOOK_APP_ID não definido!");
 }
 
 if (!EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN) {
-  throw new Error("EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN não definido");
+  throw new Error("EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN não definido!");
 }
 
 if (!EXPO_PUBLIC_EAS_BUILD_PROFILE) {
-  throw new Error("EXPO_PUBLIC_EAS_BUILD_PROFILE não definido");
+  throw new Error("EXPO_PUBLIC_EAS_BUILD_PROFILE não definido!");
+}
+if (!EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID) {
+  throw new Error("EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID não definido!");
 }
 
 /**
@@ -66,7 +70,7 @@ export default {
 
     icon: appIcon,
 
-    scheme: "com.victor1669.piggyxp",
+    scheme: androidPackage,
     userInterfaceStyle: "light",
     newArchEnabled: true,
 
@@ -84,6 +88,14 @@ export default {
       },
       edgeToEdgeEnabled: true,
       usesCleartextTraffic: true,
+      enableProguardInReleaseBuilds: true,
+      enableShrinkResourcesInReleaseBuilds: true,
+      enableSeparateBuildPerCPUArchiteture: true,
+      defaultConfig: {
+        ndk: {
+          abiFilters: ["arm64-v8a", "armeabi-v7a"],
+        },
+      },
     },
 
     ios: {
@@ -127,6 +139,7 @@ export default {
       // backEndUrl: EXPO_PUBLIC_BACKEND_URL,
       google: {
         androidClientId: androidClientId,
+        webClientId: EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID,
       },
       eas: {
         projectId: "b18f3c9f-62e6-4427-baa3-efe71bd4ea09",

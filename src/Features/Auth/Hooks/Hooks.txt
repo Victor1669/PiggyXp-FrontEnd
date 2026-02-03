@@ -1,0 +1,1 @@
+Por motivos de instabilidade e prevenção, temos dois hooks de autenticação da Google caso uma dê erro

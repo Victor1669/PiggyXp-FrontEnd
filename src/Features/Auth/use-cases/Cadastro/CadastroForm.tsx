@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
@@ -10,17 +9,9 @@ import Form from "../../../../Components/Form/Form";
 import { CadastroSchema } from "./CadastroSchema";
 import { CadastroFormStyles } from "./CadastroForm.css";
 
-interface CadastroFormProps {
-  googleUser: object;
-  facebookUser: object;
-}
-
-export default function CadastroForm({
-  googleUser,
-  facebookUser,
-}: CadastroFormProps) {
+export default function CadastroForm() {
   const router = useRouter();
-  const { login, updateTemporaryImageToken } = useAuth();
+  const { updateTemporaryImageToken } = useAuth();
 
   async function handleSubmit(formData: any) {
     const { Nome: name, Email: email, Senha: password } = formData;
@@ -46,14 +37,6 @@ export default function CadastroForm({
     router.replace("/DefinirFoto");
     toastMessage({ type: "success", text: registerData.message });
   }
-
-  useEffect(() => {
-    if (Object.keys(facebookUser).length) {
-      login(facebookUser);
-      router.replace("/Content");
-    }
-    if (Object.keys(googleUser).length) login(googleUser);
-  }, [googleUser, facebookUser]);
 
   return (
     <View>

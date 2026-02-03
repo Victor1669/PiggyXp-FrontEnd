@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
-import { useGoogleAuth } from "../../src/Features/Auth/Hooks/useGoogleAuth";
+import { useAuth } from "../../src/Features/Auth/Contexts/useAuth";
+import { useNativeGoogleAuth } from "../../src/Features/Auth/Hooks/useNativeGoogleAuth";
 import { useFacebookAuth } from "../../src/Features/Auth/Hooks/useFacebookAuth";
 
 import CadastroForm from "../../src/Features/Auth/use-cases/Cadastro/CadastroForm";
@@ -9,7 +12,9 @@ import AlternateSignins from "../../src/Features/Auth/Components/AlternateSignin
 import { GlobalColors } from "../../assets/Colors";
 
 export default function Cadastro() {
-  const { signIn: googleSignIn, user: googleUser } = useGoogleAuth();
+  const router = useRouter();
+  const { login } = useAuth();
+  const { signIn: googleSignIn, user: googleUser } = useNativeGoogleAuth();
   const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
 
   async function handleGoogleSignIn() {
@@ -19,9 +24,21 @@ export default function Cadastro() {
   async function handleFabebookSignIn() {
     await facebookSignIn();
   }
+
+  useEffect(() => {
+    if (Object.keys(facebookUser).length) {
+      login(facebookUser);
+      router.replace("/Content");
+    }
+    if (Object.keys(googleUser).length) {
+      login(googleUser);
+      router.replace("/Content");
+    }
+  }, [googleUser, facebookUser]);
+
   return (
     <View style={CadastroStyles.container}>
-      <CadastroForm facebookUser={facebookUser} googleUser={googleUser} />
+      <CadastroForm />
       <AlternateSignins
         text="Criar conta com"
         onGoogleClick={handleGoogleSignIn}

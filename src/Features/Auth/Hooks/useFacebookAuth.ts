@@ -7,8 +7,10 @@ import {
   Settings,
 } from "react-native-fbsdk-next";
 
+import { type User } from "../../Auth/Contexts/useAuth";
+
 export function useFacebookAuth() {
-  const [user, setUser] = useState<object>({});
+  const [user, setUser] = useState<User | {}>({});
 
   const signIn = async () => {
     try {
@@ -58,11 +60,10 @@ export function useFacebookAuth() {
                 data: { url },
               },
             } = result;
-            console.log(url);
             setUser({ name, email, picture: url });
             resolve(result);
           }
-        }
+        },
       );
       new GraphRequestManager().addRequest(infoRequest).start();
     });
