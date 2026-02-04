@@ -29,7 +29,7 @@ export default function Home() {
         <Text>Mensagem Toast</Text>
       </TouchableOpacity>
       <Image
-        style={{ width: 100, height: 100, borderRadius: 50 }}
+        style={HomeStyles.Image}
         source={
           user_img
             ? {
@@ -46,5 +46,15 @@ export default function Home() {
 }
 
 const HomeStyles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  container: { flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    gap: 20, 
+   },
+   Image: {
+    width: 120,
+    height: 100,
+    borderRadius: 50,
+    marginTop: 200,
+   }
 });
