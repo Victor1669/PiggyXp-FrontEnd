@@ -11,6 +11,8 @@ import Form from "../../../../Components/Form/Form";
 import { LoginSchema } from "./LoginSchema";
 import { LoginFormStyles } from "./LoginForm.css";
 
+import { GlobalFontColors } from "../../../../../assets/Colors";
+
 export default function LoginForm() {
   const router = useRouter();
   const { login, decodeUserDataToken } = useAuth();
@@ -32,19 +34,18 @@ export default function LoginForm() {
   async function loginSuccess(loginData: any) {
     const { message, refreshToken, token } = loginData;
 
-    console.log(message);
-
     const { userId } = decodeUserDataToken(token);
 
     const { data: userData, status: userDataStatus } =
       await GetUserInfo(userId);
 
     if (userDataStatus < 300) {
-      getUserDataSuccess(loginData, userData);
+      getUserDataSuccess(loginData, { ...userData, userId });
     } else toastMessage({ type: "error", text: userData.message });
   }
 
   function getUserDataSuccess(loginData: any, userData: any) {
+    console.log(userData);
     login(userData);
     router.replace("/Content");
     toastMessage({ type: "success", text: loginData.message });
@@ -68,7 +69,10 @@ export default function LoginForm() {
         forgotPasswordHREF="/EsqueceuSenha"
       />
       <NaoTemContaText />
-      <Link style={{ color: "#fff", fontSize: 40, margin: 25 }} href="/Content">
+      <Link
+        style={{ color: GlobalFontColors.Dark, fontSize: 40, margin: 25 }}
+        href="/Content"
+      >
         Conteúdo
       </Link>
     </View>
@@ -77,10 +81,13 @@ export default function LoginForm() {
 function NaoTemContaText() {
   return (
     <View style={LoginFormStyles.naoTemConta}>
-      <Text style={{ color: "#fff" }}>Não tem uma conta? </Text>
+      <Text style={{ color: GlobalFontColors.Dark }}>Não tem uma conta? </Text>
       <Link
         href="/Cadastro"
-        style={{ color: "#fff", textDecorationLine: "underline" }}
+        style={{
+          color: GlobalFontColors.Dark,
+          textDecorationLine: "underline",
+        }}
       >
         Inscrever-se
       </Link>

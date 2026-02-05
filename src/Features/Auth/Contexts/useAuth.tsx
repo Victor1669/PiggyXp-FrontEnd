@@ -12,6 +12,13 @@ interface AuthProviderTypes {
   children: React.ReactNode;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  picture: string;
+}
+
 type AuthProviderValues = {
   user: any;
   login: (userData: object) => Promise<void>;
@@ -20,12 +27,6 @@ type AuthProviderValues = {
   getTemporaryImageToken: () => Promise<string>;
   decodeUserDataToken: (token: string) => any;
 };
-
-export interface User {
-  name: string;
-  email: string;
-  picture: string;
-}
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 
@@ -67,16 +68,16 @@ function AuthProvider({ children }: AuthProviderTypes) {
   }
 
   useEffect(() => {
-    async function carregarDados() {
+    async function getUserInfoFromStore() {
       if (Platform.OS === "web") return;
       const storedUser = await getSecureStoreItem({ itemName: "USER" });
 
       setUser(storedUser.length ? JSON.parse(storedUser) : {});
     }
-    carregarDados();
+    getUserInfoFromStore();
   }, []);
 
-  const value = {
+  const value: AuthProviderValues = {
     user,
     login,
     logout,

@@ -37,9 +37,6 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          contentStyle: {
-            //transform: [{ rotate: "180deg" }],
-          },
         }}
         key={Date.now().toString()}
       />

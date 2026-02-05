@@ -1,0 +1,1 @@
+Essa pasta existe para organização e configuração das rotas, o conteúdo principal delas está dentro da pasta "src/", aqui terá apenas configuração e lógica se for necessária
