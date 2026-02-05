@@ -111,7 +111,7 @@ export default function Layout() {
       />
 
       <Tabs.Screen
-        name="Perfil"
+        name="Profile"
         options={{
           title: "Perfil",
           tabBarIcon: ({ focused}) => (

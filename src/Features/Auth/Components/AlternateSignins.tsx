@@ -1,6 +1,10 @@
 import { Text, View } from "react-native";
-import { AuthImages } from "../Assets/AuthImages";
+
 import ImageButton from "./ImageButton";
+
+import { AuthImages } from "../Assets/AuthImages";
+
+import { GlobalFontColors } from "../../../../assets/Colors";
 
 const {
   logos: { google, facebook },
@@ -27,7 +31,9 @@ export default function AlternateSignins({
         alignItems: "center",
       }}
     >
-      <Text style={{ color: "#fff", fontSize: 18, marginBottom: 20 }}>
+      <Text
+        style={{ color: GlobalFontColors.Dark, fontSize: 18, marginBottom: 20 }}
+      >
         {text}
       </Text>
 
