@@ -33,10 +33,7 @@ export async function useFetch({
       data: res.data,
     };
   } catch (err: any) {
-    console.log("ERRO: ", err);
-
-    console.log("STATUS:", err.response?.status);
-    console.log("DATA:", err.response?.data);
+    console.log(JSON.stringify(err, null, 2));
 
     return {
       status: err.response?.status ?? 500,

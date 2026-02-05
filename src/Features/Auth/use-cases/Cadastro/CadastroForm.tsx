@@ -9,6 +9,8 @@ import Form from "../../../../Components/Form/Form";
 import { CadastroSchema } from "./CadastroSchema";
 import { CadastroFormStyles } from "./CadastroForm.css";
 
+import { GlobalFontColors } from "../../../../../assets/Colors";
+
 export default function CadastroForm() {
   const router = useRouter();
   const { updateTemporaryImageToken } = useAuth();
@@ -22,19 +24,21 @@ export default function CadastroForm() {
       password,
     });
 
+    console.log(registerData, registerStatus);
+
     if (registerStatus < 300) {
       registerSuccess(registerData);
     } else
       toastMessage({
         type: "error",
-        text: registerData?.error ?? registerData,
+        text: registerData?.error ?? registerData.message,
       });
   }
 
   function registerSuccess(registerData: any) {
     const { token } = registerData;
     updateTemporaryImageToken(token);
-    router.replace("/DefinirFoto");
+    router.replace("/DefinePhoto");
     toastMessage({ type: "success", text: registerData.message });
   }
 
@@ -62,10 +66,13 @@ export default function CadastroForm() {
 function JaTemContaText() {
   return (
     <View style={CadastroFormStyles.jaTemConta}>
-      <Text style={{ color: "#fff" }}>Já tem uma conta? </Text>
+      <Text style={{ color: GlobalFontColors.Dark }}>Já tem uma conta? </Text>
       <Link
         href="/Login"
-        style={{ color: "#fff", textDecorationLine: "underline" }}
+        style={{
+          color: GlobalFontColors.Dark,
+          textDecorationLine: "underline",
+        }}
       >
         Logar-se
       </Link>
