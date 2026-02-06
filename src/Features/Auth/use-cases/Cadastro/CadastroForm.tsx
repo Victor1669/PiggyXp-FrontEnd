@@ -24,8 +24,6 @@ export default function CadastroForm() {
       password,
     });
 
-    console.log(registerData, registerStatus);
-
     if (registerStatus < 300) {
       registerSuccess(registerData);
     } else
@@ -44,7 +42,7 @@ export default function CadastroForm() {
 
   return (
     <View>
-      <Text style={CadastroFormStyles.title}>Criar Conta</Text>
+      <Text style={CadastroFormStyles.title}>Cadastro</Text>
       <Form
         formFields={[
           { nomeCampo: "Nome", validation: CadastroSchema.Nome },

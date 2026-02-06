@@ -4,7 +4,7 @@ export const LoginSchema: Record<string, RegisterOptions> = {
   Email: {
     required: {
       value: true,
-      message: "O email é obrigatório!",
+      message: "O email é obrigatório",
     },
     validate: {
       emailEstaValido: (valor) =>
@@ -14,11 +14,11 @@ export const LoginSchema: Record<string, RegisterOptions> = {
   Senha: {
     required: {
       value: true,
-      message: "A senha é obrigatória!",
+      message: "A senha é obrigatória",
     },
     minLength: {
       value: 6,
-      message: "A senha deve possuir no mínimo 6 caracteres!",
+      message: "A senha deve possuir no mínimo 6 caracteres",
     },
     validate: {
       possuiCaractereEspecial: (valor) =>
@@ -27,7 +27,7 @@ export const LoginSchema: Record<string, RegisterOptions> = {
 
       possuiLetraMinusculaOuMaiuscula: (valor) =>
         /(?=.*[a-z])(?=.*[A-Z])/.test(valor) ||
-        "A senha deve  conter letras minúsculas e maiúsculas",
+        "A senha deve conter letras minúsculas e maiúsculas",
     },
   },
 };

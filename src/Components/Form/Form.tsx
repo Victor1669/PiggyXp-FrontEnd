@@ -49,6 +49,7 @@ export default function Form({
           <></>
         )}
         <Button
+          testId="submit-button"
           style={FormGlobalStyles.button}
           onPress={methods.handleSubmit(onSubmit)}
         >

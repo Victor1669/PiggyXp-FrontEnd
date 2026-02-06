@@ -6,14 +6,21 @@ interface ButtonProps {
   children: string;
   onPress: any;
   style?: RN.StyleProp<any>;
+  testId?: string;
 }
 
-export default function Button({ onPress, children, style }: ButtonProps) {
+export default function Button({
+  onPress,
+  children,
+  style,
+  testId,
+}: ButtonProps) {
   const [buttonHeight, setButtonHeight] = useState(4);
 
   const { width } = useWindowDimensions();
   return (
     <TouchableOpacity
+      testID={testId}
       activeOpacity={1}
       onPress={onPress}
       onPressIn={() => setButtonHeight(0)}

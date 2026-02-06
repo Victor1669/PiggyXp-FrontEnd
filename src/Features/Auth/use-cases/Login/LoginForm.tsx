@@ -36,6 +36,8 @@ export default function LoginForm() {
 
     const { userId } = decodeUserDataToken(token);
 
+    console.log(message);
+
     const { data: userData, status: userDataStatus } =
       await GetUserInfo(userId);
 
@@ -53,7 +55,7 @@ export default function LoginForm() {
 
   return (
     <View>
-      <Text style={LoginFormStyles.title}>Entrar</Text>
+      <Text style={LoginFormStyles.title}>Login</Text>
       <Form
         formFields={[
           { nomeCampo: "Email", validation: LoginSchema.Email },

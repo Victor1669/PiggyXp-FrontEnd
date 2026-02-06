@@ -4,12 +4,14 @@
   "main": "index.ts",
   "scripts": {
     "android": "expo run:android",
-    "ios": "expo run:ios",
     "test": "jest",
     "prebuild": "pnpm expo prebuild --clean",
-    "build-preview": "pnpm eas build -p android --profile preview",
-    "build-dev": "pnpm eas build -p android --profile development",
-    "start": "pnpm expo start --dev-client"
+    "build-preview": "eas build -p android --profile preview",
+    "update-preview": "eas update --branch preview --message",
+    "build-dev": "eas build -p android --profile development",
+    "update-dev": "eas update --branch development --message",
+    "start": "pnpm expo start --dev-client",
+    "ios": "expo run:ios"
   },
   "jest": {
     "preset": "jest-expo",

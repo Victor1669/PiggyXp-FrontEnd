@@ -2,7 +2,7 @@ import { useRef } from "react";
 import RN, { Animated, TextInput, View } from "react-native";
 import RHF from "react-hook-form";
 
-import { Animate } from "../Utils/Animate";
+import { Animate } from "../Services/animate";
 
 interface InputTypes {
   testID: string;
@@ -27,7 +27,7 @@ export default function Input({
   const FINAL_LABEL_MARGIN_BOTTOM = 50;
 
   const labelMarginBottom = useRef(
-    new Animated.Value(INITIAL_LABEL_MARGIN_BOTTOM)
+    new Animated.Value(INITIAL_LABEL_MARGIN_BOTTOM),
   ).current;
 
   async function focusMarginBottom() {
