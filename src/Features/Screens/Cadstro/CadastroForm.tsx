@@ -1,15 +1,16 @@
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useAuth } from "../../Contexts/useAuth";
-import { UserRegister } from "./CadastroService";
-import { toastMessage } from "../../../../Services/toast";
+import { useAuth } from "@Auth/Contexts/useAuth";
 
-import Form from "../../../../Components/Form/Form";
-import { CadastroSchema } from "./CadastroSchema";
+import { UserRegister } from "@Auth/use-cases/Cadastro/CadastroService";
+import { toastMessage } from "@Services/toast";
+
+import Form from "@Components/Form/Form";
 import { CadastroFormStyles } from "./CadastroForm.css";
+import { CadastroFields } from "@Auth/use-cases/Cadastro/CadastroSchema";
 
-import { GlobalFontColors } from "../../../../../assets/Colors";
+import { GlobalFontColors } from "@Colors";
 
 export default function CadastroForm() {
   const router = useRouter();
@@ -43,17 +44,9 @@ export default function CadastroForm() {
   return (
     <View>
       <Text style={CadastroFormStyles.title}>Cadastro</Text>
+
       <Form
-        formFields={[
-          { nomeCampo: "Nome", validation: CadastroSchema.Nome },
-          { nomeCampo: "Email", validation: CadastroSchema.Email },
-          { nomeCampo: "Senha", validation: CadastroSchema.Senha },
-        ]}
-        defaultValues={{
-          Nome: "Victor",
-          Email: "victorfernandes1669@gmail.com",
-          Senha: "@Ar09112001",
-        }}
+        formFields={CadastroFields}
         onSubmit={handleSubmit}
         buttonText="Criar Conta"
       />

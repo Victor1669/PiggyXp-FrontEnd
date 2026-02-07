@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react-native";
 
-import { AuthProvider } from "../../Contexts/useAuth";
+import { AuthProvider } from "@UseAuth";
 
-import { submitInputAndExpectError } from "../../../../Services/jest";
+import { submitInputAndExpectError } from "@Services/jest";
 
-import Cadastro from "../../../../../app/Cadastro";
+import Cadastro from "@App/Cadastro";
 
 describe("CadastroForm", () => {
   it("Renderizar", async () => {

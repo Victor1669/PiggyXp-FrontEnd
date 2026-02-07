@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import { useRouter } from "expo-router";
 
-import { useAuth } from "../../../../src/Features/Auth/Contexts/useAuth";
+import { useAuth } from "@UseAuth";
 
-import Button from "../../../../src/Components/Button";
+import Button from "@Components/Button";
 import UserInfo from "./UserInfo/UserInfo";
 import Achievements from "./Achievements/Achievements";
 import Offensive from "./Offensive/Offensive";

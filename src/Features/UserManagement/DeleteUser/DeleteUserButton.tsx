@@ -1,6 +1,6 @@
-import Button from "../../../Components/Button";
+import Button from "@Components/Button";
 
-import { useAuth } from "../../Auth/Contexts/useAuth";
+import { useAuth } from "@UseAuth";
 
 export default function DeleteUserButton() {
   const { user } = useAuth();

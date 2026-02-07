@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-import { GlobalFontColors } from "../../../assets/Colors";
+
+import { GlobalFontColors } from "@Colors";
 
 export { FormGlobalStyles, FieldGlobalStyles };
 

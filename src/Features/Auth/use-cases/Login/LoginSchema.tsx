@@ -1,6 +1,6 @@
 import { RegisterOptions } from "react-hook-form";
 
-export const LoginSchema: Record<string, RegisterOptions> = {
+export const LoginValidation: Record<string, RegisterOptions> = {
   Email: {
     required: {
       value: true,

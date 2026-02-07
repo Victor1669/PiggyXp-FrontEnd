@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors } from "../../../../../assets/Colors";
+import { GlobalColors } from "@Colors";
 
 const CONTENT_LEFT_SPACE = 10;
 const CONTENT_TOP_SPACE = 15;

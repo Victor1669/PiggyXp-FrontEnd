@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react-native";
 
-import { AuthProvider } from "../../Contexts/useAuth";
+import { AuthProvider } from "@UseAuth";
 
-import { submitInputAndExpectError } from "../../../../Services/jest";
+import { submitInputAndExpectError } from "@Services/jest";
 
-import Login from "../../../../../app/Login";
+import Login from "@App/Login";
 
 describe("LoginForm", () => {
   it("Renderizar", async () => {

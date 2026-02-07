@@ -1,6 +1,8 @@
-import RN, { Text, TouchableOpacity, useWindowDimensions } from "react-native";
-import { GlobalColors } from "../../assets/Colors";
 import { useState } from "react";
+
+import RN, { Text, TouchableOpacity, useWindowDimensions } from "react-native";
+
+import { GlobalColors } from "@Assets/Colors";
 
 interface ButtonProps {
   children: string;

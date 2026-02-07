@@ -1,4 +1,4 @@
-import { api } from "../Config/axios";
+import { api } from "@Config/axios";
 
 type useFetchProps = {
   method: "get" | "post" | "delete" | "put";

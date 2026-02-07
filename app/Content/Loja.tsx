@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Loja() {
   return <View style={LojaStyles.container}></View>;

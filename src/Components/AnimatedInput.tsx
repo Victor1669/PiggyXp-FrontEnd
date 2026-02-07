@@ -2,7 +2,7 @@ import { useRef } from "react";
 import RN, { Animated, TextInput, View } from "react-native";
 import RHF from "react-hook-form";
 
-import { Animate } from "../Services/animate";
+import { Animate } from "@Services/animate";
 
 interface InputTypes {
   testID: string;
@@ -11,6 +11,7 @@ interface InputTypes {
   onBlur: RHF.Noop;
   onChange: (...event: any[]) => void;
   inputStyle: RN.StyleProp<RN.TextStyle>;
+  autoComplete: RN.TextInputProps["autoComplete"];
   labelStyle: RN.StyleProp<RN.TextStyle>;
 }
 
@@ -22,6 +23,7 @@ export default function Input({
   onBlur,
   onChange,
   value,
+  autoComplete,
 }: InputTypes) {
   const INITIAL_LABEL_MARGIN_BOTTOM = 10;
   const FINAL_LABEL_MARGIN_BOTTOM = 50;
@@ -58,6 +60,7 @@ export default function Input({
         {label}
       </Animated.Text>
       <TextInput
+        autoComplete={autoComplete}
         style={inputStyle}
         testID={testID}
         onFocus={focusMarginBottom}

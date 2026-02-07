@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 import { useRouter } from "expo-router";
 
 import { WelcomeContainerStyles } from "./WelcomeContainer.css";
-import Button from "../../../Components/Button";
+import Button from "@Components/Button";
 
 const { container, text, buttons } = WelcomeContainerStyles;
 

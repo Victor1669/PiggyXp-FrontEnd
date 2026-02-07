@@ -3,12 +3,12 @@ import { Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
-import { useAuth } from "../../Auth/Contexts/useAuth";
-import { DefinePhotoService } from "./DefinePhotoService";
+import { useAuth } from "@UseAuth";
+import { DefinePhotoService } from "@Auth/Services/UserServices";
 
 import { DefinePhotoFormStyles } from "./DefinePhotoForm.css";
 
-import Button from "../../../Components/Button";
+import Button from "@Components/Button";
 import { ImageContainer } from "./ImageContainer";
 import { ImageUploaderButton } from "./ImageUploaderButton";
 
@@ -54,7 +54,7 @@ export default function DefinePhotoForm() {
       /**
        * TASK: Adicionar feedback do toastify
        */
-      if (status < 300) {
+      if (status > 300) {
         console.log("Erro: " + body);
       }
     }

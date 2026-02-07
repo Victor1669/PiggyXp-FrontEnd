@@ -1,17 +1,17 @@
 import { Text, View } from "react-native";
 import { Link, useRouter } from "expo-router";
 
-import { useAuth } from "../../Contexts/useAuth";
+import { useAuth } from "@Auth/Contexts/useAuth";
 
-import { UserLogin } from "./LoginService";
-import { GetUserInfo } from "../../Services/UserServices";
-import { toastMessage } from "../../../../Services/toast";
+import { UserLogin } from "@Auth/use-cases/Login/LoginService";
+import { GetUserInfo } from "@Auth/Services/UserServices";
+import { toastMessage } from "@Services/toast";
 
-import Form from "../../../../Components/Form/Form";
-import { LoginSchema } from "./LoginSchema";
+import Form from "@Components/Form/Form";
+import { LoginValidation } from "@Auth/use-cases/Login/LoginSchema";
 import { LoginFormStyles } from "./LoginForm.css";
 
-import { GlobalFontColors } from "../../../../../assets/Colors";
+import { GlobalFontColors } from "@Colors";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -58,13 +58,17 @@ export default function LoginForm() {
       <Text style={LoginFormStyles.title}>Login</Text>
       <Form
         formFields={[
-          { nomeCampo: "Email", validation: LoginSchema.Email },
-          { nomeCampo: "Senha", validation: LoginSchema.Senha },
+          {
+            nomeCampo: "Email",
+            validation: LoginValidation.Email,
+            inputAutoComplete: "email",
+          },
+          {
+            nomeCampo: "Senha",
+            validation: LoginValidation.Senha,
+            inputAutoComplete: "password",
+          },
         ]}
-        defaultValues={{
-          Email: "victorfernandes1669@gmail.com",
-          Senha: "@Ar09112001",
-        }}
         onSubmit={handleSubmit}
         buttonText="Entrar"
         forgotPasswordText="Esqueceu a senha?"

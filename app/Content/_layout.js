@@ -1,8 +1,8 @@
-import { Image, View,} from "react-native";
+import { Image, View } from "react-native";
 import { Tabs } from "expo-router";
 
-import { GlobalImages } from "../../assets/Images";
-import { GlobalColors } from "../../assets/Colors";
+import { GlobalImages } from "@Assets/GlobalImages";
+import { GlobalColors } from "@Colors";
 
 const {
   tabBar: { home, loja, missoes, perfil, ranking },
@@ -33,15 +33,12 @@ export default function Layout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ focused, size }) => (
+          tabBarIcon: () => (
             <Image
               source={home}
               style={{
-                width: 30,
-                height: size,
-                tintColor: focused
-                  ? GlobalColors.Dark
-                  : GlobalColors.Light,
+                width: 35,
+                height: 35,
               }}
             />
           ),
@@ -52,7 +49,7 @@ export default function Layout() {
         name="Ranking"
         options={{
           title: "Ranking",
-          tabBarIcon: ({ focused}) => (
+          tabBarIcon: () => (
             <View>
               <Image
                 source={ranking}
@@ -60,11 +57,8 @@ export default function Layout() {
                   width: 40,
                   height: 40,
                   marginTop: 7,
-                  tintColor: focused
-                    ? GlobalColors.Dark
-                    : GlobalColors.Light,
                 }}
-              />   
+              />
             </View>
           ),
         }}
@@ -74,16 +68,13 @@ export default function Layout() {
         name="Missoes"
         options={{
           title: "Missões",
-          tabBarIcon: ({ focused}) => (
+          tabBarIcon: () => (
             <Image
               source={missoes}
               style={{
                 width: 35,
                 marginTop: 5,
                 height: 35,
-                tintColor: focused
-                  ? GlobalColors.Dark
-                  : GlobalColors.Light,
               }}
             />
           ),
@@ -94,16 +85,13 @@ export default function Layout() {
         name="Loja"
         options={{
           title: "Loja",
-          tabBarIcon: ({ focused}) => (
+          tabBarIcon: () => (
             <Image
               source={loja}
               style={{
                 width: 30,
                 height: 30,
                 marginTop: -5,
-                tintColor: focused
-                  ? GlobalColors.Dark
-                  : GlobalColors.Light,
               }}
             />
           ),
@@ -114,16 +102,13 @@ export default function Layout() {
         name="Profile"
         options={{
           title: "Perfil",
-          tabBarIcon: ({ focused}) => (
+          tabBarIcon: () => (
             <Image
               source={perfil}
               style={{
                 width: 35,
                 height: 50,
                 marginTop: -5,
-                tintColor: focused
-                  ? GlobalColors.Dark
-                  : GlobalColors.Light,
               }}
             />
           ),
