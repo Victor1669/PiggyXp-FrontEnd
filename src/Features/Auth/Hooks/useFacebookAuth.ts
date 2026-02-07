@@ -7,7 +7,7 @@ import {
   Settings,
 } from "react-native-fbsdk-next";
 
-import { type User } from "../../Auth/Contexts/useAuth";
+import { type User } from "@Auth/Contexts/useAuth";
 
 export function useFacebookAuth() {
   const [user, setUser] = useState<User | {}>({});

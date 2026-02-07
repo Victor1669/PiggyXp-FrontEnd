@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { GlobalColors, GlobalFontColors } from "../../../../../assets/Colors";
+import { GlobalColors, GlobalFontColors } from "@Colors";
 
 export const AchievementsStyles = StyleSheet.create({
   achievementsContainer: {

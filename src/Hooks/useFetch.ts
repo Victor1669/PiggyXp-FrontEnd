@@ -1,4 +1,4 @@
-import { api } from "../Config/axios";
+import { api } from "@Config/axios";
 
 type useFetchProps = {
   method: "get" | "post" | "delete" | "put";
@@ -33,8 +33,6 @@ export async function useFetch({
       data: res.data,
     };
   } catch (err: any) {
-    console.log(JSON.stringify(err, null, 2));
-
     return {
       status: err.response?.status ?? 500,
       data: err.response?.data ?? err.message,

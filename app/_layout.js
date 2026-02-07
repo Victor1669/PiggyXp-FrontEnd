@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
 
-import { env } from "../src/Config/env";
+import { env } from "Config/env";
 
-import { ToastContainer, toastMessage } from "../src/Services/toast";
+import { ToastContainer, toastMessage } from "@Services/toast";
 
-import { AuthProvider } from "../src/Features/Auth/Contexts/useAuth";
+import { AuthProvider } from "@Auth/Contexts/useAuth";
 
 export default function RootLayout() {
   async function checkUpdate() {
