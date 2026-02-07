@@ -2,7 +2,7 @@ import { useState } from "react";
 import RN, { View, Text, Dimensions, Image, FlatList } from "react-native";
 import { Link } from "expo-router";
 
-import { SplashScreenImages } from "./Assets/Images";
+import { SplashScreenImages } from "@Assets/SwiperImages";
 import { SwiperStyles } from "./SwiperContainer.css";
 
 const { width } = Dimensions.get("window");

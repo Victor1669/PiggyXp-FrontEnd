@@ -9,7 +9,7 @@ const {
   seeMore,
 } = AchievementsStyles;
 
-import { ProfileImages } from "../Assets/ProfileImages";
+import { ProfileImages } from "@Assets/ProfileImages";
 const { trophy, invest } = ProfileImages;
 
 export default function Achievements() {

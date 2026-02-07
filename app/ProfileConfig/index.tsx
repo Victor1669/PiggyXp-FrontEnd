@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 
-import DeleteUserButton from "../../src/Features/UserManagement/DeleteUser/DeleteUserButton";
+import DeleteUserButton from "@UserManagement/DeleteUser/DeleteUserButton";
 
 export default function ProfileConfig() {
   return (

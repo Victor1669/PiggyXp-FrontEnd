@@ -1,6 +1,18 @@
 import { RegisterOptions } from "react-hook-form";
 
-export const LoginValidation: Record<string, RegisterOptions> = {
+import { type FieldProps } from "@Components/Form/Form";
+
+const CadastroValidation: Record<string, RegisterOptions> = {
+  Nome: {
+    required: {
+      value: true,
+      message: "O nome é obrigatório",
+    },
+    minLength: {
+      value: 4,
+      message: "O nome deve possuir no mínimo 4 caracteres",
+    },
+  },
   Email: {
     required: {
       value: true,
@@ -31,3 +43,21 @@ export const LoginValidation: Record<string, RegisterOptions> = {
     },
   },
 };
+
+export const CadastroFields: FieldProps[] = [
+  {
+    nomeCampo: "Nome",
+    validation: CadastroValidation.Nome,
+    inputAutoComplete: "given-name",
+  },
+  {
+    nomeCampo: "Email",
+    validation: CadastroValidation.Email,
+    inputAutoComplete: "email",
+  },
+  {
+    nomeCampo: "Senha",
+    validation: CadastroValidation.Senha,
+    inputAutoComplete: "password",
+  },
+];

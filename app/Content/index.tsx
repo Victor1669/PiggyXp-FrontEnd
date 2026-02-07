@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native";
 
-import { notifications } from "../../src/Services/notifications";
-import { toastMessage } from "../../src/Services/toast";
+import { notifications } from "@Services/notifications";
+import { toastMessage } from "@Services/toast";
 
 export default function Home() {
   return (
