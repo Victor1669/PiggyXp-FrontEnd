@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { env } from "@Config/env";
+import { env } from "./env";
 
 export const api = axios.create({
   baseURL: env.backEndUrl,

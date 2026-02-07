@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { useAuth } from "@Auth/Contexts/useAuth";
+import { useAuth } from "../src/Features/Auth/Contexts/useAuth";
 
-import SplashContainer from "@Screens/Splash/SplashContainer";
+import SplashContainer from "../src/Features/Screens/Splash/SplashContainer";
 
 export default function SplashScreen() {
   const router = useRouter();

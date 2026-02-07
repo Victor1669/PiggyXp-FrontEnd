@@ -1,4 +1,4 @@
-import { useFetch } from "@Hooks/useFetch";
+import { useFetch } from "../../../Hooks/useFetch";
 
 export async function DeleteUserService(id: number) {
   const response = await useFetch({

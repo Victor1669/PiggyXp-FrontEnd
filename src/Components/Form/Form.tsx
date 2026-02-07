@@ -1,32 +1,17 @@
-import { View, Text, useWindowDimensions, TextInputProps } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
 import { Link } from "expo-router";
 import {
   Controller,
   FormProvider,
-  RegisterOptions,
   useForm,
   useFormContext,
 } from "react-hook-form";
 
-import Button from "@Components/Button";
-import Input from "@Components/AnimatedInput";
+import Button from "../Button";
+import Input from "../AnimatedInput";
 
+import { FieldProps, FormProps } from "./FormTypes";
 import { FieldGlobalStyles, FormGlobalStyles } from "./Form.css";
-
-export type FieldProps = {
-  nomeCampo: string;
-  validation: RegisterOptions;
-  inputAutoComplete: TextInputProps["autoComplete"];
-};
-
-type FormProps = {
-  formFields: FieldProps[];
-  buttonText: string;
-  onSubmit: (data: any) => void;
-  defaultValues?: object;
-  forgotPasswordText?: string;
-  forgotPasswordHREF?: string;
-};
 
 export default function Form({
   formFields,
@@ -51,7 +36,6 @@ export default function Form({
             key={field.nomeCampo}
             nomeCampo={field.nomeCampo}
             validation={field.validation}
-            inputAutoComplete={field.inputAutoComplete}
           />
         ))}
         {forgotPasswordText ? (
@@ -65,7 +49,6 @@ export default function Form({
           <></>
         )}
         <Button
-          testId="submit-button"
           style={FormGlobalStyles.button}
           onPress={methods.handleSubmit(onSubmit)}
         >
@@ -76,11 +59,7 @@ export default function Form({
   );
 }
 
-export function Field({
-  nomeCampo,
-  validation,
-  inputAutoComplete,
-}: FieldProps) {
+export function Field({ nomeCampo, validation }: FieldProps) {
   const {
     control,
     formState: { errors },
@@ -103,7 +82,6 @@ export function Field({
             onChange={onChange}
             onBlur={onBlur}
             value={value}
-            autoComplete={inputAutoComplete}
           />
         )}
       />

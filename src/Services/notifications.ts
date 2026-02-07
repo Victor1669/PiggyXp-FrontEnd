@@ -1,6 +1,6 @@
-import { Platform } from "react-native";
-
 import * as Notifications from "expo-notifications";
+
+import { Platform } from "react-native";
 
 // CONFIGURAÇÕES DA NOTIFICAÇÃO
 Notifications.setNotificationHandler({

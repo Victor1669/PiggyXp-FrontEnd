@@ -2,7 +2,7 @@ import { Image, ImageBackground, Text, View } from "react-native";
 
 import { RandomMessageStyles } from "./RandomMessage.css";
 
-import { ProfileImages } from "@Assets/ProfileImages";
+import { ProfileImages } from "../Assets/ProfileImages";
 
 const { randomMessageContainer, characterImage, dialogContainer, dialogText } =
   RandomMessageStyles;

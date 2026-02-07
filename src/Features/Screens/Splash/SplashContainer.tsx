@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 
-import { Animate } from "@Services/animate";
+import { Animate } from "../../../Utils/Animate";
 
-import { GlobalImages } from "@Assets/GlobalImages";
+import { GlobalImages } from "../../../../assets/Images";
 import { SplashStyles } from "./SplashScreen.css";
 
 export default function Splash() {
@@ -13,6 +13,7 @@ export default function Splash() {
   useEffect(() => {
     SplashAnimation();
   }, []);
+  
 
   async function SplashAnimation() {
     await Animate({
@@ -36,6 +37,7 @@ export default function Splash() {
 
   return (
     <View style={SplashStyles.container}>
+      
       <Animated.Image
         style={{ transform: [{ scale: logoScale }] }}
         source={GlobalImages.mainLogo}

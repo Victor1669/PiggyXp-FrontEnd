@@ -1,9 +1,9 @@
 import { Image, View, Text, Pressable, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 
-import { useAuth } from "@UseAuth";
+import { useAuth } from "../../../Auth/Contexts/useAuth";
 
-import { UserInfoStyles } from "./UserInfo.css";
+import { UserInfoStyles } from ".//UserInfo.css";
 const {
   userInfoContainer,
   userInfoBackground,
@@ -13,8 +13,8 @@ const {
   profileEmail,
 } = UserInfoStyles;
 
-import { GlobalImages } from "@Assets/GlobalImages";
-import { ProfileImages } from "@Assets/ProfileImages";
+import { GlobalImages } from "../../../../../assets/Images";
+import { ProfileImages } from "../Assets/ProfileImages";
 const { userInfoDetail, config } = ProfileImages;
 
 export default function UserInfo() {

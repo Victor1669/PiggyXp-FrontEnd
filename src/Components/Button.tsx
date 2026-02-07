@@ -1,28 +1,19 @@
-import { useState } from "react";
-
 import RN, { Text, TouchableOpacity, useWindowDimensions } from "react-native";
-
-import { GlobalColors } from "@Assets/Colors";
+import { GlobalColors } from "../../assets/Colors";
+import { useState } from "react";
 
 interface ButtonProps {
   children: string;
   onPress: any;
   style?: RN.StyleProp<any>;
-  testId?: string;
 }
 
-export default function Button({
-  onPress,
-  children,
-  style,
-  testId,
-}: ButtonProps) {
+export default function Button({ onPress, children, style }: ButtonProps) {
   const [buttonHeight, setButtonHeight] = useState(4);
 
   const { width } = useWindowDimensions();
   return (
     <TouchableOpacity
-      testID={testId}
       activeOpacity={1}
       onPress={onPress}
       onPressIn={() => setButtonHeight(0)}

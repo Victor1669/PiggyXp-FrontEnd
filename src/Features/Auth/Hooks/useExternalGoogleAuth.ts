@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 
-import { env } from "@Config/env";
-
-import { type User } from "@Auth/Contexts/useAuth";
+import { env } from "../../../Config/env";
 
 import { type User } from "../../Auth/Contexts/useAuth";
 

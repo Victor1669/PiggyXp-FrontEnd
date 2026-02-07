@@ -2,7 +2,7 @@ import { Image, Text, View } from "react-native";
 
 import { OffensiveStyles } from "./OffensiveStyles.css";
 
-import { ProfileImages } from "@Assets/ProfileImages";
+import { ProfileImages } from "../Assets/ProfileImages";
 
 const {
   offensiveContainer,

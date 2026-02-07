@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-
-import { GlobalColors, GlobalFontColors } from "@Colors";
+import { GlobalColors, GlobalFontColors } from "../../../../../assets/Colors";
 
 export const OffensiveStyles = StyleSheet.create({
   offensiveContainer: {

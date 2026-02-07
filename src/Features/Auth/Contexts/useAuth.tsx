@@ -6,7 +6,7 @@ import {
   deleteSecureStoreItem,
   getSecureStoreItem,
   setSecureStoreItem,
-} from "@Services/securestore";
+} from "../../../Services/securestore";
 
 interface AuthProviderTypes {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors } from "@Colors";
+import { GlobalColors } from "../../../../assets/Colors";
 
 export const ProfileContainerStyles = StyleSheet.create({
   profileContainer: {
