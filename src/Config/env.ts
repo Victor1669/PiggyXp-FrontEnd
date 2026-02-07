@@ -16,5 +16,5 @@ export const env: envTypes = {
   webClientId: extra?.google?.webClientId,
   androidPackage: extra?.androidPackage,
   // backEndUrl: extra?.backEndUrl,
-  backEndUrl: "http://192.168.1.6:3000",
+  backEndUrl: "http://192.168.1.8:3000",
 };

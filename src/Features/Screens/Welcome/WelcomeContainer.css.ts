@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors } from "../../../../assets/Colors";
+import { GlobalColors, GlobalFontColors } from "@Colors";
 
 export const WelcomeContainerStyles = StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ export const WelcomeContainerStyles = StyleSheet.create({
     width: "60%",
     fontSize: 20,
     textAlign: "center",
-    color: "#fff",
+    color: GlobalFontColors.Dark,
     marginVertical: 50,
   },
   buttons: {

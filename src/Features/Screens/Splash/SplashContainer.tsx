@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 
-import { Animate } from "../../../Utils/Animate";
+import { Animate } from "@Services/animate";
 
-import { GlobalImages } from "../../../../assets/Images";
+import { GlobalImages } from "@Assets/GlobalImages";
 import { SplashStyles } from "./SplashScreen.css";
 
 export default function Splash() {

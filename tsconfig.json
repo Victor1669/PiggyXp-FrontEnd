@@ -1,7 +1,28 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@App/*": ["../app/*"],
+      "@Auth/*": ["Features/Auth/*"],
+      "@UseAuth": ["Features/Auth/Contexts/useAuth.tsx"],
+      "@Assets/*": [
+        "../assets/*",
+        "Assets/*",
+        "Features/Auth/Assets/*",
+        "Features/Screens/Profile/Assets/*",
+        "Features/Screens/Swiper/Assets/*"
+      ],
+      "@Colors": ["Assets/Colors.tsx"],
+      "@Components/*": ["Components/*"],
+      "@Config/*": ["Config/*"],
+      "@Contexts/*": ["Contexts/*"],
+      "@Hooks/*": ["Hooks/*", "Features/Auth/Hooks/*"],
+      "@Screens/*": ["Features/Screens/*"],
+      "@Services/*": ["Services/*"],
+      "@UserManagement/*": ["Features/UserManagement/*"]
+    }
   },
   "types": ["jest", "react-native"]
 }

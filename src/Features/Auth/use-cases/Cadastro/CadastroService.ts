@@ -1,4 +1,4 @@
-import { useFetch } from "../../../../Hooks/useFetch";
+import { useFetch } from "@Hooks/useFetch";
 
 export async function UserRegister(userData: any) {
   const response = await useFetch({

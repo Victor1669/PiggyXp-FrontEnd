@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
-import { env } from "../../../Config/env";
+import { env } from "@Config/env";
 
-import { type User } from "../../Auth/Contexts/useAuth";
+import { type User } from "@Auth/Contexts/useAuth";
 
 export const useNativeGoogleAuth = () => {
   const [user, setUser] = useState<User | {}>({});
@@ -38,6 +38,7 @@ export const useNativeGoogleAuth = () => {
 
   async function signIn() {
     try {
+      await GoogleSignin.signOut();
       await GoogleSignin.hasPlayServices();
 
       const userInfo = await GoogleSignin.signIn();
@@ -46,7 +47,13 @@ export const useNativeGoogleAuth = () => {
 
       return true;
     } catch (err: any) {
-      console.error("Google Sign-In Error:", JSON.stringify(err, null, 2));
+      console.error("Google Sign-In Error:", {
+        code: err.code,
+        message: err.message,
+        webClientId: env.webClientId,
+        androidId: env.androidClientId,
+        androidPackage: env.androidPackage,
+      });
       return false;
     }
   }

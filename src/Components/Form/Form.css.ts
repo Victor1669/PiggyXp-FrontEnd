@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+import { GlobalFontColors } from "@Colors";
+
 export { FormGlobalStyles, FieldGlobalStyles };
 
 const FormGlobalStyles = StyleSheet.create({
@@ -9,7 +11,7 @@ const FormGlobalStyles = StyleSheet.create({
     alignItems: "center",
   },
   forgotPassword: {
-    color: "#fff",
+    color: GlobalFontColors.Dark,
     width: "100%",
     textAlign: "right",
     textDecorationLine: "underline",
@@ -24,7 +26,7 @@ const FieldGlobalStyles = StyleSheet.create({
     marginTop: 40,
   },
   label: {
-    color: "#fff",
+    color: GlobalFontColors.Dark,
     position: "absolute",
     left: 10,
     fontSize: 20,
@@ -33,7 +35,7 @@ const FieldGlobalStyles = StyleSheet.create({
     backgroundColor: "rgb(255,255,255,0.30)",
     borderRadius: 10,
     padding: 15,
-    color: "#fff",
+    color: GlobalFontColors.Dark,
   },
   error: {
     color: "#f00",
