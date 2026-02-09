@@ -1,12 +1,20 @@
 import { useEffect } from "react";
+import { Alert } from "react-native";
 import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
 
+import { AuthProvider } from "@Auth/Contexts/useAuth";
+
+import { ToastContainer, toastMessage } from "Utils/toast";
+
 import { env } from "Config/env";
 
-import { ToastContainer, toastMessage } from "@Services/toast";
+import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 
-import { AuthProvider } from "@Auth/Contexts/useAuth";
+import { screenValues } from "Config/screenValues";
+const {
+  fontSizes: { TITLE_FONT_SIZE },
+} = screenValues();
 
 export default function RootLayout() {
   async function checkUpdate() {
@@ -14,7 +22,10 @@ export default function RootLayout() {
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        toastMessage({ type: "info", text: "Nova atualização disponível" });
+        Alert.alert({
+          type: "info",
+          text: "Nova atualização disponível, feche e abra o app!",
+        });
       }
     } catch (e) {
       console.log(e);
@@ -32,14 +43,42 @@ export default function RootLayout() {
       }, 1000);
     }, 100);
   }, []);
+
+  const hideHeaderPages = [
+    "index",
+    "Swiper",
+    "Welcome",
+    "Content",
+    "ProfileConfig",
+    "SendRecoveryEmail",
+  ];
+  const showHeaderPages = ["Login", "Cadastro"];
+
   return (
     <AuthProvider>
       <Stack
         screenOptions={{
-          headerShown: false,
+          headerStyle: {
+            backgroundColor: GlobalColors.contentBackColor.Dark,
+          },
+          headerTitleStyle: {
+            color: GlobalFontColors.Dark,
+            fontSize: TITLE_FONT_SIZE,
+          },
+          headerBackVisible: false,
+          contentStyle: {
+            backgroundColor: GlobalColors.contentBackColor.Dark,
+          },
         }}
         key={Date.now().toString()}
-      />
+      >
+        {showHeaderPages.map((page) => (
+          <Stack.Screen name={page} options={{ headerTitleAlign: "center" }} />
+        ))}
+        {hideHeaderPages.map((page) => (
+          <Stack.Screen name={page} options={{ headerShown: false }} />
+        ))}
+      </Stack>
       <ToastContainer />
     </AuthProvider>
   );

@@ -1,5 +1,11 @@
 import { StyleSheet } from "react-native";
-import { GlobalColors } from "@Colors";
+
+import { GlobalColors } from "@Assets/Colors";
+
+import { screenValues } from "Config/screenValues";
+const {
+  fontSizes: { TITLE_FONT_SIZE },
+} = screenValues();
 
 export const SplashStyles = StyleSheet.create({
   container: {
@@ -9,6 +15,6 @@ export const SplashStyles = StyleSheet.create({
     backgroundColor: GlobalColors.splashBackColor,
   },
   title: {
-    fontSize: 40,
+    fontSize: TITLE_FONT_SIZE,
   },
 });

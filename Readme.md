@@ -137,7 +137,7 @@ O arquivo .env precisa estar na raiz do projeto
 │   └── 📁 Utils        -> Funções simples que podem ser usadas independentemente do projeto (Ex: uma função que converte a data em um certo formato)
 │   └── 📁 Helpers      -> Funções específicas reutilizáveis feitas pro projeto/regra de negócios
 │   └── 📁 Tests        -> Testes unitários pro CI/CD
-│   └── 📁 Validations  -> Validações para formulários
+│   └── 📁 Schemas  -> Validações para formulários
 │   └── 📁 Types        -> Tipos personalizados comuns
 ├── ⚙️ .gitignore       -> Arquivo que lista o que NÃO deve ir pro repositório na hora do git push
 ├── 📝 Readme.md        -> Arquivo com informações do projeto (O que você está lendo agora)

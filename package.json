@@ -21,7 +21,11 @@
     "moduleNameMapper": {
       "react-native-fbsdk-next": "<rootDir>/__mocks__/react-native-fbsdk-next.js",
       "expo-auth-session": "<rootDir>/__mocks__/expo-auth-session.js",
-      "expo-linking": "<rootDir>/__mocks__/expo-linking.js"
+      "expo-linking": "<rootDir>/__mocks__/expo-linking.js",
+      "^Utils/(.*)$": "<rootDir>/src/Utils/$1",
+      "^Features/(.*)$": "<rootDir>/src/Features/$1",
+      "^Components/(.*)$": "<rootDir>/src/Components/$1",
+      "^Config/(.*)$": "<rootDir>/src/Config/$1"
     }
   },
   "dependencies": {

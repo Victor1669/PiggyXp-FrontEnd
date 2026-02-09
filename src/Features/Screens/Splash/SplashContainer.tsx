@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 
-import { Animate } from "@Services/animate";
+import { Animate } from "Utils/animate";
 
 import { GlobalImages } from "@Assets/GlobalImages";
+
 import { SplashStyles } from "./SplashScreen.css";
+const { container, title } = SplashStyles;
 
 export default function Splash() {
   const logoScale = useRef(new Animated.Value(0.5)).current;
@@ -35,12 +37,12 @@ export default function Splash() {
   }
 
   return (
-    <View style={SplashStyles.container}>
+    <View style={container}>
       <Animated.Image
         style={{ transform: [{ scale: logoScale }] }}
         source={GlobalImages.mainLogo}
       />
-      <Animated.Text style={[SplashStyles.title, { opacity: titleOpacity }]}>
+      <Animated.Text style={[title, { opacity: titleOpacity }]}>
         PiggyXp
       </Animated.Text>
     </View>

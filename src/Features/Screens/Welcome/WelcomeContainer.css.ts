@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors, GlobalFontColors } from "@Colors";
+import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 
 export const WelcomeContainerStyles = StyleSheet.create({
   container: {

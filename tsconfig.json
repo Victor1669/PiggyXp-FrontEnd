@@ -6,7 +6,6 @@
     "paths": {
       "@App/*": ["../app/*"],
       "@Auth/*": ["Features/Auth/*"],
-      "@UseAuth": ["Features/Auth/Contexts/useAuth.tsx"],
       "@Assets/*": [
         "../assets/*",
         "Assets/*",
@@ -14,13 +13,10 @@
         "Features/Screens/Profile/Assets/*",
         "Features/Screens/Swiper/Assets/*"
       ],
-      "@Colors": ["Assets/Colors.tsx"],
       "@Components/*": ["Components/*"],
-      "@Config/*": ["Config/*"],
-      "@Contexts/*": ["Contexts/*"],
       "@Hooks/*": ["Hooks/*", "Features/Auth/Hooks/*"],
       "@Screens/*": ["Features/Screens/*"],
-      "@Services/*": ["Services/*"],
+      "@Styles/*": ["Features/Auth/Styles/*", "Features/Screens/Styles/*"],
       "@UserManagement/*": ["Features/UserManagement/*"]
     }
   },
