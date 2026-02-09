@@ -2,7 +2,7 @@ import { Image, View } from "react-native";
 import { Tabs } from "expo-router";
 
 import { GlobalImages } from "@Assets/GlobalImages";
-import { GlobalColors } from "@Colors";
+import { GlobalColors } from "@Assets/Colors";
 
 const {
   tabBar: { home, loja, missoes, perfil, ranking },
@@ -26,6 +26,9 @@ export default function Layout() {
         tabBarLabelStyle: {
           fontSize: 13,
           marginTop: 2,
+        },
+        sceneStyle: {
+          backgroundColor: GlobalColors.contentBackColor.Dark,
         },
       }}
     >

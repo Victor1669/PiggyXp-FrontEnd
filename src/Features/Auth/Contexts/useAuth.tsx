@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Platform } from "react-native";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 import {
   deleteSecureStoreItem,
   getSecureStoreItem,
   setSecureStoreItem,
-} from "@Services/securestore";
+} from "Utils/securestore";
 
 interface AuthProviderTypes {
   children: React.ReactNode;
@@ -22,10 +22,11 @@ export interface User {
 type AuthProviderValues = {
   user: any;
   login: (userData: object) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   updateTemporaryImageToken: (token: string) => Promise<void>;
   getTemporaryImageToken: () => Promise<string>;
-  decodeUserDataToken: (token: string) => any;
+  decodeUserDataToken: (token: string) => Promise<any>;
+  getUserToken: () => Promise<string>;
 };
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
@@ -53,7 +54,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
   }
 
   async function updateTemporaryImageToken(token: string) {
-    setSecureStoreItem({
+    await setSecureStoreItem({
       itemName: "TEMPORARY_IMAGE_TOKEN",
       newValue: token,
     });
@@ -63,8 +64,15 @@ function AuthProvider({ children }: AuthProviderTypes) {
     return await getSecureStoreItem({ itemName: "TEMPORARY_IMAGE_TOKEN" });
   }
 
-  function decodeUserDataToken(token: string) {
+  async function decodeUserDataToken(token: string) {
+    await setSecureStoreItem({ itemName: "USER_TOKEN", newValue: token });
     return jwtDecode(token);
+  }
+
+  async function getUserToken() {
+    const token = await getSecureStoreItem({ itemName: "USER_TOKEN" });
+
+    return token;
   }
 
   useEffect(() => {
@@ -84,6 +92,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
     updateTemporaryImageToken,
     getTemporaryImageToken,
     decodeUserDataToken,
+    getUserToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

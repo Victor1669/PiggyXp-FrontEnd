@@ -9,9 +9,11 @@ import {
 } from "react-hook-form";
 
 import Button from "@Components/Button";
-import Input from "@Components/AnimatedInput";
+import AnimatedInput from "@Components/AnimatedInput";
 
 import { FieldGlobalStyles, FormGlobalStyles } from "./Form.css";
+const { button, forgotPassword, form } = FormGlobalStyles;
+const { error, field, fieldsContainer, input, label } = FieldGlobalStyles;
 
 export type FieldProps = {
   nomeCampo: string;
@@ -22,7 +24,7 @@ export type FieldProps = {
 type FormProps = {
   formFields: FieldProps[];
   buttonText: string;
-  onSubmit: (data: any) => void;
+  onSubmit: (formData: any) => void;
   defaultValues?: object;
   forgotPasswordText?: string;
   forgotPasswordHREF?: string;
@@ -45,20 +47,19 @@ export default function Form({
 
   return (
     <FormProvider {...methods}>
-      <View style={FormGlobalStyles.form}>
-        {formFields.map((field) => (
-          <Field
-            key={field.nomeCampo}
-            nomeCampo={field.nomeCampo}
-            validation={field.validation}
-            inputAutoComplete={field.inputAutoComplete}
-          />
-        ))}
+      <View style={form}>
+        <View style={fieldsContainer}>
+          {formFields.map((field) => (
+            <Field
+              key={field.nomeCampo}
+              nomeCampo={field.nomeCampo}
+              validation={field.validation}
+              inputAutoComplete={field.inputAutoComplete}
+            />
+          ))}
+        </View>
         {forgotPasswordText ? (
-          <Link
-            style={FormGlobalStyles.forgotPassword}
-            href={forgotPasswordHREF}
-          >
+          <Link style={forgotPassword} href={forgotPasswordHREF}>
             {forgotPasswordText}
           </Link>
         ) : (
@@ -66,7 +67,7 @@ export default function Form({
         )}
         <Button
           testId="submit-button"
-          style={FormGlobalStyles.button}
+          style={button}
           onPress={methods.handleSubmit(onSubmit)}
         >
           {buttonText}
@@ -89,15 +90,15 @@ export function Field({
   const { width } = useWindowDimensions();
 
   return (
-    <View style={[FieldGlobalStyles.field, { width: width - 40 }]}>
+    <View style={[field, { width: width - 40 }]}>
       <Controller
         control={control}
         name={nomeCampo}
         rules={validation}
         render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            inputStyle={FieldGlobalStyles.input}
-            labelStyle={FieldGlobalStyles.label}
+          <AnimatedInput
+            inputStyle={input}
+            labelStyle={label}
             testID={nomeCampo}
             label={nomeCampo}
             onChange={onChange}
@@ -108,7 +109,7 @@ export function Field({
         )}
       />
 
-      <Text testID={nomeCampo + "-Error"} style={FieldGlobalStyles.error}>
+      <Text testID={nomeCampo + "-Error"} style={error}>
         {errors[nomeCampo]?.message as string}
       </Text>
     </View>

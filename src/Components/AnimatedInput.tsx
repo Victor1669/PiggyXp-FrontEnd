@@ -2,7 +2,9 @@ import { useRef } from "react";
 import RN, { Animated, TextInput, View } from "react-native";
 import RHF from "react-hook-form";
 
-import { Animate } from "@Services/animate";
+import { Animate } from "Utils/animate";
+
+import { screenValues } from "Config/screenValues";
 
 interface InputTypes {
   testID: string;
@@ -15,7 +17,7 @@ interface InputTypes {
   labelStyle: RN.StyleProp<RN.TextStyle>;
 }
 
-export default function Input({
+export default function AnimatedInput({
   testID,
   inputStyle,
   labelStyle,
@@ -25,8 +27,10 @@ export default function Input({
   value,
   autoComplete,
 }: InputTypes) {
-  const INITIAL_LABEL_MARGIN_BOTTOM = 10;
-  const FINAL_LABEL_MARGIN_BOTTOM = 50;
+  const { isDeviceHeigthSmall } = screenValues();
+
+  const INITIAL_LABEL_MARGIN_BOTTOM = isDeviceHeigthSmall ? 6 : 15;
+  const FINAL_LABEL_MARGIN_BOTTOM = isDeviceHeigthSmall ? 40 : 61;
 
   const labelMarginBottom = useRef(
     new Animated.Value(INITIAL_LABEL_MARGIN_BOTTOM),

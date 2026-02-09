@@ -1,25 +1,9 @@
-import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native";
-
-import { notifications } from "@Services/notifications";
-import { toastMessage } from "@Services/toast";
+import { View, StyleSheet, Text } from "react-native";
 
 export default function Home() {
   return (
     <View style={HomeStyles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          notifications();
-        }}
-      >
-        <Text>Enviar notificação</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          toastMessage({ type: "error", text: `Olá, ${name}` });
-        }}
-      >
-        <Text>Mensagem Toast</Text>
-      </TouchableOpacity>
+      <Text style={{ color: "#fff", fontSize: 32 }}>HOME</Text>
     </View>
   );
 }

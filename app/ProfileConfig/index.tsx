@@ -1,12 +1,17 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
-import DeleteUserButton from "@UserManagement/DeleteUser/DeleteUserButton";
+import ChangeUserInfoContainer from "@Auth/Components/Containers/ChangeUserInfo";
 
 export default function ProfileConfig() {
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text>ProfileConfig</Text>
-      <DeleteUserButton />
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ChangeUserInfoContainer />
     </View>
   );
 }

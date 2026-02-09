@@ -1,14 +1,21 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalFontColors } from "@Colors";
+import { GlobalFontColors } from "@Assets/Colors";
 
 export { FormGlobalStyles, FieldGlobalStyles };
 
+import { screenValues } from "Config/screenValues";
+const {
+  isDeviceHeigthSmall,
+  fontSizes: { DEFAULT_FONT_SIZE },
+} = screenValues();
+
 const FormGlobalStyles = StyleSheet.create({
   form: {
-    width: 380,
+    width: "90%",
     margin: "auto",
     alignItems: "center",
+    gap: isDeviceHeigthSmall ? 10 : 20,
   },
   forgotPassword: {
     color: GlobalFontColors.Dark,
@@ -17,24 +24,27 @@ const FormGlobalStyles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   button: {
-    marginVertical: 20,
+    marginVertical: 10,
   },
 });
 
 const FieldGlobalStyles = StyleSheet.create({
+  fieldsContainer: {
+    gap: isDeviceHeigthSmall ? 10 : 40,
+  },
   field: {
-    marginTop: 40,
+    marginTop: 10,
   },
   label: {
     color: GlobalFontColors.Dark,
     position: "absolute",
     left: 10,
-    fontSize: 20,
+    fontSize: DEFAULT_FONT_SIZE,
   },
   input: {
     backgroundColor: "rgb(255,255,255,0.30)",
     borderRadius: 10,
-    padding: 15,
+    padding: isDeviceHeigthSmall ? 10 : 20,
     color: GlobalFontColors.Dark,
   },
   error: {

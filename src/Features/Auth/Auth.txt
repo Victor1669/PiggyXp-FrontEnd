@@ -1,0 +1,1 @@
+Essa pasta serve para guardar todos os componentes e estilizações relacionados à manutenção do usuário, como botões de mandar imagem, formulários que alteram o usuário

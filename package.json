@@ -21,12 +21,16 @@
     "moduleNameMapper": {
       "react-native-fbsdk-next": "<rootDir>/__mocks__/react-native-fbsdk-next.js",
       "expo-auth-session": "<rootDir>/__mocks__/expo-auth-session.js",
-      "expo-linking": "<rootDir>/__mocks__/expo-linking.js"
+      "expo-linking": "<rootDir>/__mocks__/expo-linking.js",
+      "^Utils/(.*)$": "<rootDir>/src/Utils/$1",
+      "^Features/(.*)$": "<rootDir>/src/Features/$1",
+      "^Components/(.*)$": "<rootDir>/src/Components/$1",
+      "^Config/(.*)$": "<rootDir>/src/Config/$1"
     }
   },
   "dependencies": {
     "@react-native-google-signin/google-signin": "^16.1.1",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "expo": "~54.0.31",
     "expo-auth-session": "^7.0.10",
     "expo-constants": "~18.0.13",
@@ -42,7 +46,7 @@
     "react": "19.1.0",
     "react-hook-form": "^7.68.0",
     "react-native": "0.81.5",
-    "react-native-fbsdk-next": "^13.4.1",
+    "react-native-fbsdk-next": "^13.4.3",
     "react-native-safe-area-context": "~5.6.2",
     "react-native-screens": "~4.16.0",
     "react-native-toast-message": "^2.3.3"
