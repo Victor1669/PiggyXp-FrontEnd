@@ -1,19 +1,21 @@
 import { useRouter } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+import { useShowModal } from "Contexts/useShowModal";
 
 import { UserLogin } from "@Auth/Services/LoginService";
 import { GetUserInfo } from "@Auth/Services/UserInfoService";
-import { toastMessage } from "Utils/toast";
 
 import Form from "@Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 export default function LoginForm() {
   const router = useRouter();
-  const { login, decodeUserDataToken } = useAuth();
+  const { login, decodeUserDataToken, setFirstTimeLogged } = useAuth();
+  const { setShowModal } = useShowModal();
 
   async function handleSubmit(data: any) {
+    setShowModal(true);
     const { Email: email, Senha: password } = data;
     const { data: loginData, status: loginStatus } = await UserLogin({
       email,
@@ -21,10 +23,9 @@ export default function LoginForm() {
     });
 
     if (loginStatus < 300) {
-      loginSuccess(loginData);
-    } else {
-      toastMessage({ type: "error", text: loginData?.error ?? loginData });
+      await loginSuccess(loginData);
     }
+    setShowModal(false);
   }
 
   async function loginSuccess(loginData: any) {
@@ -36,13 +37,14 @@ export default function LoginForm() {
       await GetUserInfo(userId);
 
     if (userDataStatus < 300) {
-      getUserDataSuccess({ ...userData, userId });
+      await getUserDataSuccess({ ...userData, userId });
     }
   }
 
-  function getUserDataSuccess(userData: any) {
+  async function getUserDataSuccess(userData: any) {
     login(userData);
     router.replace("/Content");
+    await setFirstTimeLogged();
   }
 
   return (

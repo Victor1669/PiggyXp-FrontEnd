@@ -10,6 +10,7 @@ export const CadastroStyles = StyleSheet.create({
   },
   jaTemConta: {
     margin: 25,
+    marginTop: 5,
     flexDirection: "row",
   },
 });

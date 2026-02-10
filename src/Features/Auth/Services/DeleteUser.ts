@@ -5,6 +5,7 @@ export async function DeleteUserService(id: number, token: string) {
     method: "delete",
     rota: `deleteUser/${id}`,
     token,
+    showToastMessage: true,
   });
 
   return response;

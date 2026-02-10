@@ -27,7 +27,11 @@ type AuthProviderValues = {
   getTemporaryImageToken: () => Promise<string>;
   decodeUserDataToken: (token: string) => Promise<any>;
   getUserToken: () => Promise<string>;
+  setFirstTimeLogged: () => Promise<void>;
+  getFirstTimeLogged: () => Promise<FirstTimeLogged>;
 };
+
+type FirstTimeLogged = "true" | "false";
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 
@@ -75,6 +79,20 @@ function AuthProvider({ children }: AuthProviderTypes) {
     return token;
   }
 
+  async function setFirstTimeLogged() {
+    await setSecureStoreItem({
+      itemName: "FIRST_TIME_LOGGED",
+      newValue: "true",
+    });
+  }
+
+  async function getFirstTimeLogged() {
+    const firstTimeLogged: FirstTimeLogged = (await getSecureStoreItem({
+      itemName: "FIRST_TIME_LOGGED",
+    })) as FirstTimeLogged;
+    return firstTimeLogged;
+  }
+
   useEffect(() => {
     async function getUserInfoFromStore() {
       if (Platform.OS === "web") return;
@@ -93,6 +111,8 @@ function AuthProvider({ children }: AuthProviderTypes) {
     getTemporaryImageToken,
     decodeUserDataToken,
     getUserToken,
+    setFirstTimeLogged,
+    getFirstTimeLogged,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

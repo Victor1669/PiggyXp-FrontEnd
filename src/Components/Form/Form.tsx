@@ -41,8 +41,8 @@ export default function Form({
 }: FormProps) {
   const methods = useForm({
     defaultValues,
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
   return (
@@ -84,10 +84,13 @@ export function Field({
 }: FieldProps) {
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitted, isSubmitSuccessful },
   } = useFormContext();
 
   const { width } = useWindowDimensions();
+
+  const errorMessage = errors[nomeCampo]?.message;
+  const hasError = !!errors[nomeCampo];
 
   return (
     <View style={[field, { width: width - 40 }]}>
@@ -97,7 +100,16 @@ export function Field({
         rules={validation}
         render={({ field: { onChange, onBlur, value } }) => (
           <AnimatedInput
-            inputStyle={input}
+            inputStyle={[
+              input,
+              {
+                backgroundColor: !isSubmitted
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : hasError
+                    ? "rgba(255, 46, 46, 0.39)"
+                    : "rgba(0, 255, 0, 0.3)",
+              },
+            ]}
             labelStyle={label}
             testID={nomeCampo}
             label={nomeCampo}
@@ -110,7 +122,7 @@ export function Field({
       />
 
       <Text testID={nomeCampo + "-Error"} style={error}>
-        {errors[nomeCampo]?.message as string}
+        {errorMessage as string}
       </Text>
     </View>
   );

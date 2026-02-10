@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react-native";
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
+import { ShowModalProvider } from "Contexts/useShowModal";
 
 import { submitInputAndExpectError } from "Utils/jest";
 
@@ -10,18 +11,22 @@ describe("CadastroForm", () => {
   it("Renderizar", async () => {
     render(
       <AuthProvider>
-        <Cadastro />
+        <ShowModalProvider>
+          <Cadastro />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 
-    const titleText = screen.findByText("Cadastro");
+    const titleText = await screen.findByText("Já tem uma conta?");
 
     expect(titleText).toBeTruthy();
   });
   it("Validar o campo de nome do Cadastro", async () => {
     const { getByTestId, findByTestId } = render(
       <AuthProvider>
-        <Cadastro />
+        <ShowModalProvider>
+          <Cadastro />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 
@@ -43,7 +48,9 @@ describe("CadastroForm", () => {
   it("Validar o campo de email do Cadastro", async () => {
     const { getByTestId, findByTestId } = render(
       <AuthProvider>
-        <Cadastro />
+        <ShowModalProvider>
+          <Cadastro />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 
@@ -86,7 +93,9 @@ describe("CadastroForm", () => {
   it("Validar o campo de senha do Cadastro", async () => {
     const { getByTestId, findByTestId } = render(
       <AuthProvider>
-        <Cadastro />
+        <ShowModalProvider>
+          <Cadastro />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 

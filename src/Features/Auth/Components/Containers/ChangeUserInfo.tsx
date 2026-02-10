@@ -3,7 +3,9 @@ import { ScrollView } from "react-native";
 import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+import { useShowModal } from "Contexts/useShowModal";
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
+
 import { GetUserInfo, UpdateUserInfo } from "@Auth/Services/UserInfoService";
 import { toastMessage } from "Utils/toast";
 
@@ -21,12 +23,14 @@ export default function ChangeUserInfoContainer() {
     "update-user-img",
     "PUT",
   );
+  const { setShowModal } = useShowModal();
 
-  async function handleSubmit(data: any) {
+  async function handleSubmit(data: { Nome: string; Email: string }) {
+    setShowModal(true);
     const { Nome: name, Email: email } = data;
 
     const hasChangedEmail = email !== user.email;
-    const hasChangedTextInfo = name !== user.name || hasChangedEmail;
+    const hasChangedTextInfo = name.trim() !== user.name || hasChangedEmail;
     const hasChangedImage = image !== user.user_img;
 
     const userToken = await getUserToken();
@@ -35,11 +39,15 @@ export default function ChangeUserInfoContainer() {
 
     if (hasChangedTextInfo) {
       const { status } = await handleUpdateUserTextInfo(
-        { name, email },
+        { name: name.trim(), email },
         userToken,
       );
 
-      if (status < 300 && hasChangedEmail) await invalidTokenResponse();
+      if (status < 300 && hasChangedEmail) {
+        await invalidTokenResponse();
+        setShowModal(false);
+        return;
+      }
     }
 
     if (!hasChangedTextInfo && !hasChangedImage) {
@@ -50,6 +58,7 @@ export default function ChangeUserInfoContainer() {
     } else {
       await handleUpdateUserInfo(hasChangedEmail);
     }
+    setShowModal(false);
   }
 
   async function handleUpdateUserTextInfo(

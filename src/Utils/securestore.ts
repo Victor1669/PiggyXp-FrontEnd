@@ -7,7 +7,7 @@ interface SecureStoreItemTypes {
 }
 
 interface setSecureStoreItemTypes extends SecureStoreItemTypes {
-  newValue: any;
+  newValue: string;
 }
 
 async function getSecureStoreItem({ itemName }: SecureStoreItemTypes) {

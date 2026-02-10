@@ -1,6 +1,17 @@
-import { View, StyleSheet, Text } from "react-native";
+import { useEffect } from "react";
+import { View, StyleSheet, Text, Alert } from "react-native";
+
+import { useAuth } from "@Auth/Contexts/useAuth";
 
 export default function Home() {
+  const { getFirstTimeLogged } = useAuth();
+
+  useEffect(() => {
+    (async function check() {
+      const first = await getFirstTimeLogged();
+      if (first === "true") Alert.alert("Bem vindo(a)!");
+    })();
+  }, []);
   return (
     <View style={HomeStyles.container}>
       <Text style={{ color: "#fff", fontSize: 32 }}>HOME</Text>

@@ -1,6 +1,7 @@
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+import { useShowModal } from "Contexts/useShowModal";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
 import { toastMessage } from "Utils/toast";
@@ -10,14 +11,19 @@ import Form from "@Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 export default function CadastroForm() {
-  const router = useRouter();
   const { updateTemporaryImageToken } = useAuth();
+  const { setShowModal } = useShowModal();
 
-  async function handleSubmit(formData: any) {
+  async function handleSubmit(formData: {
+    Nome: string;
+    Email: string;
+    Senha: string;
+  }) {
+    setShowModal(true);
     const { Nome: name, Email: email, Senha: password } = formData;
 
     const { data: registerData, status: registerStatus } = await UserRegister({
-      name,
+      name: name.trim(),
       email,
       password,
     });
@@ -35,6 +41,7 @@ export default function CadastroForm() {
       });
       router.push("/Login");
     }
+    setShowModal(false);
   }
 
   function registerSuccess(registerData: any) {

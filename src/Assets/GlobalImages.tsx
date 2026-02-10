@@ -2,6 +2,7 @@ const GlobalImages = {
   bau: require("./Bau.png"),
   mainLogo: require("../../assets/Logo.png"),
   porco: require("@Assets/Porco.png"),
+  close: require("./Close.png"),
 
   tabBar: {
     home: require("@Assets/tabBar/Home.png"),

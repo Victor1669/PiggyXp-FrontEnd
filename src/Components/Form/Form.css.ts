@@ -30,7 +30,7 @@ const FormGlobalStyles = StyleSheet.create({
 
 const FieldGlobalStyles = StyleSheet.create({
   fieldsContainer: {
-    gap: isDeviceHeigthSmall ? 10 : 40,
+    gap: isDeviceHeigthSmall ? 20 : 40,
   },
   field: {
     marginTop: 10,
@@ -42,7 +42,6 @@ const FieldGlobalStyles = StyleSheet.create({
     fontSize: DEFAULT_FONT_SIZE,
   },
   input: {
-    backgroundColor: "rgb(255,255,255,0.30)",
     borderRadius: 10,
     padding: isDeviceHeigthSmall ? 10 : 20,
     color: GlobalFontColors.Dark,

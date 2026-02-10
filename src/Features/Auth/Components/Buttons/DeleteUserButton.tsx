@@ -3,7 +3,6 @@ import { useRouter } from "expo-router";
 import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { DeleteUserService } from "@Auth/Services/DeleteUser";
-import { toastMessage } from "Utils/toast";
 
 import Button from "@Components/Button";
 

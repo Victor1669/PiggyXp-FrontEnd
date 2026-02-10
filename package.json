@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "android": "expo run:android",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "prebuild": "pnpm expo prebuild --clean",
     "build-preview": "eas build -p android --profile preview",
     "update-preview": "eas update --branch preview --message",
@@ -25,7 +25,8 @@
       "^Utils/(.*)$": "<rootDir>/src/Utils/$1",
       "^Features/(.*)$": "<rootDir>/src/Features/$1",
       "^Components/(.*)$": "<rootDir>/src/Components/$1",
-      "^Config/(.*)$": "<rootDir>/src/Config/$1"
+      "^Config/(.*)$": "<rootDir>/src/Config/$1",
+      "^Contexts/(.*)$": "<rootDir>/src/Contexts/$1"
     }
   },
   "dependencies": {

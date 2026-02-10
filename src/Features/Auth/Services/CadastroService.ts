@@ -7,5 +7,6 @@ export async function UserRegister(userData: any) {
     body: userData,
     showToastMessage: true,
   });
+
   return response;
 }

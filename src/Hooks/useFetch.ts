@@ -53,7 +53,7 @@ export async function useFetch({
     }
     return {
       status: err.response?.status ?? 500,
-      data: err.response?.data ?? err.message,
+      data: err?.message ?? err?.response?.data ?? err?.error ?? err,
     };
   }
 }

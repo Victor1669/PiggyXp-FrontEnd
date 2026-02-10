@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react-native";
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
+import { ShowModalProvider } from "Contexts/useShowModal";
 
 import { submitInputAndExpectError } from "Utils/jest";
 
@@ -10,18 +11,22 @@ describe("LoginForm", () => {
   it("Renderizar", async () => {
     render(
       <AuthProvider>
-        <Login />
+        <ShowModalProvider>
+          <Login />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 
-    const titleText = await screen.findByText("Entrar");
+    const titleText = await screen.findByText("Esqueceu a senha?");
 
     expect(titleText).toBeTruthy();
   });
   it("Validar o campo de email do Login", async () => {
     const { getByTestId, findByTestId } = render(
       <AuthProvider>
-        <Login />
+        <ShowModalProvider>
+          <Login />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 
@@ -64,7 +69,9 @@ describe("LoginForm", () => {
   it("Validar o campo de senha do login", async () => {
     const { getByTestId, findByTestId } = render(
       <AuthProvider>
-        <Login />
+        <ShowModalProvider>
+          <Login />
+        </ShowModalProvider>
       </AuthProvider>,
     );
 
