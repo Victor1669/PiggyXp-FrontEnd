@@ -1,4 +1,4 @@
-ROTAS DO BACKEND:
+ROTAS DO BACKEND CONECTADAS:
 
 ```
 /api
@@ -10,4 +10,6 @@ ROTAS DO BACKEND:
     /upload-user-img
     /update-user-img
     /recovery
+    /reset
+    /difficulty
 ```

@@ -1,13 +1,13 @@
 import { Image, Modal, Text, View } from "react-native";
 
-import { useShowModal } from "Contexts/useShowModal";
+import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 
 import { LoadingSpinnerStyles } from "./LoadingSpinner.css";
 const { container, spinner, text } = LoadingSpinnerStyles;
 
 export default function LoadingSpinner() {
-  const { showModal } = useShowModal();
-  if (showModal)
+  const { showLoadingScreen } = useShowLoadingScreen();
+  if (showLoadingScreen)
     return (
       <Modal transparent={true}>
         <View style={container}>

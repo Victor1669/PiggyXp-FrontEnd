@@ -1,4 +1,4 @@
-import DefinePhotoForm from "@Auth/Components/Forms/DefinePhoto";
+import DefinePhotoForm from "Features/User-CRUD/Cadastro/DefinePhotoForm";
 
 export default function DefinePhoto() {
   return <DefinePhotoForm />;

@@ -1,15 +1,14 @@
 import { useEffect } from "react";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
 import SplashContainer from "@Screens/Splash/SplashContainer";
 
 export default function SplashScreen() {
-  const router = useRouter();
-  const { user } = useAuth();
+  const { user, firstTimeLogged } = useAuth();
 
-  const hasUserInfo = Object.keys(user).length > 0;
+  const hasUserInfo = user.id && user.email;
 
   useEffect(() => {
     const timer1 = setTimeout(() => {
@@ -19,8 +18,12 @@ export default function SplashScreen() {
       }
     }, 0);
     const timer2 = setTimeout(() => {
-      router.replace("/Swiper");
+      (async function () {
+        const isFirstTimeLogged = await firstTimeLogged.get();
+        router.replace(isFirstTimeLogged === "true" ? "/Swiper" : "/Login");
+      })();
     }, 2800);
+
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);

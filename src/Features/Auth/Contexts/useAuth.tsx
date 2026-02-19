@@ -1,12 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Platform } from "react-native";
-import { jwtDecode, JwtPayload } from "jwt-decode";
 
-import {
-  deleteSecureStoreItem,
-  getSecureStoreItem,
-  setSecureStoreItem,
-} from "Utils/securestore";
+import { StoreItem, JWTStoreItem } from "Helpers/StoreItem";
 
 interface AuthProviderTypes {
   children: React.ReactNode;
@@ -16,22 +10,22 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  picture: string;
+  user_img: string;
+  xp: number;
+  level: number;
+  coins: number;
 }
 
 type AuthProviderValues = {
-  user: any;
-  login: (userData: object) => Promise<void>;
+  user: User;
+  login: (userData: User) => Promise<void>;
   logout: () => Promise<void>;
-  updateTemporaryImageToken: (token: string) => Promise<void>;
-  getTemporaryImageToken: () => Promise<string>;
-  decodeUserDataToken: (token: string) => Promise<any>;
-  getUserToken: () => Promise<string>;
-  setFirstTimeLogged: () => Promise<void>;
-  getFirstTimeLogged: () => Promise<FirstTimeLogged>;
+  firstTimeLogged: StoreItem;
+  userEmailWhileRecovering: StoreItem;
+  refreshToken: StoreItem;
+  temporaryImageToken: StoreItem;
+  userToken: JWTStoreItem;
 };
-
-type FirstTimeLogged = "true" | "false";
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 
@@ -39,66 +33,47 @@ const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
  * Provider para disponibilizar ações com o usuário atual.
  */
 function AuthProvider({ children }: AuthProviderTypes) {
-  const [user, setUser] = useState<object>({});
+  const [user, setUser] = useState<User>({} as User);
 
-  async function login(userData: object) {
-    if (Platform.OS === "web") return;
-
-    await setSecureStoreItem({
-      itemName: "USER",
-      newValue: JSON.stringify(userData),
-    });
+  async function login(userData: User) {
+    await userInfo.set(JSON.stringify(userData));
 
     setUser(userData);
   }
 
   async function logout() {
-    await deleteSecureStoreItem({ itemName: "USER" });
-    setUser({});
-  }
+    const allUserInfo = [
+      userInfo,
+      userEmailWhileRecovering,
+      userToken,
+      temporaryImageToken,
+      refreshToken,
+    ];
 
-  async function updateTemporaryImageToken(token: string) {
-    await setSecureStoreItem({
-      itemName: "TEMPORARY_IMAGE_TOKEN",
-      newValue: token,
+    await firstTimeLogged.set("true");
+
+    allUserInfo.forEach(async (storeItem) => {
+      await storeItem.delete();
     });
+
+    console.log(await userInfo.get());
+
+    setUser({} as User);
   }
 
-  async function getTemporaryImageToken() {
-    return await getSecureStoreItem({ itemName: "TEMPORARY_IMAGE_TOKEN" });
-  }
+  const userInfo = new StoreItem("USER_INFO");
+  const firstTimeLogged = new StoreItem("FIRST_TIME_LOGGED");
+  const userEmailWhileRecovering = new StoreItem("RECOVERY_EMAIL");
+  const temporaryImageToken = new StoreItem("TEMPORARY_IMAGE_TOKEN");
+  const refreshToken = new StoreItem("REFRESH_TOKEN");
 
-  async function decodeUserDataToken(token: string) {
-    await setSecureStoreItem({ itemName: "USER_TOKEN", newValue: token });
-    return jwtDecode(token);
-  }
-
-  async function getUserToken() {
-    const token = await getSecureStoreItem({ itemName: "USER_TOKEN" });
-
-    return token;
-  }
-
-  async function setFirstTimeLogged() {
-    await setSecureStoreItem({
-      itemName: "FIRST_TIME_LOGGED",
-      newValue: "true",
-    });
-  }
-
-  async function getFirstTimeLogged() {
-    const firstTimeLogged: FirstTimeLogged = (await getSecureStoreItem({
-      itemName: "FIRST_TIME_LOGGED",
-    })) as FirstTimeLogged;
-    return firstTimeLogged;
-  }
+  const userToken = new JWTStoreItem("USER_TOKEN");
 
   useEffect(() => {
     async function getUserInfoFromStore() {
-      if (Platform.OS === "web") return;
-      const storedUser = await getSecureStoreItem({ itemName: "USER" });
+      const storedUser = await userInfo.get();
 
-      setUser(storedUser.length ? JSON.parse(storedUser) : {});
+      setUser(JSON.parse(storedUser || "{}"));
     }
     getUserInfoFromStore();
   }, []);
@@ -107,12 +82,11 @@ function AuthProvider({ children }: AuthProviderTypes) {
     user,
     login,
     logout,
-    updateTemporaryImageToken,
-    getTemporaryImageToken,
-    decodeUserDataToken,
-    getUserToken,
-    setFirstTimeLogged,
-    getFirstTimeLogged,
+    firstTimeLogged,
+    userEmailWhileRecovering,
+    refreshToken,
+    temporaryImageToken,
+    userToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

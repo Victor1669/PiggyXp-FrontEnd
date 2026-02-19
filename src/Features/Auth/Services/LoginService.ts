@@ -1,6 +1,6 @@
-import { useFetch } from "@Hooks/useFetch";
+import { useFetch } from "@Auth/Hooks/useFetch";
 
-export async function UserLogin(userData: any) {
+export async function UserLogin(userData: { email: string; password: string }) {
   const response = await useFetch({
     method: "post",
     rota: "login",

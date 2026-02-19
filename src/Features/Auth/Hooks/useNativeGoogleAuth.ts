@@ -14,15 +14,7 @@ export const useNativeGoogleAuth = () => {
       offlineAccess: true,
       forceCodeForRefreshToken: true,
     });
-
-    checkIfSignedIn();
   }, []);
-
-  async function checkIfSignedIn() {
-    const userInfo = await GoogleSignin.signInSilently();
-
-    setUserData(userInfo);
-  }
 
   function setUserData(userInfo: any) {
     const googleUser = userInfo.data?.user;

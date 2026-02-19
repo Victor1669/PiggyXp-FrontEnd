@@ -24,6 +24,17 @@ export default function _layout() {
           backgroundColor: GlobalColors.contentBackColor.Dark,
         },
       }}
-    />
+    >
+      <Stack.Screen
+        name="CodeVerifier"
+        options={{
+          title: "Insira os 4 dígitos enviados ao seu e-mail.",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontSize: 16,
+          },
+        }}
+      />
+    </Stack>
   );
 }

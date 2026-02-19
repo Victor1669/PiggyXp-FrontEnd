@@ -23,4 +23,4 @@
 8.5- Atualização das informações do usuário (Fernandes) FEITO
 
 9- Envio do email de recuperação (Fernandes) FEITO
-9.5- Redefinição de senha (Fernandes)
+9.5- Redefinição de senha (Fernandes) FEITO

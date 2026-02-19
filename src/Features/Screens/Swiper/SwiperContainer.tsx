@@ -1,24 +1,16 @@
 import { useState } from "react";
-import RN, { View, Text, Dimensions, Image, FlatList } from "react-native";
+import { View, Text } from "react-native";
 import { Link } from "expo-router";
+
+import { CardType, CardSwiper } from "@Components/CardSwiper/CardSwiper";
 
 import { SplashScreenImages } from "@Assets/SwiperImages";
 import { SwiperStyles } from "./SwiperContainer.css";
 
-const { width } = Dimensions.get("window");
-
-// cada variável dessa é uma imagem
 const { caminhos, estudante, entendendoDinheiro } = SplashScreenImages;
 
-interface SlideType {
-  id: number;
-  title: string;
-  text: string;
-  image: any;
-}
-
 export default function SwiperContainer() {
-  const slides: SlideType[] = [
+  const cards: CardType[] = [
     {
       id: 1,
       title: "Aprender é transformar.",
@@ -41,56 +33,22 @@ export default function SwiperContainer() {
 
   const [index, setIndex] = useState(0);
 
-  function onScroll(e: RN.NativeSyntheticEvent<RN.NativeScrollEvent>) {
-    const slide = Math.round(e.nativeEvent.contentOffset.x / width);
+  function onScroll(slide: number) {
     setIndex(slide);
   }
 
   return (
     <View style={SwiperStyles.container}>
       <View style={SwiperStyles.content}>
-        <FlatList
-          data={slides}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={SwiperStyles.slide}>
-              <Image style={SwiperStyles.image} source={item.image} />
-              <Text style={SwiperStyles.title}>{item.title}</Text>
-              <Text style={SwiperStyles.text}>{item.text}</Text>
-            </View>
-          )}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
+        <CardSwiper
+          cardsArray={cards}
           onScroll={onScroll}
-          scrollEventThrottle={16}
+          actualIndex={index}
         />
-        <DotsContainer array={slides} index={index} />
         <Link style={SwiperStyles.skipLink} href="/Welcome" replace>
           <Text>{"Pular > > >"}</Text>
         </Link>
       </View>
-    </View>
-  );
-}
-
-interface DotsContainerProps {
-  array: SlideType[];
-  index: number;
-}
-
-function DotsContainer({ array, index }: DotsContainerProps) {
-  return (
-    <View style={SwiperStyles.dotsContainer}>
-      {array.map((_, i) => (
-        <View
-          key={i}
-          style={[
-            SwiperStyles.dot,
-            { backgroundColor: i === index ? "#fff" : "#000" },
-          ]}
-        />
-      ))}
     </View>
   );
 }

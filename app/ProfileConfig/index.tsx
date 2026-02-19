@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import ChangeUserInfoContainer from "@Auth/Components/Containers/ChangeUserInfo";
+import ChangeUserInfoContainer from "Features/User-CRUD/ChangeUserInfo/ChangeUserInfo";
 
 export default function ProfileConfig() {
   return (

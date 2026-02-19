@@ -1,17 +1,29 @@
 import { useEffect } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
+import { GetUserInfo } from "@Auth/Services/UserInfoService";
+
 export default function Home() {
-  const { getFirstTimeLogged } = useAuth();
+  const { login, userToken, refreshToken } = useAuth();
 
   useEffect(() => {
-    (async function check() {
-      const first = await getFirstTimeLogged();
-      if (first === "true") Alert.alert("Bem vindo(a)!");
+    (async function getUserInfo() {
+      const rfToken = await refreshToken.get();
+
+      const { userId } = (await userToken.decode()) as {
+        userId: string;
+      };
+
+      const { data, status } = await GetUserInfo(userId);
+
+      if (status < 300) {
+        await login({ ...data, id: userId });
+      }
     })();
   }, []);
+
   return (
     <View style={HomeStyles.container}>
       <Text style={{ color: "#fff", fontSize: 32 }}>HOME</Text>

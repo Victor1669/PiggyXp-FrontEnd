@@ -53,7 +53,7 @@ O Expo Go não será usado devido à limitações técnicas, tais como:
 Normais
 
 - axios:                            Requisições e Interceptadores
-- expo-auth-session                 Autenticações no geral (usado com Google nessa aplicação)
+- jwt-decode                        Decodificação de JWT
 - expo-router                       Roteamento das telas
 - expo-file-system:                 Manipulação de arquivos no dispositivo
 - expo-image-picker:                Acesso à câmera e galeria do dispositivo
@@ -64,6 +64,8 @@ Normais
 - expo-dev-client                   Para executar a aplicação nativamente
 - react-native-toast-message        Feedbacks interativos
 - react-hook-form                   Formulários dinâmicos
+- @react-native-community/netinfo   Verificação de conexão
+- @react-native-google-signin       Autenticação do Google
 - react-native-fbsdk-next           Autenticação com Facebook
 
 Desenvolvimento

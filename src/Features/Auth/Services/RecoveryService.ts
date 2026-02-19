@@ -1,4 +1,4 @@
-import { useFetch } from "@Hooks/useFetch";
+import { useFetch } from "@Auth/Hooks/useFetch";
 
 /**
  *
@@ -16,19 +16,30 @@ export async function SendRecoveryEmail(body: { email: string }) {
   return response;
 }
 
+export async function resendRecoveryEmail(body: { email: string }) {
+  const response = await useFetch({
+    method: "post",
+    rota: "recovery",
+    body,
+    showToastMessage: true,
+  });
+
+  return response;
+}
+
 /**
  *
  * @param body
  * @returns
  */
 export async function ResetPassword(body: {
-  code: number;
+  code: string;
   newPassword: string;
   confirmPassword: string;
 }) {
   const response = await useFetch({
     method: "post",
-    rota: "recovery",
+    rota: "reset",
     body,
     showToastMessage: true,
   });

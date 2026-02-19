@@ -3,8 +3,8 @@ import { Text, View } from "react-native";
 import { useRouter } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useNativeGoogleAuth } from "@Hooks/useNativeGoogleAuth";
-import { useFacebookAuth } from "@Hooks/useFacebookAuth";
+import { useNativeGoogleAuth } from "@Auth/Hooks/useNativeGoogleAuth";
+import { useFacebookAuth } from "@Auth/Hooks/useFacebookAuth";
 
 import ImageButton from "./ImageButton";
 

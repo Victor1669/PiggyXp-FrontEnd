@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+/* NÃO SERÁ USADO, APENAS SE DER PROBLEMA NO CÓDIGO NATIVO */
+
+/*import { useEffect, useState } from "react";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 
@@ -94,3 +96,4 @@ async function fetchUserInfo(accessToken: string) {
 
   return res.json();
 }
+*/
