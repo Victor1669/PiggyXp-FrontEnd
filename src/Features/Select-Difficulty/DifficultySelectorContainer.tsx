@@ -19,9 +19,9 @@ const { easy, medium, hard } = SelectDifficultyImages;
 
 // Pegue essas variáveis e coloque na chave "image" que está vazia
 const cardsArray: CardType[] = [
-  { id: 1, image: "", text: "Teste", title: "Fácil" },
-  { id: 2, image: "", text: "Teste", title: "Médio" },
-  { id: 3, image: "", text: "Teste", title: "Difícil" },
+  { id: 1, image: easy, text: "easy", title: "Fácil" },
+  { id: 2, image: medium, text: "medium", title: "Médio" },
+  { id: 3, image: hard, text: "hard", title: "Difícil" },
 ];
 
 // Apague todos os comentários depois de terminar
