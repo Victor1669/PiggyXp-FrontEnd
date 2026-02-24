@@ -27,9 +27,8 @@ export function InternetConnectionProvider({
         type: "error",
         text: "Conecte-se à Internet para continuar!",
       });
-      return false;
     }
-    return true;
+    return isConnected;
   }
 
   return (

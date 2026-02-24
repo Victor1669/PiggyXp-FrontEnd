@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { useEffect } from "react";
+import { Alert, StatusBar } from "react-native";
 import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
 
@@ -18,10 +18,12 @@ import { screenValues } from "Config/screenValues";
 import { InternetConnectionProvider } from "Contexts/useInternetConnection";
 const {
   fontSizes: { TITLE_FONT_SIZE },
+  showDevTools,
 } = screenValues();
 
 export default function RootLayout() {
   async function checkUpdate() {
+    console.log(env.buildProfile);
     if (env.buildProfile === "development") return;
     try {
       const update = await Updates.checkForUpdateAsync();
@@ -38,13 +40,13 @@ export default function RootLayout() {
 
   useEffect(() => {
     const timeOut1 = setTimeout(() => {
-      checkUpdate();
-      if (env.buildProfile === "preview" || env.buildProfile === "production")
-        return;
+      if (env.buildProfile !== "development") {
+        checkUpdate();
+      } else return;
     }, 100);
 
     const timeOut2 = setTimeout(() => {
-      if (env.buildProfile === "development")
+      if (env.buildProfile === "development" && showDevTools)
         toastMessage({
           type: "info",
           text: "O Backend está em: " + env.backEndUrl,

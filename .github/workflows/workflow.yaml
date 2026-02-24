@@ -22,7 +22,7 @@ jobs:
       - name: Configurações pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.29.3
+          version: 10.30.1
           run_install: false
 
       - name: Instalar dependências

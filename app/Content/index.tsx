@@ -1,14 +1,21 @@
 import { useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { GetUserInfo } from "@Auth/Services/UserInfoService";
 
+import HomeContainer from "@Screens/Home/HomeContainer";
+
 export default function Home() {
   const { login, userToken, refreshToken } = useAuth();
+  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const {getIsConnected} = useInternetConnection();
 
   useEffect(() => {
+    if(!getIsConnected())return;
+    setShowLoadingScreen(true);
     (async function getUserInfo() {
       const rfToken = await refreshToken.get();
 
@@ -21,27 +28,9 @@ export default function Home() {
       if (status < 300) {
         await login({ ...data, id: userId });
       }
+      setShowLoadingScreen(false);
     })();
   }, []);
 
-  return (
-    <View style={HomeStyles.container}>
-      <Text style={{ color: "#fff", fontSize: 32 }}>HOME</Text>
-    </View>
-  );
+  return <HomeContainer />;
 }
-
-const HomeStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
-  },
-  Image: {
-    width: 120,
-    height: 100,
-    borderRadius: 50,
-    marginTop: 200,
-  },
-});

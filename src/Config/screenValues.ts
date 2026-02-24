@@ -6,6 +6,7 @@ export function screenValues() {
   const deviceWidth = phoneWindow.width;
   const deviceHeight = phoneWindow.height;
   const isDeviceHeigthSmall = phoneWindow.height < 861;
+  const showDevTools = false;
 
   const TITLE_FONT_SIZE = 32;
   const BIGGER_FONT_SIZE = 28;
@@ -41,5 +42,5 @@ export function screenValues() {
     VERY_SMALL_FONT_SIZE,
   };
 
-  return { isDeviceHeigthSmall, deviceWidth, deviceHeight, fontSizes };
+  return { isDeviceHeigthSmall, deviceWidth, deviceHeight, fontSizes,showDevTools };
 }

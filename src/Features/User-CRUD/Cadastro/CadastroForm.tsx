@@ -31,9 +31,6 @@ export default function CadastroForm() {
       password,
     });
 
-    console.log(registerData);
-    console.log(registerStatus);
-    console.log(JSON.stringify(registerData, null, 2));
 
     if (registerStatus < 300) {
       firstTimeLogged.set("true");

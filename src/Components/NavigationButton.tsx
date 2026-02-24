@@ -3,7 +3,11 @@ import { router } from "expo-router";
 
 import { env } from "Config/env";
 
+import { screenValues } from "Config/screenValues";
+const {showDevTools} = screenValues();
+
 import { GlobalColors } from "@Assets/Colors";
+
 
 /**
  *
@@ -12,7 +16,7 @@ import { GlobalColors } from "@Assets/Colors";
 
 export default function NavigationButton() {
   if (env.buildProfile === "development")
-    return (
+    if(showDevTools)return (
       <Pressable
         onPress={() => router.push("/_sitemap")}
         style={{

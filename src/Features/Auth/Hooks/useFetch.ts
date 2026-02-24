@@ -49,15 +49,16 @@ export async function useFetch({
 
     console.log(errObj);
     console.log(errObj?.message);
+    console.log(errObj)
     if (showToastMessage) {
       toastMessage({
         type: "error",
-        text: errObj?.message ?? errObj?.error ?? errObj,
+        text: errObj?.message || errObj?.error || errObj,
       });
     }
     return {
       status: err.response?.status || 500,
-      data: errObj?.message ?? errObj?.error ?? errObj,
+      data: errObj?.message || errObj?.error || errObj,
     };
   }
 }
