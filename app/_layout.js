@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Alert, StatusBar } from "react-native";
+import { Alert } from "react-native";
 import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
 
