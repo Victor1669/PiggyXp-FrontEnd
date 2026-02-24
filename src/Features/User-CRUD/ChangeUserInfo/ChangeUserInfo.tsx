@@ -4,6 +4,7 @@ import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
 import { GetUserInfo, UpdateUserInfo } from "@Auth/Services/UserInfoService";
@@ -18,14 +19,17 @@ const { container } = ChangeUserInfoStyles;
 
 export default function ChangeUserInfoContainer() {
   const { user, logout, login, userToken } = useAuth();
-  const [image, setImage] = useState<string>(user.user_img);
+  const {getIsConnected} = useInternetConnection();
+  const { setShowLoadingScreen } = useShowLoadingScreen();
+
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
     "update-user-img",
     "PUT",
   );
-  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const [image, setImage] = useState<string>(user.user_img);
 
   async function handleSubmit(data: { Nome: string; Email: string }) {
+    if(!getIsConnected()) return;
     setShowLoadingScreen(true);
     const { Nome: name, Email: email } = data;
 

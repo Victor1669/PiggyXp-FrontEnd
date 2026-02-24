@@ -10,8 +10,10 @@ const {
 interface ButtonProps {
   children: string;
   onPress: any;
-  style?: RN.StyleProp<any>;
+  style?: RN.StyleProp<RN.ViewStyle>;
   testId?: string;
+  fontColor?: string;
+  shadowColor?: string;
 }
 
 export default function Button({
@@ -19,10 +21,16 @@ export default function Button({
   children,
   style,
   testId,
+  fontColor = "#000",
+  shadowColor = "#2A7121",
 }: ButtonProps) {
   const [buttonHeight, setButtonHeight] = useState(4);
-
   const { width } = useWindowDimensions();
+
+  const BUTTON_BACK_COLOR =
+    //@ts-ignore
+    style?.backgroundColor || GlobalColors.formButtonBackColor;
+
   return (
     <TouchableOpacity
       testID={testId}
@@ -33,17 +41,23 @@ export default function Button({
       style={[
         style,
         {
-          width: style?.width ? style.width : width - 40,
+          //@ts-ignore
+          width: style?.width || width - 40,
           alignItems: "center",
           padding: 12,
           borderRadius: 15,
-          backgroundColor: GlobalColors.formButtonBackColor,
-          boxShadow: `0px ${buttonHeight}px 4px #2A7121`,
+          backgroundColor: BUTTON_BACK_COLOR,
+
+          boxShadow:
+            //@ts-ignore
+            style?.boxShadow || `0px ${buttonHeight}px 4px ${shadowColor}`,
           transform: `translateY(${-buttonHeight}px)`,
         },
       ]}
     >
-      <Text style={{ fontSize: BIG_FONT_STYLE }}>{children}</Text>
+      <Text style={{ fontSize: BIG_FONT_STYLE, color: fontColor }}>
+        {children}
+      </Text>
     </TouchableOpacity>
   );
 }
