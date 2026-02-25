@@ -14,8 +14,8 @@ export default function HomeContainer() {
       <View
         style={{
           width: "92%",
-          borderBottomWidth: 2,
-          borderBottomColor: GlobalFontColors.Dark,
+          borderTopWidth: 2,
+          borderTopColor: GlobalFontColors.Dark,
         }}
       >
         <Text
@@ -24,7 +24,7 @@ export default function HomeContainer() {
             margin: "auto",
             paddingHorizontal: 10,
             backgroundColor: GlobalColors.contentBackColor.Dark,
-            transform: [{ translateY: 10 }],
+            transform: [{ translateY: -15 }],
             color: GlobalFontColors.Dark,
             textAlign: "center",
             fontSize: 18,

@@ -4,6 +4,7 @@ import RN, { Text, Image, View, FlatList, StyleSheet } from "react-native";
 import { screenValues } from "Config/screenValues";
 const {
   deviceWidth,
+  isDeviceHeigthSmall,
   fontSizes: { BIG_FONT_STYLE, SMALL_FONT_SIZE, BIGGER_FONT_SIZE },
 } = screenValues();
 
@@ -39,7 +40,7 @@ export default function HomeSlider() {
       horizontal
       showsHorizontalScrollIndicator={false}
       style={{
-        height: 100,
+        height: isDeviceHeigthSmall ? 100 : 135,
       }}
       renderItem={({ item: { backgroundColor, children } }) => {
         return (
@@ -47,7 +48,7 @@ export default function HomeSlider() {
             style={{
               backgroundColor,
               width: deviceWidth * 0.9,
-              height: 100,
+              height: isDeviceHeigthSmall ? 80 : 100,
               marginHorizontal: deviceWidth * 0.05,
               borderRadius: 15,
             }}

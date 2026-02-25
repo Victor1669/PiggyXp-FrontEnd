@@ -20,12 +20,11 @@ export default function Layout() {
           backgroundColor: GlobalColors.tabBarBackColor,
           height: 120,
           paddingBottom: 10,
-          paddingTop: 10,
           borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           fontSize: 13,
-          marginTop: 2,
+          marginTop: 12,
         },
         sceneStyle: {
           backgroundColor: GlobalColors.contentBackColor.Dark,
@@ -42,6 +41,7 @@ export default function Layout() {
               style={{
                 width: 35,
                 height: 35,
+                marginTop: 15,
               }}
             />
           ),
@@ -53,16 +53,14 @@ export default function Layout() {
         options={{
           title: "Ranking",
           tabBarIcon: () => (
-            <View>
-              <Image
-                source={ranking}
-                style={{
-                  width: 40,
-                  height: 40,
-                  marginTop: 7,
-                }}
-              />
-            </View>
+            <Image
+              source={ranking}
+              style={{
+                width: 40,
+                height: 40,
+                marginTop: 25,
+              }}
+            />
           ),
         }}
       />
@@ -76,8 +74,8 @@ export default function Layout() {
               source={missoes}
               style={{
                 width: 35,
-                marginTop: 5,
                 height: 35,
+                marginTop: 20,
               }}
             />
           ),
@@ -94,7 +92,7 @@ export default function Layout() {
               style={{
                 width: 30,
                 height: 30,
-                marginTop: -5,
+                marginTop: 10,
               }}
             />
           ),
@@ -111,7 +109,7 @@ export default function Layout() {
               style={{
                 width: 35,
                 height: 50,
-                marginTop: -5,
+                marginTop: 10,
               }}
             />
           ),

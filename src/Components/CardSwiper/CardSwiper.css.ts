@@ -1,3 +1,4 @@
+import { GlobalFontColors } from "@Assets/Colors";
 import { Dimensions, StyleSheet } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -17,11 +18,12 @@ export const CardSwiperStyles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
     fontSize: 22,
+    color: GlobalFontColors.Dark,
   },
   text: {
     width: "70%",
     height: 60,
-    color: "#000000",
+    color: GlobalFontColors.Dark,
     fontSize: 15,
     textAlign: "center",
     marginTop: 50,

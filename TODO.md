@@ -17,10 +17,15 @@
 
 6- Arrumar o menu de navegação (Pereira) FEITO
 
-7- Cards de dificuldade (Pereira)
+7- Cards de dificuldade (Pereira) FEITO
 
 8- Deleção do usuário (Fernandes) FEITO
 8.5- Atualização das informações do usuário (Fernandes) FEITO
 
 9- Envio do email de recuperação (Fernandes) FEITO
 9.5- Redefinição de senha (Fernandes) FEITO
+
+10- Estilização inicial da Home (Fernandes) FEITO
+10.25- Conexão do BackEnd na Home (Fernadnes)
+10.5- Tela de carregamento (Pereira)
+10.75- Estilização final da Home (Fernandes)

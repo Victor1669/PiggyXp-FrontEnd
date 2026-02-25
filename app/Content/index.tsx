@@ -11,10 +11,10 @@ import HomeContainer from "@Screens/Home/HomeContainer";
 export default function Home() {
   const { login, userToken, refreshToken } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
-  const {getIsConnected} = useInternetConnection();
+  const { getIsConnected } = useInternetConnection();
 
   useEffect(() => {
-    if(!getIsConnected())return;
+    if (!getIsConnected()) return;
     setShowLoadingScreen(true);
     (async function getUserInfo() {
       const rfToken = await refreshToken.get();

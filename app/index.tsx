@@ -8,7 +8,7 @@ import SplashContainer from "@Screens/Splash/SplashContainer";
 export default function SplashScreen() {
   const { user, firstTimeLogged } = useAuth();
 
-  const hasUserInfo = user.id && user.email;
+  const hasUserInfo = user.id !== 0 && user.email !== "";
 
   useEffect(() => {
     const timer1 = setTimeout(() => {
@@ -28,7 +28,7 @@ export default function SplashScreen() {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
-  }, [user]);
+  }, [hasUserInfo]);
 
   return <SplashContainer />;
 }

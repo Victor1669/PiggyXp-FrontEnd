@@ -5,12 +5,13 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { screenValues } from "Config/screenValues";
 const {
+  isDeviceHeigthSmall,
   fontSizes: { BIG_FONT_STYLE },
 } = screenValues();
 
 import { HomeImages } from "../Assets/HomeImages";
 
-const IMAGE_SIZE = 55;
+const IMAGE_SIZE = isDeviceHeigthSmall ? 40 : 55;
 
 const HomeHeaderStyles = StyleSheet.create({
   container: {
@@ -32,15 +33,14 @@ const HomeHeaderStyles = StyleSheet.create({
     borderRadius: 50,
   },
   livesImageContainer: {
-    padding: 10,
     flexDirection: "row",
     alignItems: "center",
-    gap: 15,
   },
   livesImage: {
-    width: 45,
-    height: 35,
+    width: IMAGE_SIZE + 10,
+    height: IMAGE_SIZE,
     marginVertical: "auto",
+    transform: [{ scale: 0.6 }],
   },
 });
 const {

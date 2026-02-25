@@ -9,6 +9,10 @@ const {
 } = HomeImages;
 import { GlobalImages } from "@Assets/GlobalImages";
 import { HexagonButton } from "../Components/HexagonButton";
+
+import { screenValues } from "Config/screenValues";
+const { deviceHeight, isDeviceHeigthSmall } = screenValues();
+
 const {
   tabBar: { loja, missoes, perfil, ranking },
 } = GlobalImages;
@@ -70,7 +74,11 @@ export default function HomeContent() {
 
   return (
     <ScrollView
-      style={{ width: "90%", height: 540 }}
+      style={{
+        width: "90%",
+        height: isDeviceHeigthSmall ? deviceHeight - 350 : deviceHeight - 400,
+        transform: [{ translateY: -20 }],
+      }}
       contentContainerStyle={{ height: levels.length * 115 }}
       showsVerticalScrollIndicator={false}
       scrollEnabled
