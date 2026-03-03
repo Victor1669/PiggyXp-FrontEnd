@@ -33,8 +33,6 @@ export default function LevelContainer() {
   const SHEET_HEIGHT = 290;
   const pan = useRef(new Animated.ValueXY()).current;
 
-  console.log(pan);
-
   useEffect(() => {
     return () => {
       setShowSheet(false);

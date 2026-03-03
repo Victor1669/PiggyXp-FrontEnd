@@ -40,7 +40,6 @@ export default function CodeVerifierForm() {
 
     const { data, status } = await ResetPassword(reqBody);
 
-    console.log(data);
     if (status < 300) {
       router.replace("/Login");
       await userEmailWhileRecovering.delete();

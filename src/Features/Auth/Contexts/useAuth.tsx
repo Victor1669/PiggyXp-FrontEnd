@@ -40,7 +40,6 @@ function AuthProvider({ children }: AuthProviderTypes) {
 
   async function login(userData: User) {
     await userInfo.set(JSON.stringify(userData));
-    console.log(userData);
     setUser(userData);
   }
 

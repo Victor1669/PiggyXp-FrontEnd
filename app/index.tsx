@@ -28,8 +28,6 @@ export default function SplashScreen() {
         const { data, status } = await RefreshTokenService(rfToken);
 
         if (status < 300) {
-          console.log("Usuário está em sessão!");
-
           await userToken.set(data.accessToken);
           router.replace("/Content");
         } else {
@@ -53,7 +51,7 @@ export default function SplashScreen() {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
-  }, [hasUserInfo]);
+  }, [user]);
 
   return <SplashContainer />;
 }

@@ -33,7 +33,7 @@ export default function CadastroForm() {
 
     if (registerStatus < 300) {
       registerSuccess(registerData);
-    } else if (registerData.message === "Email já cadastrado!") {
+    } else if (registerData?.message === "Email já cadastrado!") {
       toastMessage({
         type: "info",
         text: "Email já está cadastrado!",

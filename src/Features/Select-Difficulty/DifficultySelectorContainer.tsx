@@ -14,6 +14,7 @@ const { container, cardsContainer } = DifficultySelectorStyles;
 
 import { SelectDifficultyImages } from "./Assets/SelectDifficultyImages";
 import { router } from "expo-router";
+import { GlobalFontColors } from "@Assets/Colors";
 // Cada variável é uma imagem
 const { easy, medium, hard } = SelectDifficultyImages;
 
@@ -61,6 +62,7 @@ export default function DifficultySelectorContainer() {
           actualIndex={difficulty}
           cardImageWidth={300}
           cardImageHeight={340}
+          fontColor={GlobalFontColors.Dark}
         />
       </View>
       <Button onPress={handleSubmit}>Continuar</Button>

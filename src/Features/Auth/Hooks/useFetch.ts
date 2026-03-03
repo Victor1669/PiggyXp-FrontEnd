@@ -33,7 +33,6 @@ export async function useFetch({
     }
 
     if (res.status < 300 && showToastMessage) {
-      console.log(res.data.message);
       toastMessage({
         type: "success",
         text: res.data.message ?? res.data,
@@ -46,18 +45,20 @@ export async function useFetch({
     };
   } catch (err: any) {
     const errObj = err?.response?.data;
-
+    const errMessage =
+      errObj?.message || errObj?.error || err.message || errObj;
+    console.log(err);
     console.log(errObj);
     console.log(errObj?.message);
     if (showToastMessage) {
       toastMessage({
         type: "error",
-        text: errObj?.message || errObj?.error || errObj,
+        text: errMessage,
       });
     }
     return {
       status: err.response?.status || 500,
-      data: errObj?.message || errObj?.error || errObj,
+      data: errMessage,
     };
   }
 }

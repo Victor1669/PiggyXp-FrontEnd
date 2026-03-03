@@ -43,8 +43,6 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
 
   const selectedLevel = levels[selectedLevelIndex];
 
-  console.log(selectedLevelIndex);
-
   return (
     <BottomSheet
       height={SHEET_HEIGHT}

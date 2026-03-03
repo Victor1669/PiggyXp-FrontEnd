@@ -14,15 +14,12 @@ export default function LoadingLevelContainer() {
   const { actualQuestion } = useLocalSearchParams();
   const { dispatch } = useQuiz();
 
-  console.log(user.difficulty, Number(actualQuestion));
-
   useEffect(() => {
     (async () => {
       const { data, status } = await GetPhaseService(
         user.difficulty,
         Number(actualQuestion),
       );
-      console.log(data);
       if (status < 300) {
         dispatch({ type: "DADOS_CARREGADOS", payload: data });
         router.replace("/Content/Level/LevelTips");

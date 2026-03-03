@@ -18,7 +18,6 @@ export const CardSwiperStyles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
     fontSize: 22,
-    color: GlobalFontColors.Dark,
   },
   text: {
     width: "70%",

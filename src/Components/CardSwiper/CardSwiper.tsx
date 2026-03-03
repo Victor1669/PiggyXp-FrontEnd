@@ -22,6 +22,7 @@ interface CardSwiperProps {
   actualIndex: number;
   cardImageHeight?: number;
   cardImageWidth?: number;
+  fontColor?: string;
 }
 
 interface DotsContainerProps {
@@ -37,6 +38,7 @@ export function CardSwiper({
   actualIndex,
   cardImageHeight,
   cardImageWidth,
+  fontColor = "#000",
 }: CardSwiperProps) {
   function onCardScroll(e: RN.NativeSyntheticEvent<RN.NativeScrollEvent>) {
     const cardIndex = Math.round(e.nativeEvent.contentOffset.x / width);
@@ -57,6 +59,7 @@ export function CardSwiper({
             cardInfo={item}
             cardImageHeight={cardImageHeight}
             cardImageWidth={cardImageWidth}
+            fontColor={fontColor}
           />
         )}
       />
@@ -69,10 +72,12 @@ function Card({
   cardInfo,
   cardImageHeight,
   cardImageWidth,
+  fontColor = "#000",
 }: {
   cardInfo: CardType;
   cardImageHeight?: number;
   cardImageWidth?: number;
+  fontColor?: string;
 }) {
   const DOTS_SECTION_HEIGHT = 50;
   const { height } = useWindowDimensions();
@@ -90,8 +95,12 @@ function Card({
         ]}
         source={cardInfo.image}
       />
-      <Text style={CardSwiperStyles.title}>{cardInfo.title}</Text>
-      <Text style={CardSwiperStyles.text}>{cardInfo.text}</Text>
+      <Text style={[CardSwiperStyles.title, { color: fontColor }]}>
+        {cardInfo.title}
+      </Text>
+      <Text style={[CardSwiperStyles.text, { color: fontColor }]}>
+        {cardInfo.text}
+      </Text>
     </View>
   );
 }
