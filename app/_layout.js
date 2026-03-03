@@ -1,3 +1,4 @@
+//#region Importações
 import { useEffect } from "react";
 import { Alert } from "react-native";
 import { Stack } from "expo-router";
@@ -21,10 +22,10 @@ const {
   fontSizes: { TITLE_FONT_SIZE },
   showDevTools,
 } = screenValues();
+//#endregion
 
 export default function RootLayout() {
   async function checkUpdate() {
-    console.log(env.buildProfile);
     if (env.buildProfile === "development") return;
     try {
       const update = await Updates.checkForUpdateAsync();

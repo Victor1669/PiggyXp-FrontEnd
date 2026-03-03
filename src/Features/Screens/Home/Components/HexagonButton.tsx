@@ -1,10 +1,15 @@
+//#region Importações
 import { useState } from "react";
 import RN, { View, Pressable, Image } from "react-native";
+
+import { screenValues } from "Config/screenValues";
+const { isDeviceHeigthSmall } = screenValues();
 
 import { HomeImages } from "../Assets/HomeImages";
 const {
   content: { hexagon, hexagonShadow, hexagonLocked, hexagonLockedShadow },
 } = HomeImages;
+//#endregion
 
 export function HexagonButton({
   position = "center",
@@ -22,7 +27,7 @@ export function HexagonButton({
     <View
       style={{
         alignSelf: position,
-        marginHorizontal: 15,
+        marginHorizontal: isDeviceHeigthSmall ? 0 : 15,
         position: "relative",
       }}
     >

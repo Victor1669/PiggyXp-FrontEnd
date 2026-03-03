@@ -53,7 +53,7 @@ export default function SplashScreen() {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
-  }, [user]);
+  }, [hasUserInfo]);
 
   return <SplashContainer />;
 }

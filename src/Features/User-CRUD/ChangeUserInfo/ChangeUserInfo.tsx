@@ -71,7 +71,7 @@ export default function ChangeUserInfoContainer() {
   ) {
     const { data, status } = await UpdateUserInfo(user.id, formData, userToken);
 
-    if (data.message === "jwt expired") {
+    if (data.message === "jwt expired" || data === "jwt expired") {
       toastMessage({
         type: "error",
         text: "Token expirado, refaça o login antes!",

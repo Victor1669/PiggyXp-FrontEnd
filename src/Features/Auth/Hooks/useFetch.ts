@@ -49,7 +49,6 @@ export async function useFetch({
 
     console.log(errObj);
     console.log(errObj?.message);
-    console.log(errObj)
     if (showToastMessage) {
       toastMessage({
         type: "error",
