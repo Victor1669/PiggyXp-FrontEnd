@@ -9,7 +9,7 @@ export default function LoadingSpinner() {
   const { showLoadingScreen } = useShowLoadingScreen();
   if (showLoadingScreen)
     return (
-      <Modal transparent={true}>
+      <Modal transparent animationType="fade" statusBarTranslucent>
         <View style={container}>
           <Image source={require("./Spinner.gif")} style={spinner} />
           <Text style={text}>Carregando...</Text>

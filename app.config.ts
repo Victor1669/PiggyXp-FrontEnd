@@ -69,7 +69,7 @@ export default {
     orientation: "portrait",
 
     icon: appIcon,
-
+    assets: ["./assets/", "./assets/fonts/"],
     scheme: androidPackage,
     userInterfaceStyle: "light",
     newArchEnabled: true,

@@ -1,14 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 
 import { screenValues } from "Config/screenValues";
 const { isDeviceHeigthSmall, deviceHeight } = screenValues();
 
 export const ProfileContainerStyles = StyleSheet.create({
   content: {
-    height: isDeviceHeigthSmall ? deviceHeight - 120 : deviceHeight + 20,
-    marginTop: isDeviceHeigthSmall ? 30 : 0,
+    paddingTop: 2 * (StatusBar.currentHeight || 50),
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     gap: isDeviceHeigthSmall ? 20 : 5,
+  },
+  button: {
+    width: "90%",
+    margin: "auto",
   },
 });

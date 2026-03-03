@@ -14,6 +14,8 @@ interface ButtonProps {
   testId?: string;
   fontColor?: string;
   shadowColor?: string;
+  disabled?: boolean;
+  fontSize?: number;
 }
 
 export default function Button({
@@ -23,6 +25,8 @@ export default function Button({
   testId,
   fontColor = "#000",
   shadowColor = "#2A7121",
+  disabled = false,
+  fontSize,
 }: ButtonProps) {
   const [buttonHeight, setButtonHeight] = useState(4);
   const { width } = useWindowDimensions();
@@ -34,6 +38,7 @@ export default function Button({
   return (
     <TouchableOpacity
       testID={testId}
+      disabled={disabled}
       activeOpacity={1}
       onPress={onPress}
       onPressIn={() => setButtonHeight(0)}
@@ -55,7 +60,14 @@ export default function Button({
         },
       ]}
     >
-      <Text style={{ fontSize: BIG_FONT_STYLE, color: fontColor }}>
+      <Text
+        style={{
+          fontWeight: "bold",
+          fontSize: fontSize || BIG_FONT_STYLE,
+          color: fontColor,
+          textAlign: "center",
+        }}
+      >
         {children}
       </Text>
     </TouchableOpacity>

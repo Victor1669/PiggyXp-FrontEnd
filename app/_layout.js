@@ -17,6 +17,7 @@ import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 import { env } from "Config/env";
 import { screenValues } from "Config/screenValues";
 import { InternetConnectionProvider } from "Contexts/useInternetConnection";
+import { DynamicScrollProvider } from "Contexts/useDynamicScroll";
 const {
   fontSizes: { TITLE_FONT_SIZE },
   showDevTools,
@@ -76,35 +77,37 @@ export default function RootLayout() {
     <InternetConnectionProvider>
       <AuthProvider>
         <ShowLoadingScreenProvider>
-          <Stack
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: GlobalColors.contentBackColor.Dark,
-              },
-              headerTitleStyle: {
-                color: GlobalFontColors.Dark,
-                fontSize: TITLE_FONT_SIZE,
-              },
-              headerBackVisible: false,
-              contentStyle: {
-                backgroundColor: GlobalColors.contentBackColor.Dark,
-              },
-            }}
-            key={Date.now().toString()}
-          >
-            {showHeaderPages.map((page) => (
-              <Stack.Screen
-                name={page}
-                options={{ headerTitleAlign: "center" }}
-              />
-            ))}
-            {hideHeaderPages.map((page) => (
-              <Stack.Screen name={page} options={{ headerShown: false }} />
-            ))}
-          </Stack>
-          <ToastContainer />
-          <LoadingSpinner />
-          <NavigationButton />
+          <DynamicScrollProvider>
+            <Stack
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: GlobalColors.contentBackColor.Dark,
+                },
+                headerTitleStyle: {
+                  color: GlobalFontColors.Dark,
+                  fontSize: TITLE_FONT_SIZE,
+                },
+                headerBackVisible: false,
+                contentStyle: {
+                  backgroundColor: GlobalColors.contentBackColor.Dark,
+                },
+              }}
+              key={Date.now().toString()}
+            >
+              {showHeaderPages.map((page) => (
+                <Stack.Screen
+                  name={page}
+                  options={{ headerTitleAlign: "center" }}
+                />
+              ))}
+              {hideHeaderPages.map((page) => (
+                <Stack.Screen name={page} options={{ headerShown: false }} />
+              ))}
+            </Stack>
+            <ToastContainer />
+            <LoadingSpinner />
+            <NavigationButton />
+          </DynamicScrollProvider>
         </ShowLoadingScreenProvider>
       </AuthProvider>
     </InternetConnectionProvider>

@@ -1,39 +1,20 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import HomeHeader from "./Layout/HomeHeader";
 import HomeSlider from "./Layout/HomeSlider";
 import HomeContent from "./Layout/HomeContent";
 
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
+import ContentSheet from "./Components/ContentSheet";
 
 export default function HomeContainer() {
+  const sections = [{ title: "Novos Horizontes" }];
+
   return (
     <View style={HomeStyles.container}>
       <HomeHeader />
       <HomeSlider />
-      <View
-        style={{
-          width: "92%",
-          borderTopWidth: 2,
-          borderTopColor: GlobalFontColors.Dark,
-        }}
-      >
-        <Text
-          style={{
-            width: "auto",
-            margin: "auto",
-            paddingHorizontal: 10,
-            backgroundColor: GlobalColors.contentBackColor.Dark,
-            transform: [{ translateY: -15 }],
-            color: GlobalFontColors.Dark,
-            textAlign: "center",
-            fontSize: 18,
-          }}
-        >
-          Novos Horizontes
-        </Text>
-      </View>
-      <HomeContent />
+      <HomeContent sections={sections} />
+      <ContentSheet sections={sections} />
     </View>
   );
 }
