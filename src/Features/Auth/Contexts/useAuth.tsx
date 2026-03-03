@@ -12,18 +12,21 @@ export interface User {
   email: string;
   user_img: string;
   xp: number;
-  level: number;
+  nivel: number;
   coins: number;
+  difficulty: number;
+  first_login: boolean;
+  lives: number;
 }
 
 type AuthProviderValues = {
   user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
   login: (userData: User) => Promise<void>;
   logout: () => Promise<void>;
-  firstTimeLogged: StoreItem;
   userEmailWhileRecovering: StoreItem;
-  refreshToken: StoreItem;
   temporaryImageToken: StoreItem;
+  refreshToken: StoreItem;
   userToken: JWTStoreItem;
 };
 
@@ -37,7 +40,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
 
   async function login(userData: User) {
     await userInfo.set(JSON.stringify(userData));
-
+    console.log(userData);
     setUser(userData);
   }
 
@@ -50,23 +53,18 @@ function AuthProvider({ children }: AuthProviderTypes) {
       refreshToken,
     ];
 
-    await firstTimeLogged.set("true");
-
     allUserInfo.forEach(async (storeItem) => {
       await storeItem.delete();
     });
 
-    console.log(await userInfo.get());
-
     setUser({} as User);
   }
 
-  const userInfo = new StoreItem("USER_INFO");
-  const firstTimeLogged = new StoreItem("FIRST_TIME_LOGGED");
   const userEmailWhileRecovering = new StoreItem("RECOVERY_EMAIL");
   const temporaryImageToken = new StoreItem("TEMPORARY_IMAGE_TOKEN");
-  const refreshToken = new StoreItem("REFRESH_TOKEN");
+  const userInfo = new StoreItem("USER_INFO");
 
+  const refreshToken = new JWTStoreItem("REFRESH_TOKEN");
   const userToken = new JWTStoreItem("USER_TOKEN");
 
   useEffect(() => {
@@ -80,12 +78,12 @@ function AuthProvider({ children }: AuthProviderTypes) {
 
   const value: AuthProviderValues = {
     user,
+    setUser,
     login,
     logout,
-    firstTimeLogged,
     userEmailWhileRecovering,
-    refreshToken,
     temporaryImageToken,
+    refreshToken,
     userToken,
   };
 

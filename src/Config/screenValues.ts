@@ -42,5 +42,11 @@ export function screenValues() {
     VERY_SMALL_FONT_SIZE,
   };
 
-  return { isDeviceHeigthSmall, deviceWidth, deviceHeight, fontSizes,showDevTools };
+  return {
+    isDeviceHeigthSmall,
+    deviceWidth,
+    deviceHeight,
+    fontSizes,
+    showDevTools,
+  };
 }

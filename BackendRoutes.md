@@ -2,14 +2,18 @@ ROTAS DO BACKEND CONECTADAS:
 
 ```
 /api
-    /register
-    /login
-    /userInfo/?userId=<number>
     /deleteUser/<userId>
-    /updateUser/<userId>
-    /upload-user-img
-    /update-user-img
+    /difficulty
+    /phase/?difficulty=<number>&order=<number>
+    /phases/?difficulty=<number>&order=<number> (MongoDb)                                    X
+    /userInfo/?userId=<number>
+    /progressInfo/?progressId=<number>
+    /login
     /recovery
     /reset
-    /difficulty
+    /refreshToken
+    /register
+    /update-user-img
+    /updateUser/<userId>
+    /upload-user-img
 ```

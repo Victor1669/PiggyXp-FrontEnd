@@ -26,6 +26,10 @@
 9.5- Redefinição de senha (Fernandes) FEITO
 
 10- Estilização inicial da Home (Fernandes) FEITO
-10.25- Conexão do BackEnd na Home (Fernadnes)
+10.25- Conexão do BackEnd na Home (Fernandes)
 10.5- Tela de carregamento (Pereira)
 10.75- Estilização final da Home (Fernandes)
+
+11- Estilização inicial dos níveis e telas derivadas (Fernandes) FEITO
+11.25- Conexão com o BackEnd para atualizar o usuário (!AGUARDANDO O BACKEND)
+11.5- Estilização final dos níveis (Pereira)

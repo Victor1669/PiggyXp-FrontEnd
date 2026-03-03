@@ -19,7 +19,7 @@ const { container } = ChangeUserInfoStyles;
 
 export default function ChangeUserInfoContainer() {
   const { user, logout, login, userToken } = useAuth();
-  const {getIsConnected} = useInternetConnection();
+  const { getIsConnected } = useInternetConnection();
   const { setShowLoadingScreen } = useShowLoadingScreen();
 
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
@@ -29,7 +29,7 @@ export default function ChangeUserInfoContainer() {
   const [image, setImage] = useState<string>(user.user_img);
 
   async function handleSubmit(data: { Nome: string; Email: string }) {
-    if(!getIsConnected()) return;
+    if (!getIsConnected()) return;
     setShowLoadingScreen(true);
     const { Nome: name, Email: email } = data;
 
@@ -86,7 +86,7 @@ export default function ChangeUserInfoContainer() {
     const { data, status } = await GetUserInfo(String(user.id));
 
     if (status < 300 && !hasChangedEmail) {
-      await login({ ...data, userId: user.id });
+      await login({ ...data, id: user.id });
       router.push("/Content/Profile");
     }
   }

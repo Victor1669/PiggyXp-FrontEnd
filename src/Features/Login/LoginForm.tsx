@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { jwtDecode } from "jwt-decode";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
@@ -8,9 +9,10 @@ import { UserLogin } from "@Auth/Services/LoginService";
 
 import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
+import { GetUserInfo } from "@Auth/Services/UserInfoService";
 
 export default function LoginForm() {
-  const { userToken, firstTimeLogged, refreshToken } = useAuth();
+  const { refreshToken, userToken } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
 
@@ -36,13 +38,16 @@ export default function LoginForm() {
   }) {
     const { refreshToken: rfValue, token } = loginData;
 
-    await userToken.set(token);
     await refreshToken.set(rfValue);
+    await userToken.set(token);
 
-    const isFirstTimeLogged = await firstTimeLogged.get();
-    router.replace(
-      isFirstTimeLogged === "true" ? "/DifficultySelector" : "/Content",
-    );
+    const { userId } = (await userToken.decode()) as { userId: string };
+
+    const { data: user, status } = await GetUserInfo(userId);
+
+    if (status < 300) {
+      router.replace(user.first_login ? "/DifficultySelector" : "/Content");
+    } else router.replace("/Login");
   }
 
   return (

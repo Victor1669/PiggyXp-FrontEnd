@@ -30,7 +30,7 @@ export default function DifficultySelectorContainer() {
   const [difficulty, setDifficulty] = useState<number>(0);
   const { height } = useWindowDimensions();
 
-  const { firstTimeLogged, userToken } = useAuth();
+  const { setUser, userToken } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
 
@@ -46,7 +46,7 @@ export default function DifficultySelectorContainer() {
     const { data, status } = await DifficultySelector(body, token);
 
     if (status < 300) {
-      await firstTimeLogged.set("false");
+      setUser((prev) => ({ ...prev, difficulty }));
       router.replace("/Content");
     }
     setShowLoadingScreen(false);

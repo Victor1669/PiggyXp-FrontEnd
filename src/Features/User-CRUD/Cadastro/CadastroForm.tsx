@@ -12,7 +12,7 @@ import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 export default function CadastroForm() {
-  const { firstTimeLogged, temporaryImageToken } = useAuth();
+  const { temporaryImageToken } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
 
@@ -31,9 +31,7 @@ export default function CadastroForm() {
       password,
     });
 
-
     if (registerStatus < 300) {
-      firstTimeLogged.set("true");
       registerSuccess(registerData);
     } else if (registerData.message === "Email já cadastrado!") {
       toastMessage({

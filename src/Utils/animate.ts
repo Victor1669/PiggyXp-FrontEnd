@@ -8,6 +8,15 @@ interface AnimateTypes {
   useNativeDriver?: boolean;
 }
 
+/**
+ *
+ * @param animatedValue Variável de animação Ex: useRef(new Animated.Value(0)).current
+ * @param toValue Valor da variável no final da animação
+ * @param duration Duração em milissegundos da animação
+ * @param delay Daly da animação em milissegundos
+ * @param useNativeDriver Usar drivers nativos para animação (nem sempre funciona)
+ * @returns
+ */
 export function Animate({
   animatedValue,
   toValue,

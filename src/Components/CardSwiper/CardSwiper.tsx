@@ -47,6 +47,11 @@ export function CardSwiper({
       <FlatList
         data={cardsArray}
         keyExtractor={(item) => item.id.toString()}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={onCardScroll}
+        scrollEventThrottle={16}
         renderItem={({ item }) => (
           <Card
             cardInfo={item}
@@ -54,11 +59,6 @@ export function CardSwiper({
             cardImageWidth={cardImageWidth}
           />
         )}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={onCardScroll}
-        scrollEventThrottle={16}
       />
       <DotsContainer array={cardsArray} actualIndex={actualIndex} />
     </>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Pressable, Image } from "react-native";
+import RN, { View, Pressable, Image } from "react-native";
 
 import { HomeImages } from "../Assets/HomeImages";
 const {
@@ -12,10 +12,10 @@ export function HexagonButton({
   onPress,
   img,
 }: {
-  position?: "flex-start" | "center" | "flex-end";
-  isLocked?: boolean;
-  onPress?: ()=>void;
-  img?: any;
+  position: "flex-start" | "center" | "flex-end";
+  isLocked: boolean;
+  onPress: (e: RN.GestureResponderEvent) => void;
+  img: any;
 }) {
   const [showShadow, setShowShadow] = useState(false);
   return (
@@ -29,6 +29,7 @@ export function HexagonButton({
       <Pressable
         onPressIn={() => setShowShadow(true)}
         onPressOut={() => setShowShadow(false)}
+        disabled={isLocked}
         onPress={onPress}
         style={{
           marginTop: showShadow ? 8 : 0,
