@@ -28,21 +28,24 @@ export default function BottomSheet({
   showThumb?: boolean;
   interactive?: boolean;
 }) {
-  const animateTo = (y: number) => {
+  function animateTo(y: number) {
     Animated.spring(yPosition, {
       toValue: { x: 0, y },
       useNativeDriver: true,
       tension: 40,
       friction: 8,
     }).start();
-  };
+  }
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => interactive,
+      onStartShouldSetPanResponder: () => {
+        return interactive;
+      },
 
-      onMoveShouldSetPanResponder: (_, gestureState) =>
-        interactive && Math.abs(gestureState.dy) > 5,
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        return interactive && Math.abs(gestureState.dy) > 5;
+      },
 
       onPanResponderMove: (_, gestureState) => {
         if (!interactive) return;
@@ -66,12 +69,13 @@ export default function BottomSheet({
   ).current;
 
   useEffect(() => {
+    console.log("showSheet mudou");
     if (showSheet) {
       animateTo(0);
     } else {
       animateTo(height);
     }
-  }, [showSheet, height]);
+  }, [showSheet]);
 
   return (
     <>
