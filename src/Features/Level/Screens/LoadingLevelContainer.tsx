@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
 import { env } from "Config/env";
@@ -11,6 +11,13 @@ import { GetPhaseService } from "@Auth/Services/GetPhaseService";
 import { toastMessage } from "Utils/toast";
 
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
+import { LevelAssets } from "../Assets/LevelAssets";
+
+import { screenValues } from "Config/screenValues";
+import { LoadingLevelContainerStyles } from "../Styles/LoadingLevelContainer.css";
+const {
+  fontSizes: { DEFAULT_FONT_SIZE, SMALL_FONT_SIZE },
+} = screenValues();
 
 export default function LoadingLevelContainer() {
   const { user } = useAuth();
@@ -39,8 +46,26 @@ export default function LoadingLevelContainer() {
   }, []);
 
   return (
-    <View>
-      <Text>LoadingPhaseContainer</Text>
+    <View style={{ gap: 15 }}>
+      <Image source={LevelAssets.gato} style={{ marginHorizontal: "auto" }} />
+      <Text
+        style={[
+          {
+            fontSize: DEFAULT_FONT_SIZE,
+          },
+          LoadingLevelContainerStyles.text,
+        ]}
+      >
+        Aguarde...
+      </Text>
+      <Text
+        style={[
+          { marginHorizontal: 50, fontSize: SMALL_FONT_SIZE },
+          LoadingLevelContainerStyles.text,
+        ]}
+      >
+        "Quando o dinheiro vai na frente, todos os caminhos se abrem."
+      </Text>
     </View>
   );
 }

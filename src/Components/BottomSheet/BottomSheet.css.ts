@@ -10,7 +10,7 @@ export const BottomSheetStyles = StyleSheet.create({
     zIndex: 999,
     borderRadius: 50,
     paddingBottom: SHEET_MARGIN_BOTTOM,
-    marginBottom: -SHEET_MARGIN_BOTTOM,
+    marginBottom: 150,
   },
   interactiveView: {
     width: "100%",

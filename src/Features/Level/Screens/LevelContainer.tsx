@@ -46,7 +46,7 @@ export default function LevelContainer() {
 
   function handlePassQuestion() {
     if (isLevelCompleted) {
-      dispatch({ type: "QUIZ_ACABADO" });
+      dispatch({ type: "QUIZ_ACABOU" });
     }
 
     router.replace(

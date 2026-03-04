@@ -49,6 +49,7 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
       style={{
         bottom: SHEET_HEIGHT * sections.length - SHEET_HEIGHT,
         paddingHorizontal: 20,
+        marginBottom: 10,
       }}
       yPosition={pan}
       showSheet={showSheet}
