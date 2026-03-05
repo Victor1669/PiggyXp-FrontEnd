@@ -12,6 +12,10 @@ const FieldsValidation: Record<string, RegisterOptions> = {
       value: 4,
       message: "O nome deve possuir no mínimo 4 caracteres",
     },
+    maxLength: {
+      value: 25,
+      message: "O nome deve possuir no máximo 25 caracteres",
+    },
   },
   Email: {
     required: {

@@ -10,7 +10,7 @@ import { AuthImages } from "@Assets/AuthImages";
 export default function SendRecoveryEmailContainer() {
   return (
     <View style={container}>
-      <Image source={AuthImages.lock} />
+      <Image source={AuthImages.inputs.lock} />
       <Text style={title}>Esqueçeu sua senha</Text>
       <Text style={subTitle}>
         Informe o e-mail da sua conta para atualizarmos sua senha.
