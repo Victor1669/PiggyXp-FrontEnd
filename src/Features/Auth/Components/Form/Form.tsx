@@ -41,8 +41,8 @@ export default function Form({
 }: FormProps) {
   const methods = useForm({
     defaultValues,
-    mode: "onBlur",
-    reValidateMode: "onBlur",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
   });
 
   return (

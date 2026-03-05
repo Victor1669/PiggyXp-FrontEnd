@@ -38,13 +38,14 @@ const FieldGlobalStyles = StyleSheet.create({
   label: {
     color: GlobalFontColors.Dark,
     position: "absolute",
-    left: 10,
+    left: 50,
     fontSize: DEFAULT_FONT_SIZE,
   },
   input: {
     borderRadius: 10,
     padding: isDeviceHeigthSmall ? 10 : 20,
     color: GlobalFontColors.Dark,
+    paddingLeft: 50,
   },
   error: {
     color: "#f00",

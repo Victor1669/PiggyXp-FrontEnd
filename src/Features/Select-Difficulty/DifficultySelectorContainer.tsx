@@ -1,9 +1,12 @@
+//#region Importações
 import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
+import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+
 import { DifficultySelector } from "@Auth/Services/DifficultySelector";
 
 import { CardSwiper, CardType } from "@Components/CardSwiper/CardSwiper";
@@ -11,21 +14,16 @@ import Button from "@Components/Button";
 
 import { DifficultySelectorStyles } from "./DifficultySelector.css";
 const { container, cardsContainer } = DifficultySelectorStyles;
-
 import { SelectDifficultyImages } from "./Assets/SelectDifficultyImages";
-import { router } from "expo-router";
-import { GlobalFontColors } from "@Assets/Colors";
-// Cada variável é uma imagem
 const { easy, medium, hard } = SelectDifficultyImages;
+import { GlobalFontColors } from "@Assets/Colors";
+//#endregion
 
-// Pegue essas variáveis e coloque na chave "image" que está vazia
 const cardsArray: CardType[] = [
   { id: 1, image: easy, text: "easy", title: "Fácil" },
   { id: 2, image: medium, text: "medium", title: "Médio" },
   { id: 3, image: hard, text: "hard", title: "Difícil" },
 ];
-
-// Apague todos os comentários depois de terminar
 
 export default function DifficultySelectorContainer() {
   const [difficulty, setDifficulty] = useState<number>(0);

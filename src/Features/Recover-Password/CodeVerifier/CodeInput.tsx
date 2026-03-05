@@ -1,5 +1,5 @@
 import { GlobalColors } from "@Assets/Colors";
-import React, { useState, useRef } from "react";
+import { useRef } from "react";
 import {
   View,
   TextInput,
