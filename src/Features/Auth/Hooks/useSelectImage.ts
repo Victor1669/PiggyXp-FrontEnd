@@ -4,6 +4,20 @@ import * as ImagePicker from "expo-image-picker";
 
 import { UploadPhotoService } from "@Auth/Services/UploadPhotoService";
 import { toastMessage } from "Utils/toast";
+import { env } from "Config/env";
+
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+
+const MIME_TYPE_MAP: Record<string, string> = {
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+};
+
+function getMimeType(uri: string): string {
+  const extension = Object.keys(MIME_TYPE_MAP).find((ext) => uri.endsWith(ext));
+  return extension ? MIME_TYPE_MAP[extension] : "invalid";
+}
 
 function useSelectImage(backEndURL: string, method: "POST" | "PUT") {
   const [imageURI, setImageURI] = useState<string>("");
@@ -18,8 +32,10 @@ function useSelectImage(backEndURL: string, method: "POST" | "PUT") {
     if (result.canceled) return;
 
     const image = result.assets[0];
+    const isFileSizeInvalid =
+      image.fileSize === undefined || image.fileSize > MAX_FILE_SIZE_BYTES;
 
-    if (image.fileSize === undefined || image.fileSize > 5 * 1024 * 1024) {
+    if (isFileSizeInvalid) {
       toastMessage({
         type: "error",
         text: "Imagem inexistente ou grande demais!",
@@ -32,42 +48,41 @@ function useSelectImage(backEndURL: string, method: "POST" | "PUT") {
   }
 
   async function handleImageSubmit(token: string) {
-    if (imageLocation) {
-      const mimeType = imageLocation.endsWith(".png")
-        ? "image/png"
-        : imageLocation.endsWith(".jpg") || imageLocation.endsWith(".jpeg")
-          ? "image/jpeg"
-          : "invalid";
+    if (!imageLocation) return;
 
-      if (mimeType === "invalid") {
-        toastMessage({
-          type: "error",
-          text: "Tipo de imagem inválida!",
-        });
-      }
+    const mimeType = getMimeType(imageLocation);
 
-      const { body, status } = await UploadPhotoService(
-        imageLocation,
-        token,
-        mimeType,
-        backEndURL,
-        method,
-      );
+    if (mimeType === "invalid") {
+      toastMessage({ type: "error", text: "Tipo de imagem inválida!" });
+      return;
+    }
 
-      const data = JSON.parse(body);
+    const { body, status } = await UploadPhotoService(
+      imageLocation,
+      token,
+      mimeType,
+      backEndURL,
+      method,
+    );
 
-      if (status < 300) {
-        toastMessage({ type: "success", text: data.message });
-      } else {
-        if (data.message === "Token inválido ou expirado") {
-          toastMessage({
-            type: "error",
-            text: "Token expirado, refaça o login antes!",
-          });
+    const data = JSON.parse(body);
+    const uploadFailed = status >= 300;
 
-          router.replace("/Login");
-        } else toastMessage({ type: "error", text: data.message });
-      }
+    if (!uploadFailed) {
+      toastMessage({ type: "success", text: data.message });
+      return;
+    }
+
+    const isTokenExpired = data.message === "Token inválido ou expirado";
+
+    if (isTokenExpired) {
+      toastMessage({
+        type: "error",
+        text: "Token expirado, refaça o login antes!",
+      });
+      router.replace("/Login");
+    } else {
+      toastMessage({ type: "error", text: data.message });
     }
   }
 

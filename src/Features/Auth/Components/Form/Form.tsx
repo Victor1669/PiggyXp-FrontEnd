@@ -19,6 +19,7 @@ export type FieldProps = {
   nomeCampo: string;
   validation: RegisterOptions;
   inputAutoComplete: TextInputProps["autoComplete"];
+  validationEnabled?: boolean;
 };
 
 type FormProps = {
@@ -28,6 +29,7 @@ type FormProps = {
   defaultValues?: object;
   forgotPasswordText?: string;
   forgotPasswordHREF?: string;
+  validationEnabled?: boolean;
 };
 
 export default function Form({
@@ -38,6 +40,7 @@ export default function Form({
   onSubmit,
   // É UM OBJETO CUJAS CHAVES POSSUEM O MESMO NOME QUE O CAMPO
   defaultValues,
+  validationEnabled = true,
 }: FormProps) {
   const methods = useForm({
     defaultValues,
@@ -55,6 +58,7 @@ export default function Form({
               nomeCampo={field.nomeCampo}
               validation={field.validation}
               inputAutoComplete={field.inputAutoComplete}
+              validationEnabled={validationEnabled}
             />
           ))}
         </View>
@@ -81,10 +85,11 @@ export function Field({
   nomeCampo,
   validation,
   inputAutoComplete,
+  validationEnabled,
 }: FieldProps) {
   const {
     control,
-    formState: { errors, isSubmitted, isSubmitSuccessful },
+    formState: { errors, isSubmitted },
   } = useFormContext();
 
   const { width } = useWindowDimensions();
@@ -97,7 +102,7 @@ export function Field({
       <Controller
         control={control}
         name={nomeCampo}
-        rules={validation}
+        rules={validationEnabled ? validation : {}}
         render={({ field: { onChange, onBlur, value } }) => (
           <AnimatedInput
             inputStyle={[

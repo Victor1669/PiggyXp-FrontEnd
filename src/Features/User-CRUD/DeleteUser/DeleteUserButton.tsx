@@ -1,25 +1,32 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
+import { Modal, Pressable, Text, View } from "react-native";
+import { router } from "expo-router";
+
+import { env } from "Config/env";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+
 import { DeleteUserService } from "@Auth/Services/DeleteUser";
 
 import { toastMessage } from "Utils/toast";
 
 import Button from "@Components/Button";
-import { Modal, Pressable, Text, View } from "react-native";
 
 export default function DeleteUserButton() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const router = useRouter();
 
   const { user, userToken, logout } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
 
   async function handleDeleteAccount() {
+    if (env.buildProfile === "preview") {
+      await logout();
+      router.replace("/Cadastro");
+      return;
+    }
     if (!getIsConnected()) return;
     setShowLoadingScreen(true);
 

@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import { env } from "Config/env";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 import { useInternetConnection } from "Contexts/useInternetConnection";
@@ -18,6 +20,7 @@ export default function Home() {
   const { getIsConnected } = useInternetConnection();
 
   useEffect(() => {
+    if (env.buildProfile === "preview") return;
     if (!getIsConnected()) return;
     setShowLoadingScreen(true);
     (async function getUserInfo() {

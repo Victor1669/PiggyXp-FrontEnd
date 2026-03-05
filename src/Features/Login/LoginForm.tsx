@@ -1,22 +1,32 @@
+//#region Importações
 import { router } from "expo-router";
-import { jwtDecode } from "jwt-decode";
+
+import { env } from "Config/env";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 
+import { GetUserInfo } from "@Auth/Services/UserInfoService";
 import { UserLogin } from "@Auth/Services/LoginService";
 
 import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
-import { GetUserInfo } from "@Auth/Services/UserInfoService";
+
+import { PreviewUserInfo } from "Features/Preview/PreviewUser";
+//#endregion
 
 export default function LoginForm() {
-  const { refreshToken, userToken } = useAuth();
+  const { refreshToken, userToken, login } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
 
   async function handleSubmit(data: any) {
+    if (env.buildProfile === "preview") {
+      await login(PreviewUserInfo);
+      router.push("/Content");
+      return;
+    }
     if (!getIsConnected()) return;
     setShowLoadingScreen(true);
     const { Email: email, Senha: password } = data;
@@ -57,6 +67,7 @@ export default function LoginForm() {
       buttonText="Entrar"
       forgotPasswordText="Esqueceu a senha?"
       forgotPasswordHREF="/SendRecoveryEmail"
+      validationEnabled={env.buildProfile !== "preview"}
     />
   );
 }
