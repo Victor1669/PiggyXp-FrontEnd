@@ -10,7 +10,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  user_img: string;
+  user_img: string | undefined;
   xp: number;
   nivel: number;
   coins: number;

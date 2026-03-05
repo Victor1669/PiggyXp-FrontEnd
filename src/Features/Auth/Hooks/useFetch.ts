@@ -1,4 +1,5 @@
 import { api } from "Config/axios";
+import { env } from "Config/env";
 
 import { toastMessage } from "Utils/toast";
 
@@ -18,6 +19,7 @@ export async function useFetch({
   showToastMessage,
 }: useFetchProps) {
   try {
+    if (env.buildProfile === "preview") return { data: "", status: 200 };
     const config = {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,

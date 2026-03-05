@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import { View, Text, Image } from "react-native";
 import { router } from "expo-router";
 
-import { env } from "Config/env";
-import { screenValues } from "Config/screenValues";
-const { showDevTools } = screenValues();
-
 import { themeChanger } from "Helpers/themeChanger";
 
 import Button from "@Components/Button";
@@ -31,11 +27,6 @@ export default function WelcomeContainer() {
       <Button style={buttons} onPress={() => router.push("/Cadastro")}>
         Cadastrar-se
       </Button>
-      {env.buildProfile !== "production" && showDevTools && (
-        <Button style={buttons} onPress={() => router.push("/Content")}>
-          Conteúdo
-        </Button>
-      )}
     </View>
   );
 }

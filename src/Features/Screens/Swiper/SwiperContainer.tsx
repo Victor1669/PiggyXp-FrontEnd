@@ -2,10 +2,13 @@ import { useState } from "react";
 import { View, Text } from "react-native";
 import { Link } from "expo-router";
 
+import { env } from "Config/env";
+
 import { CardType, CardSwiper } from "@Components/CardSwiper/CardSwiper";
 
-import { SplashScreenImages } from "@Assets/SwiperImages";
 import { SwiperStyles } from "./SwiperContainer.css";
+
+import { SplashScreenImages } from "@Assets/SwiperImages";
 
 const { caminhos, estudante, entendendoDinheiro } = SplashScreenImages;
 
@@ -45,7 +48,11 @@ export default function SwiperContainer() {
           onScroll={onScroll}
           actualIndex={index}
         />
-        <Link style={SwiperStyles.skipLink} href="/Welcome" replace>
+        <Link
+          style={SwiperStyles.skipLink}
+          href="/Welcome"
+          replace={env.buildProfile !== "preview"}
+        >
           <Text>{"Pular > > >"}</Text>
         </Link>
       </View>
