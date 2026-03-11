@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { screenValues } from "Config/screenValues";
 const {
-  fontSizes: { DEFAULT_FONT_SIZE },
+  fontSizes: { SMALL_FONT_SIZE },
 } = screenValues();
 
 import Button from "@Components/Button";
@@ -30,12 +30,13 @@ export default function AnswerButton({
     <Button
       disabled={disabled}
       fontColor={GlobalFontColors.Dark}
-      fontSize={DEFAULT_FONT_SIZE}
+      fontSize={SMALL_FONT_SIZE}
       style={{
         backgroundColor: buttonColor.backColor,
-        margin: "auto",
         justifyContent: "center",
-        height: 72,
+        paddingVertical: 5,
+        margin: "auto",
+        height: 60,
       }}
       shadowColor={buttonColor.shadowColor}
       onPress={() => {

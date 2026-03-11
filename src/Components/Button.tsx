@@ -5,7 +5,7 @@ import { GlobalColors } from "@Assets/Colors";
 
 import { screenValues } from "Config/screenValues";
 const {
-  fontSizes: { BIG_FONT_STYLE },
+  fontSizes: { BIG_FONT_SIZE },
 } = screenValues();
 interface ButtonProps {
   children: string;
@@ -44,7 +44,6 @@ export default function Button({
       onPressIn={() => setButtonHeight(0)}
       onPressOut={() => setButtonHeight(4)}
       style={[
-        style,
         {
           //@ts-ignore
           width: style?.width || width - 40,
@@ -58,12 +57,13 @@ export default function Button({
             style?.boxShadow || `0px ${buttonHeight}px 4px ${shadowColor}`,
           transform: `translateY(${-buttonHeight}px)`,
         },
+        style,
       ]}
     >
       <Text
         style={{
           fontWeight: "bold",
-          fontSize: fontSize || BIG_FONT_STYLE,
+          fontSize: fontSize || BIG_FONT_SIZE,
           color: fontColor,
           textAlign: "center",
         }}

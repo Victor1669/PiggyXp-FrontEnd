@@ -26,6 +26,7 @@ export default function QuestionContainer({
         style={{
           color: GlobalFontColors.Dark,
           textAlign: "center",
+          marginBottom: 60,
           fontWeight: "bold",
           fontSize: TITLE_FONT_SIZE,
         }}

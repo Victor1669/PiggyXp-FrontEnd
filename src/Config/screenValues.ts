@@ -6,7 +6,7 @@ export function screenValues() {
   const deviceWidth = phoneWindow.width;
   const deviceHeight = phoneWindow.height;
   const isDeviceHeigthSmall = phoneWindow.height < 861;
-  const showDevTools = true;
+  const showDevTools = false;
 
   // Largura de referência (ex: iPhone 14 = 390px)
   const BASE_WIDTH = 390;
