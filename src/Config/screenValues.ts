@@ -8,6 +8,8 @@ export function screenValues() {
   const isDeviceHeigthSmall = phoneWindow.height < 861;
   const showDevTools = false;
 
+  const TABBAR_HEIGHT = 130;
+
   // Largura de referência (ex: iPhone 14 = 390px)
   const BASE_WIDTH = 390;
   const scale = deviceWidth / BASE_WIDTH;
@@ -29,5 +31,6 @@ export function screenValues() {
     deviceHeight,
     fontSizes,
     showDevTools,
+    TABBAR_HEIGHT,
   };
 }

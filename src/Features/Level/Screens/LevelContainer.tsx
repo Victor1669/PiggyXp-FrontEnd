@@ -1,6 +1,7 @@
 //#region Importações
 import { useEffect, useRef } from "react";
 import { View, Text, StatusBar, Animated } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 
 import { useQuiz } from "../Contexts/useQuiz";
@@ -22,6 +23,7 @@ export default function LevelContainer() {
     seconds,
     dispatch,
   } = useQuiz();
+  const insets = useSafeAreaInsets();
 
   const actualQuestion = questions[Number(questionIndex)];
   const nextQuestionIndex = Number(questionIndex) + 1;
@@ -31,6 +33,9 @@ export default function LevelContainer() {
   const pan = useRef(new Animated.ValueXY()).current;
 
   useEffect(() => {
+    if (questionIndex === "0") {
+      dispatch({ type: "QUIZ_COMECOU" });
+    }
     return () => {
       dispatch({ type: "PROXIMA_QUESTAO" });
     };
@@ -51,7 +56,7 @@ export default function LevelContainer() {
 
     router.replace(
       isLevelCompleted
-        ? `/Content`
+        ? `/Content/Level/LevelConclusion`
         : `/Content/Level/?questionIndex=${nextQuestionIndex}`,
     );
   }
@@ -79,6 +84,7 @@ export default function LevelContainer() {
         >
           {seconds}
         </Text>
+
         <QuestionContainer
           actualQuestion={actualQuestion}
           btnDisabled={disableButton}
@@ -97,6 +103,8 @@ export default function LevelContainer() {
         showSheet={showSheet}
         showThumb={false}
         interactive={false}
+        startSheetTop={SHEET_HEIGHT + 90}
+        finalSheetTop={100 + insets.bottom - 15}
         textElements={
           <Text style={{ color: GlobalFontColors.Dark }}>{textFeedBack}</Text>
         }

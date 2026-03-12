@@ -1,14 +1,20 @@
 import { View, Text, Image } from "react-native";
-import { LevelAssets } from "../Assets/LevelAssets";
-import Button from "@Components/Button";
-import { GlobalFontColors } from "@Assets/Colors";
+import { router } from "expo-router";
+
 import { screenValues } from "Config/screenValues";
+
+import Button from "@Components/Button";
+
+import { LevelAssets } from "../Assets/LevelAssets";
+import { GlobalFontColors } from "@Assets/Colors";
+import { useQuiz } from "../Contexts/useQuiz";
 
 const {
   fontSizes: { DEFAULT_FONT_SIZE, BIG_FONT_SIZE },
 } = screenValues();
 
 export default function LevelConclusionContainer() {
+  const { seconds, rightAnswers, questions } = useQuiz();
   return (
     <View
       style={{
@@ -39,13 +45,25 @@ export default function LevelConclusionContainer() {
       <View style={{ gap: 20 }}>
         <Text
           style={{
+            color: GlobalFontColors.Dark,
+            fontSize: BIG_FONT_SIZE,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          {rightAnswers} / {questions.length}
+        </Text>
+
+        <Text
+          style={{
             color: "#E2FF41",
             fontSize: BIG_FONT_SIZE,
             fontWeight: "bold",
             textAlign: "center",
           }}
         >
-          3:17
+          {(seconds / 60).toFixed(0)} : {seconds % 60 < 10 ? 0 : ""}
+          {seconds % 60}
         </Text>
         <View style={{ flexDirection: "row", gap: 70 }}>
           <Text
@@ -68,7 +86,10 @@ export default function LevelConclusionContainer() {
           </Text>
         </View>
       </View>
-      <Button onPress={() => {}} style={{ marginTop: 50 }}>
+      <Button
+        onPress={() => router.replace("/Content")}
+        style={{ marginTop: 50 }}
+      >
         Receber xp
       </Button>
     </View>

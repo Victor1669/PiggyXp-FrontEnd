@@ -15,6 +15,7 @@ export interface LevelTypes {
   questions: QuestionTypes[];
   showSheet: boolean;
   disableButton: boolean;
+  timerActive: boolean;
   seconds: number;
 }
 interface QuizProviderValues extends LevelTypes {
@@ -29,6 +30,7 @@ const initialValues: LevelTypes = {
   rightAnswers: 0,
   showSheet: false,
   disableButton: false,
+  timerActive: false,
   seconds: 0,
 };
 
@@ -42,6 +44,9 @@ function reducer(state: any, action: any): LevelTypes {
       const { text: initialText, difficulty, order, questions } = payload;
 
       return { ...state, initialText, difficulty, order, questions };
+    }
+    case "QUIZ_COMECOU": {
+      return { ...state, timerActive: true };
     }
     case "TICK": {
       return { ...state, seconds: seconds + 1 };
@@ -66,8 +71,9 @@ function reducer(state: any, action: any): LevelTypes {
     case "PROXIMA_QUESTAO": {
       return { ...state, showSheet: false, disableButton: false };
     }
+
     case "QUIZ_ACABOU": {
-      return { ...state };
+      return { ...state, timerActive: false };
     }
     default:
       throw new Error("Ação desconhecida: " + type);
@@ -85,6 +91,7 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
       showSheet,
       disableButton,
       textFeedBack,
+      timerActive,
       seconds,
     },
     dispatch,
@@ -92,6 +99,8 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
     useReducer(reducer, initialValues);
 
   useEffect(() => {
+    if (!timerActive) return;
+
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
     }, 1000);
@@ -99,7 +108,7 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [timerActive]);
 
   const value: QuizProviderValues = {
     initialText,
@@ -109,6 +118,7 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
     showSheet,
     disableButton,
     textFeedBack,
+    timerActive,
     seconds,
   };
 

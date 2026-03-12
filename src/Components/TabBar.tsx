@@ -1,4 +1,4 @@
-import React from "react";
+//#region Importações
 import {
   View,
   Text,
@@ -7,17 +7,22 @@ import {
   StyleSheet,
   Animated,
 } from "react-native";
+import { usePathname } from "expo-router";
 import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { screenValues } from "Config/screenValues";
+const { TABBAR_HEIGHT } = screenValues();
+
 import { GlobalColors } from "@Assets/Colors";
 import { GlobalImages } from "@Assets/GlobalImages";
-import { usePathname } from "expo-router";
-
 const {
   tabBar: { home, loja, missoes, perfil, ranking },
 } = GlobalImages;
+//#endregion
 
 const ICON_MAP: Record<string, any> = {
   index: { img: home, width: 40, height: 40, mt: 0, mb: 0 },
@@ -38,6 +43,8 @@ export default function TabBar({
   navBarHeight,
 }: MyTabBarProps) {
   const pathName = usePathname();
+  const insets = useSafeAreaInsets();
+
   const translateY = navBarHeight.interpolate({
     inputRange: [0, 30],
     outputRange: [30, 0],
@@ -50,8 +57,8 @@ export default function TabBar({
         style={[
           styles.container,
           {
-            height: 130,
-            transform: [{ translateY }],
+            height: TABBAR_HEIGHT,
+            transform: [{ translateY: translateY }],
           },
         ]}
       >

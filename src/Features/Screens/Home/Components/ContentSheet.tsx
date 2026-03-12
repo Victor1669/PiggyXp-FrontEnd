@@ -1,6 +1,7 @@
 //#region Importações
 import { useEffect, useRef } from "react";
 import { Animated, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, usePathname } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
@@ -21,6 +22,7 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
   const pathName = usePathname();
   const { showSheet, setShowSheet } = useShowSheet();
   const { selectedLevelIndex, levels } = useLevels();
+  const insets = useSafeAreaInsets();
 
   const pan = useRef(new Animated.ValueXY()).current;
   const SHEET_HEIGHT = 300;
@@ -46,14 +48,17 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
   return (
     <BottomSheet
       height={SHEET_HEIGHT}
+      yPosition={pan}
+      showSheet={showSheet}
+      setShowSheet={setShowSheet}
+      startSheetTop={SHEET_HEIGHT}
+      finalSheetTop={insets.bottom - 35}
+      buttonText="Iniciar"
       style={{
         bottom: SHEET_HEIGHT * sections.length - SHEET_HEIGHT,
         paddingHorizontal: 20,
         marginBottom: 10,
       }}
-      yPosition={pan}
-      showSheet={showSheet}
-      setShowSheet={setShowSheet}
       onButtonPress={() => {
         router.push(
           `/Content/Level/LoadingLevel/?actualQuestion=${selectedLevelIndex + 1}`,
@@ -72,7 +77,6 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
           </Text>
         </View>
       }
-      buttonText="Iniciar"
     />
   );
 }

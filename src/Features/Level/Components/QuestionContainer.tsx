@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 
 import { screenValues } from "Config/screenValues";
 const {
@@ -21,12 +21,18 @@ export default function QuestionContainer({
   onAnswerPress: (index: number) => void;
 }) {
   return (
-    <View style={{ gap: 35 }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        marginVertical: 2 * (StatusBar.currentHeight ?? 20),
+      }}
+    >
       <Text
         style={{
           color: GlobalFontColors.Dark,
           textAlign: "center",
-          marginBottom: 60,
+          marginTop: 80,
           fontWeight: "bold",
           fontSize: TITLE_FONT_SIZE,
         }}

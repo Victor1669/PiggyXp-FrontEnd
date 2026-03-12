@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
 import RN, { Animated, PanResponder, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { screenValues } from "Config/screenValues";
+const { isDeviceHeigthSmall, deviceHeight, TABBAR_HEIGHT } = screenValues();
 
 import Button from "../Button";
 
@@ -16,6 +20,8 @@ export default function BottomSheet({
   style,
   showThumb = true,
   interactive = true,
+  startSheetTop = height,
+  finalSheetTop = 0,
 }: {
   onButtonPress: () => void;
   buttonText: string;
@@ -27,6 +33,8 @@ export default function BottomSheet({
   style?: RN.StyleProp<RN.ViewStyle>;
   showThumb?: boolean;
   interactive?: boolean;
+  startSheetTop?: number;
+  finalSheetTop?: number;
 }) {
   function animateTo(y: number) {
     Animated.spring(yPosition, {
@@ -51,17 +59,17 @@ export default function BottomSheet({
         if (!interactive) return;
 
         const newY = Math.max(0, gestureState.dy);
-        yPosition.setValue({ x: 0, y: newY });
+        yPosition.setValue({ x: 0, y: newY + finalSheetTop });
       },
 
       onPanResponderRelease: (_, gestureState) => {
         if (!setShowSheet || !interactive) return;
 
         if (gestureState.dy > 100 || gestureState.vy > 0.5) {
-          animateTo(height);
+          animateTo(startSheetTop);
           setShowSheet(false);
         } else {
-          animateTo(0);
+          animateTo(finalSheetTop);
           setShowSheet(true);
         }
       },
@@ -69,11 +77,10 @@ export default function BottomSheet({
   ).current;
 
   useEffect(() => {
-    console.log("showSheet mudou");
     if (showSheet) {
-      animateTo(0);
+      animateTo(finalSheetTop);
     } else {
-      animateTo(height);
+      animateTo(startSheetTop);
     }
   }, [showSheet]);
 
@@ -83,7 +90,12 @@ export default function BottomSheet({
         style={[
           style,
           BottomSheetStyles.container,
-          { height, transform: yPosition.getTranslateTransform() },
+          {
+            height,
+            transform: yPosition.getTranslateTransform(),
+            top:
+              deviceHeight - 3 * TABBAR_HEIGHT + (isDeviceHeigthSmall ? 30 : 0),
+          },
         ]}
       >
         <View
