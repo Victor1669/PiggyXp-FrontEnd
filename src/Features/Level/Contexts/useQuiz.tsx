@@ -7,7 +7,7 @@ export interface QuestionTypes {
   rightAnswerIndex: number;
 }
 
-interface LevelTypes {
+export interface LevelTypes {
   initialText: string;
   rightAnswers: number;
   questions: QuestionTypes[];

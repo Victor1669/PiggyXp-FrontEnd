@@ -9,9 +9,12 @@ import { toastMessage } from "Utils/toast";
 
 import SplashContainer from "@Screens/Splash/SplashContainer";
 import { themeChanger } from "Helpers/themeChanger";
+import { env } from "Config/env";
 
 export default function SplashScreen() {
   const { user, refreshToken, userToken } = useAuth();
+
+  console.log(env.buildProfile);
 
   // CONFIGURAÇÃO DE FONTES
   const [loaded, error] = useFonts({
@@ -19,6 +22,7 @@ export default function SplashScreen() {
   });
 
   useEffect(() => {
+    if (env.buildProfile === "preview") return;
     // SE TIVER INFORMAÇÃO DO USUÁRIO, VAI PRA CONTENT
     const timer1 = setTimeout(() => {
       (async () => {
@@ -43,7 +47,7 @@ export default function SplashScreen() {
     }, 0);
 
     // COMPORTAMENTO PADRÃO DO APP
-    const timer2 = setTimeout(async () => {
+    const timer2 = setTimeout(() => {
       router.replace("/Swiper");
     }, 2800);
 
@@ -52,6 +56,15 @@ export default function SplashScreen() {
       clearTimeout(timer2);
     };
   }, [user]);
+
+  // CASO SEJA BUILD DE PREVIEW
+  useEffect(() => {
+    if (env.buildProfile !== "preview") return;
+    themeChanger("splash");
+    setTimeout(async () => {
+      router.replace("/Swiper");
+    }, 2800);
+  }, []);
 
   return <SplashContainer />;
 }
