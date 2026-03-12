@@ -11,6 +11,9 @@ export default function _layout() {
           headerShown: false,
 
           contentStyle: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
             backgroundColor: GlobalColors.contentBackColor.Dark,
           },
         }}

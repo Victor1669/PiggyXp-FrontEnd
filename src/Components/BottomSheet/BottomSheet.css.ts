@@ -6,11 +6,10 @@ export const BottomSheetStyles = StyleSheet.create({
   container: {
     width: "100%",
     backgroundColor: "rgb(85, 105, 78)",
-    position: "absolute",
     zIndex: 999,
     borderRadius: 50,
     paddingBottom: SHEET_MARGIN_BOTTOM,
-    marginBottom: -SHEET_MARGIN_BOTTOM,
+    position: "absolute",
   },
   interactiveView: {
     width: "100%",

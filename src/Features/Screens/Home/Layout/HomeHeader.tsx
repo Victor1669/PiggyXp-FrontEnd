@@ -7,7 +7,7 @@ import { useShowSheet } from "../Contexts/useShowSheet";
 
 import { screenValues } from "Config/screenValues";
 const {
-  fontSizes: { BIG_FONT_STYLE },
+  fontSizes: { BIG_FONT_SIZE },
 } = screenValues();
 
 import { HomeHeaderStyles } from "../Styles/HomeHeader.css";
@@ -35,7 +35,7 @@ export default function HomeHeader() {
           <Text
             style={{
               color: "#F24822",
-              fontSize: BIG_FONT_STYLE,
+              fontSize: BIG_FONT_SIZE,
             }}
           >
             {user.lives ?? 5}

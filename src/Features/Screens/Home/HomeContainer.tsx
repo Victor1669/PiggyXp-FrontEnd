@@ -21,6 +21,7 @@ export default function HomeContainer() {
 
 const HomeStyles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     gap: 20,

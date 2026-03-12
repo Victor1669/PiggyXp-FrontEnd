@@ -8,38 +8,21 @@ export function screenValues() {
   const isDeviceHeigthSmall = phoneWindow.height < 861;
   const showDevTools = false;
 
-  const TITLE_FONT_SIZE = 32;
-  const BIGGER_FONT_SIZE = 28;
-  const BIG_FONT_STYLE = 24;
-  const DEFAULT_FONT_SIZE = 20;
-  const SMALL_FONT_SIZE = 16;
-  const VERY_SMALL_FONT_SIZE = 14;
+  const TABBAR_HEIGHT = 130;
+
+  // Largura de referência (ex: iPhone 14 = 390px)
+  const BASE_WIDTH = 390;
+  const scale = deviceWidth / BASE_WIDTH;
+
+  const normalize = (size: number) => Math.round(size * scale);
 
   const fontSizes = {
-    /**
-     * Fonte para títulos: 32
-     */
-    TITLE_FONT_SIZE,
-    /**
-     * Fonte para textos grandes: 28
-     */
-    BIGGER_FONT_SIZE,
-    /**
-     * Fonte para textos maiores que o comum: 24
-     */
-    BIG_FONT_STYLE,
-    /**
-     * Fonte para texto comum: 20
-     */
-    DEFAULT_FONT_SIZE,
-    /**
-     * Fonte para textos pequenos: 16
-     */
-    SMALL_FONT_SIZE,
-    /**
-     * Fonte para textos muito pequenos: 14
-     */
-    VERY_SMALL_FONT_SIZE,
+    TITLE_FONT_SIZE: normalize(32),
+    BIGGER_FONT_SIZE: normalize(28),
+    BIG_FONT_SIZE: normalize(24),
+    DEFAULT_FONT_SIZE: normalize(20),
+    SMALL_FONT_SIZE: normalize(16),
+    VERY_SMALL_FONT_SIZE: normalize(14),
   };
 
   return {
@@ -48,5 +31,6 @@ export function screenValues() {
     deviceHeight,
     fontSizes,
     showDevTools,
+    TABBAR_HEIGHT,
   };
 }

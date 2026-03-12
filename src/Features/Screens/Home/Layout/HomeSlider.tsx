@@ -6,7 +6,7 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { screenValues } from "Config/screenValues";
 const {
   deviceWidth,
-  fontSizes: { BIG_FONT_STYLE, BIGGER_FONT_SIZE },
+  fontSizes: { BIG_FONT_SIZE, BIGGER_FONT_SIZE },
 } = screenValues();
 
 import ProgressBar from "@Components/ProgressBar";
@@ -71,7 +71,7 @@ function Card1() {
           style={{
             color: GlobalFontColors.Dark,
             fontWeight: "bold",
-            fontSize: BIG_FONT_STYLE,
+            fontSize: BIG_FONT_SIZE,
           }}
         >
           Novos horizontes
