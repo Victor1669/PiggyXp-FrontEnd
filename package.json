@@ -12,8 +12,7 @@
     "update-dev": "eas update --branch development --message",
     "build-production": "eas build -p android --profile production",
     "update-production": "eas update --branch production --message",
-    "start": "pnpm expo start --dev-client",
-    "ios": "expo run:ios"
+    "start": "pnpm expo start --dev-client"
   },
   "jest": {
     "preset": "jest-expo",
@@ -29,10 +28,9 @@
     }
   },
   "dependencies": {
-    "@react-native-community/netinfo": "^12.0.1",
-    "@react-native-google-signin/google-signin": "^16.1.2",
     "axios": "^1.13.6",
     "expo": "~54.0.33",
+    "expo-av": "^16.0.8",
     "expo-constants": "~18.0.13",
     "expo-dev-client": "~6.0.20",
     "expo-font": "~14.0.11",
@@ -52,7 +50,9 @@
     "react-native-fbsdk-next": "^13.4.3",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.16.0",
-    "react-native-toast-message": "^2.3.3"
+    "react-native-toast-message": "^2.3.3",
+    "@react-native-community/netinfo": "^12.0.1",
+    "@react-native-google-signin/google-signin": "^16.1.2"
   },
   "devDependencies": {
     "@testing-library/react-native": "^13.3.3",

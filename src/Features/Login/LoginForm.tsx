@@ -56,7 +56,9 @@ export default function LoginForm() {
     const { data: user, status } = await GetUserInfo(userId);
 
     if (status < 300) {
-      router.replace(user.first_login ? "/DifficultySelector" : "/Content");
+      router.replace(
+        user.first_login ? "/Login/DifficultySelector" : "/Content",
+      );
     } else router.replace("/Login");
   }
 

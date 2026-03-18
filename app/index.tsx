@@ -4,17 +4,16 @@ import { useFonts } from "expo-font";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
+import { env } from "Config/env";
+
 import { RefreshTokenService } from "@Auth/Services/RefreshTokenService";
 import { toastMessage } from "Utils/toast";
 
 import SplashContainer from "@Screens/Splash/SplashContainer";
 import { themeChanger } from "Helpers/themeChanger";
-import { env } from "Config/env";
 
 export default function SplashScreen() {
   const { user, refreshToken, userToken } = useAuth();
-
-  console.log(env.buildProfile);
 
   // CONFIGURAÇÃO DE FONTES
   const [loaded, error] = useFonts({

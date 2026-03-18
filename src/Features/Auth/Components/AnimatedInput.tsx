@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import RN, { Animated, Image, Pressable, TextInput, View } from "react-native";
+import { useRef, useState } from "react";
+import RN, { Animated, Pressable, TextInput, View } from "react-native";
 import RHF from "react-hook-form";
 
 import { Animate } from "Utils/animate";
 
 import { screenValues } from "Config/screenValues";
 
+import Picture from "@Components/Picture";
+
 import { AuthImages } from "@Auth/Assets/AuthImages";
 const {
   name,
   email,
-  password: { lock, eyeOpen, eyeClosed },
+  password: { eyeClosed, eyeOpen, lock },
 } = AuthImages;
 
 export default function AnimatedInput({
@@ -81,7 +83,8 @@ export default function AnimatedInput({
 
   return (
     <View>
-      <Image
+      <Picture
+        folder="auth"
         style={{
           width: 30,
           height: 30,
@@ -90,25 +93,8 @@ export default function AnimatedInput({
 
           position: "absolute",
         }}
-        source={label === "Email" ? email : label === "Senha" ? lock : name}
+        source={label === "Nome" ? name : label === "Email" ? email : lock}
       />
-      {label === "Senha" && (
-        <Pressable
-          style={{
-            position: "absolute",
-            marginTop: 17,
-            width: 25,
-            right: 20,
-            zIndex: 2,
-          }}
-          onPress={() => setShowPassword((s) => !s)}
-        >
-          <Image
-            style={{ width: "100%" }}
-            source={showPassword ? eyeClosed : eyeOpen}
-          />
-        </Pressable>
-      )}
       <Animated.Text
         style={[
           labelStyle,
@@ -134,6 +120,24 @@ export default function AnimatedInput({
         value={value}
         secureTextEntry={label === "Senha" && !showPassword}
       />
+      {label === "Senha" && (
+        <Pressable
+          style={{
+            position: "absolute",
+            marginTop: 17,
+            width: 25,
+            right: 20,
+            zIndex: 2,
+          }}
+          onPress={() => setShowPassword((s) => !s)}
+        >
+          <Picture
+            folder="auth"
+            style={{ width: 25, height: 25 }}
+            source={showPassword ? eyeClosed : eyeOpen}
+          />
+        </Pressable>
+      )}
     </View>
   );
 }

@@ -20,7 +20,7 @@ export default function LevelTipsContainer() {
       >
         {initialText}
       </Text>
-      <Button onPress={() => router.replace("/Content/Level/?questionIndex=0")}>
+      <Button onPress={() => router.replace("/Level/?questionIndex=0")}>
         Continuar
       </Button>
     </View>

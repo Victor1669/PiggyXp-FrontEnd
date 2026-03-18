@@ -1,4 +1,6 @@
-import { Image, Text, useWindowDimensions, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
+
+import Picture from "@Components/Picture";
 
 import { AchievementsStyles } from "../Styles/Achievements.css";
 const {
@@ -23,7 +25,11 @@ export default function Achievements() {
       <View style={achievementList}>
         {achievementsArray.map((image, i) => (
           <View key={i} style={achievement}>
-            <Image style={{ width: "100%", height: "100%" }} source={image} />
+            <Picture
+              folder="profile"
+              style={{ width: "100%", height: "100%" }}
+              source={image}
+            />
             <View
               style={{
                 height: "100%",

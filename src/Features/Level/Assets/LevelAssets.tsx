@@ -1,4 +1,4 @@
 export const LevelAssets = {
-  gato: require("./gato.gif"),
-  homem: require("./homem.gif"),
+  gato: "gato.gif",
+  homem: "homem.gif",
 };

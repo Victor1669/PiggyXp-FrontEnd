@@ -1,6 +1,7 @@
-import { Image, Pressable } from "react-native";
+import { Pressable } from "react-native";
 
 import { ImageContainer } from "../../../Auth/Components/ImageContainer";
+import Picture from "@Components/Picture";
 
 import { ChangeUserInfoStyles } from "../../../User-CRUD/ChangeUserInfo/ChangeUserInfo.css";
 const { imageField, selectImageButton, imageContainer } = ChangeUserInfoStyles;
@@ -25,7 +26,11 @@ export default function ChangeImageButton({
         }}
         style={selectImageButton}
       >
-        <Image source={AuthImages.edit} />
+        <Picture
+          style={{ width: 15, height: 15 }}
+          folder="auth"
+          source={AuthImages.edit}
+        />
       </Pressable>
       <ImageContainer image={image} style={imageContainer} />
     </Pressable>

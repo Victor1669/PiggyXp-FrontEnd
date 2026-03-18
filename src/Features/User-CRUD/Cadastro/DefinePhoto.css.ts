@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-const { contentBackColor } = GlobalColors;
+import { GlobalFontColors } from "@Assets/Colors";
 
 import { screenValues } from "Config/screenValues";
 const {
@@ -10,11 +9,6 @@ const {
 } = screenValues();
 
 export const DefinePhotoFormStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: contentBackColor.Dark,
-    alignItems: "center",
-  },
   subtitle: {
     color: GlobalFontColors.Dark,
     fontSize: SMALL_FONT_SIZE,

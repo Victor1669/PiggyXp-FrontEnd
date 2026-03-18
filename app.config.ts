@@ -4,11 +4,12 @@ const {
   EXPO_PUBLIC_FACEBOOK_APP_ID,
   EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN,
   EXPO_PUBLIC_EAS_BUILD_PROFILE,
-  // EXPO_PUBLIC_BACKEND_URL
+  EXPO_PUBLIC_BACKEND_URL,
   EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID,
   EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID,
   EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID,
   EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID,
+  EXPO_PUBLIC_CLOUDINARY_BASE_LINK,
 } = process.env;
 
 /**
@@ -27,6 +28,9 @@ if (!EXPO_PUBLIC_EAS_BUILD_PROFILE) {
 }
 if (!EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID) {
   throw new Error("EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID não definido!");
+}
+if (!EXPO_PUBLIC_CLOUDINARY_BASE_LINK) {
+  throw new Error("EXPO_PUBLIC_CLOUDINARY_BASE_LINK não definido!");
 }
 
 /**
@@ -82,15 +86,16 @@ export default {
 
     android: {
       package: androidPackage,
-      adaptiveIcon: {
-        foregroundImage: appIcon,
-        backgroundColor: "#ffffff",
-      },
       edgeToEdgeEnabled: true,
       usesCleartextTraffic: true,
       enableProguardInReleaseBuilds: true,
       enableShrinkResourcesInReleaseBuilds: true,
       enableSeparateBuildPerCPUArchiteture: true,
+      adaptiveIcon: {
+        foregroundImage: appIcon,
+        backgroundColor: "#ffffff",
+      },
+      permissions: ["VIBRATE"],
       defaultConfig: {
         ndk: {
           abiFilters: ["arm64-v8a", "armeabi-v7a"],
@@ -136,7 +141,8 @@ export default {
     extra: {
       buildProfile: profile,
       androidPackage: androidPackage,
-      // backEndUrl: EXPO_PUBLIC_BACKEND_URL,
+      backEndUrl: EXPO_PUBLIC_BACKEND_URL,
+      cloudinaryBaseLink: EXPO_PUBLIC_CLOUDINARY_BASE_LINK,
       google: {
         androidClientId: androidClientId,
         webClientId: EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID,

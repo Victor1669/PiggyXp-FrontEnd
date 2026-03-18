@@ -1,3 +1,4 @@
+//#region Importações
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { router } from "expo-router";
@@ -17,6 +18,7 @@ import Form from "@Auth/Components/Form/Form";
 
 import { CodeVerifierStyles } from "Features/Recover-Password/CodeVerifier/CodeVerifier.css";
 const { textContainer, text } = CodeVerifierStyles;
+//#endregion
 
 export default function CodeVerifierForm() {
   const LENGTH = 4;

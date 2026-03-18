@@ -23,7 +23,8 @@ export type LevelType = {
   containerPosition: "flex-start" | "center" | "flex-end";
   isLocked: boolean;
   isPathLocked: boolean;
-  img: any;
+  imgFolder: string;
+  img: string;
 };
 
 const LevelsContext = createContext<LevelsContextData>({} as LevelsContextData);
@@ -40,6 +41,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "center",
       isLocked: 1 > actualLevel,
       isPathLocked: 0 > actualLevel - 2,
+      imgFolder: "tabbar",
       img: ranking,
     },
     {
@@ -47,6 +49,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "flex-start",
       isLocked: 2 > actualLevel,
       isPathLocked: 1 > actualLevel - 2,
+      imgFolder: "tabbar",
       img: perfil,
     },
     {
@@ -54,6 +57,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "center",
       isLocked: 3 > actualLevel,
       isPathLocked: 2 > actualLevel - 2,
+      imgFolder: "tabbar",
       img: missoes,
     },
     {
@@ -61,6 +65,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "flex-end",
       isLocked: 4 > actualLevel,
       isPathLocked: 3 > actualLevel - 2,
+      imgFolder: "tabbar",
       img: loja,
     },
     {
@@ -68,6 +73,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "center",
       isLocked: 5 > actualLevel,
       isPathLocked: 4 > actualLevel - 2,
+      imgFolder: "home/content",
       img: graphic,
     },
     {
@@ -75,6 +81,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "flex-start",
       isLocked: 6 > actualLevel,
       isPathLocked: 5 > actualLevel - 2,
+      imgFolder: "home/content",
       img: star,
     },
     {
@@ -82,6 +89,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "center",
       isLocked: 7 > actualLevel,
       isPathLocked: 6 > actualLevel - 2,
+      imgFolder: "tabbar",
       img: loja,
     },
     {
@@ -89,6 +97,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
       containerPosition: "flex-end",
       isLocked: 8 > actualLevel,
       isPathLocked: 7 > actualLevel - 2,
+      imgFolder: "home/content",
       img: trophy,
     },
   ];

@@ -1,4 +1,6 @@
-import { Image, Text, useWindowDimensions, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
+
+import Picture from "@Components/Picture";
 
 import { OffensiveStyles } from "../Styles/Offensive.css";
 
@@ -31,7 +33,11 @@ export default function Offensive() {
     <View style={[offensiveContainer, { height: height * 0.14 }]}>
       <Text style={offensiveTitle}>Ofensiva</Text>
       <View style={offensiveListContainer}>
-        <Image style={offensiveImage} source={ProfileImages.fire} />
+        <Picture
+          folder="profile"
+          style={offensiveImage}
+          source={ProfileImages.fire}
+        />
         <View style={offensiveList}>
           {offensiveDays.map((day, i) => (
             <View

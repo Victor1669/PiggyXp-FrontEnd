@@ -56,8 +56,8 @@ export default function LevelContainer() {
 
     router.replace(
       isLevelCompleted
-        ? `/Content/Level/LevelConclusion`
-        : `/Content/Level/?questionIndex=${nextQuestionIndex}`,
+        ? `/Level/LevelConclusion`
+        : `/Level/?questionIndex=${nextQuestionIndex}`,
     );
   }
 

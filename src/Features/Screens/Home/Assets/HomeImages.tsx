@@ -1,20 +1,20 @@
 export const HomeImages = {
-  lives: require("./Lives.png"),
+  lives: "lives.png",
   slider: {
-    section: require("./Slider/Section.png"),
-    coin: require("./Slider/Coin.png"),
+    section: "section.png",
+    coin: "coin.png",
   },
   path: {
-    locked: require("./Path/PathLocked.png"),
-    unLocked: require("./Path/PathUnlocked.png"),
+    locked: "pathLocked.png",
+    unLocked: "pathUnlocked.png",
   },
   content: {
-    hexagon: require("./Content/Hexagon.png"),
-    hexagonLocked: require("./Content/Hexagon-Locked.png"),
-    hexagonShadow: require("./Content/Hexagon-Shadow.png"),
-    hexagonLockedShadow: require("./Content/Hexagon-Shadow-Locked.png"),
-    star: require("./Content/Star.png"),
-    graphic: require("./Content/Graphic.png"),
-    trophy: require("./Content/Trophy.png"),
+    hexagon: "hexagon.png",
+    hexagonLocked: "hexagonLocked.png",
+    hexagonShadow: "hexagonShadow.png",
+    hexagonLockedShadow: "hexagonShadowLocked.png",
+    star: "star.png",
+    graphic: "graphic.png",
+    trophy: "trophy.png",
   },
 };

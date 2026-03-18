@@ -8,6 +8,7 @@ import RN, {
 } from "react-native";
 
 import { CardSwiperStyles } from "./CardSwiper.css";
+import Picture from "@Components/Picture";
 
 export interface CardType {
   id: number;
@@ -23,6 +24,7 @@ interface CardSwiperProps {
   cardImageHeight?: number;
   cardImageWidth?: number;
   fontColor?: string;
+  imgFolder: string;
 }
 
 interface DotsContainerProps {
@@ -39,6 +41,7 @@ export function CardSwiper({
   cardImageHeight,
   cardImageWidth,
   fontColor = "#000",
+  imgFolder,
 }: CardSwiperProps) {
   function onCardScroll(e: RN.NativeSyntheticEvent<RN.NativeScrollEvent>) {
     const cardIndex = Math.round(e.nativeEvent.contentOffset.x / width);
@@ -59,6 +62,7 @@ export function CardSwiper({
             cardInfo={item}
             cardImageHeight={cardImageHeight}
             cardImageWidth={cardImageWidth}
+            imgFolder={imgFolder}
             fontColor={fontColor}
           />
         )}
@@ -73,11 +77,13 @@ function Card({
   cardImageHeight,
   cardImageWidth,
   fontColor = "#000",
+  imgFolder,
 }: {
   cardInfo: CardType;
   cardImageHeight?: number;
   cardImageWidth?: number;
   fontColor?: string;
+  imgFolder: string;
 }) {
   const DOTS_SECTION_HEIGHT = 50;
   const { height } = useWindowDimensions();
@@ -85,7 +91,8 @@ function Card({
     <View
       style={[CardSwiperStyles.card, { height: height - DOTS_SECTION_HEIGHT }]}
     >
-      <Image
+      <Picture
+        folder={imgFolder}
         style={[
           CardSwiperStyles.image,
           {
