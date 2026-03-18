@@ -1,4 +1,6 @@
-import { Image, View } from "react-native";
+import { View } from "react-native";
+
+import Picture from "@Components/Picture";
 
 import { HomeImages } from "../Assets/HomeImages";
 const { path } = HomeImages;
@@ -42,8 +44,11 @@ export default function LevelPath({
           alignSelf: position,
         }}
       >
-        <Image
+        <Picture
+          folder="home/path"
           style={{
+            width: 52,
+            height: 66,
             aspectRatio: 0.8,
             transform: [{ rotateX: direction === "left" ? "0deg" : "180deg" }],
           }}

@@ -60,6 +60,7 @@ export default function DifficultySelectorContainer() {
           actualIndex={difficulty}
           cardImageWidth={300}
           cardImageHeight={340}
+          imgFolder="difficulty"
           fontColor={GlobalFontColors.Dark}
         />
       </View>

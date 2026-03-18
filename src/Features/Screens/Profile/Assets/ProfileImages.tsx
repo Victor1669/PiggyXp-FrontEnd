@@ -1,9 +1,9 @@
 export const ProfileImages = {
-  config: require("./Config.png"),
-  dialog: require("./Dialog.png"),
-  fire: require("./Fire.gif"),
-  invest: require("./Invest.gif"),
-  trophy: require("./Trophy.gif"),
-  userInfoDetail: require("./UserInfoDetail.png"),
-  working: require("./Working.gif"),
+  config: "config.png",
+  fire: "fire.gif",
+  invest: "invest.gif",
+  trophy: "trophy.gif",
+  userInfoDetail: {
+    uri: "https://res.cloudinary.com/ddkfjt90e/image/upload/v1773347795/piggyxp/profile/userInfoDetail.png",
+  },
 };

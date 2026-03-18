@@ -1,9 +1,10 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import { router } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
 import Button from "@Components/Button";
+import Picture from "@Components/Picture";
 
 import { LevelAssets } from "../Assets/LevelAssets";
 import { GlobalFontColors } from "@Assets/Colors";
@@ -24,10 +25,11 @@ export default function LevelConclusionContainer() {
         alignItems: "center",
       }}
     >
-      <Image
+      <Picture
+        folder=""
         source={LevelAssets.homem}
         style={{
-          width: "90%",
+          width: "70%",
           aspectRatio: 16 / 9,
         }}
       />

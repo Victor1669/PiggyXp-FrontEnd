@@ -5,11 +5,11 @@ const GlobalImages = {
   close: require("./Close.png"),
 
   tabBar: {
-    home: require("@Assets/tabBar/Home.png"),
-    ranking: require("@Assets/tabBar/Ranking.png"),
-    missoes: require("@Assets/tabBar/Missões.png"),
-    loja: require("@Assets/tabBar/Loja.png"),
-    perfil: require("@Assets/tabBar/Perfil.png"),
+    home: "home.png",
+    ranking: "ranking.png",
+    missoes: "missoes.png",
+    loja: "loja.png",
+    perfil: "perfil.png",
   },
 };
 

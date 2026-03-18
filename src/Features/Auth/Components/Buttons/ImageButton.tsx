@@ -1,9 +1,11 @@
-import RN, { Image, StyleSheet, TouchableOpacity } from "react-native";
+import RN, { StyleSheet, TouchableOpacity } from "react-native";
+
+import Picture from "@Components/Picture";
 
 interface ImageButtonTypes {
   onPress: () => {};
   size: number;
-  imageSource: RN.ImageSourcePropType;
+  imageSource: string;
 }
 export default function ImageButton({
   onPress,
@@ -27,7 +29,11 @@ export default function ImageButton({
 
   return (
     <TouchableOpacity style={ImageButtonStyles.button} onPress={onPress}>
-      <Image style={ImageButtonStyles.image} source={imageSource} />
+      <Picture
+        folder="auth"
+        style={ImageButtonStyles.image}
+        source={imageSource}
+      />
     </TouchableOpacity>
   );
 }

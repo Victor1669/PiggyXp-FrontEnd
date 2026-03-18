@@ -74,6 +74,7 @@ export default function CodeInput({
           value={digit}
           onChangeText={(text) => handleChange(text, index)}
           onKeyPress={(event) => handleKeyPress(event, index)}
+          cursorColor={"#fff"}
           keyboardType="number-pad"
           maxLength={1}
           selectTextOnFocus
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderWidth: 2,
     borderColor: "#E0E0E0",
+    color: "#fff",
     borderRadius: 12,
     fontSize: 24,
     fontWeight: "bold",

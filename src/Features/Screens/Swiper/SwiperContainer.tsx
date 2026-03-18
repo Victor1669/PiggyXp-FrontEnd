@@ -44,6 +44,7 @@ export default function SwiperContainer() {
     <View style={SwiperStyles.container}>
       <View style={SwiperStyles.content}>
         <CardSwiper
+          imgFolder="start"
           cardsArray={cards}
           onScroll={onScroll}
           actualIndex={index}

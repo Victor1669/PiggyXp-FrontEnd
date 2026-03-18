@@ -1,5 +1,7 @@
 import { Dimensions } from "react-native";
 
+import { normalize } from "Helpers/normalizeSize";
+
 export function screenValues() {
   const phoneWindow = Dimensions.get("window");
 
@@ -9,12 +11,6 @@ export function screenValues() {
   const showDevTools = false;
 
   const TABBAR_HEIGHT = 130;
-
-  // Largura de referência (ex: iPhone 14 = 390px)
-  const BASE_WIDTH = 390;
-  const scale = deviceWidth / BASE_WIDTH;
-
-  const normalize = (size: number) => Math.round(size * scale);
 
   const fontSizes = {
     TITLE_FONT_SIZE: normalize(32),

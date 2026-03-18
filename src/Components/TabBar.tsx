@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   StyleSheet,
   Animated,
 } from "react-native";
@@ -16,6 +15,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { screenValues } from "Config/screenValues";
 const { TABBAR_HEIGHT } = screenValues();
+
+import Picture from "@Components/Picture";
 
 import { GlobalColors } from "@Assets/Colors";
 import { GlobalImages } from "@Assets/GlobalImages";
@@ -84,8 +85,9 @@ export default function TabBar({
                 style={styles.tabItem}
               >
                 {iconData && (
-                  <Image
+                  <Picture
                     source={iconData.img}
+                    folder="tabbar"
                     style={{
                       width: iconData.width,
                       height: iconData.height,

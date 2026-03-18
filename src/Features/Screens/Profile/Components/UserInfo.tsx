@@ -1,16 +1,11 @@
 //#region Importações
 import { useEffect, useState } from "react";
-import {
-  Image,
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-  ImageSourcePropType,
-} from "react-native";
+import { Image, View, Text, Pressable, ImageBackground } from "react-native";
 import { usePathname, router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+
+import Picture from "@Components/Picture";
 
 import { UserInfoStyles } from "../Styles/UserInfo.css";
 const {
@@ -32,7 +27,7 @@ export default function UserInfo() {
   const { user } = useAuth();
   const { name, email, user_img } = user;
 
-  const imageSrc: ImageSourcePropType = user_img
+  const imageSrc = user_img
     ? {
         uri: user_img,
       }
@@ -56,7 +51,11 @@ export default function UserInfo() {
             router.push("/ProfileConfig");
           }}
         >
-          <Image source={config} />
+          <Picture
+            style={{ width: 25, height: 25 }}
+            folder="profile"
+            source={config}
+          />
         </Pressable>
         <Text style={profileName}>{name}</Text>
         <Text style={profileEmail}>{email}</Text>
