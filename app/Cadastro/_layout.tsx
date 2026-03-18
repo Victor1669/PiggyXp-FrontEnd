@@ -1,29 +1,35 @@
 import { Stack } from "expo-router";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-
-import { GlobalImages } from "@Assets/GlobalImages";
-const { close } = GlobalImages;
-
 import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { TITLE_FONT_SIZE },
-} = screenValues();
 
 export default function _layout() {
+  const {
+    fontSizes: { TITLE_FONT_SIZE },
+  } = screenValues();
+
   return (
     <Stack
       screenOptions={{
+        title: "Cadastro",
+        headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: GlobalColors.contentBackColor.Dark,
         },
-        headerTintColor: GlobalFontColors.Dark,
-        headerBackIcon: close,
+        headerTitleStyle: {
+          color: GlobalFontColors.Dark,
+          fontSize: TITLE_FONT_SIZE,
+        },
         headerBackVisible: false,
+        contentStyle: {
+          backgroundColor: GlobalColors.contentBackColor.Dark,
+          flex: 1,
+        },
       }}
+      key={Date.now().toString()}
     >
       <Stack.Screen
-        name="index"
+        name="DefinePhoto"
         options={{
           title: "Personalizar Perfil",
           headerTitleStyle: {
@@ -32,6 +38,7 @@ export default function _layout() {
           },
           contentStyle: {
             backgroundColor: GlobalColors.contentBackColor.Dark,
+            alignItems: "center",
           },
           headerTitleAlign: "center",
         }}

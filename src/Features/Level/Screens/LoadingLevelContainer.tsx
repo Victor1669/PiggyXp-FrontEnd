@@ -7,7 +7,7 @@ import { env } from "Config/env";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
-import { GetPhaseService } from "@Auth/Services/GetPhaseService";
+import { GetPhaseService } from "Features/Level/Services/GetPhaseService";
 
 import { toastMessage } from "Utils/toast";
 
@@ -31,7 +31,7 @@ export default function LoadingLevelContainer() {
   useEffect(() => {
     if (env.buildProfile === "preview") {
       dispatch({ type: "DADOS_CARREGADOS", payload: PreviewLevel });
-      router.replace("/Content/Level/LevelTips");
+      router.replace("/Level/LevelTips");
       return;
     }
     (async () => {
@@ -41,7 +41,7 @@ export default function LoadingLevelContainer() {
       );
       if (status < 300) {
         dispatch({ type: "DADOS_CARREGADOS", payload: data });
-        router.replace("/Content/Level/LevelTips");
+        router.replace("/Level/LevelTips");
       } else {
         toastMessage({ type: "error", text: data });
         router.replace("/Content");

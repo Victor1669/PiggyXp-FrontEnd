@@ -1,32 +1,40 @@
 import { Stack } from "expo-router";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-
 import { screenValues } from "Config/screenValues";
-const { fontSizes } = screenValues();
 
 export default function _layout() {
+  const {
+    fontSizes: { TITLE_FONT_SIZE },
+  } = screenValues();
+
   return (
     <Stack
       screenOptions={{
+        title: "Login",
+        headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: GlobalColors.contentBackColor.Dark,
         },
-        headerTintColor: GlobalFontColors.Dark,
+        headerTitleStyle: {
+          color: GlobalFontColors.Dark,
+          fontSize: TITLE_FONT_SIZE,
+        },
+        headerBackVisible: false,
+        contentStyle: {
+          backgroundColor: GlobalColors.contentBackColor.Dark,
+        },
       }}
+      key={Date.now().toString()}
     >
       <Stack.Screen
-        name="index"
+        name="DifficultySelector"
         options={{
-          title: "Editar Perfil",
-          headerTitleStyle: {
-            color: GlobalFontColors.Dark,
-            fontSize: fontSizes.TITLE_FONT_SIZE,
-          },
+          headerShown: false,
           contentStyle: {
+            alignItems: "center",
             backgroundColor: GlobalColors.contentBackColor.Dark,
           },
-          headerTitleAlign: "center",
         }}
       />
     </Stack>

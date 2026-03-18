@@ -4,13 +4,13 @@ import SendRecoveryEmailForm from "./SendRecoveryEmailForm";
 import Picture from "@Components/Picture";
 
 import { SendRecoveryEmailStyles } from "Features/Recover-Password/SendEmail/SendRecoveryEmail.css";
-const { container, title, subTitle } = SendRecoveryEmailStyles;
+const { title, subTitle } = SendRecoveryEmailStyles;
 
 import { AuthImages } from "@Assets/AuthImages";
 
 export default function SendRecoveryEmailContainer() {
   return (
-    <View style={container}>
+    <>
       <Picture
         style={{ width: 100, height: 100 }}
         folder="auth"
@@ -23,6 +23,6 @@ export default function SendRecoveryEmailContainer() {
       <View>
         <SendRecoveryEmailForm />
       </View>
-    </View>
+    </>
   );
 }

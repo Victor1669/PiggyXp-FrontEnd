@@ -1,10 +1,13 @@
 import { Tabs } from "expo-router";
+
 import { useDynamicScroll } from "Contexts/useDynamicScroll";
+
+import TabBar from "@Components/TabBar";
+
 import { GlobalColors } from "@Assets/Colors";
-import TabBar from "@Components/TabBar"; // Importe o componente criado acima
 
 export default function Layout() {
-  const { navBarHeight } = useDynamicScroll(); // Supondo que isso seja um Animated.Value
+  const { navBarHeight } = useDynamicScroll();
 
   return (
     <Tabs
@@ -16,11 +19,6 @@ export default function Layout() {
         },
       }}
     >
-      <Tabs.Screen
-        name="Level"
-        options={{ href: null, tabBarStyle: { display: "none" } }}
-      />
-
       <Tabs.Screen name="index" options={{ title: "Home" }} />
       <Tabs.Screen name="Ranking" options={{ title: "Ranking" }} />
       <Tabs.Screen name="Missoes" options={{ title: "Missões" }} />

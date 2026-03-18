@@ -4,8 +4,18 @@ import { Alert } from "react-native";
 import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
 
+import { env } from "Config/env";
+
+import { screenValues } from "Config/screenValues";
+const {
+  fontSizes: { TITLE_FONT_SIZE },
+  showDevTools,
+} = screenValues();
+
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
+import { InternetConnectionProvider } from "Contexts/useInternetConnection";
+import { DynamicScrollProvider } from "Contexts/useDynamicScroll";
 
 import { ToastContainer, toastMessage } from "Utils/toast";
 
@@ -13,15 +23,6 @@ import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
 import NavigationButton from "@Components/NavigationButton";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-
-import { env } from "Config/env";
-import { screenValues } from "Config/screenValues";
-import { InternetConnectionProvider } from "Contexts/useInternetConnection";
-import { DynamicScrollProvider } from "Contexts/useDynamicScroll";
-const {
-  fontSizes: { TITLE_FONT_SIZE },
-  showDevTools,
-} = screenValues();
 //#endregion
 
 export default function RootLayout() {
@@ -30,10 +31,7 @@ export default function RootLayout() {
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        Alert.alert({
-          type: "info",
-          text: "Nova atualização disponível, feche e abra o app!",
-        });
+        Alert.alert("Nova atualização disponível, feche e abra o app!");
       }
     } catch (e) {
       console.log(e);
@@ -66,12 +64,11 @@ export default function RootLayout() {
     "Swiper",
     "Welcome",
     "Content",
-    "ProfileConfig",
     "SendRecoveryEmail",
-    "DefinePhoto",
-    "DifficultySelector",
+    "Level",
+    "Cadastro",
+    "Login",
   ];
-  const showHeaderPages = ["Login", "Cadastro"];
 
   return (
     <InternetConnectionProvider>
@@ -94,12 +91,6 @@ export default function RootLayout() {
               }}
               key={Date.now().toString()}
             >
-              {showHeaderPages.map((page) => (
-                <Stack.Screen
-                  name={page}
-                  options={{ headerTitleAlign: "center" }}
-                />
-              ))}
               {hideHeaderPages.map((page) => (
                 <Stack.Screen name={page} options={{ headerShown: false }} />
               ))}

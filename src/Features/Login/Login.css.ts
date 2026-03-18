@@ -1,12 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors } from "@Assets/Colors";
-
 export const LoginStyles = StyleSheet.create({
-  container: {
-    backgroundColor: GlobalColors.contentBackColor.Dark,
-    flex: 1,
-  },
   formContainer: {
     marginTop: 40,
     gap: 20,

@@ -52,7 +52,7 @@ export default function TabBar({
     extrapolate: "clamp",
   });
 
-  if (!pathName.startsWith("/Content/Level"))
+  if (pathName !== "/Content/Profile/Config")
     return (
       <Animated.View
         style={[

@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import RankingContainer from "Features/Ranking/RankingContainer";
 
 export default function Ranking() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ color: "#fff", fontSize: 32 }}>RANKING</Text>
-    </View>
-  );
+  return <RankingContainer />;
 }

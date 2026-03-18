@@ -5,19 +5,19 @@ import CadastroForm from "./CadastroForm";
 import AlternateSignins from "@Auth/Components/Buttons/AlternateSignins";
 
 import { CadastroStyles } from "Features/User-CRUD/Cadastro/Cadastro.css";
-const { container, formContainer, jaTemConta } = CadastroStyles;
+const { formContainer, jaTemConta } = CadastroStyles;
 
 import { GlobalFontColors } from "@Assets/Colors";
 
 export default function CadastroContainer() {
   return (
-    <View style={container}>
+    <>
       <View style={formContainer}>
         <CadastroForm />
         <JaTemContaText />
       </View>
       <AlternateSignins text="Criar conta com" />
-    </View>
+    </>
   );
 }
 function JaTemContaText() {

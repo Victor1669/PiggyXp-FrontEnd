@@ -48,7 +48,7 @@ export default function UserInfo() {
           style={profileConfig}
           onPress={() => {
             setBtnDisabled(true);
-            router.push("/ProfileConfig");
+            router.push("/Content/Profile/Config");
           }}
         >
           <Picture

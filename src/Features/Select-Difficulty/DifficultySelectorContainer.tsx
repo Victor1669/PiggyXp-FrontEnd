@@ -12,8 +12,6 @@ import { DifficultySelector } from "@Auth/Services/DifficultySelector";
 import { CardSwiper, CardType } from "@Components/CardSwiper/CardSwiper";
 import Button from "@Components/Button";
 
-import { DifficultySelectorStyles } from "./DifficultySelector.css";
-const { container, cardsContainer } = DifficultySelectorStyles;
 import { SelectDifficultyImages } from "./Assets/SelectDifficultyImages";
 const { easy, medium, hard } = SelectDifficultyImages;
 import { GlobalFontColors } from "@Assets/Colors";
@@ -52,8 +50,8 @@ export default function DifficultySelectorContainer() {
   }
 
   return (
-    <View style={container}>
-      <View style={[cardsContainer, { height: height * 0.8 }]}>
+    <>
+      <View style={{ height: height * 0.8, marginBottom: 50 }}>
         <CardSwiper
           cardsArray={cardsArray}
           onScroll={onScroll}
@@ -65,6 +63,6 @@ export default function DifficultySelectorContainer() {
         />
       </View>
       <Button onPress={handleSubmit}>Continuar</Button>
-    </View>
+    </>
   );
 }

@@ -22,6 +22,7 @@ export default function _layout() {
         headerTintColor: GlobalFontColors.Dark,
         contentStyle: {
           backgroundColor: GlobalColors.contentBackColor.Dark,
+          alignItems: "center",
         },
       }}
     >
