@@ -39,13 +39,13 @@ export default function AnswerButton({
         height: 60,
       }}
       shadowColor={buttonColor.shadowColor}
-      onPress={() => {
+      onPress={async () => {
         onPress();
-
         setButtonColor({ backColor: "green", shadowColor: "green" });
 
-        if (answerIndex !== rightAnswer)
+        if (answerIndex !== rightAnswer) {
           setButtonColor({ backColor: "red", shadowColor: "red" });
+        }
       }}
     >
       {text}

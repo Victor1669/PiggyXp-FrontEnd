@@ -13,7 +13,7 @@ import { ImageUploaderButton } from "./ImageUploaderButton";
 
 import { DefinePhotoFormStyles } from "Features/User-CRUD/Cadastro/DefinePhoto.css";
 import { ImageContainer } from "../../Auth/Components/ImageContainer";
-const { container, subtitle } = DefinePhotoFormStyles;
+const { subtitle } = DefinePhotoFormStyles;
 
 export default function DefinePhotoForm() {
   const { temporaryImageToken, login, user } = useAuth();
@@ -44,13 +44,13 @@ export default function DefinePhotoForm() {
   }
 
   return (
-    <View style={container}>
+    <>
       <Text style={subtitle}>Adicione uma foto para o seu perfil</Text>
       <ImageContainer image={imageURI} />
       <ImageUploaderButton onPress={handleImageSending} />
       <Button onPress={handleSubmit} style={{ width: "90%" }}>
         Concluir cadastro
       </Button>
-    </View>
+    </>
   );
 }

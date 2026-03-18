@@ -1,5 +1,5 @@
 export const SelectDifficultyImages = {
-  easy: require("./Easy.png"),
-  medium: require("./Medium.png"),
-  hard: require("./Hard.png"),
+  easy: "easy.png",
+  medium: "medium.png",
+  hard: "hard.png",
 };

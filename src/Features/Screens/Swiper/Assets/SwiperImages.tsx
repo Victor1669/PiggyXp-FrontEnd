@@ -1,7 +1,7 @@
 const SplashScreenImages = {
-  caminhos: require("./Splash-Caminhos.png"),
-  entendendoDinheiro: require("./Splash-EntendendoDinheiro.png"),
-  estudante: require("./Splash-Estudante.png"),
+  caminhos: "caminhos.png",
+  entendendoDinheiro: "entendendoDinheiro.png",
+  estudante: "estudante.png",
 };
 
 export { SplashScreenImages };

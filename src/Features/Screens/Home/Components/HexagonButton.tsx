@@ -5,24 +5,29 @@ import RN, { View, Pressable, Image } from "react-native";
 import { screenValues } from "Config/screenValues";
 const { isDeviceHeigthSmall } = screenValues();
 
+import Picture from "@Components/Picture";
+
 import { HomeImages } from "../Assets/HomeImages";
 const {
   content: { hexagon, hexagonShadow, hexagonLocked, hexagonLockedShadow },
 } = HomeImages;
 //#endregion
 
-export function HexagonButton({
+export default function HexagonButton({
   position = "center",
   isLocked = true,
   onPress,
+  imgFolder,
   img,
 }: {
   position: "flex-start" | "center" | "flex-end";
   isLocked: boolean;
   onPress: (e: RN.GestureResponderEvent) => void;
-  img: any;
+  imgFolder: string;
+  img: string;
 }) {
   const [showShadow, setShowShadow] = useState(false);
+
   return (
     <View
       style={{
@@ -42,7 +47,10 @@ export function HexagonButton({
           alignItems: "center",
         }}
       >
-        <Image
+        {/* Ícone do nível — por cima */}
+        <Picture
+          folder={imgFolder}
+          source={img}
           style={{
             width: showShadow ? 47 : 45,
             height: showShadow ? 47 : 45,
@@ -50,10 +58,11 @@ export function HexagonButton({
             position: "absolute",
             zIndex: 2,
           }}
-          source={img}
         />
-        <Image
-          style={{ zIndex: 1 }}
+
+        <Picture
+          style={{ zIndex: 1, width: 80, height: showShadow ? 93 : 101 }}
+          folder="home/content"
           source={
             showShadow
               ? isLocked

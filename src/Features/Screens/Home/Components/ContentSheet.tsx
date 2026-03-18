@@ -61,7 +61,7 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
       }}
       onButtonPress={() => {
         router.push(
-          `/Content/Level/LoadingLevel/?actualQuestion=${selectedLevelIndex + 1}`,
+          `/Level/LoadingLevel/?actualQuestion=${selectedLevelIndex + 1}`,
         );
       }}
       textElements={

@@ -8,6 +8,7 @@ interface envTypes {
   androidPackage: string;
   backEndUrl: string;
   webClientId: string;
+  cloudinaryLink: string;
 }
 
 export const env: envTypes = {
@@ -15,6 +16,7 @@ export const env: envTypes = {
   androidClientId: extra?.google?.androidClientId,
   webClientId: extra?.google?.webClientId,
   androidPackage: extra?.androidPackage,
-  // backEndUrl: extra?.backEndUrl,
+  //backEndUrl: extra?.backEndUrl,
   backEndUrl: "http://192.168.1.8:3000",
+  cloudinaryLink: extra?.cloudinaryBaseLink,
 };

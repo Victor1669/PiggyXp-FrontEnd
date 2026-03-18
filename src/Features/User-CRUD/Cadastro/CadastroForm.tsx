@@ -27,7 +27,7 @@ export default function CadastroForm() {
   }) {
     if (env.buildProfile === "preview") {
       login(PreviewUserInfo);
-      router.push("/DefinePhoto");
+      router.push("/Cadastro/DefinePhoto");
       return;
     }
     if (!getIsConnected()) return;
@@ -55,7 +55,7 @@ export default function CadastroForm() {
   async function registerSuccess(registerData: any) {
     const { token } = registerData;
     await temporaryImageToken.set(token);
-    router.replace("/DefinePhoto");
+    router.replace("/Cadastro/DefinePhoto");
     toastMessage({ type: "success", text: registerData.message });
   }
 

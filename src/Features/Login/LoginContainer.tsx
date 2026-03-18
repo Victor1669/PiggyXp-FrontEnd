@@ -5,19 +5,19 @@ import AlternateSignins from "@Auth/Components/Buttons/AlternateSignins";
 import LoginForm from "./LoginForm";
 
 import { LoginStyles } from "Features/Login/Login.css";
-const { container, formContainer, naoTemConta } = LoginStyles;
+const { formContainer, naoTemConta } = LoginStyles;
 
 import { GlobalFontColors } from "@Assets/Colors";
 
 export default function LoginContainer() {
   return (
-    <View style={container}>
+    <>
       <View style={formContainer}>
         <LoginForm />
       </View>
       <NaoTemContaText />
       <AlternateSignins text="Logar com" />
-    </View>
+    </>
   );
 }
 
