@@ -1,20 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-
-import { GlobalFontColors } from "@Assets/Colors";
-
-const {
-  fontSizes: { SMALL_FONT_SIZE },
-} = screenValues();
-
 export const HomeSliderStyles = StyleSheet.create({
-  cardTitle: {
-    color: GlobalFontColors.Dark,
-    fontWeight: "bold",
-    fontSize: SMALL_FONT_SIZE,
-    textAlign: "left",
-  },
   card1: {
     flex: 1,
     justifyContent: "space-around",

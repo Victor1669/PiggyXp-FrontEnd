@@ -1,6 +1,6 @@
 //#region Importações
 import { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
 import { env } from "Config/env";
@@ -12,15 +12,10 @@ import { GetPhaseService } from "Features/Level/Services/GetPhaseService";
 import { toastMessage } from "Utils/toast";
 
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
 import { LevelAssets } from "../Assets/LevelAssets";
-
-import { screenValues } from "Config/screenValues";
-import { LoadingLevelContainerStyles } from "../Styles/LoadingLevelContainer.css";
-const {
-  fontSizes: { DEFAULT_FONT_SIZE, SMALL_FONT_SIZE },
-} = screenValues();
 //#endregion
 
 export default function LoadingLevelContainer() {
@@ -56,24 +51,14 @@ export default function LoadingLevelContainer() {
         source={LevelAssets.gato}
         style={{ marginHorizontal: "auto", width: 200, height: 200 }}
       />
-      <Text
-        style={[
-          {
-            fontSize: DEFAULT_FONT_SIZE,
-          },
-          LoadingLevelContainerStyles.text,
-        ]}
-      >
-        Aguarde...
-      </Text>
-      <Text
-        style={[
-          { marginHorizontal: 50, fontSize: SMALL_FONT_SIZE },
-          LoadingLevelContainerStyles.text,
-        ]}
+      <Paragraph fontWeight="bold">Aguarde...</Paragraph>
+      <Paragraph
+        fontSize="small"
+        fontWeight="bold"
+        style={{ marginHorizontal: 50 }}
       >
         "Quando o dinheiro vai na frente, todos os caminhos se abrem."
-      </Text>
+      </Paragraph>
     </View>
   );
 }

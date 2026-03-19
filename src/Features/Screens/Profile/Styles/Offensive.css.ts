@@ -1,17 +1,12 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
+import { GlobalColors } from "@Assets/Colors";
 
 export const OffensiveStyles = StyleSheet.create({
   offensiveContainer: {
     width: "90%",
     justifyContent: "center",
     marginTop: 10,
-  },
-  offensiveTitle: {
-    color: GlobalFontColors.Dark,
-    fontSize: 20,
-    margin: 5,
   },
   offensiveListContainer: {
     backgroundColor: GlobalColors.sectionBackColor,
@@ -42,11 +37,5 @@ export const OffensiveStyles = StyleSheet.create({
     height: 30,
     borderRadius: 20,
     padding: 5,
-  },
-  dayText: {
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 14,
-    color: GlobalFontColors.Dark,
   },
 });

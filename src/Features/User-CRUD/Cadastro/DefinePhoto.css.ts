@@ -1,20 +1,9 @@
 import { StyleSheet } from "react-native";
 
-import { GlobalFontColors } from "@Assets/Colors";
-
 import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { SMALL_FONT_SIZE },
-  isDeviceHeigthSmall,
-} = screenValues();
+const { isDeviceHeigthSmall } = screenValues();
 
 export const DefinePhotoFormStyles = StyleSheet.create({
-  subtitle: {
-    color: GlobalFontColors.Dark,
-    fontSize: SMALL_FONT_SIZE,
-    textAlign: "center",
-    marginVertical: 20,
-  },
   uploadImageContainer: {
     backgroundColor: "#B4B4B4",
     borderRadius: "50%",

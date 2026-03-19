@@ -1,14 +1,14 @@
 //#region Importações
 import { FlatList } from "react-native";
 
-import { Card1, Card3, CardTemplate } from "../Components/CardTemplate";
+import { Card1, Card2, CardTemplate } from "../Components/CardTemplate";
 
 export default function HomeSlider() {
   return (
     <FlatList
       data={[
         { backgroundColor: "#02B1E2", children: <Card1 /> },
-        { backgroundColor: "#008CFF", children: <Card3 /> },
+        { backgroundColor: "#008CFF", children: <Card2 /> },
       ]}
       scrollEnabled
       horizontal

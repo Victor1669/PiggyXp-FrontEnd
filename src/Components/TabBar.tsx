@@ -11,15 +11,14 @@ import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from "@react-navigation/bottom-tabs";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { screenValues } from "Config/screenValues";
-const { TABBAR_HEIGHT } = screenValues();
 
 import Picture from "@Components/Picture";
 
 import { GlobalColors } from "@Assets/Colors";
 import { GlobalImages } from "@Assets/GlobalImages";
+import Paragraph from "./Paragraph";
 const {
   tabBar: { home, loja, missoes, perfil, ranking },
 } = GlobalImages;
@@ -44,7 +43,7 @@ export default function TabBar({
   navBarHeight,
 }: MyTabBarProps) {
   const pathName = usePathname();
-  const insets = useSafeAreaInsets();
+  const { TABBAR_HEIGHT } = screenValues();
 
   const translateY = navBarHeight.interpolate({
     inputRange: [0, 30],
@@ -96,11 +95,12 @@ export default function TabBar({
                     }}
                   />
                 )}
-                <Text
-                  style={[styles.label, { color: isFocused ? "#FFF" : "#888" }]}
+                <Paragraph
+                  fontSize="verySmall"
+                  color={isFocused ? "#FFF" : "#888"}
                 >
                   {options.title}
-                </Text>
+                </Paragraph>
               </TouchableOpacity>
             );
           })}
@@ -130,9 +130,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  label: {
-    fontSize: 13,
-    marginTop: 2,
   },
 });

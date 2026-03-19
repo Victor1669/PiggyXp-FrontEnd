@@ -1,19 +1,18 @@
-import { Text, useWindowDimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 
 import Picture from "@Components/Picture";
 
 import { OffensiveStyles } from "../Styles/Offensive.css";
 
 import { ProfileImages } from "@Assets/ProfileImages";
+import Paragraph from "@Components/Paragraph";
 
 const {
   offensiveContainer,
-  offensiveTitle,
   offensiveListContainer,
   offensiveImage,
   offensiveList,
   dayCircle,
-  dayText,
 } = OffensiveStyles;
 
 export default function Offensive() {
@@ -31,7 +30,9 @@ export default function Offensive() {
 
   return (
     <View style={[offensiveContainer, { height: height * 0.14 }]}>
-      <Text style={offensiveTitle}>Ofensiva</Text>
+      <Paragraph textAlign="left" style={{ margin: 5 }}>
+        Ofensiva
+      </Paragraph>
       <View style={offensiveListContainer}>
         <Picture
           folder="profile"
@@ -47,7 +48,7 @@ export default function Offensive() {
               ]}
               key={i}
             >
-              <Text style={dayText}>{day.initials[0]}</Text>
+              <Paragraph fontSize="verySmall">{day.initials[0]}</Paragraph>
             </View>
           ))}
         </View>

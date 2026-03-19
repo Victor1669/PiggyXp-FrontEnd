@@ -1,7 +1,7 @@
 import { StatusBar, StyleSheet } from "react-native";
 
 import { screenValues } from "Config/screenValues";
-const { isDeviceHeigthSmall, deviceHeight } = screenValues();
+const { isDeviceHeigthSmall } = screenValues();
 
 export const ProfileContainerStyles = StyleSheet.create({
   content: {

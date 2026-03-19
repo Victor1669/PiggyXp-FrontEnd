@@ -1,11 +1,7 @@
-import { Pressable, Text } from "react-native";
-
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { DEFAULT_FONT_SIZE },
-} = screenValues();
+import { Pressable } from "react-native";
 
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { DefinePhotoFormStyles } from "./DefinePhoto.css";
 const { uploadButton } = DefinePhotoFormStyles;
@@ -27,9 +23,7 @@ export function ImageUploaderButton({
         source={AuthImages.upload}
         style={{ width: 40, height: 40 }}
       />
-      <Text style={{ fontSize: DEFAULT_FONT_SIZE, color: "#fff" }}>
-        Upload da sua foto
-      </Text>
+      <Paragraph>Upload da sua foto</Paragraph>
     </Pressable>
   );
 }

@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import { router } from "expo-router";
 
 import { themeChanger } from "Helpers/themeChanger";
 
 import Button from "@Components/Button";
+import Paragraph from "@Components/Paragraph";
 
 import { WelcomeContainerStyles } from "./WelcomeContainer.css";
 const { container, text, buttons } = WelcomeContainerStyles;
@@ -17,9 +18,9 @@ export default function WelcomeContainer() {
   return (
     <View style={container}>
       <Image source={require("./Welcome.png")} />
-      <Text style={text}>
+      <Paragraph style={text}>
         Bem-vindo ao PiggyXp! Aprenda a gerenciar seu dinheiro com facilidade.
-      </Text>
+      </Paragraph>
 
       <Button style={buttons} onPress={() => router.push("/Login")}>
         Entrar

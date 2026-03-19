@@ -1,6 +1,8 @@
-import { Pressable, Text } from "react-native";
+import { Pressable } from "react-native";
 
 import { useShowSheet } from "../Contexts/useShowSheet";
+
+import Paragraph from "@Components/Paragraph";
 
 import { GlobalFontColors, GlobalColors } from "@Assets/Colors";
 
@@ -16,20 +18,17 @@ export default function SectionTitle({ title }: { title: string }) {
         marginBottom: 20,
       }}
     >
-      <Text
+      <Paragraph
         style={{
           width: "auto",
           margin: "auto",
           paddingHorizontal: 10,
           backgroundColor: GlobalColors.contentBackColor.Dark,
           transform: [{ translateY: 10 }],
-          color: GlobalFontColors.Dark,
-          textAlign: "center",
-          fontSize: 18,
         }}
       >
         {title}
-      </Text>
+      </Paragraph>
     </Pressable>
   );
 }

@@ -1,9 +1,11 @@
-import { Image, Modal, Text, View } from "react-native";
+import { Image, Modal, View } from "react-native";
 
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 
+import Paragraph from "@Components/Paragraph";
+
 import { LoadingSpinnerStyles } from "./LoadingSpinner.css";
-const { container, spinner, text } = LoadingSpinnerStyles;
+const { container, spinner } = LoadingSpinnerStyles;
 
 export default function LoadingSpinner() {
   const { showLoadingScreen } = useShowLoadingScreen();
@@ -12,7 +14,7 @@ export default function LoadingSpinner() {
       <Modal transparent animationType="fade" statusBarTranslucent>
         <View style={container}>
           <Image source={require("./Spinner.gif")} style={spinner} />
-          <Text style={text}>Carregando...</Text>
+          <Paragraph fontSize="bigger">Carregando...</Paragraph>
         </View>
       </Modal>
     );

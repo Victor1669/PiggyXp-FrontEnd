@@ -1,9 +1,7 @@
-//#region Importações
 import { useState } from "react";
-import RN, { View, Pressable, Image } from "react-native";
+import RN, { View, Pressable } from "react-native";
 
 import { screenValues } from "Config/screenValues";
-const { isDeviceHeigthSmall } = screenValues();
 
 import Picture from "@Components/Picture";
 
@@ -11,7 +9,6 @@ import { HomeImages } from "../Assets/HomeImages";
 const {
   content: { hexagon, hexagonShadow, hexagonLocked, hexagonLockedShadow },
 } = HomeImages;
-//#endregion
 
 export default function HexagonButton({
   position = "center",
@@ -27,6 +24,8 @@ export default function HexagonButton({
   img: string;
 }) {
   const [showShadow, setShowShadow] = useState(false);
+
+  const { isDeviceHeigthSmall } = screenValues();
 
   return (
     <View

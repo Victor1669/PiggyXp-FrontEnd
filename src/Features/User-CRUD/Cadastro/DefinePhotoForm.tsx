@@ -1,4 +1,3 @@
-import { Text, View } from "react-native";
 import { router } from "expo-router";
 
 import { env } from "Config/env";
@@ -9,11 +8,10 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
 import Button from "@Components/Button";
+import Paragraph from "@Components/Paragraph";
 import { ImageUploaderButton } from "./ImageUploaderButton";
 
-import { DefinePhotoFormStyles } from "Features/User-CRUD/Cadastro/DefinePhoto.css";
 import { ImageContainer } from "../../Auth/Components/ImageContainer";
-const { subtitle } = DefinePhotoFormStyles;
 
 export default function DefinePhotoForm() {
   const { temporaryImageToken, login, user } = useAuth();
@@ -45,7 +43,9 @@ export default function DefinePhotoForm() {
 
   return (
     <>
-      <Text style={subtitle}>Adicione uma foto para o seu perfil</Text>
+      <Paragraph fontSize="small" style={{ marginVertical: 20 }}>
+        Adicione uma foto para o seu perfil
+      </Paragraph>
       <ImageContainer image={imageURI} />
       <ImageUploaderButton onPress={handleImageSending} />
       <Button onPress={handleSubmit} style={{ width: "90%" }}>

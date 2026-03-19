@@ -1,20 +1,16 @@
 //#region Importações
 import { useEffect, useState } from "react";
-import { Image, View, Text, Pressable, ImageBackground } from "react-native";
+import { Image, View, Pressable, ImageBackground } from "react-native";
 import { usePathname, router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { UserInfoStyles } from "../Styles/UserInfo.css";
-const {
-  userInfoBackground,
-  profilePicture,
-  profileConfig,
-  profileName,
-  profileEmail,
-} = UserInfoStyles;
+const { userInfoBackground, profilePicture, profileConfig, profileEmail } =
+  UserInfoStyles;
 
 import { GlobalImages } from "@Assets/GlobalImages";
 import { ProfileImages } from "@Assets/ProfileImages";
@@ -57,8 +53,17 @@ export default function UserInfo() {
             source={config}
           />
         </Pressable>
-        <Text style={profileName}>{name}</Text>
-        <Text style={profileEmail}>{email}</Text>
+        <Paragraph
+          textAlign="left"
+          color="lightModeFont"
+          fontSize="title"
+          style={{ marginTop: 40 }}
+        >
+          {name}
+        </Paragraph>
+        <Paragraph color="lightModeFont" textAlign="left" style={profileEmail}>
+          {email}
+        </Paragraph>
       </ImageBackground>
     </View>
   );

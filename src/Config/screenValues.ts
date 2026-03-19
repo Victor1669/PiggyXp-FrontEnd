@@ -8,7 +8,7 @@ export function screenValues() {
   const deviceWidth = phoneWindow.width;
   const deviceHeight = phoneWindow.height;
   const isDeviceHeigthSmall = phoneWindow.height < 861;
-  const showDevTools = false;
+  const showDevTools = true;
 
   const TABBAR_HEIGHT = 130;
 

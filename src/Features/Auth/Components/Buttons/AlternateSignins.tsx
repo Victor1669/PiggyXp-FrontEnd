@@ -1,6 +1,6 @@
 //#region Importações
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { router } from "expo-router";
 
 import { env } from "Config/env";
@@ -10,18 +10,12 @@ import { useNativeGoogleAuth } from "@Auth/Hooks/useNativeGoogleAuth";
 import { useFacebookAuth } from "@Auth/Hooks/useFacebookAuth";
 
 import ImageButton from "./ImageButton";
+import Paragraph from "@Components/Paragraph";
 
 import { AuthImages } from "@Assets/AuthImages";
 const {
   logos: { google, facebook },
 } = AuthImages;
-
-import { GlobalFontColors } from "@Assets/Colors";
-
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { SMALL_FONT_SIZE },
-} = screenValues();
 //#endregion
 interface AlternateSigninsProps {
   text: string;
@@ -61,15 +55,14 @@ export default function AlternateSignins({ text }: AlternateSigninsProps) {
         alignItems: "center",
       }}
     >
-      <Text
+      <Paragraph
+        fontSize="small"
         style={{
-          color: GlobalFontColors.Dark,
-          fontSize: SMALL_FONT_SIZE,
           marginBottom: 20,
         }}
       >
         {text}
-      </Text>
+      </Paragraph>
 
       <View style={{ flexDirection: "row" }}>
         <ImageButton

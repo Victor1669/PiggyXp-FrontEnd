@@ -1,16 +1,12 @@
 //#region Importações
-import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
+import { View, TouchableWithoutFeedback, Image } from "react-native";
 import { Link } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowSheet } from "../Contexts/useShowSheet";
 
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { BIG_FONT_SIZE },
-} = screenValues();
-
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { HomeHeaderStyles } from "../Styles/HomeHeader.css";
 const {
@@ -34,14 +30,9 @@ export default function HomeHeader() {
           <Image style={userProfileImage} source={{ uri: user.user_img }} />
         </Link>
         <View style={livesImageContainer}>
-          <Text
-            style={{
-              color: "#F24822",
-              fontSize: BIG_FONT_SIZE,
-            }}
-          >
+          <Paragraph color="#F24822" fontSize="big">
             {user.lives ?? 5}
-          </Text>
+          </Paragraph>
           <Picture folder="home" style={livesImage} source={HomeImages.lives} />
         </View>
       </View>

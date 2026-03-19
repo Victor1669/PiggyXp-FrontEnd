@@ -8,11 +8,6 @@ export const AchievementsStyles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 10,
   },
-  achievementTitle: {
-    color: GlobalFontColors.Dark,
-    fontSize: 20,
-    margin: 5,
-  },
   achievementList: {
     width: "100%",
     backgroundColor: GlobalColors.sectionBackColor,
@@ -31,13 +26,7 @@ export const AchievementsStyles = StyleSheet.create({
     flexDirection: "row",
   },
   seeMore: {
-    fontSize: 28,
-    fontStyle: "italic",
-    color: GlobalFontColors.Dark,
-    fontWeight: "semibold",
-
     flex: 1,
-    textAlign: "center",
-    textAlignVertical: "center",
+    fontStyle: "italic",
   },
 });

@@ -51,27 +51,26 @@ O Expo Go não será usado devido à limitações técnicas, tais como:
 
 ```
 Normais
-
-- axios:                            Requisições e Interceptadores
-- jwt-decode                        Decodificação de JWT
-- expo-router                       Roteamento das telas
-- expo-file-system:                 Manipulação de arquivos no dispositivo
-- expo-image-picker:                Acesso à câmera e galeria do dispositivo
-- expo-updates:                     Atualizações OTA da aplicação
-- expo-dev-client:                  Execução da aplicação nativamente fora do Expo Go
-- expo-notifications                Notificações no celular
-- expo-secure-store                 Armazenamento criptografado de credenciais
-- expo-dev-client                   Para executar a aplicação nativamente
-- react-native-toast-message        Feedbacks interativos
-- react-hook-form                   Formulários dinâmicos
-- @react-native-community/netinfo   Verificação de conexão
-- @react-native-google-signin       Autenticação do Google
-- react-native-fbsdk-next           Autenticação com Facebook
+axios:                                              Requisições e interceptadores.
+jwt-decode:                                         Decodificação de tokens JWT.
+expo-router:                                        Roteamento nativo baseado em arquivos.
+expo-image-picker:                                  Acesso à câmera e galeria do dispositivo.
+expo-updates:                                       Atualizações OTA (Over-the-Air) da aplicação.
+expo-dev-client:                                    Execução da aplicação nativamente fora do Expo Go.
+expo-notifications:                                 Gerenciamento de notificações push e locais.
+expo-secure-store:                                  Armazenamento criptografado de credenciais.
+expo-av:                                            Reprodução de áudio e vídeo.
+expo-constants:                                     Acesso a constantes do sistema e ambiente.
+react-native-toast-message:                         Feedbacks visuais e interativos (Toasts).
+react-hook-form:                                    Gestão de formulários dinâmicos e validação.
+@react-native-community/netinfo:                    Verificação do estado da conexão de rede.
+@react-native-google-signin/google-signin:          Autenticação com Google.
+react-native-fbsdk-next:                            Autenticação com Facebook.
 
 Desenvolvimento
-
-- typescript                        Aplicação mais robusta
-- jest e complementos               Testes unitários
+typescript:                                         Tipagem estática para uma aplicação mais robusta.
+jest:                                               Framework para testes unitários e de integração.
+@testing-library/react-native:                      Testes de componentes focados no comportamento do usuário.
 ```
 
 ## 🏪 Convenções:

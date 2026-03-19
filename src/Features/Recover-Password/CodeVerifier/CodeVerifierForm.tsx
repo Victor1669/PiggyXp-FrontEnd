@@ -1,6 +1,6 @@
 //#region Importações
 import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { router } from "expo-router";
 
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
@@ -15,9 +15,10 @@ import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import CodeInput from "Features/Recover-Password/CodeVerifier/CodeInput";
 import Form from "@Auth/Components/Form/Form";
+import Paragraph from "@Components/Paragraph";
 
 import { CodeVerifierStyles } from "Features/Recover-Password/CodeVerifier/CodeVerifier.css";
-const { textContainer, text } = CodeVerifierStyles;
+const { textContainer } = CodeVerifierStyles;
 //#endregion
 
 export default function CodeVerifierForm() {
@@ -66,11 +67,11 @@ export default function CodeVerifierForm() {
         length={LENGTH}
       />
       <View style={textContainer}>
-        <Text style={text}>Não recebeu o email?</Text>
+        <Paragraph>Não recebeu o email?</Paragraph>
         <Pressable onPress={resendEmail}>
-          <Text style={[text, { textDecorationLine: "underline" }]}>
+          <Paragraph style={{ textDecorationLine: "underline" }}>
             Reenvie
-          </Text>
+          </Paragraph>
         </Pressable>
       </View>
       <Form

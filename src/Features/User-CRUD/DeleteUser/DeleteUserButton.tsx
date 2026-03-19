@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, View } from "react-native";
 import { router } from "expo-router";
 
 import { env } from "Config/env";
@@ -13,6 +13,7 @@ import { DeleteUserService } from "@Auth/Services/DeleteUser";
 import { toastMessage } from "Utils/toast";
 
 import Button from "@Components/Button";
+import Paragraph from "@Components/Paragraph";
 
 export default function DeleteUserButton() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -95,26 +96,18 @@ function DeleteUserModal({
             borderRadius: 5,
           }}
         >
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 32,
-            }}
-          >
-            X
-          </Text>
+          <Paragraph fontSize="title">X</Paragraph>
         </Pressable>
-        <Text
+        <Paragraph
           style={{
-            color: "#fff",
-            fontSize: 24,
             width: "70%",
-            textAlign: "justify",
             marginBottom: 30,
           }}
+          fontSize="big"
+          textAlign="justify"
         >
           Certeza de que você quer deletar sua conta?
-        </Text>
+        </Paragraph>
         <Button
           fontColor="#fff"
           shadowColor="rgb(139, 0, 0)"

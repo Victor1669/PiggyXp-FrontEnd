@@ -1,21 +1,23 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { router } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
-import Button from "@Components/Button";
-import Picture from "@Components/Picture";
-
-import { LevelAssets } from "../Assets/LevelAssets";
-import { GlobalFontColors } from "@Assets/Colors";
 import { useQuiz } from "../Contexts/useQuiz";
 
-const {
-  fontSizes: { DEFAULT_FONT_SIZE, BIG_FONT_SIZE },
-} = screenValues();
+import Button from "@Components/Button";
+import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
+
+import { LevelAssets } from "../Assets/LevelAssets";
 
 export default function LevelConclusionContainer() {
   const { seconds, rightAnswers, questions } = useQuiz();
+
+  const {
+    fontSizes: { DEFAULT_FONT_SIZE, BIG_FONT_SIZE },
+  } = screenValues();
+
   return (
     <View
       style={{
@@ -33,59 +35,26 @@ export default function LevelConclusionContainer() {
           aspectRatio: 16 / 9,
         }}
       />
-      <Text
+      <Paragraph
         style={{
-          color: GlobalFontColors.Dark,
-          fontSize: BIG_FONT_SIZE,
           marginHorizontal: 75,
-          //   backgroundColor: "red",
-          textAlign: "center",
         }}
+        fontSize="big"
       >
         Impressionante, você é fora da curva!
-      </Text>
+      </Paragraph>
       <View style={{ gap: 20 }}>
-        <Text
-          style={{
-            color: GlobalFontColors.Dark,
-            fontSize: BIG_FONT_SIZE,
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
+        <Paragraph fontSize="big" fontWeight="bold" textAlign="center">
           {rightAnswers} / {questions.length}
-        </Text>
+        </Paragraph>
 
-        <Text
-          style={{
-            color: "#E2FF41",
-            fontSize: BIG_FONT_SIZE,
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
+        <Paragraph color="#E2FF41" fontSize="big" fontWeight="bold">
           {(seconds / 60).toFixed(0)} : {seconds % 60 < 10 ? 0 : ""}
           {seconds % 60}
-        </Text>
+        </Paragraph>
         <View style={{ flexDirection: "row", gap: 70 }}>
-          <Text
-            style={{
-              color: GlobalFontColors.Dark,
-              fontSize: DEFAULT_FONT_SIZE,
-              fontWeight: "bold",
-            }}
-          >
-            +30 coins
-          </Text>
-          <Text
-            style={{
-              color: GlobalFontColors.Dark,
-              fontSize: DEFAULT_FONT_SIZE,
-              fontWeight: "bold",
-            }}
-          >
-            +150 xp
-          </Text>
+          <Paragraph fontWeight="bold">+30 coins</Paragraph>
+          <Paragraph fontWeight="bold">+150 xp</Paragraph>
         </View>
       </View>
       <Button
