@@ -1,12 +1,9 @@
 import { useState } from "react";
-import RN, { Text, TouchableOpacity, useWindowDimensions } from "react-native";
+import RN, { TouchableOpacity, useWindowDimensions } from "react-native";
+
+import Paragraph from "./Paragraph";
 
 import { GlobalColors } from "@Assets/Colors";
-
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { BIG_FONT_SIZE },
-} = screenValues();
 interface ButtonProps {
   children: string;
   onPress: any;
@@ -60,16 +57,13 @@ export default function Button({
         style,
       ]}
     >
-      <Text
-        style={{
-          fontWeight: "bold",
-          fontSize: fontSize || BIG_FONT_SIZE,
-          color: fontColor,
-          textAlign: "center",
-        }}
+      <Paragraph
+        fontWeight="bold"
+        fontSize={fontSize ? fontSize : "big"}
+        color={fontColor}
       >
         {children}
-      </Text>
+      </Paragraph>
     </TouchableOpacity>
   );
 }

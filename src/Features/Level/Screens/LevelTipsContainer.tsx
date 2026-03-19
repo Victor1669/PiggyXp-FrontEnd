@@ -1,25 +1,21 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { router } from "expo-router";
+
+import { screenValues } from "Config/screenValues";
 
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
 import Button from "@Components/Button";
-
-import { GlobalFontColors } from "@Assets/Colors";
+import Paragraph from "@Components/Paragraph";
 
 export default function LevelTipsContainer() {
   const { initialText } = useQuiz();
+
+  const { deviceWidth } = screenValues();
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text
-        style={{
-          color: GlobalFontColors.Dark,
-          textAlign: "center",
-          width: "80%",
-        }}
-      >
-        {initialText}
-      </Text>
+      <Paragraph style={{ width: deviceWidth * 0.8 }}>{initialText}</Paragraph>
       <Button onPress={() => router.replace("/Level/?questionIndex=0")}>
         Continuar
       </Button>

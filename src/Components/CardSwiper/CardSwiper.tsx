@@ -1,14 +1,14 @@
 import RN, {
   Dimensions,
   FlatList,
-  Image,
-  Text,
   useWindowDimensions,
   View,
 } from "react-native";
 
-import { CardSwiperStyles } from "./CardSwiper.css";
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
+
+import { CardSwiperStyles } from "./CardSwiper.css";
 
 export interface CardType {
   id: number;
@@ -47,6 +47,7 @@ export function CardSwiper({
     const cardIndex = Math.round(e.nativeEvent.contentOffset.x / width);
     onScroll(cardIndex);
   }
+
   return (
     <>
       <FlatList
@@ -86,10 +87,14 @@ function Card({
   imgFolder: string;
 }) {
   const DOTS_SECTION_HEIGHT = 50;
-  const { height } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
+
   return (
     <View
-      style={[CardSwiperStyles.card, { height: height - DOTS_SECTION_HEIGHT }]}
+      style={[
+        CardSwiperStyles.card,
+        { height: height - DOTS_SECTION_HEIGHT, width },
+      ]}
     >
       <Picture
         folder={imgFolder}
@@ -102,19 +107,30 @@ function Card({
         ]}
         source={cardInfo.image}
       />
-      <Text style={[CardSwiperStyles.title, { color: fontColor }]}>
+      <Paragraph
+        color={fontColor}
+        fontWeight="bold"
+        fontSize="big"
+        style={{ width: width * 0.8, height: 80 }}
+      >
         {cardInfo.title}
-      </Text>
-      <Text style={[CardSwiperStyles.text, { color: fontColor }]}>
+      </Paragraph>
+      <Paragraph
+        color={fontColor}
+        fontSize="small"
+        style={CardSwiperStyles.text}
+      >
         {cardInfo.text}
-      </Text>
+      </Paragraph>
     </View>
   );
 }
 
 function DotsContainer({ array, actualIndex }: DotsContainerProps) {
+  const { width } = useWindowDimensions();
+
   return (
-    <View style={CardSwiperStyles.dotsContainer}>
+    <View style={[CardSwiperStyles.dotsContainer, { width }]}>
       {array.map((_, i) => (
         <View
           key={i}

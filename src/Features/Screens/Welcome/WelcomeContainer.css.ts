@@ -11,9 +11,6 @@ export const WelcomeContainerStyles = StyleSheet.create({
   },
   text: {
     width: "60%",
-    fontSize: 20,
-    textAlign: "center",
-    color: GlobalFontColors.Dark,
     marginVertical: 50,
   },
   buttons: {

@@ -1,15 +1,9 @@
-import { StatusBar, Text, View } from "react-native";
-
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { TITLE_FONT_SIZE },
-} = screenValues();
+import { StatusBar, View } from "react-native";
 
 import { QuestionTypes } from "../Contexts/useQuiz";
 
 import AnswerButton from "./AnswerButton";
-
-import { GlobalFontColors } from "@Assets/Colors";
+import Paragraph from "@Components/Paragraph";
 
 export default function QuestionContainer({
   actualQuestion,
@@ -28,17 +22,15 @@ export default function QuestionContainer({
         marginVertical: 2 * (StatusBar.currentHeight ?? 20),
       }}
     >
-      <Text
+      <Paragraph
         style={{
-          color: GlobalFontColors.Dark,
-          textAlign: "center",
           marginTop: 80,
-          fontWeight: "bold",
-          fontSize: TITLE_FONT_SIZE,
         }}
+        fontWeight="bold"
+        fontSize="title"
       >
         {actualQuestion?.question}
-      </Text>
+      </Paragraph>
       <View style={{ gap: 15 }}>
         {actualQuestion?.answers.map((answer, i) => (
           <AnswerButton

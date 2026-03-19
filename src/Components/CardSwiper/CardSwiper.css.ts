@@ -1,36 +1,21 @@
-import { GlobalFontColors } from "@Assets/Colors";
-import { Dimensions, StyleSheet } from "react-native";
-
-const { width } = Dimensions.get("window");
+import { StyleSheet } from "react-native";
 
 export const CardSwiperStyles = StyleSheet.create({
   card: {
-    width,
-
     alignItems: "center",
     justifyContent: "center",
   },
   image: {
     marginBottom: 20,
   },
-  title: {
-    width: width - 20,
-    textAlign: "center",
-    fontWeight: "600",
-    fontSize: 22,
-  },
   text: {
     width: "70%",
-    height: 60,
-    fontSize: 15,
-    textAlign: "center",
+    height: 90,
     marginTop: 50,
     marginBottom: 50,
     paddingHorizontal: 20,
   },
   dotsContainer: {
-    width,
-
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

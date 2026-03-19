@@ -1,6 +1,5 @@
-//#region Importações
 import { useEffect, useRef } from "react";
-import { View, Text, StatusBar, Animated } from "react-native";
+import { View, StatusBar, Animated } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 
@@ -10,8 +9,7 @@ import BottomSheet from "@Components/BottomSheet/BottomSheet";
 import ProgressBar from "@Components/ProgressBar";
 import QuestionContainer from "../Components/QuestionContainer";
 
-import { GlobalFontColors } from "@Assets/Colors";
-//#endregion
+import Paragraph from "@Components/Paragraph";
 
 export default function LevelContainer() {
   const { questionIndex } = useLocalSearchParams();
@@ -74,16 +72,15 @@ export default function LevelContainer() {
             alignSelf: "center",
           }}
         />
-        <Text
+        <Paragraph
           style={{
-            color: "#fff",
             alignSelf: "center",
             position: "absolute",
             top: (StatusBar.currentHeight ?? 40) + 50,
           }}
         >
           {seconds}
-        </Text>
+        </Paragraph>
 
         <QuestionContainer
           actualQuestion={actualQuestion}
@@ -105,9 +102,7 @@ export default function LevelContainer() {
         interactive={false}
         startSheetTop={SHEET_HEIGHT + 90}
         finalSheetTop={100 + insets.bottom - 15}
-        textElements={
-          <Text style={{ color: GlobalFontColors.Dark }}>{textFeedBack}</Text>
-        }
+        textElements={<Paragraph>{textFeedBack}</Paragraph>}
       />
     </>
   );

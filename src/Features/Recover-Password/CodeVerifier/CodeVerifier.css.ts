@@ -6,7 +6,4 @@ export const CodeVerifierStyles = StyleSheet.create({
     gap: 10,
     marginHorizontal: "auto",
   },
-  text: {
-    color: "#fff",
-  },
 });

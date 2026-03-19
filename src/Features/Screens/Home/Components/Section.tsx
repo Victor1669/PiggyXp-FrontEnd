@@ -1,4 +1,3 @@
-//#region Importações
 import { ScrollView } from "react-native";
 
 import { useDynamicScroll } from "Contexts/useDynamicScroll";
@@ -6,18 +5,18 @@ import { useShowSheet } from "../Contexts/useShowSheet";
 import { useLevels } from "../Contexts/useLevels";
 
 import { screenValues } from "Config/screenValues";
-const { deviceWidth, deviceHeight } = screenValues();
 
 import { getPathDirection } from "../Helpers/getPathDirection";
 
 import SectionLevel from "./SectionLevel";
 import SectionTitle from "./SectionTitle";
-//#endregion
 
 export default function Section({ title }: { title: string }) {
   const { setShowSheet } = useShowSheet();
   const { setIsScrolling } = useDynamicScroll();
   const { levels } = useLevels();
+
+  const { deviceWidth, deviceHeight } = screenValues();
 
   return (
     <>

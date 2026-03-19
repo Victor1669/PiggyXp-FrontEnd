@@ -1,7 +1,8 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 import SendRecoveryEmailForm from "./SendRecoveryEmailForm";
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { SendRecoveryEmailStyles } from "Features/Recover-Password/SendEmail/SendRecoveryEmail.css";
 const { title, subTitle } = SendRecoveryEmailStyles;
@@ -16,10 +17,12 @@ export default function SendRecoveryEmailContainer() {
         folder="auth"
         source={AuthImages.password.lock}
       />
-      <Text style={title}>Esqueçeu sua senha</Text>
-      <Text style={subTitle}>
+      <Paragraph fontSize="title" style={title}>
+        Esqueçeu sua senha
+      </Paragraph>
+      <Paragraph fontSize="small" style={subTitle}>
         Informe o e-mail da sua conta para atualizarmos sua senha.
-      </Text>
+      </Paragraph>
       <View>
         <SendRecoveryEmailForm />
       </View>

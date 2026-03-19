@@ -1,17 +1,13 @@
-import { Text, useWindowDimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 
 import Picture from "@Components/Picture";
 
 import { AchievementsStyles } from "../Styles/Achievements.css";
-const {
-  achievementsContainer,
-  achievementTitle,
-  achievementList,
-  achievement,
-  seeMore,
-} = AchievementsStyles;
+const { achievementsContainer, achievementList, achievement, seeMore } =
+  AchievementsStyles;
 
 import { ProfileImages } from "@Assets/ProfileImages";
+import Paragraph from "@Components/Paragraph";
 const { trophy, invest } = ProfileImages;
 
 export default function Achievements() {
@@ -21,7 +17,9 @@ export default function Achievements() {
   const achievementsArray = [trophy, invest].slice(0, 2);
   return (
     <View style={[achievementsContainer, { height: height * 0.13 }]}>
-      <Text style={achievementTitle}>Conquistas</Text>
+      <Paragraph textAlign="left" style={{ margin: 5 }}>
+        Conquistas
+      </Paragraph>
       <View style={achievementList}>
         {achievementsArray.map((image, i) => (
           <View key={i} style={achievement}>
@@ -42,7 +40,9 @@ export default function Achievements() {
         {
           // Será um <Link> no futuro para a tela de conquistas
         }
-        <Text style={seeMore}>Ver mais</Text>
+        <Paragraph fontSize="bigger" fontWeight="semibold" style={seeMore}>
+          Ver mais
+        </Paragraph>
       </View>
     </View>
   );

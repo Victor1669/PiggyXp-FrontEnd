@@ -1,9 +1,6 @@
 import { useState } from "react";
 
 import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { SMALL_FONT_SIZE },
-} = screenValues();
 
 import Button from "@Components/Button";
 
@@ -22,10 +19,15 @@ export default function AnswerButton({
   text: string;
   disabled: boolean;
 }) {
+  const {
+    fontSizes: { SMALL_FONT_SIZE },
+  } = screenValues();
+
   const [buttonColor, setButtonColor] = useState({
     backColor: "rgba(217,217,217, 0.28)",
     shadowColor: "rgba(101,101,101, 0.78)",
   });
+
   return (
     <Button
       disabled={disabled}

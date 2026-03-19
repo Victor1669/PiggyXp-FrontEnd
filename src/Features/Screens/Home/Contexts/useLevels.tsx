@@ -37,7 +37,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
   const levels: LevelType[] = [
     {
       id: 1,
-      title: "Minha relação como dinheiro",
+      title: "Minha relação com o dinheiro",
       containerPosition: "center",
       isLocked: 1 > actualLevel,
       isPathLocked: 0 > actualLevel - 2,

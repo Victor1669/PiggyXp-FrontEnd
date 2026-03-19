@@ -24,10 +24,6 @@ export const UserInfoStyles = StyleSheet.create({
     position: "absolute",
     right: 0,
   },
-  profileName: {
-    marginTop: 40,
-    fontSize: 32,
-  },
   profileEmail: {
     fontSize: 16,
   },
