@@ -1,8 +1,6 @@
 import { View } from "react-native";
 import { router } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
-
 import { useQuiz } from "../Contexts/useQuiz";
 
 import Button from "@Components/Button";
@@ -13,10 +11,6 @@ import { LevelAssets } from "../Assets/LevelAssets";
 
 export default function LevelConclusionContainer() {
   const { seconds, rightAnswers, questions } = useQuiz();
-
-  const {
-    fontSizes: { DEFAULT_FONT_SIZE, BIG_FONT_SIZE },
-  } = screenValues();
 
   return (
     <View
