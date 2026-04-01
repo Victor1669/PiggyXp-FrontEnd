@@ -37,7 +37,6 @@ export default function AnswerButton({
         backgroundColor: buttonColor.backColor,
         justifyContent: "center",
         paddingVertical: 5,
-        margin: "auto",
         height: 60,
       }}
       shadowColor={buttonColor.shadowColor}

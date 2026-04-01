@@ -1,5 +1,5 @@
 //#region Importações
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { router } from "expo-router";
 
@@ -8,6 +8,8 @@ import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { DifficultySelector } from "@Auth/Services/DifficultySelector";
+
+import { requestNotificationPermission } from "Utils/notifications";
 
 import { CardSwiper, CardType } from "@Components/CardSwiper/CardSwiper";
 import Button from "@Components/Button";
@@ -30,6 +32,12 @@ export default function DifficultySelectorContainer() {
   const { setUser, userToken } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
+
+  useEffect(() => {
+    (async () => {
+      await requestNotificationPermission();
+    })();
+  }, []);
 
   function onScroll(cardIndex: number) {
     setDifficulty(cardIndex);

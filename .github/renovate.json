@@ -22,7 +22,12 @@
       "enabled": false
     },
     {
-      "matchPackageNames": ["react", "react-native-screens", "react-native"],
+      "matchPackageNames": [
+        "react",
+        "react-native-screens",
+        "react-native",
+        "axios"
+      ],
       "enabled": false
     }
   ],
