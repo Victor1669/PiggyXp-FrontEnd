@@ -48,6 +48,7 @@ export default function Button({
           padding: 12,
           borderRadius: 15,
           backgroundColor: BUTTON_BACK_COLOR,
+          marginHorizontal: "auto",
 
           boxShadow:
             //@ts-ignore

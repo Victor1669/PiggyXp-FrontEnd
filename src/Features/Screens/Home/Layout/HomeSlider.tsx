@@ -13,7 +13,7 @@ export default function HomeSlider() {
       scrollEnabled
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={{ height: 100 }}
+      style={{ height: 110 }}
       renderItem={({ item: { backgroundColor, children } }) => {
         return (
           <CardTemplate backColor={backgroundColor}>{children}</CardTemplate>

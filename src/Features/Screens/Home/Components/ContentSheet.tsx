@@ -1,4 +1,3 @@
-//#region Importações
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -9,7 +8,6 @@ import { useLevels } from "../Contexts/useLevels";
 
 import BottomSheet from "@Components/BottomSheet/BottomSheet";
 import Paragraph from "@Components/Paragraph";
-//#endregion
 
 export default function ContentSheet({ sections }: { sections: any[] }) {
   const pathName = usePathname();
@@ -17,8 +15,8 @@ export default function ContentSheet({ sections }: { sections: any[] }) {
   const { selectedLevelIndex, levels } = useLevels();
   const insets = useSafeAreaInsets();
 
-  const pan = useRef(new Animated.ValueXY()).current;
   const SHEET_HEIGHT = 300;
+  const pan = useRef(new Animated.ValueXY({ x: 0, y: SHEET_HEIGHT })).current;
 
   useEffect(() => {
     // SE A ROTA MUDAR, ELE VOLTA PRA FALSE

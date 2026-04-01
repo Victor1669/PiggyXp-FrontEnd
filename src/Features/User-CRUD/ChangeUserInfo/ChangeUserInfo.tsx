@@ -10,8 +10,9 @@ import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
+import { useVerifyAchievements } from "Features/Achievements/Hooks/useVerifyAchievements";
 
-import { GetUserInfo, UpdateUserInfo } from "@Auth/Services/UserInfoService";
+import { UpdateUserInfo } from "@Auth/Services/UserInfoService";
 import { toastMessage } from "Utils/toast";
 
 import ChangeImageButton from "@Screens/Profile/Components/ChangeImageButton";
@@ -22,98 +23,73 @@ import { ChangeUserInfoStyles } from "Features/User-CRUD/ChangeUserInfo/ChangeUs
 const { container } = ChangeUserInfoStyles;
 //#endregion
 
+type FormData = { Nome: string; Email: string };
+
 export default function ChangeUserInfoContainer() {
   const { user, logout, login, userToken } = useAuth();
   const { getIsConnected } = useInternetConnection();
   const { setShowLoadingScreen } = useShowLoadingScreen();
-
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
     "update-user-img",
     "PUT",
   );
+  const { checkAchievementsStatus } = useVerifyAchievements();
+
   const [image, setImage] = useState<string>(user.user_img as string);
 
-  async function handleSubmit(data: { Nome: string; Email: string }) {
-    if (!getIsConnected()) return;
+  useEffect(() => {
+    if (imageURI.length) setImage(imageURI);
+  }, [imageURI]);
 
-    setShowLoadingScreen(true);
+  // --- Detecção de mudanças ---
 
-    const { Nome: name, Email: email } = data;
-    const trimmedName = name.trim();
-
+  function detectChanges(name: string, email: string) {
     const hasChangedImage = image !== user.user_img;
+    const hasChangedName = name !== user.name;
     const hasChangedEmail = email !== user.email;
-    const hasChangedTextInfo = trimmedName !== user.name || hasChangedEmail;
+    const hasChangedTextInfo = hasChangedName || hasChangedEmail;
     const hasChangedAnything = hasChangedImage || hasChangedTextInfo;
 
-    if (!hasChangedAnything) {
-      toastMessage({ type: "info", text: "Nenhuma informação foi alterada!" });
-      setShowLoadingScreen(false);
-      return;
-    }
+    return {
+      hasChangedImage,
+      hasChangedEmail,
+      hasChangedTextInfo,
+      hasChangedAnything,
+    };
+  }
 
-    if (env.buildProfile === "preview") {
-      await login({
-        ...user,
-        name: trimmedName,
-        email,
-        user_img: hasChangedImage ? imageURI : user.user_img,
-      });
-      router.push("/Content/Profile");
-      setShowLoadingScreen(false);
-      return;
-    }
+  // --- Preview mode ---
 
-    const storedUserToken = await userToken.get();
+  async function handlePreviewSubmit(name: string, email: string) {
+    await login({
+      ...user,
+      name,
+      email,
+      user_img: image !== user.user_img ? imageURI : user.user_img,
+    });
+    router.push("/Content/Profile");
+  }
 
+  // --- Atualização de imagem ---
+
+  async function submitImageIfChanged(hasChangedImage: boolean, token: string) {
     if (hasChangedImage) {
-      await handleImageSubmit(storedUserToken);
+      await handleImageSubmit(token);
+      await checkAchievementsStatus(String(user.id));
     }
-
-    if (hasChangedTextInfo) {
-      const shouldRedirectToLogin = await updateTextInfoAndCheckRedirect(
-        { name: trimmedName, email },
-        storedUserToken,
-        hasChangedEmail,
-      );
-
-      if (shouldRedirectToLogin) {
-        setShowLoadingScreen(false);
-        return;
-      }
-    }
-
-    await handleUpdateUserInfo(hasChangedEmail);
-    setShowLoadingScreen(false);
   }
 
-  async function updateTextInfoAndCheckRedirect(
-    formData: { name: string; email: string },
-    storedUserToken: string,
+  // --- Atualização de texto ---
+
+  async function submitTextInfoIfChanged(
+    hasChangedTextInfo: boolean,
     hasChangedEmail: boolean,
-  ): Promise<boolean> {
-    const { status } = await handleUpdateUserTextInfo(
-      formData,
-      storedUserToken,
-    );
-
-    const updatedSuccessfully = status < 300;
-    const shouldLogout = updatedSuccessfully && hasChangedEmail;
-
-    if (shouldLogout) {
-      await invalidTokenResponse();
-      return true;
-    }
-
-    return false;
-  }
-
-  async function handleUpdateUserTextInfo(
     formData: { name: string; email: string },
     token: string,
-  ) {
-    const { data, status } = await UpdateUserInfo(user.id, formData, token);
+  ): Promise<boolean> {
+    if (!hasChangedTextInfo) return false;
 
+    const { data, status } = await UpdateUserInfo(user.id, formData, token);
     const isTokenExpired =
       data.message === "jwt expired" || data === "jwt expired";
 
@@ -122,41 +98,89 @@ export default function ChangeUserInfoContainer() {
         type: "error",
         text: "Token expirado, refaça o login antes!",
       });
-      await invalidTokenResponse();
+      await redirectToLogin();
+      return true;
     }
 
-    return { status };
-  }
+    const updatedSuccessfully = status < 300;
 
-  async function handleUpdateUserInfo(hasChangedEmail: boolean) {
-    const { data, status } = await GetUserInfo(String(user.id));
-
-    const fetchedSuccessfully = status < 300;
-
-    if (fetchedSuccessfully && !hasChangedEmail) {
-      await login({ ...data, id: user.id });
-      router.push("/Content/Profile");
+    // --- ADIÇÃO DA ATUALIZAÇÃO LOCAL ---
+    if (updatedSuccessfully) {
+      // Atualiza o contexto global com o novo nome/imagem sem deslogar o usuário
+      await login({
+        ...user,
+        name: formData.name,
+        email: formData.email,
+        user_img: image, // Garante que a imagem do estado local também reflita no contexto
+      });
     }
+    // ----------------------------------
+
+    if (updatedSuccessfully && hasChangedEmail) {
+      await redirectToLogin();
+      return true;
+    }
+
+    return false;
   }
 
-  async function invalidTokenResponse() {
+  // --- Redirecionamento ---
+
+  async function redirectToLogin() {
     await logout();
     router.replace("/Login");
   }
 
-  useEffect(() => {
-    if (imageURI.length) setImage(imageURI);
-  }, [imageURI]);
+  // --- Submit principal ---
+
+  async function handleSubmit({ Nome: name, Email: email }: FormData) {
+    if (!getIsConnected()) return;
+
+    const trimmedName = name.trim();
+    const {
+      hasChangedImage,
+      hasChangedEmail,
+      hasChangedTextInfo,
+      hasChangedAnything,
+    } = detectChanges(trimmedName, email);
+
+    if (!hasChangedAnything) {
+      toastMessage({ type: "info", text: "Nenhuma informação foi alterada!" });
+      return;
+    }
+
+    setShowLoadingScreen(true);
+
+    if (env.buildProfile === "preview") {
+      await handlePreviewSubmit(trimmedName, email);
+      setShowLoadingScreen(false);
+      return;
+    }
+
+    const token = await userToken.get();
+
+    await submitImageIfChanged(hasChangedImage, token);
+
+    const shouldRedirect = await submitTextInfoIfChanged(
+      hasChangedTextInfo,
+      hasChangedEmail,
+      { name: trimmedName, email },
+      token,
+    );
+
+    if (!shouldRedirect) {
+      router.push("/Content/Profile");
+    }
+
+    setShowLoadingScreen(false);
+  }
 
   return (
     <ScrollView style={{ width: "100%" }} contentContainerStyle={container}>
       <ChangeImageButton onPress={handleImageSending} image={image} />
       <ChangeUserInfoForm
         onSubmit={handleSubmit}
-        defaultValues={{
-          Nome: user.name,
-          Email: user.email,
-        }}
+        defaultValues={{ Nome: user.name, Email: user.email }}
       />
       <DeleteUserButton />
     </ScrollView>

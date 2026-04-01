@@ -68,6 +68,7 @@ export default function RootLayout() {
     "Level",
     "Cadastro",
     "Login",
+    "Achievements",
   ];
 
   return (

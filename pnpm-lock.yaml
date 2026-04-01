@@ -15,7 +15,7 @@ importers:
         specifier: ^16.1.2
         version: 16.1.2(expo@54.0.33)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.1.0))(react@19.1.0)
       axios:
-        specifier: ^1.13.6
+        specifier: ~1.13.6
         version: 1.13.6
       expo:
         specifier: ~54.0.33

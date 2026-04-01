@@ -1,17 +1,22 @@
 import { useWindowDimensions, View } from "react-native";
+import { Link } from "expo-router";
 
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { AchievementsStyles } from "../Styles/Achievements.css";
 const { achievementsContainer, achievementList, achievement, seeMore } =
   AchievementsStyles;
 
 import { ProfileImages } from "@Assets/ProfileImages";
-import Paragraph from "@Components/Paragraph";
+import { screenValues } from "Config/screenValues";
 const { trophy, invest } = ProfileImages;
 
 export default function Achievements() {
   const { height } = useWindowDimensions();
+  const {
+    fontSizes: { BIGGER_FONT_SIZE },
+  } = screenValues();
 
   // Isso será pego do back-end no futuro
   const achievementsArray = [trophy, invest].slice(0, 2);
@@ -37,12 +42,12 @@ export default function Achievements() {
             ></View>
           </View>
         ))}
-        {
-          // Será um <Link> no futuro para a tela de conquistas
-        }
-        <Paragraph fontSize="bigger" fontWeight="semibold" style={seeMore}>
+        <Link
+          href="/Achievements"
+          style={[seeMore, { fontSize: BIGGER_FONT_SIZE }]}
+        >
           Ver mais
-        </Paragraph>
+        </Link>
       </View>
     </View>
   );

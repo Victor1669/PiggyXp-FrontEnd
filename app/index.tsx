@@ -20,14 +20,20 @@ export default function SplashScreen() {
     "MadimiOne-Regular": require("../assets/fonts/MadimiOne-Regular.ttf"),
   });
 
-  useEffect(() => {
-    if (env.buildProfile === "preview") return;
-    // SE TIVER INFORMAÇÃO DO USUÁRIO, VAI PRA CONTENT
-    const timer1 = setTimeout(() => {
+  useEffect(
+    function initialCode() {
+      themeChanger("splash");
+
+      const timer = setTimeout(() => {
+        router.replace("/Swiper");
+      }, 2800);
+
+      if (env.buildProfile === "preview") return () => clearTimeout(timer);
+
       (async () => {
-        await themeChanger("splash");
         const rfToken = await refreshToken.get();
         if (!rfToken.length) return;
+
         const { data, status } = await RefreshTokenService(rfToken);
 
         if (status < 300) {
@@ -40,30 +46,14 @@ export default function SplashScreen() {
           });
           router.replace("/Login");
         }
+
         await themeChanger("dark");
-        return;
       })();
-    }, 0);
 
-    // COMPORTAMENTO PADRÃO DO APP
-    const timer2 = setTimeout(() => {
-      router.replace("/Swiper");
-    }, 2800);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-  }, [user]);
-
-  // CASO SEJA BUILD DE PREVIEW
-  useEffect(() => {
-    if (env.buildProfile !== "preview") return;
-    themeChanger("splash");
-    setTimeout(async () => {
-      router.replace("/Swiper");
-    }, 2800);
-  }, []);
+      return () => clearTimeout(timer);
+    },
+    [user],
+  );
 
   return <SplashContainer />;
 }
