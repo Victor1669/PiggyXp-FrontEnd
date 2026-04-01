@@ -28,5 +28,8 @@ export const AchievementsStyles = StyleSheet.create({
   seeMore: {
     flex: 1,
     fontStyle: "italic",
+    color: GlobalFontColors.Dark,
+    textAlignVertical: "center",
+    textAlign: "center",
   },
 });

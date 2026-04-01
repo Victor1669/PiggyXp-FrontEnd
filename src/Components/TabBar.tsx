@@ -1,11 +1,5 @@
 //#region Importações
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
 import { usePathname } from "expo-router";
 import {
   BottomTabBarProps,
@@ -15,14 +9,15 @@ import {
 import { screenValues } from "Config/screenValues";
 
 import Picture from "@Components/Picture";
+import Paragraph from "./Paragraph";
 
 import { GlobalColors } from "@Assets/Colors";
 import { GlobalImages } from "@Assets/GlobalImages";
-import Paragraph from "./Paragraph";
+//#endregion
+
 const {
   tabBar: { home, loja, missoes, perfil, ranking },
 } = GlobalImages;
-//#endregion
 
 const ICON_MAP: Record<string, any> = {
   index: { img: home, width: 40, height: 40, mt: 0, mb: 0 },
@@ -36,6 +31,14 @@ interface MyTabBarProps extends BottomTabBarProps {
   navBarHeight: Animated.Value;
 }
 
+interface TabItemProps {
+  routeName: string;
+  isFocused: boolean;
+  title?: string;
+  onPress: () => void;
+}
+//#endregion
+
 export default function TabBar({
   state,
   descriptors,
@@ -45,68 +48,78 @@ export default function TabBar({
   const pathName = usePathname();
   const { TABBAR_HEIGHT } = screenValues();
 
+  // Esconde a TabBar em rotas específicas
+  if (pathName === "/Content/Profile/Config") return null;
+
   const translateY = navBarHeight.interpolate({
     inputRange: [0, 30],
     outputRange: [30, 0],
     extrapolate: "clamp",
   });
 
-  if (pathName !== "/Content/Profile/Config")
-    return (
-      <Animated.View
-        style={[
-          styles.container,
-          {
-            height: TABBAR_HEIGHT,
-            transform: [{ translateY: translateY }],
-          },
-        ]}
-      >
-        <View style={styles.content}>
-          {state.routes.map((route, index) => {
-            const options = descriptors[route.key]
-              .options as BottomTabNavigationOptions & { href?: string | null };
-            const tabBarStyle = options.tabBarStyle as any;
-            const isDisplayNone = tabBarStyle?.display === "none";
+  return (
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          height: TABBAR_HEIGHT,
+          transform: [{ translateY }],
+        },
+      ]}
+    >
+      <View style={styles.content}>
+        {state.routes.map((route, index) => {
+          const options = descriptors[route.key]
+            .options as BottomTabNavigationOptions & { href?: string | null };
+          const isDisplayNone =
+            (options.tabBarStyle as any)?.display === "none";
 
-            if (options.href === null || isDisplayNone) {
-              return null;
-            }
+          if (options.href === null || isDisplayNone) return null;
 
-            const isFocused = state.index === index;
-            const iconData = ICON_MAP[route.name];
+          return (
+            <TabItem
+              key={route.key}
+              routeName={route.name}
+              isFocused={state.index === index}
+              title={options.title}
+              onPress={() => navigation.navigate(route.name)}
+            />
+          );
+        })}
+      </View>
+    </Animated.View>
+  );
+}
 
-            return (
-              <TouchableOpacity
-                key={route.key}
-                onPress={() => navigation.navigate(route.name)}
-                activeOpacity={0.7}
-                style={styles.tabItem}
-              >
-                {iconData && (
-                  <Picture
-                    source={iconData.img}
-                    folder="tabbar"
-                    style={{
-                      width: iconData.width,
-                      height: iconData.height,
-                      marginTop: iconData.mt,
-                      marginBottom: iconData.mb,
-                    }}
-                  />
-                )}
-                <Paragraph
-                  fontSize="verySmall"
-                  color={isFocused ? "#FFF" : "#888"}
-                >
-                  {options.title}
-                </Paragraph>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </Animated.View>
-    );
+/**
+ * Componente interno para cada botão da TabBar
+ */
+function TabItem({ routeName, isFocused, title, onPress }: TabItemProps) {
+  const iconData = ICON_MAP[routeName];
+
+  if (!iconData) return null;
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      style={styles.tabItem}
+    >
+      <Picture
+        source={iconData.img}
+        folder="tabbar"
+        style={{
+          width: iconData.width,
+          height: iconData.height,
+          marginTop: iconData.mt,
+          marginBottom: iconData.mb,
+        }}
+      />
+      <Paragraph fontSize="verySmall" color={isFocused ? "#FFF" : "#888"}>
+        {title}
+      </Paragraph>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -116,7 +129,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: GlobalColors.tabBarBackColor,
-    height: 120,
     borderTopWidth: 0,
     overflow: "hidden",
   },

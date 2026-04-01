@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 
 const IMAGE_SIZE = 55;
 
@@ -8,7 +8,7 @@ export const HomeHeaderStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "90%",
-    marginTop: 70,
+    marginTop: (StatusBar.currentHeight ?? 50) + 10,
   },
   userProfileImageContainer: {
     width: IMAGE_SIZE,
