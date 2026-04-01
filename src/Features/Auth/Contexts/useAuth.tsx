@@ -17,6 +17,8 @@ export interface User {
   difficulty: number;
   first_login: boolean;
   lives: number;
+  achievements: string;
+  collectedAchievements: string;
 }
 
 type AuthProviderValues = {
@@ -66,13 +68,12 @@ function AuthProvider({ children }: AuthProviderTypes) {
   const refreshToken = new JWTStoreItem("REFRESH_TOKEN");
   const userToken = new JWTStoreItem("USER_TOKEN");
 
-  useEffect(() => {
-    async function getUserInfoFromStore() {
+  useEffect(function getUserInfoFromStore() {
+    (async () => {
       const storedUser = await userInfo.get();
 
       setUser(JSON.parse(storedUser || "{}"));
-    }
-    getUserInfoFromStore();
+    })();
   }, []);
 
   const value: AuthProviderValues = {

@@ -27,7 +27,7 @@ export default function UserInfo() {
     ? {
         uri: user_img,
       }
-    : GlobalImages.porco;
+    : undefined;
 
   useEffect(() => {
     if (pathName !== "/Content/Profile") {

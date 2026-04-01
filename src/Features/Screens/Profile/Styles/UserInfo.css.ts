@@ -11,7 +11,7 @@ export const UserInfoStyles = StyleSheet.create({
   profilePicture: {
     width: USER_PROFILE_PICTURE_SIZE,
     height: USER_PROFILE_PICTURE_SIZE,
-    backgroundColor: "#AAFFEB",
+    backgroundColor: "#e7e7e7",
     borderRadius: USER_PROFILE_PICTURE_SIZE / 2,
     borderWidth: 4,
     borderColor: "#8E8E8E",

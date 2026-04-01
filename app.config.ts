@@ -69,7 +69,7 @@ export default {
   expo: {
     name: appName,
     slug: "PiggyXp-FrontEnd",
-    version: "1.0.0",
+    version: "0.5.0",
     orientation: "portrait",
 
     icon: appIcon,
@@ -95,7 +95,6 @@ export default {
         foregroundImage: appIcon,
         backgroundColor: "#ffffff",
       },
-      permissions: ["VIBRATE"],
       defaultConfig: {
         ndk: {
           abiFilters: ["arm64-v8a", "armeabi-v7a"],
@@ -115,7 +114,7 @@ export default {
       [
         "expo-notifications",
         {
-          icon: appIcon,
+          icon: "./assets/Porco.png",
           color: "#ffffff",
         },
       ],

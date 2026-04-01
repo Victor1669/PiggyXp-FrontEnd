@@ -63,10 +63,10 @@ export default function LevelContainer() {
     <>
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ProgressBar
-          width={300}
           maxValue={questions.length}
           actualValue={Number(questionIndex)}
           style={{
+            width: 300,
             position: "absolute",
             top: (StatusBar.currentHeight ?? 40) + 5,
             alignSelf: "center",
