@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "android": "expo run:android",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --verbose --detectOpenHandles",
     "prebuild": "pnpm expo prebuild --clean",
     "build-preview": "eas build -p android --profile preview",
     "update-preview": "eas update --branch preview --message",
@@ -18,8 +18,13 @@
   "jest": {
     "preset": "jest-expo",
     "moduleNameMapper": {
+      "react-native-google-signin": "<rootDir>/__mocks__/react-native-google-signin/google-signin.js",
       "react-native-fbsdk-next": "<rootDir>/__mocks__/react-native-fbsdk-next.js",
+      "expo-auth-session": "<rootDir>/__mocks__/expo-auth-session.js",
+      "expo-constants": "<rootDir>/__mocks__/expo-constants.js",
+      "expo-notifications": "<rootDir>/__mocks__/expo-notifications.js",
       "expo-linking": "<rootDir>/__mocks__/expo-linking.js",
+      "expo-router": "<rootDir>/__mocks__/expo-router.tsx",
       "^Utils/(.*)$": "<rootDir>/src/Utils/$1",
       "^Features/(.*)$": "<rootDir>/src/Features/$1",
       "^Helpers/(.*)$": "<rootDir>/src/Helpers/$1",
@@ -56,12 +61,12 @@
     "react-native-toast-message": "^2.3.3"
   },
   "devDependencies": {
-    "@testing-library/react-native": "^13.3.3",
+    "typescript": "~5.9.3",
     "@types/jest": "^29.5.14",
     "@types/react": "~19.2.14",
     "jest": "^29.7.0",
     "jest-expo": "^54.0.17",
-    "typescript": "~5.9.3"
+    "@testing-library/react-native": "^13.3.3"
   },
   "private": true
 }
