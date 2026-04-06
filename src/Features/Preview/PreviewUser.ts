@@ -11,4 +11,6 @@ export const PreviewUserInfo: User = {
   difficulty: 0,
   first_login: true,
   lives: 5,
+  achievements: "0000000000",
+  collectedAchievements: "0000000000",
 };

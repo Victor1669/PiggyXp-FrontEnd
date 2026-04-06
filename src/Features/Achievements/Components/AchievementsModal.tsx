@@ -32,7 +32,7 @@ export default function AchievementModal() {
       )}
       <View style={descriptionView}>
         <Paragraph color="lightModeFont" fontWeight="600">
-          {selectedAchievement.description}
+          {selectedAchievement?.description}
         </Paragraph>
       </View>
       <Button style={button} onPress={() => setShowDescription(false)}>

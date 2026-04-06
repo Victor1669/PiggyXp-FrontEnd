@@ -1,10 +1,14 @@
 import R, { useContext, createContext, useState, useEffect } from "react";
 
+import { env } from "Config/env";
+
 import { achievementsProgress } from "../Content/achievementsProgress";
 import { formatAchievements } from "../Helpers/formatAchievements";
 import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { Achievement } from "../Types/AchievementTypes";
+
+import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 
 interface AchievementsProviderValues {
   showDescription: boolean;
@@ -29,7 +33,10 @@ function AchievementsProvider({ children }: { children: R.ReactNode }) {
 
   const { user } = useAuth();
 
-  const achievements = formatAchievements(user, achievementsProgress);
+  const achievements =
+    env.buildProfile === "preview"
+      ? formatAchievements(PreviewUserInfo, achievementsProgress)
+      : formatAchievements(user, achievementsProgress);
 
   const selectedAchievement = achievements?.[selectedAchievementIndex];
 

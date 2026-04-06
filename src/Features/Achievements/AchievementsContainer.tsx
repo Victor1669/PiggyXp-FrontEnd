@@ -1,5 +1,5 @@
 //#region Importações
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 import { useAuth } from "@Auth/Contexts/useAuth";

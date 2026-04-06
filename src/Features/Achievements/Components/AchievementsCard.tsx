@@ -120,7 +120,7 @@ function CardFooter({
             style={progressBar}
           />
           <Paragraph>
-            {actualProgress !== null
+            {actualProgress !== null && actualProgress !== undefined
               ? `${actualProgress}/${totalProgress}`
               : "Incompleto"}
           </Paragraph>
