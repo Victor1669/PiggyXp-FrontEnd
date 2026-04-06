@@ -1,5 +1,7 @@
 import { useAuth } from "@Auth/Contexts/useAuth";
 
+import { env } from "Config/env";
+
 import { GetUserInfo } from "@Auth/Services/UserInfoService";
 import { verifyAchievements } from "../AchievementsServices";
 import { GetUserProgress } from "@Auth/Services/UserProgressService";
@@ -7,7 +9,7 @@ import { GetUserProgress } from "@Auth/Services/UserProgressService";
 import { notifications } from "Utils/notifications";
 
 export function useVerifyAchievements() {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
 
   async function checkAchievementsStatus(userId: string) {
     const [
@@ -26,7 +28,10 @@ export function useVerifyAchievements() {
       achievementsStatus < 300
     ) {
       const { nivel, xp, coins } = userProgressData;
-      await login({ ...userInfoData, id: userId, nivel, xp, coins });
+
+      if (env.buildProfile === "preview") {
+        await login({ ...user, id: +userId, nivel, xp, coins });
+      } else await login({ ...userInfoData, id: +userId, nivel, xp, coins });
     }
 
     const newAchievements = achievementsData?.newAchievements;
