@@ -21,10 +21,11 @@ interface CardSwiperProps {
   onScroll: (index: number) => void;
   cardsArray: CardType[];
   actualIndex: number;
+  imgFolder: string;
   cardImageHeight?: number;
   cardImageWidth?: number;
   fontColor?: string;
-  imgFolder: string;
+  testId?: string;
 }
 
 interface DotsContainerProps {
@@ -42,6 +43,7 @@ export function CardSwiper({
   cardImageWidth,
   fontColor = "#000",
   imgFolder,
+  testId,
 }: CardSwiperProps) {
   function onCardScroll(e: RN.NativeSyntheticEvent<RN.NativeScrollEvent>) {
     const cardIndex = Math.round(e.nativeEvent.contentOffset.x / width);
@@ -51,6 +53,7 @@ export function CardSwiper({
   return (
     <>
       <FlatList
+        testID={testId}
         data={cardsArray}
         keyExtractor={(item) => item.id.toString()}
         horizontal
@@ -134,6 +137,7 @@ function DotsContainer({ array, actualIndex }: DotsContainerProps) {
       {array.map((_, i) => (
         <View
           key={i}
+          testID={`dot-${i}`}
           style={[
             CardSwiperStyles.dot,
             { backgroundColor: i === actualIndex ? "#fff" : "#000" },

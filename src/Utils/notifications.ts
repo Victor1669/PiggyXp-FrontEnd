@@ -42,8 +42,6 @@ export async function notifications(
 export async function requestNotificationPermission() {
   const { status: actualStatus } = await Notifications.getPermissionsAsync();
 
-  console.log(actualStatus);
-
   if (actualStatus === "granted" || "denied") return false;
 
   const permissionStatus = await Notifications.requestPermissionsAsync();

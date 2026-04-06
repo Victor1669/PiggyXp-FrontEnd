@@ -7,7 +7,7 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
-import { DifficultySelector } from "@Auth/Services/DifficultySelector";
+import { DifficultyService } from "@Auth/Services/DifficultyService";
 
 import { requestNotificationPermission } from "Utils/notifications";
 
@@ -46,14 +46,16 @@ export default function DifficultySelectorContainer() {
   async function handleSubmit() {
     if (!getIsConnected()) return;
     setShowLoadingScreen(true);
+
     const token = await userToken.get();
     const body = { difficulty };
-    const { data, status } = await DifficultySelector(body, token);
+    const { data, status } = await DifficultyService(body, token);
 
     if (status < 300) {
       setUser((prev) => ({ ...prev, difficulty }));
       router.replace("/Content");
     }
+
     setShowLoadingScreen(false);
   }
 
@@ -61,6 +63,7 @@ export default function DifficultySelectorContainer() {
     <>
       <View style={{ height: height * 0.8, marginBottom: 50 }}>
         <CardSwiper
+          testId="CardSwiper"
           cardsArray={cardsArray}
           onScroll={onScroll}
           actualIndex={difficulty}
