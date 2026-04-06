@@ -24,9 +24,28 @@
     {
       "matchPackageNames": [
         "react",
-        "react-native-screens",
         "react-native",
-        "axios"
+        "react-native-screens",
+        "react-native-safe-area-context",
+        "axios",
+        "expo",
+        "expo-av",
+        "expo-constants",
+        "expo-dev-client",
+        "expo-font",
+        "expo-image-picker",
+        "expo-linking",
+        "expo-navigation-bar",
+        "expo-notifications",
+        "expo-router",
+        "expo-secure-store",
+        "expo-status-bar",
+        "expo-system-ui",
+        "expo-updates",
+        "jest-expo",
+        "typescript",
+        "@react-native-community/netinfo",
+        "@react-native-google-signin/google-signin"
       ],
       "enabled": false
     }

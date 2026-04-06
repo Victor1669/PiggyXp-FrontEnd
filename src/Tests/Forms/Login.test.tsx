@@ -17,10 +17,6 @@ const mockUseFetch = useFetch as jest.MockedFunction<typeof useFetch>;
 
 const userData = { email: "usuario@email.com", password: "senha123" };
 
-console.log("AuthProvider:", AuthProvider);
-console.log("ShowLoadingScreenProvider:", ShowLoadingScreenProvider);
-console.log("Login:", Login);
-
 const renderLogin = () =>
   render(
     <AuthProvider>
