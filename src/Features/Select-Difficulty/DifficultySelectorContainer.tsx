@@ -11,8 +11,6 @@ import { DifficultyService } from "@Auth/Services/DifficultyService";
 
 import { requestNotificationPermission } from "Utils/notifications";
 
-import { requestNotificationPermission } from "Utils/notifications";
-
 import { CardSwiper, CardType } from "@Components/CardSwiper/CardSwiper";
 import Button from "@Components/Button";
 
