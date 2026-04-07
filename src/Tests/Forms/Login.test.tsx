@@ -4,9 +4,9 @@ import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
 
 import { useFetch } from "@Auth/Hooks/useFetch";
-import { fieldValidations, FieldName } from "./fieldValidations";
+import { fieldValidations, FieldName } from "../Helpers/fieldValidations";
 
-import { submitInputAndExpectError } from "./submitInputAndExpectError";
+import { submitInputAndExpectError } from "../Helpers/submitInputAndExpectError";
 
 import { UserLogin } from "@Auth/Services/LoginService";
 

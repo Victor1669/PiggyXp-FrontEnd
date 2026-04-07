@@ -1,0 +1,27 @@
+* Principais variáveis:
+
+DOTS_COLORS: Possui as cores de "ativo" e "inativo". 
+Representando a parte visual da navegação nesses cards.
+
+swipeScenarios: Uma lista com todos os cenários de deslizamento. 
+Cada item é usado em um teste diferente para verificar a funcionalidade do componente.
+
+* Configurações dos testes
+
+- beforeEach(): Função que é executada antes de cada teste.
+    jest.useFakeTimers(): Avisa pro Jest usar timers fakes ao invés de timers reais.
+
+- afterEach(): Função que é executada depois de cada teste.
+    jest.runOnlyPendingTimers(): Tudo o que estiver pendente, acontecerá no momento em que essa função for chamada.
+
+    act(): Garante que o React processe todas as atualizações pendentes de interface antes de ir para outro teste.
+
+    jest.useRealTimers(): Segurança para não quebrar os próximos testes.
+
+    cleanup(): Limpa o componente da memória
+
+* Testes:
+
+- Renderizar: Verifica se o componente está renderizando corretamente.
+
+- Deve exibir o card: Esse teste é executado para cada card, garante que o componente está funcionando corretamente.

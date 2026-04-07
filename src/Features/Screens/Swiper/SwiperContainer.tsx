@@ -1,62 +1,88 @@
-import { useState } from "react";
-import { View, Text } from "react-native";
-import { Link } from "expo-router";
+import { useEffect, useRef, useState } from "react";
+import { View, FlatList, Dimensions } from "react-native";
 
-import { env } from "Config/env";
-
-import { CardType, CardSwiper } from "@Components/CardSwiper/CardSwiper";
+import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
 
 import { SwiperStyles } from "./SwiperContainer.css";
 
-import { SplashScreenImages } from "@Assets/SwiperImages";
+import { cards } from "./Content/CardsContent";
+import { SkipCardsButton } from "./Components/SkipCardsButton";
 
-const { caminhos, estudante, entendendoDinheiro } = SplashScreenImages;
+const CARDS_LIMIT = cards.length - 1;
 
-const cards: CardType[] = [
-  {
-    id: 1,
-    title: "Aprender é transformar.",
-    text: "Pequenos conhecimentos geram grandes mudanças nas suas escolhas e no seu futuro.",
-    image: estudante,
-  },
-  {
-    id: 2,
-    title: "Conhecimento muda escolhas.",
-    text: "Quando você aprende, suas escolhas ficam mais inteligentes.",
-    image: caminhos,
-  },
-  {
-    id: 3,
-    title: "Entenda o dinheiro. Controle o futuro",
-    text: "Saber lidar com dinheiro hoje evita problemas amanhã.",
-    image: entendendoDinheiro,
-  },
-];
+const screenWidth = Dimensions.get("screen").width;
 
 export default function SwiperContainer() {
-  const [index, setIndex] = useState(0);
+  const [cardIndex, setCardIndex] = useState(0);
+  const [isTimerEnabled, setIsTimerEnabled] = useState(true);
+  const [isSkipButtonEnabled, setIsSkipButtonEnabled] = useState(false);
 
-  function onScroll(slide: number) {
-    setIndex(slide);
+  const cardSwiperRef = useRef<FlatList>(null);
+  const cardIntervalRef = useRef<NodeJS.Timeout>(null);
+
+  const isOnLastCard = cardIndex === CARDS_LIMIT;
+
+  useEffect(function createCardInterval() {
+    if (!isTimerEnabled) return;
+    cardIntervalRef.current = setInterval(() => {
+      setCardIndex((prev) => {
+        const next = prev + 1 > CARDS_LIMIT ? 0 : prev + 1;
+
+        return next;
+      });
+    }, 3000);
+
+    return () => {
+      clearInterval(cardIntervalRef.current ?? undefined);
+    };
+  }, []);
+
+  useEffect(() => {
+    const flatList = cardSwiperRef.current;
+    if (!flatList || !isTimerEnabled) return;
+    if (isOnLastCard) {
+      setIsSkipButtonEnabled(true);
+    }
+
+    const animationSteps = [
+      { offset: screenWidth * cardIndex, delay: 0 },
+      { offset: screenWidth * cardIndex + 40, delay: 1000 },
+      { offset: screenWidth * cardIndex, delay: 1400 },
+    ];
+
+    const timeouts = animationSteps.map(({ offset, delay }) =>
+      setTimeout(() => {
+        flatList.scrollToOffset({ offset, animated: true });
+      }, delay),
+    );
+
+    return () => timeouts.forEach(clearTimeout);
+  }, [cardIndex, isTimerEnabled]);
+
+  function handleTouchStart() {
+    setIsTimerEnabled(false);
+    clearInterval(cardIntervalRef.current ?? undefined);
+  }
+
+  function handleScroll(cardIndex: number) {
+    if (isTimerEnabled) return;
+    setCardIndex(cardIndex);
   }
 
   return (
     <View style={SwiperStyles.container}>
       <View style={SwiperStyles.content}>
         <CardSwiper
+          ref={cardSwiperRef}
           testId="SwiperContainer"
           imgFolder="start"
           cardsArray={cards}
-          onScroll={onScroll}
-          actualIndex={index}
+          actualIndex={cardIndex}
+          onScroll={handleScroll}
+          onTouchStart={handleTouchStart}
+          dotsContainerStyle={{ marginBottom: isSkipButtonEnabled ? 0 : 100 }}
         />
-        <Link
-          style={SwiperStyles.skipLink}
-          href="/Welcome"
-          replace={env.buildProfile !== "preview"}
-        >
-          <Text testID="btn-pular">Pular</Text>
-        </Link>
+        {isSkipButtonEnabled && <SkipCardsButton />}
       </View>
     </View>
   );

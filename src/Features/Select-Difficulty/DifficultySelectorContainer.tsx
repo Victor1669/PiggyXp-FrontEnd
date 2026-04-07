@@ -11,12 +11,14 @@ import { DifficultyService } from "@Auth/Services/DifficultyService";
 
 import { requestNotificationPermission } from "Utils/notifications";
 
-import { CardSwiper, CardType } from "@Components/CardSwiper/CardSwiper";
+import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
 import Button from "@Components/Button";
 
 import { SelectDifficultyImages } from "./Assets/SelectDifficultyImages";
 const { easy, medium, hard } = SelectDifficultyImages;
 import { GlobalFontColors } from "@Assets/Colors";
+
+import { CardType } from "@Components/CardSwiper/CardType";
 //#endregion
 
 const cardsArray: CardType[] = [

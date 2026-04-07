@@ -1,0 +1,35 @@
+* Principais variáveis e funções auxiliares:
+
+    DOTS_COLORS: Contém as cores hexadecimais para os estados "ativo" e "inativo" das bolinhas de navegação.
+
+    TOTAL_CARDS: Define a quantidade total de dificuldades disponíveis (3), usada para validar se todos os dots estão presentes.
+
+    expectDots(): Função auxiliar que percorre cada dot e verifica se a cor de fundo corresponde ao card que deveria estar selecionado no momento.
+
+    renderDifficultySelector(): Função assíncrona que prepara o ambiente do teste, envolvendo o componente nos Providers necessários (Auth e Loading) e esperando o botão "Continuar" aparecer.
+
+* Mocks e Configurações:
+    Jest Mocks: Substituem serviços reais (como DifficultyService e useInternetConnection) por versões controladas. Isso permite simular sucesso, erro ou falta de internet sem depender de uma API real.
+
+    beforeEach():
+
+    jest.clearAllMocks(): Limpa o histórico de chamadas das funções fakes para que um teste não influencie o resultado do próximo.
+
+    Configura, por padrão, que o dispositivo sempre tenha conexão com a internet no início de cada teste.
+
+    afterEach():
+
+    cleanup(): Remove o seletor de dificuldade da memória, garantindo um ambiente limpo para o próximo cenário.
+
+* Testes:
+
+- Atualizar os dots ao realizar swipe: Garante que, ao deslizar entre as dificuldades, a bolinha (dot) correspondente mude para a cor ativa. É o teste que valida a navegação visual.
+
+- Definir a dificuldade com sucesso:
+    Simula um deslize para a dificuldade de índice 1.
+    Clica no botão "Continuar".
+    Verifica se o serviço de API foi chamado com os dados corretos (difficulty: 1) e o token esperado.
+    Confirma se o usuário foi atualizado no sistema após a resposta da API.
+    Não chamar a API se não houver conexão:
+    Simula um cenário onde o getIsConnected retorna false.
+    Tenta clicar em "Continuar" e garante que a função da API (DifficultyService) não seja disparada, protegendo o aplicativo de erros de rede.
