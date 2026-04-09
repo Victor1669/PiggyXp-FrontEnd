@@ -11,8 +11,7 @@ export const CardSwiperStyles = StyleSheet.create({
   text: {
     width: "70%",
     height: 90,
-    marginTop: 50,
-    marginBottom: 50,
+    marginVertical: 40,
     paddingHorizontal: 20,
   },
   dotsContainer: {

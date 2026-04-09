@@ -5,62 +5,59 @@ import RN, {
   View,
 } from "react-native";
 
-import Picture from "@Components/Picture";
-import Paragraph from "@Components/Paragraph";
+import Card from "./Card";
 
 import { CardSwiperStyles } from "./CardSwiper.css";
 
-export interface CardType {
-  id: number;
-  title: string;
-  text: string;
-  image: any;
-}
+import { CardType } from "./CardType";
 
 interface CardSwiperProps {
-  onScroll: (index: number) => void;
   cardsArray: CardType[];
   actualIndex: number;
   imgFolder: string;
+  onScroll?: (index: number) => void;
+  ref?: React.RefObject<FlatList | null>;
+  onTouchStart?: () => void;
   cardImageHeight?: number;
   cardImageWidth?: number;
   fontColor?: string;
   testId?: string;
-}
-
-interface DotsContainerProps {
-  array: CardType[];
-  actualIndex: number;
+  dotsContainerStyle?: RN.StyleProp<RN.ViewStyle>;
 }
 
 const { width } = Dimensions.get("window");
 
 export function CardSwiper({
-  onScroll,
   cardsArray,
   actualIndex,
+  onScroll,
+  imgFolder,
+  ref,
   cardImageHeight,
   cardImageWidth,
   fontColor = "#000",
-  imgFolder,
   testId,
+  onTouchStart,
+  dotsContainerStyle,
 }: CardSwiperProps) {
   function onCardScroll(e: RN.NativeSyntheticEvent<RN.NativeScrollEvent>) {
     const cardIndex = Math.round(e.nativeEvent.contentOffset.x / width);
-    onScroll(cardIndex);
+    onScroll?.(cardIndex);
   }
 
   return (
     <>
       <FlatList
+        ref={ref}
         testID={testId}
         data={cardsArray}
-        keyExtractor={(item) => item.id.toString()}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={onCardScroll}
         scrollEventThrottle={16}
+        onScroll={onCardScroll}
+        onTouchStart={onTouchStart}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Card
             cardInfo={item}
@@ -71,69 +68,26 @@ export function CardSwiper({
           />
         )}
       />
-      <DotsContainer array={cardsArray} actualIndex={actualIndex} />
+      <DotsContainer
+        style={dotsContainerStyle}
+        array={cardsArray}
+        actualIndex={actualIndex}
+      />
     </>
   );
 }
 
-function Card({
-  cardInfo,
-  cardImageHeight,
-  cardImageWidth,
-  fontColor = "#000",
-  imgFolder,
+function DotsContainer({
+  array,
+  actualIndex,
+  style,
 }: {
-  cardInfo: CardType;
-  cardImageHeight?: number;
-  cardImageWidth?: number;
-  fontColor?: string;
-  imgFolder: string;
+  array: CardType[];
+  actualIndex: number;
+  style: RN.StyleProp<RN.ViewStyle>;
 }) {
-  const DOTS_SECTION_HEIGHT = 50;
-  const { width, height } = useWindowDimensions();
-
   return (
-    <View
-      style={[
-        CardSwiperStyles.card,
-        { height: height - DOTS_SECTION_HEIGHT, width },
-      ]}
-    >
-      <Picture
-        folder={imgFolder}
-        style={[
-          CardSwiperStyles.image,
-          {
-            height: cardImageHeight ? cardImageHeight : 240,
-            width: cardImageWidth ? cardImageWidth : 320,
-          },
-        ]}
-        source={cardInfo.image}
-      />
-      <Paragraph
-        color={fontColor}
-        fontWeight="bold"
-        fontSize="big"
-        style={{ width: width * 0.8, height: 80 }}
-      >
-        {cardInfo.title}
-      </Paragraph>
-      <Paragraph
-        color={fontColor}
-        fontSize="small"
-        style={CardSwiperStyles.text}
-      >
-        {cardInfo.text}
-      </Paragraph>
-    </View>
-  );
-}
-
-function DotsContainer({ array, actualIndex }: DotsContainerProps) {
-  const { width } = useWindowDimensions();
-
-  return (
-    <View style={[CardSwiperStyles.dotsContainer, { width }]}>
+    <View style={[CardSwiperStyles.dotsContainer, { width }, style]}>
       {array.map((_, i) => (
         <View
           key={i}

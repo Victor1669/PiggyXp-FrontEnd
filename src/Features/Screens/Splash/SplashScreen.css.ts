@@ -12,7 +12,6 @@ export const SplashStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: GlobalColors.splashBackColor,
   },
   title: {
     fontSize: TITLE_FONT_SIZE,

@@ -13,9 +13,4 @@ export const SwiperStyles = StyleSheet.create({
   content: {
     height: height * 0.9,
   },
-
-  skipLink: {
-    marginVertical: 25,
-    marginHorizontal: 15,
-  },
 });

@@ -1,50 +1,54 @@
-import { useEffect, useRef } from "react";
-import { Animated, View } from "react-native";
+import { useEffect } from "react";
+import { Animated } from "react-native";
 
-import { Animate } from "Utils/animate";
+import { screenValues } from "Config/screenValues";
 
-import { GlobalImages } from "@Assets/GlobalImages";
+import { useSplashAnimation } from "./Contexts/useSplashAnimation";
+import { useSplashAnimatedValues } from "./Contexts/useSplashAnimatedValues";
+
+import SplashLogo from "./Components/SplashLogo";
+import SplashParticles from "./Components/SplashParticles";
+import SplashTitle from "./Components/SplashTitle";
+import QuestionMarker from "./Components/QuestionMarker";
 
 import { SplashStyles } from "./SplashScreen.css";
-const { container, title } = SplashStyles;
+const { container } = SplashStyles;
 
 export default function Splash() {
-  const logoScale = useRef(new Animated.Value(0.5)).current;
-  const titleOpacity = useRef(new Animated.Value(0)).current;
+  const { animationIndex } = useSplashAnimation();
+  const { splashBackColorInterpolated, animatedValues, runAnimation } =
+    useSplashAnimatedValues();
+
+  const { deviceHeight } = screenValues();
+
+  const isWaterAnimation = animationIndex === 4;
+  const isQuestionAnimation = animationIndex === 6;
 
   useEffect(() => {
-    SplashAnimation();
+    runAnimation();
   }, []);
 
-  async function SplashAnimation() {
-    await Animate({
-      animatedValue: logoScale,
-      toValue: 1.1,
-      duration: 1200,
-      delay: 100,
-    });
-    await Animate({
-      animatedValue: logoScale,
-      toValue: 1,
-      duration: 200,
-    });
-    await Animate({
-      animatedValue: titleOpacity,
-      toValue: 1,
-      duration: 200,
-      delay: 100,
-    });
-  }
+  useEffect(() => {
+    if (isWaterAnimation)
+      animatedValues.forEach((anim, i) => {
+        Animated.loop(
+          Animated.timing(anim, {
+            toValue: -deviceHeight,
+            duration: 1800 + i * 500,
+            useNativeDriver: true,
+          }),
+        ).start();
+      });
+  }, []);
 
   return (
-    <View style={container}>
-      <Animated.Image
-        style={{ transform: [{ scale: logoScale }] }}
-        source={GlobalImages.mainLogo}
-      />
-      <Animated.Text style={[title, { opacity: titleOpacity }]}>
-        PiggyXp
-      </Animated.Text>
-    </View>
+    <Animated.View
+      style={[container, { backgroundColor: splashBackColorInterpolated }]}
+    >
+      {isQuestionAnimation && <QuestionMarker />}
+      <SplashLogo />
+      {isWaterAnimation && <SplashParticles />}
+      <SplashTitle />
+    </Animated.View>
   );
 }

@@ -6,6 +6,7 @@ import { GlobalFontColors } from "@Assets/Colors";
 import { GlobalFonts } from "@Assets/fonts/Fonts";
 
 export default function Paragraph({
+  testID,
   children = "",
   fontSize = "normal",
   fontFamily,
@@ -15,6 +16,7 @@ export default function Paragraph({
   textAlignVertical = "center",
   style,
 }: {
+  testID?: string;
   children: React.ReactNode;
   fontSize?:
     | "verySmall"
@@ -55,6 +57,7 @@ export default function Paragraph({
 
   return (
     <Text
+      testID={testID}
       style={[
         {
           fontSize:

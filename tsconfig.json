@@ -2,23 +2,26 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "baseUrl": "./src",
+    "types": ["jest", "react-native"],
     "paths": {
-      "@App/*": ["../app/*"],
-      "@Auth/*": ["Features/Auth/*"],
+      "*": ["./src/*"],
+      "@App/*": ["./app/*"],
+      "@Auth/*": ["./src/Features/Auth/*"],
       "@Assets/*": [
-        "../assets/*",
-        "Assets/*",
-        "Features/Auth/Assets/*",
-        "Features/Screens/Profile/Assets/*",
-        "Features/Screens/Swiper/Assets/*"
+        "./assets/*",
+        "./src/Assets/*",
+        "./src/Features/Auth/Assets/*",
+        "./src/Features/Screens/Profile/Assets/*",
+        "./src/Features/Screens/Swiper/Assets/*"
       ],
-      "@Components/*": ["Components/*"],
-      "@Hooks/*": ["Hooks/*", "Features/Auth/Hooks/*"],
-      "@Screens/*": ["Features/Screens/*"],
-      "@Styles/*": ["Features/Auth/Styles/*", "Features/Screens/Styles/*"],
-      "@UserManagement/*": ["Features/UserManagement/*"]
+      "@Components/*": ["./src/Components/*"],
+      "@Hooks/*": ["./src/Hooks/*", "./src/Features/Auth/Hooks/*"],
+      "@Screens/*": ["./src/Features/Screens/*"],
+      "@Styles/*": [
+        "./src/Features/Auth/Styles/*",
+        "./src/Features/Screens/Styles/*"
+      ],
+      "@Utils/*": ["./src/Utils/*"]
     }
-  },
-  "types": ["jest", "react-native"]
+  }
 }

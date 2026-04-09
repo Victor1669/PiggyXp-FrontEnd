@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 
 import { useDynamicScroll } from "Contexts/useDynamicScroll";
 
-import TabBar from "@Components/TabBar";
+import TabBar from "@Components/Config/TabBar";
 
 import { GlobalColors } from "@Assets/Colors";
 

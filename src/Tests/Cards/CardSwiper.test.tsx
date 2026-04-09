@@ -1,14 +1,8 @@
-import { render } from "@testing-library/react-native";
-
-import { swipeToCard } from "./swipeToCard";
+import { render, cleanup, act, fireEvent } from "@testing-library/react-native";
+import { swipeToCard } from "../Helpers/swipeToCard";
 import SwiperContainer from "@Screens/Swiper/SwiperContainer";
-
-import type { GetByQuery } from "@testing-library/react-native/build/queries/make-queries";
-
-const DOTS_COLORS = {
-  active: "#fff",
-  inactive: "#000",
-} as const;
+import { expectDots } from "../Helpers/expectDots";
+import { SplashAnimationProvider } from "Features/Screens/Splash/Contexts/useSplashAnimation";
 
 const swipeScenarios = [
   { label: "primeiro", swipes: [], activeIndex: 0 },
@@ -18,34 +12,51 @@ const swipeScenarios = [
 
 const TOTAL_CARDS = 3;
 
+const renderSwiperContainer = () =>
+  render(
+    <SplashAnimationProvider>
+      <SwiperContainer />
+    </SplashAnimationProvider>,
+  );
+
 describe("SwiperContainer", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+    jest.useRealTimers();
+    cleanup();
+  });
+
   it("Renderizar", async () => {
-    const { findByText } = render(<SwiperContainer />);
+    const { findByText } = renderSwiperContainer();
     expect(await findByText("Aprender é transformar.")).toBeTruthy();
   });
 
   swipeScenarios.forEach(({ label, swipes, activeIndex }) => {
     it(`Deve exibir o ${label} card`, () => {
-      const { getByTestId } = render(<SwiperContainer />);
+      const { getByTestId } = renderSwiperContainer();
+      const swiper = getByTestId("SwiperContainer");
 
-      swipes.forEach((index) =>
-        swipeToCard(getByTestId, "SwiperContainer", index),
-      );
+      act(() => {
+        fireEvent(swiper, "touchStart");
+      });
+
+      swipes.forEach((index) => {
+        act(() => {
+          swipeToCard(getByTestId, "SwiperContainer", index);
+        });
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(2000);
+      });
 
       expectDots(getByTestId, activeIndex, TOTAL_CARDS);
     });
   });
 });
-
-function expectDots(
-  getByTestId: GetByQuery<string, never>,
-  activeIndex: number,
-  total: number,
-) {
-  return Array.from({ length: total }, (_, i) => {
-    expect(getByTestId(`dot-${i}`)).toHaveStyle({
-      backgroundColor:
-        i === activeIndex ? DOTS_COLORS.active : DOTS_COLORS.inactive,
-    });
-  });
-}

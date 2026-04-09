@@ -1,5 +1,7 @@
 import { View, Text } from "react-native";
 
+/* EM DESENVOLVIMENTO */
+
 export default function StatusModal({
   typeScreen,
 }: {

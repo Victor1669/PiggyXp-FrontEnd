@@ -1,44 +1,29 @@
 //#region Importações
 import { useEffect } from "react";
 import { Alert } from "react-native";
-import { Stack } from "expo-router";
 import * as Updates from "expo-updates";
 
 import { env } from "Config/env";
 
 import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { TITLE_FONT_SIZE },
-  showDevTools,
-} = screenValues();
+const { showDevTools } = screenValues();
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
 import { InternetConnectionProvider } from "Contexts/useInternetConnection";
 import { DynamicScrollProvider } from "Contexts/useDynamicScroll";
+import { SplashAnimationProvider } from "@Screens/Splash/Contexts/useSplashAnimation";
+import { SplashAnimatedValuesProvider } from "Features/Screens/Splash/Contexts/useSplashAnimatedValues";
 
 import { ToastContainer, toastMessage } from "Utils/toast";
 
 import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
 import NavigationButton from "@Components/NavigationButton";
-
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
+import ScreenContainer from "@Components/Config/ScreenContainer";
 //#endregion
 
 export default function RootLayout() {
-  async function checkUpdate() {
-    if (env.buildProfile === "development") return;
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      if (update.isAvailable) {
-        Alert.alert("Nova atualização disponível, feche e abra o app!");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  useEffect(() => {
+  useEffect(function warningTimer() {
     const timeOut1 = setTimeout(() => {
       if (env.buildProfile !== "development") {
         checkUpdate();
@@ -59,43 +44,28 @@ export default function RootLayout() {
     };
   }, []);
 
-  const hideHeaderPages = [
-    "index",
-    "Swiper",
-    "Welcome",
-    "Content",
-    "SendRecoveryEmail",
-    "Level",
-    "Cadastro",
-    "Login",
-    "Achievements",
-  ];
+  async function checkUpdate() {
+    if (env.buildProfile === "development") return;
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        Alert.alert("Nova atualização disponível, feche e abra o app!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <InternetConnectionProvider>
       <AuthProvider>
         <ShowLoadingScreenProvider>
           <DynamicScrollProvider>
-            <Stack
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: GlobalColors.contentBackColor.Dark,
-                },
-                headerTitleStyle: {
-                  color: GlobalFontColors.Dark,
-                  fontSize: TITLE_FONT_SIZE,
-                },
-                headerBackVisible: false,
-                contentStyle: {
-                  backgroundColor: GlobalColors.contentBackColor.Dark,
-                },
-              }}
-              key={Date.now().toString()}
-            >
-              {hideHeaderPages.map((page) => (
-                <Stack.Screen name={page} options={{ headerShown: false }} />
-              ))}
-            </Stack>
+            <SplashAnimationProvider>
+              <SplashAnimatedValuesProvider>
+                <ScreenContainer />
+              </SplashAnimatedValuesProvider>
+            </SplashAnimationProvider>
             <ToastContainer />
             <LoadingSpinner />
             <NavigationButton />

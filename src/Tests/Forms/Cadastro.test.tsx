@@ -5,8 +5,8 @@ import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
 
-import { submitInputAndExpectError } from "./submitInputAndExpectError";
-import { fieldValidations, FieldName } from "./fieldValidations";
+import { submitInputAndExpectError } from "../Helpers/submitInputAndExpectError";
+import { fieldValidations, FieldName } from "../Helpers/fieldValidations";
 import Cadastro from "@App/Cadastro";
 
 jest.mock("@Auth/Services/CadastroService");
