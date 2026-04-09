@@ -7,6 +7,8 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useVerifyAchievements } from "./Hooks/useVerifyAchievements";
 import { useAchievements } from "./Contexts/useAchievements";
 
+import { randomNumber } from "Utils/randomNumber";
+
 import AchievementModal from "./Components/AchievementsModal";
 import { AchievementCard } from "./Components/AchievementsCard";
 import RewardsModal from "./Components/RewardsModal";
@@ -18,12 +20,12 @@ export default function AchievementsContainer() {
   const { achievements } = useAchievements();
   const { checkAchievementsStatus } = useVerifyAchievements();
 
+  const tipsIndex = useRef(randomNumber());
+
   const tips = [
     "clique nas imagens para ver a descrição da conquista",
     "Faça níveis para completar as conquistas",
   ];
-
-  const tipsIndex = useRef(Math.round(+Math.random().toPrecision(1)));
 
   useEffect(
     function updateAchievementsStatus() {

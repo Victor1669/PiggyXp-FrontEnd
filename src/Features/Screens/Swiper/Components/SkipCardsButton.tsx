@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { Animated } from "react-native";
 import { router } from "expo-router";
 
-import { Animate } from "Utils/animate";
+import { AnimationUtil } from "Utils/animationUtils";
 
 import Button from "@Components/Button";
 
@@ -11,7 +11,7 @@ export function SkipCardsButton() {
 
   useEffect(() => {
     (async function animation() {
-      await Animate({
+      await AnimationUtil({
         animatedValue: buttonOpacity,
         duration: 500,
         toValue: 1,

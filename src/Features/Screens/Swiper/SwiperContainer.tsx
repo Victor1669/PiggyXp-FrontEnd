@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { View, FlatList, Dimensions } from "react-native";
 
+import useSplashAnimation from "@Screens/Splash/Contexts/useSplashAnimation";
+
 import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
 
 import { SwiperStyles } from "./SwiperContainer.css";
@@ -17,12 +19,17 @@ export default function SwiperContainer() {
   const [isTimerEnabled, setIsTimerEnabled] = useState(true);
   const [isSkipButtonEnabled, setIsSkipButtonEnabled] = useState(false);
 
+  const { setLayoutAnimation } = useSplashAnimation();
+
   const cardSwiperRef = useRef<FlatList>(null);
-  const cardIntervalRef = useRef<NodeJS.Timeout>(null);
+  const cardIntervalRef = useRef<number>(null);
 
   const isOnLastCard = cardIndex === CARDS_LIMIT;
 
   useEffect(function createCardInterval() {
+    setTimeout(() => {
+      setLayoutAnimation("fade");
+    }, 0);
     if (!isTimerEnabled) return;
     cardIntervalRef.current = setInterval(() => {
       setCardIndex((prev) => {
@@ -39,10 +46,10 @@ export default function SwiperContainer() {
 
   useEffect(() => {
     const flatList = cardSwiperRef.current;
-    if (!flatList || !isTimerEnabled) return;
     if (isOnLastCard) {
       setIsSkipButtonEnabled(true);
     }
+    if (!flatList || !isTimerEnabled) return;
 
     const animationSteps = [
       { offset: screenWidth * cardIndex, delay: 0 },

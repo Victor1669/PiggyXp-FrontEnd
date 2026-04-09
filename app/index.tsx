@@ -4,8 +4,6 @@ import { useFonts } from "expo-font";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
-import { env } from "Config/env";
-
 import { RefreshTokenService } from "@Auth/Services/RefreshTokenService";
 import { toastMessage } from "Utils/toast";
 
@@ -23,12 +21,6 @@ export default function SplashScreen() {
   useEffect(
     function initialCode() {
       themeChanger("splash");
-
-      const timer = setTimeout(() => {
-        router.replace("/Swiper");
-      }, 2800);
-
-      if (env.buildProfile === "preview") return () => clearTimeout(timer);
 
       (async () => {
         const rfToken = await refreshToken.get();
@@ -49,8 +41,6 @@ export default function SplashScreen() {
 
         await themeChanger("dark");
       })();
-
-      return () => clearTimeout(timer);
     },
     [user],
   );

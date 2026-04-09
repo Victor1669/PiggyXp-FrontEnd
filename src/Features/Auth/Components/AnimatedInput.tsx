@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import RN, { Animated, Pressable, TextInput, View } from "react-native";
 import RHF from "react-hook-form";
 
-import { Animate } from "Utils/animate";
+import { AnimationUtil } from "Utils/animationUtils";
 
 import { screenValues } from "Config/screenValues";
 
@@ -53,13 +53,13 @@ export default function AnimatedInput({
   ).current;
 
   async function focusMarginBottom() {
-    await Animate({
+    await AnimationUtil({
       animatedValue: labelMarginBottom,
       duration: ANIMATION_DURATION,
       toValue: FINAL_LABEL_BOTTOM,
       useNativeDriver: false,
     });
-    await Animate({
+    await AnimationUtil({
       animatedValue: labelMarginLeft,
       duration: ANIMATION_DURATION,
       toValue: FINAL_LABEL_LEFT,
@@ -67,13 +67,13 @@ export default function AnimatedInput({
     });
   }
   async function blurMarginBottom() {
-    await Animate({
+    await AnimationUtil({
       animatedValue: labelMarginLeft,
       duration: ANIMATION_DURATION,
       toValue: INITIAL_LABEL_LEFT,
       useNativeDriver: false,
     });
-    await Animate({
+    await AnimationUtil({
       animatedValue: labelMarginBottom,
       duration: ANIMATION_DURATION,
       toValue: INITIAL_LABEL_BOTTOM,

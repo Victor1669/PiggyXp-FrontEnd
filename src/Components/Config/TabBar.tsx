@@ -9,7 +9,7 @@ import {
 import { screenValues } from "Config/screenValues";
 
 import Picture from "@Components/Picture";
-import Paragraph from "./Paragraph";
+import Paragraph from "../Paragraph";
 
 import { GlobalColors } from "@Assets/Colors";
 import { GlobalImages } from "@Assets/GlobalImages";

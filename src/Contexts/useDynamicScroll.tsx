@@ -3,7 +3,7 @@ import { Animated } from "react-native";
 import * as StatusBar from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 
-import { Animate } from "Utils/animate";
+import { AnimationUtil } from "Utils/animationUtils";
 
 export interface DynamicScrollContextData {
   isScrolling: boolean;
@@ -31,11 +31,15 @@ export const DynamicScrollProvider: React.FC<DynamicScrollProviderProps> = ({
   useEffect(() => {
     if (isScrolling) {
       NavigationBar.setVisibilityAsync("hidden");
-      Animate({ animatedValue: navBarHeight, duration: 100, toValue: 0 });
+      AnimationUtil({ animatedValue: navBarHeight, duration: 100, toValue: 0 });
     } else {
       NavigationBar.setVisibilityAsync("visible");
       StatusBar.setStatusBarHidden(false, "slide");
-      Animate({ animatedValue: navBarHeight, duration: 100, toValue: 30 });
+      AnimationUtil({
+        animatedValue: navBarHeight,
+        duration: 100,
+        toValue: 30,
+      });
     }
   }, [isScrolling]);
 
