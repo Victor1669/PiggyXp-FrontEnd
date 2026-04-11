@@ -16,6 +16,7 @@ import { SplashAnimationProvider } from "@Screens/Splash/Contexts/useSplashAnima
 import { SplashAnimatedValuesProvider } from "Features/Screens/Splash/Contexts/useSplashAnimatedValues";
 
 import { ToastContainer, toastMessage } from "Utils/toast";
+import { registerNotificationClickListener } from "Utils/notifications";
 
 import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
 import NavigationButton from "@Components/NavigationButton";
@@ -55,6 +56,11 @@ export default function RootLayout() {
       console.log(e);
     }
   }
+
+  useEffect(() => {
+    const subscription = registerNotificationClickListener();
+    return () => subscription.remove();
+  }, []);
 
   return (
     <InternetConnectionProvider>

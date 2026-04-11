@@ -16,4 +16,7 @@ ROTAS DO BACKEND CONECTADAS:
     /update-user-img
     /updateUser/<userId>
     /upload-user-img
+    /achievements/verify/<userId>
+    /achievements/rewards/<userId>
+    /title
 ```

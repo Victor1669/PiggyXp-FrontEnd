@@ -2,6 +2,7 @@ import R, { createContext, useContext, useRef } from "react";
 import { Animated, Easing } from "react-native";
 
 import useSplashAnimation from "./useSplashAnimation";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 interface SplashAnimatedValuesProviderValues {
   titleOpacity: Animated.Value;
@@ -22,6 +23,7 @@ interface SplashAnimatedValuesProviderValues {
   splashBackColorInterpolated: Animated.AnimatedInterpolation<string>;
   animatedValues: Animated.Value[];
   runAnimation: () => void;
+  CAN_RUN_ANIMATION: boolean;
 }
 
 const SplashAnimatedValuesContext = createContext<
@@ -29,13 +31,16 @@ const SplashAnimatedValuesContext = createContext<
 >(undefined);
 
 function SplashAnimatedValuesProvider({ children }: { children: R.ReactNode }) {
+  const { hasVerifiedUserInfo, hasUserInfo } = useAuth();
   const { pickedAnimation } = useSplashAnimation();
 
+  const CAN_RUN_ANIMATION = hasVerifiedUserInfo && !hasUserInfo;
+
   const {
-    initialLogoScale = 1,
     initialTitleOpacity = 0,
     initialTitleScale = 1,
     initialTitleCoords = { x: 0, y: 0 },
+    initialLogoScale = 1,
     initialLogoRotateX = 0,
     initialLogoRotateY = 0,
     initialLogoRotateZ = 0,
@@ -137,6 +142,7 @@ function SplashAnimatedValuesProvider({ children }: { children: R.ReactNode }) {
     splashBackColorInterpolated,
     animatedValues,
     runAnimation,
+    CAN_RUN_ANIMATION,
   };
 
   return (

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { HomeImages } from "../Assets/HomeImages";
 const {
@@ -10,34 +10,34 @@ const {
   tabBar: { loja, missoes, perfil, ranking },
 } = GlobalImages;
 
+import { LevelType } from "../Types/LevelType";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { TitlesService } from "../Services/TitlesService";
+
 interface LevelsContextData {
   levels: LevelType[];
   selectedLevelIndex: number;
   setSelectedLevelIndex: React.Dispatch<React.SetStateAction<number>>;
   actualLevel: number;
+  title: string;
 }
-
-export type LevelType = {
-  id: number;
-  title?: string;
-  containerPosition: "flex-start" | "center" | "flex-end";
-  isLocked: boolean;
-  isPathLocked: boolean;
-  imgFolder: string;
-  img: string;
-};
 
 const LevelsContext = createContext<LevelsContextData>({} as LevelsContextData);
 
 export function LevelsProvider({ children }: { children: React.ReactNode }) {
-  const LEVEL = 1;
-  const actualLevel = LEVEL;
-  const [selectedLevelIndex, setSelectedLevelIndex] = useState(LEVEL);
+  const {
+    user: { nivel, difficulty },
+    userUnit,
+  } = useAuth();
+
+  const actualLevel = nivel + 1;
+
+  const [selectedLevelIndex, setSelectedLevelIndex] = useState(nivel);
+  const [title, setTitle] = useState("");
 
   const levels: LevelType[] = [
     {
       id: 1,
-      title: "Minha relação com o dinheiro",
       containerPosition: "center",
       isLocked: 1 > actualLevel,
       isPathLocked: 0 > actualLevel - 2,
@@ -102,9 +102,26 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
     },
   ];
 
+  useEffect(() => {
+    if (typeof difficulty !== "number") return;
+
+    (async function () {
+      const storedUserUnit = await userUnit.get();
+      const { data, status } = await TitlesService(difficulty, +storedUserUnit);
+
+      setTitle(status < 300 ? data.tittle : "");
+    })();
+  }, [difficulty]);
+
   return (
     <LevelsContext.Provider
-      value={{ levels, selectedLevelIndex, setSelectedLevelIndex, actualLevel }}
+      value={{
+        levels,
+        selectedLevelIndex,
+        setSelectedLevelIndex,
+        actualLevel,
+        title,
+      }}
     >
       {children}
     </LevelsContext.Provider>

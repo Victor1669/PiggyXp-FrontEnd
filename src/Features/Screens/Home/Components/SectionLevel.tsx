@@ -1,10 +1,12 @@
 import { View } from "react-native";
 
-import { LevelType, useLevels } from "../Contexts/useLevels";
+import { useLevels } from "../Contexts/useLevels";
 import { useShowSheet } from "../Contexts/useShowSheet";
 
 import HexagonButton from "./HexagonButton";
 import LevelPath from "./LevelPath";
+
+import { LevelType } from "../Types/LevelType";
 
 export default function SectionLevel({
   index,
