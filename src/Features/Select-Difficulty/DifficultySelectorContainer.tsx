@@ -31,13 +31,14 @@ export default function DifficultySelectorContainer() {
   const [difficulty, setDifficulty] = useState<number>(0);
   const { height } = useWindowDimensions();
 
-  const { setUser, userToken } = useAuth();
+  const { setUser, userToken, userUnit } = useAuth();
   const { setShowLoadingScreen } = useShowLoadingScreen();
   const { getIsConnected } = useInternetConnection();
 
   useEffect(() => {
     (async () => {
       await requestNotificationPermission();
+      await userUnit.set("1");
     })();
   }, []);
 

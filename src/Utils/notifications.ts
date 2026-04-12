@@ -1,9 +1,7 @@
 import { Platform } from "react-native";
 import { router } from "expo-router";
-
 import * as Notifications from "expo-notifications";
 
-// CONFIGURAÇÕES DA NOTIFICAÇÃO
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldPlaySound: true,
@@ -18,10 +16,8 @@ export async function notifications(
   message: string,
   route?: string,
 ) {
-  // Verifica permissão atual
   const { status: actualStatus } = await Notifications.getPermissionsAsync();
 
-  // SE NÃO TIVER PERMISSÃO, SAI DA FUNÇÃO
   if (actualStatus === "undetermined" || actualStatus === "denied") return;
 
   if (Platform.OS === "web") {
@@ -30,19 +26,16 @@ export async function notifications(
   }
 
   if (Platform.OS === "android") {
-    setAndroidNotificationChannelConfiguration();
+    await setAndroidNotificationChannelConfiguration();
   }
 
-  scheduleLocalNotification(title, message, route);
+  await scheduleLocalNotification(title, message, route);
 }
 
-/**
- * PERMISSÃO DE NOTIFICAÇÃO
- */
 export async function requestNotificationPermission() {
   const { status: actualStatus } = await Notifications.getPermissionsAsync();
 
-  if (actualStatus === "granted" || "denied") return false;
+  if (actualStatus === "granted" || actualStatus === "denied") return false;
 
   const permissionStatus = await Notifications.requestPermissionsAsync();
 
@@ -56,9 +49,6 @@ async function setAndroidNotificationChannelConfiguration() {
   });
 }
 
-/**
- * CONTEÚDO DA NOTIFICAÇÃO
- */
 async function scheduleLocalNotification(
   title: string,
   message: string,
@@ -69,18 +59,16 @@ async function scheduleLocalNotification(
       title,
       color: "#ff00ff",
       body: message,
-      ...(route && { data: { route } }),
+      data: { route },
     },
     trigger: {
-      channelId: "default",
+      type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
       seconds: 2,
+      channelId: "default",
     },
   });
 }
 
-/**
- * LISTENER PARA CLIQUE DA NOTIFICAÇÃO
- */
 export function registerNotificationClickListener() {
   const subscription = Notifications.addNotificationResponseReceivedListener(
     (response) => {
@@ -92,5 +80,5 @@ export function registerNotificationClickListener() {
     },
   );
 
-  return subscription; // retorne para poder remover o listener depois
+  return subscription;
 }

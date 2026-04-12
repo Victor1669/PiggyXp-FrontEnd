@@ -10,11 +10,13 @@ const SplashAnimation7: AnimationFunction = async function ({
   titleOpacity,
   titleCoords,
   logoRotateY,
+  logoRotateX,
   questionMarkerOpacity,
   logoCoords,
 }) {
   if (
     logoRotateY === undefined ||
+    logoRotateX === undefined ||
     questionMarkerOpacity === undefined ||
     logoCoords === undefined ||
     titleCoords === undefined
@@ -22,16 +24,11 @@ const SplashAnimation7: AnimationFunction = async function ({
     return;
   const LOGO_INCLINATION = 60;
 
-  /* APARIÇÃO NORMAL: 1500ms */
-  await AnimationUtil({
-    animatedValue: logoScale,
-    toValue: 1.1,
-    duration: 1200,
-  });
+  /* APARIÇÃO NORMAL: 700ms */
   await AnimationUtil({
     animatedValue: logoScale,
     toValue: 1,
-    duration: 200,
+    duration: 700,
   });
 
   /* PRIMEIRA INCLINAÇÃO 800ms */
@@ -74,11 +71,18 @@ const SplashAnimation7: AnimationFunction = async function ({
     delay: 200,
   });
 
-  await AnimateXYUtil({
-    animatedValue: logoCoords,
-    duration: 250,
-    toValue: { x: 0, y: -deviceHeight / 2 },
-  });
+  await Promise.all([
+    AnimationUtil({
+      animatedValue: logoRotateX,
+      toValue: 60,
+      duration: 250,
+    }),
+    AnimateXYUtil({
+      animatedValue: logoCoords,
+      duration: 250,
+      toValue: { x: 0, y: -deviceHeight / 2 },
+    }),
+  ]);
 
   await Promise.all([
     AnimateXYUtil({
@@ -91,6 +95,11 @@ const SplashAnimation7: AnimationFunction = async function ({
       duration: 500,
       toValue: { x: 0, y: 0 },
     }),
+    AnimationUtil({
+      animatedValue: logoRotateX,
+      toValue: 0,
+      duration: 500,
+    }),
   ]);
 };
 
@@ -98,11 +107,12 @@ SplashAnimation7.initialValues = {
   initialLogoScale: 0.5,
   animationType: "fade",
   initialLogoRotateY: 0,
+  initialLogoRotateX: 0,
   initialQuestionMarkerOpacity: 0,
   initialTitleCoords: { x: 0, y: -deviceHeight },
   initialLogoCoords: { x: 0, y: 0 },
   initialTitleOpacity: 1,
-  animationDuration: 5000,
+  animationDuration: 4700,
 };
 
 export { SplashAnimation7 };

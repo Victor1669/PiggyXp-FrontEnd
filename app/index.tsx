@@ -11,7 +11,7 @@ import SplashContainer from "@Screens/Splash/SplashContainer";
 import { themeChanger } from "Helpers/themeChanger";
 
 export default function SplashScreen() {
-  const { user, refreshToken, userToken } = useAuth();
+  const { user, refreshToken, userToken, setHasVerifiedUserInfo } = useAuth();
 
   // CONFIGURAÇÃO DE FONTES
   const [loaded, error] = useFonts({
@@ -24,7 +24,10 @@ export default function SplashScreen() {
 
       (async () => {
         const rfToken = await refreshToken.get();
-        if (!rfToken.length) return;
+        if (!rfToken.length) {
+          setHasVerifiedUserInfo(true);
+          return;
+        }
 
         const { data, status } = await RefreshTokenService(rfToken);
 
@@ -39,6 +42,7 @@ export default function SplashScreen() {
           router.replace("/Login");
         }
 
+        setHasVerifiedUserInfo(true);
         await themeChanger("dark");
       })();
     },

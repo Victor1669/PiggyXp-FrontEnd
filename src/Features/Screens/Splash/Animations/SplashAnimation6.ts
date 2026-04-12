@@ -57,7 +57,7 @@ const SplashAnimation6: AnimationFunction = async function ({
 SplashAnimation6.initialValues = {
   initialLogoScale: 0.35,
   animationType: "fade",
-  animationDuration: 3600,
+  animationDuration: 3800,
   initialLogoCoords: { x: -deviceWidth / 2 - 75, y: 0 },
 };
 

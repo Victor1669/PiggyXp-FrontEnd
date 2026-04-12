@@ -1,19 +1,22 @@
-import { router, Stack } from "expo-router";
+import { useEffect } from "react";
+import { router, Stack, usePathname } from "expo-router";
 
+import { env } from "Config/env";
 import { screenValues } from "Config/screenValues";
 
-import useSplashAnimation from "@Screens/Splash/Contexts/useSplashAnimation";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { useSplashAnimation } from "@Screens/Splash/Contexts/useSplashAnimation";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-import { useEffect } from "react";
-import { env } from "Config/env";
 
 export default function ScreenContainer() {
+  const pathName = usePathname();
+  const { layoutAnimation, animationDuration } = useSplashAnimation();
+  const { hasUserInfo } = useAuth();
+
   const {
     fontSizes: { TITLE_FONT_SIZE },
   } = screenValues();
-
-  const { layoutAnimation, animationDuration } = useSplashAnimation();
 
   const hideHeaderPages = [
     "index",
@@ -28,6 +31,10 @@ export default function ScreenContainer() {
   ];
 
   useEffect(() => {
+    if (hasUserInfo || pathName !== "/") {
+      return;
+    }
+
     const timer = setTimeout(() => {
       router.replace("/Swiper");
     }, animationDuration);
@@ -37,7 +44,7 @@ export default function ScreenContainer() {
     return () => {
       clearTimeout(timer);
     };
-  }, [animationDuration]);
+  }, [animationDuration, hasUserInfo, pathName]);
 
   return (
     <Stack
@@ -53,7 +60,7 @@ export default function ScreenContainer() {
         contentStyle: {
           backgroundColor: GlobalColors.contentBackColor.Dark,
         },
-        animation: layoutAnimation,
+        animation: hasUserInfo ? "fade" : layoutAnimation,
       }}
     >
       {hideHeaderPages.map((page) => (

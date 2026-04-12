@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import { Animated } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-
 import { useSplashAnimation } from "./Contexts/useSplashAnimation";
 import { useSplashAnimatedValues } from "./Contexts/useSplashAnimatedValues";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import SplashLogo from "./Components/SplashLogo";
 import SplashParticles from "./Components/SplashParticles";
@@ -14,40 +13,36 @@ import QuestionMarker from "./Components/QuestionMarker";
 import { SplashStyles } from "./SplashScreen.css";
 const { container } = SplashStyles;
 
+import { GlobalColors } from "Assets/Colors";
+
 export default function Splash() {
+  const { hasUserInfo, hasVerifiedUserInfo } = useAuth();
   const { animationIndex } = useSplashAnimation();
-  const { splashBackColorInterpolated, animatedValues, runAnimation } =
+  const { splashBackColorInterpolated, runAnimation, CAN_RUN_ANIMATION } =
     useSplashAnimatedValues();
 
-  const { deviceHeight } = screenValues();
-
-  const isWaterAnimation = animationIndex === 4;
   const isQuestionAnimation = animationIndex === 6;
 
-  useEffect(() => {
-    runAnimation();
-  }, []);
+  const SPLASH_CONTAINER_STYLES = [
+    container,
+    {
+      backgroundColor: CAN_RUN_ANIMATION
+        ? splashBackColorInterpolated
+        : GlobalColors.splashBackColor,
+    },
+  ];
 
   useEffect(() => {
-    if (isWaterAnimation)
-      animatedValues.forEach((anim, i) => {
-        Animated.loop(
-          Animated.timing(anim, {
-            toValue: -deviceHeight,
-            duration: 1800 + i * 500,
-            useNativeDriver: true,
-          }),
-        ).start();
-      });
-  }, []);
+    if (!hasUserInfo && hasVerifiedUserInfo) {
+      runAnimation();
+    }
+  }, [hasUserInfo, hasVerifiedUserInfo]);
 
   return (
-    <Animated.View
-      style={[container, { backgroundColor: splashBackColorInterpolated }]}
-    >
+    <Animated.View style={SPLASH_CONTAINER_STYLES}>
       {isQuestionAnimation && <QuestionMarker />}
       <SplashLogo />
-      {isWaterAnimation && <SplashParticles />}
+      <SplashParticles />
       <SplashTitle />
     </Animated.View>
   );

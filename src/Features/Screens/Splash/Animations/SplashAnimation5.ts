@@ -39,6 +39,7 @@ SplashAnimation5.initialValues = {
   animationType: "slide_from_right",
   initialLogoCoords: { x: 0, y: deviceHeight / 2 + 300 },
   initialSplashBackColor: 1,
+  animationDuration: 3400,
 };
 
 export { SplashAnimation5 };

@@ -29,9 +29,13 @@ export function useVerifyAchievements() {
     ) {
       const { nivel, xp, coins } = userProgressData;
 
-      if (env.buildProfile === "preview") {
-        await login({ ...user, id: +userId, nivel, xp, coins });
-      } else await login({ ...userInfoData, id: +userId, nivel, xp, coins });
+      await login({
+        ...(env.buildProfile === "preview" ? user : userInfoData),
+        id: +userId,
+        nivel,
+        xp,
+        coins,
+      });
     }
 
     const newAchievements = achievementsData?.newAchievements;

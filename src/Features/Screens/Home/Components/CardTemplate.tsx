@@ -70,7 +70,7 @@ export function Card2() {
         <Paragraph fontSize="small" fontWeight="bold" textAlign="left">
           Nível: {user.nivel} XP: {user.xp}
         </Paragraph>
-        <ProgressBar width={200} maxValue={10} actualValue={1} />
+        <ProgressBar style={{ width: 200 }} maxValue={10} actualValue={1} />
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <Picture

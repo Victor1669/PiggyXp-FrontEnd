@@ -9,4 +9,5 @@ export const AchievementsImages = [
   "aspiranteBanqueiro.png",
   "moedaCara.png",
   "coracao.png",
+  "notificacao.png",
 ];

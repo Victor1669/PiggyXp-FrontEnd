@@ -1,34 +1,24 @@
 import { Pressable } from "react-native";
 
 import { useShowSheet } from "../Contexts/useShowSheet";
+import { useLevels } from "../Contexts/useLevels";
 
 import Paragraph from "@Components/Paragraph";
 
-import { GlobalFontColors, GlobalColors } from "@Assets/Colors";
+import { HomeContentStyles } from "../Styles/HomeContent.css";
+const { sectionTitle, sectionTitleContainer } = HomeContentStyles;
 
-export default function SectionTitle({ title }: { title: string }) {
+export default function SectionTitle() {
+  const { title } = useLevels();
   const { setShowSheet } = useShowSheet();
+
+  function handleTitlePress() {
+    setShowSheet(false);
+  }
+
   return (
-    <Pressable
-      onPress={() => setShowSheet(false)}
-      style={{
-        width: "92%",
-        borderBottomWidth: 2,
-        borderBottomColor: GlobalFontColors.Dark,
-        marginBottom: 20,
-      }}
-    >
-      <Paragraph
-        style={{
-          width: "auto",
-          margin: "auto",
-          paddingHorizontal: 10,
-          backgroundColor: GlobalColors.contentBackColor.Dark,
-          transform: [{ translateY: 10 }],
-        }}
-      >
-        {title}
-      </Paragraph>
+    <Pressable onPress={handleTitlePress} style={sectionTitleContainer}>
+      <Paragraph style={sectionTitle}>{title}</Paragraph>
     </Pressable>
   );
 }

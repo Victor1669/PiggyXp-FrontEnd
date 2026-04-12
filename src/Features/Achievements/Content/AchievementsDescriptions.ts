@@ -1,5 +1,5 @@
 export const AchievementsDescriptions = [
-  "Faça sua primeira fase", // Começo da jornada (XP > 0)
+  "Conquiste seus primeiros XPs!", // Começo da jornada (XP > 0)
   "Acumule mais de 100 de experiência", // Engatinhando (XP > 100)
   "Alcance a marca de 1.000 de XP", // Controlando o dinheiro (XP > 1.000)
   "Torne-se um mestre acumulando 10.000 de XP", // Manipulador da economia (XP > 10.000)

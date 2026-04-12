@@ -3,9 +3,9 @@ import { useEffect, useRef } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+import { useAchievements } from "./Contexts/useAchievements";
 
 import { useVerifyAchievements } from "./Hooks/useVerifyAchievements";
-import { useAchievements } from "./Contexts/useAchievements";
 
 import { randomNumber } from "Utils/randomNumber";
 
@@ -13,6 +13,7 @@ import AchievementModal from "./Components/AchievementsModal";
 import { AchievementCard } from "./Components/AchievementsCard";
 import RewardsModal from "./Components/RewardsModal";
 import Paragraph from "@Components/Paragraph";
+import NotificationButton from "./Components/NotificationButton";
 //#endregion
 
 export default function AchievementsContainer() {
@@ -38,6 +39,7 @@ export default function AchievementsContainer() {
 
   return (
     <>
+      {<NotificationButton />}
       <Paragraph style={{ marginTop: 25 }}>
         Dica: {tips[tipsIndex.current]}
       </Paragraph>

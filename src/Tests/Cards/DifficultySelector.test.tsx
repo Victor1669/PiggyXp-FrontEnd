@@ -20,6 +20,7 @@ jest.mock("../../Features/Auth/Contexts/useAuth", () => ({
   useAuth: () => ({
     setUser: mockSetUser,
     userToken: { get: jest.fn().mockResolvedValue("token") },
+    userUnit: { set: jest.fn().mockResolvedValue(undefined) },
   }),
 }));
 
