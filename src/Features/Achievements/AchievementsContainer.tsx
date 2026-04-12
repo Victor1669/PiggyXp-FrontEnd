@@ -9,6 +9,8 @@ import { useVerifyAchievements } from "./Hooks/useVerifyAchievements";
 
 import { randomNumber } from "Utils/randomNumber";
 
+import { randomNumber } from "Utils/randomNumber";
+
 import AchievementModal from "./Components/AchievementsModal";
 import { AchievementCard } from "./Components/AchievementsCard";
 import RewardsModal from "./Components/RewardsModal";
