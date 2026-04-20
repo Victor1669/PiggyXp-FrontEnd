@@ -6,8 +6,9 @@ import { GlobalFontColors } from "@Assets/Colors";
 import { GlobalFonts } from "@Assets/fonts/Fonts";
 
 export default function Paragraph({
-  testID,
   children = "",
+  numberOfLines,
+  testID,
   fontSize = "normal",
   fontFamily,
   fontWeight,
@@ -16,8 +17,9 @@ export default function Paragraph({
   textAlignVertical = "center",
   style,
 }: {
-  testID?: string;
   children: React.ReactNode;
+  numberOfLines?: number;
+  testID?: string;
   fontSize?:
     | "verySmall"
     | "small"
@@ -55,27 +57,25 @@ export default function Paragraph({
 
   const { Dark, Light } = GlobalFontColors;
 
+  const TEXT_STYLES = [
+    {
+      fontSize: typeof fontSize === "number" ? fontSize : fontSizeMap[fontSize],
+      color:
+        color === "darkModeFont"
+          ? Dark
+          : color === "lightModeFont"
+            ? Light
+            : color,
+      fontFamily: fontFamily ? GlobalFonts[fontFamily] : undefined,
+      fontWeight,
+      textAlign,
+      textAlignVertical,
+    },
+    style,
+  ];
+
   return (
-    <Text
-      testID={testID}
-      style={[
-        {
-          fontSize:
-            typeof fontSize === "number" ? fontSize : fontSizeMap[fontSize],
-          color:
-            color === "darkModeFont"
-              ? Dark
-              : color === "lightModeFont"
-                ? Light
-                : color,
-          fontFamily: fontFamily ? GlobalFonts[fontFamily] : undefined,
-          fontWeight,
-          textAlign,
-          textAlignVertical,
-        },
-        style,
-      ]}
-    >
+    <Text numberOfLines={numberOfLines} testID={testID} style={TEXT_STYLES}>
       {children}
     </Text>
   );

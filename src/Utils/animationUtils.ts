@@ -26,6 +26,15 @@ interface AnimateLoopTypes {
   easing?: EasingFunction;
 }
 
+interface AnimateSpringTypes {
+  animatedValue: Animated.Value;
+  toValue: number;
+  speed?: number;
+  bounciness?: number;
+  delay?: number;
+  useNativeDriver?: boolean;
+}
+
 export function AnimationUtil({
   animatedValue,
   toValue,
@@ -89,4 +98,30 @@ export function AnimateLoopUtil({
 
   loop.start();
   return () => loop.stop();
+}
+
+export function AnimateSpringUtil({
+  animatedValue,
+  toValue,
+  speed = 12,
+  bounciness = 8,
+  delay = 0,
+  useNativeDriver = true,
+}: AnimateSpringTypes) {
+  return new Promise((res) => {
+    const startSpring = () => {
+      Animated.spring(animatedValue, {
+        toValue,
+        speed,
+        bounciness,
+        useNativeDriver,
+      }).start(res);
+    };
+
+    if (delay > 0) {
+      setTimeout(startSpring, delay);
+    } else {
+      startSpring();
+    }
+  });
 }

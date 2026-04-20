@@ -5,7 +5,7 @@ ROTAS DO BACKEND CONECTADAS:
     /deleteUser/<userId>
     /difficulty
     /phase/?difficulty=<number>&order=<number>
-    /phases/?difficulty=<number>&order=<number> (MongoDb)                                    X
+    /phases/?difficulty=<number>&order=<number> (MongoDb)
     /userInfo/?userId=<number>
     /progressInfo/?progressId=<number>
     /login
@@ -19,4 +19,5 @@ ROTAS DO BACKEND CONECTADAS:
     /achievements/verify/<userId>
     /achievements/rewards/<userId>
     /title
+    /ranking
 ```
