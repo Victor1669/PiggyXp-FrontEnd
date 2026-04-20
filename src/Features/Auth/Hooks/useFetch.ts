@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from "axios";
+
 import { api } from "Config/axios";
 import { env } from "Config/env";
 
@@ -20,7 +22,7 @@ export async function useFetch({
 }: useFetchProps) {
   try {
     if (env.buildProfile === "preview") return { data: "", status: 200 };
-    const config = {
+    const config: AxiosRequestConfig = {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,
       },

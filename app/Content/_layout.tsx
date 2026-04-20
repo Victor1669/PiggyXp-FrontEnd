@@ -1,13 +1,19 @@
 import { Tabs } from "expo-router";
 
+import { screenValues } from "Config/screenValues";
+
 import { useDynamicScroll } from "Contexts/useDynamicScroll";
 
 import TabBar from "@Components/Config/TabBar";
 
-import { GlobalColors } from "@Assets/Colors";
+import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 
 export default function Layout() {
   const { navBarHeight } = useDynamicScroll();
+
+  const {
+    fontSizes: { TITLE_FONT_SIZE },
+  } = screenValues();
 
   return (
     <Tabs
@@ -20,7 +26,19 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="Ranking" options={{ title: "Ranking" }} />
+      <Tabs.Screen
+        name="Ranking"
+        options={{
+          title: "Ranking",
+          headerShown: true,
+          headerStyle: { backgroundColor: GlobalColors.contentBackColor.Dark },
+          headerTitleStyle: {
+            color: GlobalFontColors.Dark,
+            fontSize: TITLE_FONT_SIZE,
+          },
+          headerTitleAlign: "center",
+        }}
+      />
       <Tabs.Screen name="Missoes" options={{ title: "Missões" }} />
       <Tabs.Screen name="Loja" options={{ title: "Loja" }} />
       <Tabs.Screen name="Profile" options={{ title: "Perfil" }} />
