@@ -28,6 +28,7 @@ export default function ScreenContainer() {
     "Cadastro",
     "Login",
     "Achievements",
+    "DevTools",
   ];
 
   useEffect(() => {

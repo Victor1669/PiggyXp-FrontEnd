@@ -19,8 +19,8 @@ import { ToastContainer, toastMessage } from "Utils/toast";
 import { registerNotificationClickListener } from "Utils/notifications";
 
 import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
-import NavigationButton from "@Components/NavigationButton";
 import ScreenContainer from "@Components/Config/ScreenContainer";
+import DevToolsLink from "Features/DevTools/Components/DevToolsLink";
 //#endregion
 
 export default function RootLayout() {
@@ -74,7 +74,7 @@ export default function RootLayout() {
             </SplashAnimationProvider>
             <ToastContainer />
             <LoadingSpinner />
-            <NavigationButton />
+            <DevToolsLink />
           </DynamicScrollProvider>
         </ShowLoadingScreenProvider>
       </AuthProvider>

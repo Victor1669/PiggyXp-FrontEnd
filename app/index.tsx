@@ -23,13 +23,14 @@ export default function SplashScreen() {
       themeChanger("splash");
 
       (async () => {
-        const rfToken = await refreshToken.get();
-        if (!rfToken.length) {
+        const storedRefreshToken = await refreshToken.get();
+
+        if (!storedRefreshToken.length) {
           setHasVerifiedUserInfo(true);
           return;
         }
 
-        const { data, status } = await RefreshTokenService(rfToken);
+        const { data, status } = await RefreshTokenService(storedRefreshToken);
 
         if (status < 300) {
           await userToken.set(data.accessToken);

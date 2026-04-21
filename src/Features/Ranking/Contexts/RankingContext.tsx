@@ -53,7 +53,7 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
 
       setIsLoading(false);
     })();
-  }, []);
+  }, [user.xp]);
 
   return (
     <RankingContext.Provider
