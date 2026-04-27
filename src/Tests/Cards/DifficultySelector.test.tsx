@@ -24,15 +24,16 @@ jest.mock("../../Features/Auth/Contexts/useAuth", () => ({
   }),
 }));
 
-jest.mock("Contexts/useShowLoadingScreen", () => ({
-  ...jest.requireActual("Contexts/useShowLoadingScreen"),
-  useShowLoadingScreen: () => ({
-    setShowLoadingScreen: mockSetShowLoadingScreen,
+jest.mock("Contexts/StatusContext", () => ({
+  ...jest.requireActual("Contexts/StatusContext"),
+  useStatus: () => ({
+    showStatus: mockShowStatus,
+    hideStatus: mockHideStatus,
   }),
 }));
 
 import { AuthProvider } from "../../Features/Auth/Contexts/useAuth";
-import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
+import { StatusProvider } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { DifficultyService } from "../../Features/Auth/Services/DifficultyService";
@@ -43,7 +44,8 @@ import { swipeToCard } from "../Helpers/swipeToCard";
 import { expectDots } from "../Helpers/expectDots";
 
 const mockSetUser = jest.fn();
-const mockSetShowLoadingScreen = jest.fn();
+const mockShowStatus = jest.fn();
+const mockHideStatus = jest.fn();
 //#endregion
 
 const TOTAL_CARDS = 3;
@@ -51,9 +53,9 @@ const TOTAL_CARDS = 3;
 async function renderDifficultySelector() {
   const renderResult = render(
     <AuthProvider>
-      <ShowLoadingScreenProvider>
+      <StatusProvider>
         <DifficultySelector />
-      </ShowLoadingScreenProvider>
+      </StatusProvider>
     </AuthProvider>,
   );
 
@@ -114,6 +116,8 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
         "token",
       );
       expect(mockSetUser).toHaveBeenCalled();
+      expect(mockShowStatus).toHaveBeenCalledWith("loading");
+      expect(mockHideStatus).toHaveBeenCalled();
     });
   });
 
@@ -128,6 +132,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
 
     await waitFor(() => {
       expect(DifficultyService).not.toHaveBeenCalled();
+      expect(mockShowStatus).toHaveBeenCalledWith("noInternet");
     });
   });
 });

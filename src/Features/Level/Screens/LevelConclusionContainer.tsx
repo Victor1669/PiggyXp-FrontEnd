@@ -1,61 +1,69 @@
+import { useState } from "react";
 import { View } from "react-native";
 import { router } from "expo-router";
 
+import { FinishPhaseService } from "../Services/LevelServices";
+
 import { useQuiz } from "../Contexts/useQuiz";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import Button from "@Components/Button";
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
 import { LevelAssets } from "../Assets/LevelAssets";
+import { LevelConclusionStyles } from "../Styles/LevelConclusionStyles.css";
+const {
+  container,
+  image,
+  conclusionMessage,
+  textsContainer,
+  rewardsTexts,
+  conclusionButton,
+} = LevelConclusionStyles;
 
 export default function LevelConclusionContainer() {
-  const { seconds, rightAnswers, questions } = useQuiz();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { user, userToken } = useAuth();
+  const { TIMER, rightAnswers, questions, rewards, difficulty, order, unit } =
+    useQuiz();
+
+  async function handleFinishLevel() {
+    setIsLoading(true);
+
+    const storedToken = await userToken.get();
+    await FinishPhaseService(difficulty, order, unit, user.id, storedToken);
+
+    setIsLoading(false);
+    router.replace("/Content");
+  }
 
   return (
-    <View
-      style={{
-        gap: 50,
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Picture
-        folder=""
-        source={LevelAssets.homem}
-        style={{
-          width: "70%",
-          aspectRatio: 16 / 9,
-        }}
-      />
-      <Paragraph
-        style={{
-          marginHorizontal: 75,
-        }}
-        fontSize="big"
-      >
+    <View style={container}>
+      <Picture folder="" source={LevelAssets.homem} style={image} />
+
+      <Paragraph style={conclusionMessage} fontSize="big">
         Impressionante, você é fora da curva!
       </Paragraph>
-      <View style={{ gap: 20 }}>
+
+      <View style={textsContainer}>
         <Paragraph fontSize="big" fontWeight="bold" textAlign="center">
           {rightAnswers} / {questions.length}
         </Paragraph>
 
         <Paragraph color="#E2FF41" fontSize="big" fontWeight="bold">
-          {(seconds / 60).toFixed(0)} : {seconds % 60 < 10 ? 0 : ""}
-          {seconds % 60}
+          {TIMER}
         </Paragraph>
-        <View style={{ flexDirection: "row", gap: 70 }}>
-          <Paragraph fontWeight="bold">+30 coins</Paragraph>
-          <Paragraph fontWeight="bold">+150 xp</Paragraph>
+
+        <View style={rewardsTexts}>
+          <Paragraph fontWeight="bold">+{rewards.coins} coins</Paragraph>
+          <Paragraph fontWeight="bold">+{rewards.xp} xp</Paragraph>
         </View>
       </View>
-      <Button
-        onPress={() => router.replace("/Content")}
-        style={{ marginTop: 50 }}
-      >
-        Receber xp
+
+      <Button onPress={handleFinishLevel} style={conclusionButton}>
+        {isLoading ? "Carregando..." : "Receber xp"}
       </Button>
     </View>
   );

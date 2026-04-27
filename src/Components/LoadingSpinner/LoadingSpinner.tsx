@@ -1,21 +1,23 @@
 import { Image, Modal, View } from "react-native";
-
-import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
-
+import { useStatus } from "Contexts/StatusContext";
 import Paragraph from "@Components/Paragraph";
-
 import { LoadingSpinnerStyles } from "./LoadingSpinner.css";
+
 const { container, spinner } = LoadingSpinnerStyles;
 
-export default function LoadingSpinner() {
-  const { showLoadingScreen } = useShowLoadingScreen();
-  if (showLoadingScreen)
+export default function StatusModal() {
+  const { modalType, isVisible } = useStatus();
+
+  if (isVisible && modalType === "loading") {
     return (
-      <Modal transparent animationType="fade" statusBarTranslucent>
+      <Modal visible={isVisible} transparent animationType="fade">
         <View style={container}>
           <Image source={require("./Spinner.gif")} style={spinner} />
-          <Paragraph fontSize="bigger">Carregando...</Paragraph>
+          <Paragraph>Carregando...</Paragraph>
         </View>
       </Modal>
     );
+  }
+
+  return null;
 }

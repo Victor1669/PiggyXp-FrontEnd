@@ -1,125 +1,77 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import { Animated } from "react-native";
 
-//#region Interfaces e Types
-export interface QuestionTypes {
-  question: string;
-  answers: string[];
-  rightAnswerIndex: number;
-}
+import { quizReducer } from "./quizReducer";
 
-export interface LevelTypes {
-  initialText: string;
-  textFeedBack: string;
-  rightAnswers: number;
-  questions: QuestionTypes[];
-  showSheet: boolean;
-  disableButton: boolean;
-  timerActive: boolean;
-  seconds: number;
-}
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+
+import { LevelTypes, QuestionTypes } from "../Types/LevelTypes";
+
 interface QuizProviderValues extends LevelTypes {
-  dispatch: React.ActionDispatch<[action: any]>;
+  dispatch: React.Dispatch<any>;
+  getQuestion: (questionIndex: number) => QuestionTypes;
+  getIsLevelCompleted: (questionIndex: number) => boolean;
 }
-//#endregions
 
 const initialValues: LevelTypes = {
   initialText: "",
   textFeedBack: "",
   questions: [],
   rightAnswers: 0,
-  showSheet: false,
-  disableButton: false,
+  isAnswered: false,
   timerActive: false,
   seconds: 0,
+  lives: 0,
+  unit: 0,
+  difficulty: 0,
+  order: 0,
+  rewards: { coins: 0, xp: 0 },
+  TIMER: "00 : 00",
+  losed: false,
 };
-
-function reducer(state: any, action: any): LevelTypes {
-  const { rightAnswers, seconds }: LevelTypes = state;
-
-  const { type, payload } = action;
-
-  switch (type) {
-    case "DADOS_CARREGADOS": {
-      const { text: initialText, difficulty, order, questions } = payload;
-
-      return { ...state, initialText, difficulty, order, questions };
-    }
-    case "QUIZ_COMECOU": {
-      return { ...state, timerActive: true };
-    }
-    case "TICK": {
-      return { ...state, seconds: seconds + 1 };
-    }
-    case "ERROU_QUESTAO": {
-      return {
-        ...state,
-        textFeedBack: "Errou!",
-        disableButton: true,
-        showSheet: true,
-      };
-    }
-    case "ACERTOU_QUESTAO": {
-      return {
-        ...state,
-        rightAnswers: rightAnswers + 1,
-        textFeedBack: "Acertou!",
-        disableButton: true,
-        showSheet: true,
-      };
-    }
-    case "PROXIMA_QUESTAO": {
-      return { ...state, showSheet: false, disableButton: false };
-    }
-
-    case "QUIZ_ACABOU": {
-      return { ...state, timerActive: false };
-    }
-    default:
-      throw new Error("Ação desconhecida: " + type);
-  }
-}
 
 const QuizContext = createContext<QuizProviderValues | undefined>(undefined);
 
 function QuizProvider({ children }: { children: React.ReactNode }) {
-  const [
-    {
-      initialText,
-      questions,
-      rightAnswers,
-      showSheet,
-      disableButton,
-      textFeedBack,
-      timerActive,
-      seconds,
-    },
-    dispatch,
-  ]: [state: LevelTypes, dispatch: React.ActionDispatch<[action: any]>] =
-    useReducer(reducer, initialValues);
+  const { user } = useAuth();
+  const [state, dispatch] = useReducer(quizReducer, {
+    ...initialValues,
+    lives: user?.lives ?? 0,
+  });
+
+  const { seconds, timerActive, questions } = state;
+
+  useEffect(() => {
+    if (user?.lives !== undefined) {
+      dispatch({ type: "ATUALIZAR_VIDAS", payload: user.lives });
+    }
+  }, [user?.lives]);
+
+  function getQuestion(questionIndex: number) {
+    return questions[+questionIndex];
+  }
+
+  function getIsLevelCompleted(questionIndex: number) {
+    return +questionIndex + 1 === questions.length;
+  }
+
+  const TIMER_MINUTES = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const TIMER_SECONDS = String(seconds % 60).padStart(2, "0");
+  const TIMER_STRING = `${TIMER_MINUTES} : ${TIMER_SECONDS}`;
 
   useEffect(() => {
     if (!timerActive) return;
-
-    const timer = setInterval(() => {
+    const interval = setInterval(() => {
       dispatch({ type: "TICK" });
     }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
+    return () => clearInterval(interval);
   }, [timerActive]);
 
   const value: QuizProviderValues = {
-    initialText,
-    rightAnswers,
-    questions,
+    ...state,
+    getQuestion,
+    getIsLevelCompleted,
     dispatch,
-    showSheet,
-    disableButton,
-    textFeedBack,
-    timerActive,
-    seconds,
+    TIMER: TIMER_STRING,
   };
 
   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;

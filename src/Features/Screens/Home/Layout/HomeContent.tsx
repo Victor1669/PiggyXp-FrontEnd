@@ -1,6 +1,5 @@
 import { ScrollView } from "react-native";
 
-import { useDynamicScroll } from "Contexts/useDynamicScroll";
 import { useShowSheet } from "../Contexts/useShowSheet";
 import { useLevels } from "../Contexts/useLevels";
 
@@ -13,7 +12,6 @@ import SectionTitle from "../Components/SectionTitle";
 
 export default function HomeContent() {
   const { setShowSheet } = useShowSheet();
-  const { setIsScrolling } = useDynamicScroll();
   const { levels } = useLevels();
 
   const { deviceWidth, deviceHeight } = screenValues();
@@ -29,11 +27,6 @@ export default function HomeContent() {
 
   function handleScrollBegin() {
     setShowSheet(false);
-    setIsScrolling(true);
-  }
-
-  function handleScrollEnd() {
-    setIsScrolling(false);
   }
 
   return (
@@ -43,7 +36,6 @@ export default function HomeContent() {
         style={SCROLLVIEW_STYLES}
         contentContainerStyle={CONTENT_STYLES}
         onScrollBeginDrag={handleScrollBegin}
-        onScrollEndDrag={handleScrollEnd}
         showsVerticalScrollIndicator={false}
         scrollEnabled
         bounces={false}

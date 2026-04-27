@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
-import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
+import { StatusProvider } from "Contexts/StatusContext";
 
 import { useFetch } from "@Auth/Hooks/useFetch";
 import { fieldValidations, FieldName } from "../Helpers/fieldValidations";
@@ -20,9 +20,9 @@ const userData = { email: "usuario@email.com", password: "senha123" };
 const renderLogin = () =>
   render(
     <AuthProvider>
-      <ShowLoadingScreenProvider>
+      <StatusProvider>
         <Login />
-      </ShowLoadingScreenProvider>
+      </StatusProvider>
     </AuthProvider>,
   );
 

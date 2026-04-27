@@ -1,22 +1,65 @@
+import { router } from "expo-router";
 import { Fields } from "@Auth/Schemas/SchemaFields";
-
 import Form from "@Auth/Components/Form/Form";
 
+import { env } from "Config/env";
+import { useAuth } from "@Auth/Contexts/useAuth";
+import { useInternetConnection } from "Contexts/useInternetConnection";
+import { toastMessage } from "Utils/toast";
+
 interface ChangeUserInfoFormProps {
-  onSubmit: (data: any) => Promise<void>;
-  defaultValues: object;
+  onProductionSubmit: (
+    data: { name: string; email: string },
+    hasChangedEmail: boolean,
+  ) => Promise<void>;
+  currentImage: string;
 }
 
+const USER_FIELDS = [Fields.Nome, Fields.Email];
+
 export default function ChangeUserInfoForm({
-  onSubmit,
-  defaultValues,
+  onProductionSubmit,
+  currentImage,
 }: ChangeUserInfoFormProps) {
+  const { user, login } = useAuth();
+  const { getIsConnected } = useInternetConnection();
+
+  async function internalSubmit(formData: { Nome: string; Email: string }) {
+    if (!getIsConnected()) return;
+
+    const trimmedName = formData.Nome.trim();
+    const hasChangedName = trimmedName !== user.name;
+    const hasChangedEmail = formData.Email !== user.email;
+    const hasChangedImage = currentImage !== user.user_img;
+
+    if (!hasChangedName && !hasChangedEmail && !hasChangedImage) {
+      toastMessage({ type: "info", text: "Nenhuma informação foi alterada!" });
+      return;
+    }
+
+    if (env.buildProfile === "preview") {
+      await login({
+        ...user,
+        name: trimmedName,
+        email: formData.Email,
+        user_img: currentImage,
+      });
+      router.push("/Content/Profile");
+      return;
+    }
+
+    await onProductionSubmit(
+      { name: trimmedName, email: formData.Email },
+      hasChangedEmail,
+    );
+  }
+
   return (
     <Form
-      onSubmit={onSubmit}
+      onSubmit={internalSubmit}
       buttonText="Salvar"
-      formFields={[Fields.Nome, Fields.Email]}
-      defaultValues={defaultValues}
+      formFields={USER_FIELDS}
+      defaultValues={{ Nome: user.name, Email: user.email }}
     />
   );
 }

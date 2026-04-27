@@ -20,4 +20,7 @@ ROTAS DO BACKEND CONECTADAS:
     /achievements/rewards/<userId>
     /title
     /ranking
+    /finish
+    /regen
+    /live
 ```

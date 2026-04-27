@@ -17,7 +17,7 @@ export default function _layout() {
             backgroundColor: GlobalColors.contentBackColor.Dark,
           },
         }}
-      ></Stack>
+      />
     </QuizProvider>
   );
 }

@@ -5,7 +5,7 @@ import { FlatList, StyleSheet } from "react-native";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useAchievements } from "./Contexts/useAchievements";
 
-import { useVerifyAchievements } from "./Hooks/useVerifyAchievements";
+import { useUpdateUserInfo } from "../../Hooks/useUpdateUserInfo";
 
 import { randomNumber } from "Utils/randomNumber";
 
@@ -19,7 +19,7 @@ import NotificationButton from "./Components/NotificationButton";
 export default function AchievementsContainer() {
   const { user } = useAuth();
   const { achievements } = useAchievements();
-  const { checkAchievementsStatus } = useVerifyAchievements();
+  const updateUserInfo = useUpdateUserInfo();
 
   const tipsIndex = useRef(randomNumber());
 
@@ -31,7 +31,7 @@ export default function AchievementsContainer() {
   useEffect(
     function updateAchievementsStatus() {
       (async () => {
-        await checkAchievementsStatus(String(user.id));
+        await updateUserInfo();
       })();
     },
     [user.collectedAchievements],

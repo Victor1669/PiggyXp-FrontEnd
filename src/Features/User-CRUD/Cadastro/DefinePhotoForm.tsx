@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { env } from "Config/env";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
@@ -19,7 +19,7 @@ export default function DefinePhotoForm() {
     "upload-user-img",
     "POST",
   );
-  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
   async function handleSubmit() {
@@ -28,8 +28,13 @@ export default function DefinePhotoForm() {
       router.push("/Content");
       return;
     }
-    if (!getIsConnected()) return;
-    setShowLoadingScreen(true);
+
+    if (!getIsConnected()) {
+      showStatus("noInternet");
+      return;
+    }
+
+    showStatus("loading");
 
     const userToken = await temporaryImageToken.get();
 
@@ -38,7 +43,7 @@ export default function DefinePhotoForm() {
 
     router.replace("/Login");
 
-    setShowLoadingScreen(false);
+    hideStatus();
   }
 
   return (

@@ -1,6 +1,6 @@
 //#region Importações
 import { useEffect } from "react";
-import { Alert } from "react-native";
+import { Alert, DevSettings } from "react-native";
 import * as Updates from "expo-updates";
 
 import { env } from "Config/env";
@@ -9,9 +9,8 @@ import { screenValues } from "Config/screenValues";
 const { showDevTools } = screenValues();
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
-import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
+import { StatusProvider } from "Contexts/StatusContext";
 import { InternetConnectionProvider } from "Contexts/useInternetConnection";
-import { DynamicScrollProvider } from "Contexts/useDynamicScroll";
 import { SplashAnimationProvider } from "@Screens/Splash/Contexts/useSplashAnimation";
 import { SplashAnimatedValuesProvider } from "Features/Screens/Splash/Contexts/useSplashAnimatedValues";
 
@@ -20,7 +19,7 @@ import { registerNotificationClickListener } from "Utils/notifications";
 
 import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
 import ScreenContainer from "@Components/Config/ScreenContainer";
-import DevToolsLink from "Features/DevTools/Components/DevToolsLink";
+import DevToolsLink from "DevTools/Components/DevToolsLink";
 //#endregion
 
 export default function RootLayout() {
@@ -65,18 +64,16 @@ export default function RootLayout() {
   return (
     <InternetConnectionProvider>
       <AuthProvider>
-        <ShowLoadingScreenProvider>
-          <DynamicScrollProvider>
-            <SplashAnimationProvider>
-              <SplashAnimatedValuesProvider>
-                <ScreenContainer />
-              </SplashAnimatedValuesProvider>
-            </SplashAnimationProvider>
-            <ToastContainer />
-            <LoadingSpinner />
-            <DevToolsLink />
-          </DynamicScrollProvider>
-        </ShowLoadingScreenProvider>
+        <StatusProvider>
+          <SplashAnimationProvider>
+            <SplashAnimatedValuesProvider>
+              <ScreenContainer />
+            </SplashAnimatedValuesProvider>
+          </SplashAnimationProvider>
+          <ToastContainer />
+          <LoadingSpinner />
+          <DevToolsLink />
+        </StatusProvider>
       </AuthProvider>
     </InternetConnectionProvider>
   );

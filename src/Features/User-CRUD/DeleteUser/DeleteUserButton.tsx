@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { env } from "Config/env";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { DeleteUserService } from "@Auth/Services/DeleteUser";
@@ -19,7 +19,7 @@ export default function DeleteUserButton() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { user, userToken, logout } = useAuth();
-  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
   async function handleDeleteAccount() {
@@ -28,8 +28,13 @@ export default function DeleteUserButton() {
       router.replace("/Cadastro");
       return;
     }
-    if (!getIsConnected()) return;
-    setShowLoadingScreen(true);
+
+    if (!getIsConnected()) {
+      showStatus("noInternet");
+      return;
+    }
+
+    showStatus("loading");
 
     const token = await userToken.get();
     const { data, status } = await DeleteUserService(user.id, token);
@@ -43,7 +48,7 @@ export default function DeleteUserButton() {
       router.replace("/Login");
     }
 
-    setShowLoadingScreen(false);
+    hideStatus();
   }
 
   return (

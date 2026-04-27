@@ -1,1 +1,30 @@
 O "R" do CRUD (read) está sendo feito pela tela de perfil, então terá apenas ttrês pastas aqui.
+
+Lógica do ChangeUserInfo:
+
+Parte 1:
+
+Se tiver sem internet: Acontece nada
+Não mudou nada: Acontece nada
+Se estiver no modo preview: Não altera nada de verdade
+
+Caso seja um usuário de produção e tenha dados alterados: requisição real
+
+Parte 2
+
+Tela de carregamento é exibida, e o token do usuário é usado
+
+Caso a imagem foi alterada:
+    Service de mudar imagem chamado
+    Se o usuário não tiver imagem, o service de verificar conquistas é chamado
+
+Caso o texto seja alterado:
+    Service de mudar texto é chamado
+    
+    Verificação se o token está expirado
+        Caso o token esteja expirado:
+            Redirecionamento pro login, encerramento da operação
+    Atualização das informações locais caso dê sucesso
+
+    Caso o email foi alterado:
+        Redirecionamento pro login

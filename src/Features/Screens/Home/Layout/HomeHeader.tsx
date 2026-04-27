@@ -23,6 +23,7 @@ import { HomeImages } from "../Assets/HomeImages";
 export default function HomeHeader() {
   const { user } = useAuth();
   const { setShowSheet } = useShowSheet();
+
   return (
     <TouchableWithoutFeedback onPress={() => setShowSheet(false)}>
       <View style={container}>
