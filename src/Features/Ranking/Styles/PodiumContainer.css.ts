@@ -5,6 +5,7 @@ const { deviceHeight } = screenValues();
 
 export const PodiumContainerStyles = StyleSheet.create({
   container: {
+    width: "95%",
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 15,

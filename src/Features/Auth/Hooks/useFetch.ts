@@ -11,6 +11,7 @@ type useFetchProps = {
   body?: object;
   token?: string;
   showToastMessage?: boolean;
+  logError?: boolean;
 };
 
 export async function useFetch({
@@ -19,6 +20,7 @@ export async function useFetch({
   body,
   token = "",
   showToastMessage,
+  logError = true,
 }: useFetchProps) {
   try {
     if (env.buildProfile === "preview") return { data: "", status: 200 };
@@ -48,12 +50,15 @@ export async function useFetch({
       data: res.data,
     };
   } catch (err: any) {
-    const errObj = err?.response?.data;
-    const errMessage =
-      errObj?.message || errObj?.error || err.message || errObj;
-    console.log(err);
-    console.log(errObj);
-    console.log(errObj?.message);
+    let errMessage;
+    if (logError) {
+      const errObj = err?.response?.data;
+      errMessage = errObj?.message || errObj?.error || err.message || errObj;
+      console.log(err);
+      console.log(errObj);
+      console.log(errObj?.message);
+    }
+
     if (showToastMessage) {
       toastMessage({
         type: "error",

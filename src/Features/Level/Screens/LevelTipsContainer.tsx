@@ -1,22 +1,26 @@
 import { View } from "react-native";
 import { router } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
-
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
+import { textFormatter } from "../Utils/textFormatter";
+
 import Button from "@Components/Button";
-import Paragraph from "@Components/Paragraph";
+import Book from "../Components/Book";
 
 export default function LevelTipsContainer() {
   const { initialText } = useQuiz();
 
-  const { deviceWidth } = screenValues();
+  const [string1, string2] = textFormatter(initialText);
+
+  function handleContinue() {
+    router.replace("/Level/?questionIndex=0");
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Paragraph style={{ width: deviceWidth * 0.8 }}>{initialText}</Paragraph>
-      <Button onPress={() => router.replace("/Level/?questionIndex=0")}>
+      <Book leftText={string1} rightText={string2} />
+      <Button style={{ marginTop: 70 }} onPress={handleContinue}>
         Continuar
       </Button>
     </View>

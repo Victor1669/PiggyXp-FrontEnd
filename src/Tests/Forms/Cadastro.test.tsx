@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
-import { ShowLoadingScreenProvider } from "Contexts/useShowLoadingScreen";
+import { StatusProvider } from "Contexts/StatusContext";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
 
@@ -23,9 +23,9 @@ const registrationData = {
 const renderCadastro = () =>
   render(
     <AuthProvider>
-      <ShowLoadingScreenProvider>
+      <StatusProvider>
         <Cadastro />
-      </ShowLoadingScreenProvider>
+      </StatusProvider>
     </AuthProvider>,
   );
 

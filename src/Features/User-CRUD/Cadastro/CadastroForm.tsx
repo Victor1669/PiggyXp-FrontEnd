@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { env } from "Config/env";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
@@ -17,7 +17,7 @@ import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 
 export default function CadastroForm() {
   const { temporaryImageToken, login } = useAuth();
-  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
   async function handleSubmit(formData: {
@@ -30,8 +30,14 @@ export default function CadastroForm() {
       router.push("/Cadastro/DefinePhoto");
       return;
     }
-    if (!getIsConnected()) return;
-    setShowLoadingScreen(true);
+
+    if (!getIsConnected()) {
+      showStatus("noInternet");
+      return;
+    }
+
+    showStatus("loading");
+
     const { Nome: name, Email: email, Senha: password } = formData;
 
     const { data: registerData, status: registerStatus } = await UserRegister({
@@ -43,7 +49,8 @@ export default function CadastroForm() {
     if (registerStatus < 300) {
       registerSuccess(registerData);
     }
-    setShowLoadingScreen(false);
+
+    hideStatus();
   }
 
   async function registerSuccess(registerData: any) {

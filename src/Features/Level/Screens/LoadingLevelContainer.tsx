@@ -7,7 +7,7 @@ import { env } from "Config/env";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
-import { GetPhaseService } from "Features/Level/Services/GetPhaseService";
+import { GetPhaseService } from "Features/Level/Services/LevelServices";
 
 import { toastMessage } from "Utils/toast";
 

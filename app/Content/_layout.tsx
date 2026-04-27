@@ -2,22 +2,18 @@ import { Tabs } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
-import { useDynamicScroll } from "Contexts/useDynamicScroll";
-
 import TabBar from "@Components/Config/TabBar";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 
 export default function Layout() {
-  const { navBarHeight } = useDynamicScroll();
-
   const {
     fontSizes: { TITLE_FONT_SIZE },
   } = screenValues();
 
   return (
     <Tabs
-      tabBar={(props) => <TabBar {...props} navBarHeight={navBarHeight} />}
+      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
         sceneStyle: {

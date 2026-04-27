@@ -1,9 +1,8 @@
-//#region Importações
 import { useState } from "react";
 import { Pressable, View } from "react-native";
 import { router } from "expo-router";
 
-import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useStatus } from "Contexts/StatusContext";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
@@ -19,43 +18,54 @@ import Paragraph from "@Components/Paragraph";
 
 import { CodeVerifierStyles } from "Features/Recover-Password/CodeVerifier/CodeVerifier.css";
 const { textContainer } = CodeVerifierStyles;
-//#endregion
 
 export default function CodeVerifierForm() {
   const LENGTH = 4;
   const [code, setCode] = useState<string[]>(Array(LENGTH).fill(""));
 
   const { userEmailWhileRecovering } = useAuth();
-  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
   async function handleSubmit(formData: {
     "Confirmar nova senha": string;
     "Nova senha": string;
   }) {
-    if (!getIsConnected()) return;
-    setShowLoadingScreen(true);
+    if (!getIsConnected()) {
+      showStatus("noInternet");
+      return;
+    }
+
+    showStatus("loading");
+
     const codeString = code.join("");
     const newPassword = formData["Nova senha"];
     const confirmPassword = formData["Confirmar nova senha"];
 
     const reqBody = { code: codeString, confirmPassword, newPassword };
 
-    const { data, status } = await ResetPassword(reqBody);
+    const { status } = await ResetPassword(reqBody);
 
     if (status < 300) {
       router.replace("/Login");
       await userEmailWhileRecovering.delete();
     }
-    setShowLoadingScreen(false);
+
+    hideStatus();
   }
 
   async function resendEmail() {
-    if (!getIsConnected()) return;
-    setShowLoadingScreen(true);
+    if (!getIsConnected()) {
+      showStatus("noInternet");
+      return;
+    }
+
+    showStatus("loading");
+
     const email = await userEmailWhileRecovering.get();
     await resendRecoveryEmail({ email });
-    setShowLoadingScreen(false);
+
+    hideStatus();
   }
 
   return (

@@ -5,7 +5,7 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useAchievements } from "../Contexts/useAchievements";
 
 import { useAudio } from "@Hooks/useAudio";
-import { useVerifyAchievements } from "../Hooks/useVerifyAchievements";
+import { useUpdateUserInfo } from "@Hooks/useUpdateUserInfo";
 
 import { getAchievementsRewards } from "../AchievementsServices";
 
@@ -18,7 +18,7 @@ export default function RewardsModal() {
   const { user } = useAuth();
   const { showRewards, setShowRewards, selectedAchievementIndex } =
     useAchievements();
-  const { checkAchievementsStatus } = useVerifyAchievements();
+  const updateUserInfo = useUpdateUserInfo();
 
   const { load, stop, play } = useAudio();
   const { getIsConnected } = useInternetConnection();
@@ -48,15 +48,13 @@ export default function RewardsModal() {
   async function handleReceiveRewards() {
     if (!getIsConnected()) return;
 
-    const { data, status } = await getAchievementsRewards(user.id, {
+    await getAchievementsRewards(user.id, {
       achievementId: selectedAchievementIndex,
     });
-
-    console.log(data);
   }
 
   async function handleUpdateRewards() {
-    await checkAchievementsStatus(String(user.id));
+    await updateUserInfo();
     setShowRewards(false);
   }
 
@@ -74,7 +72,8 @@ export default function RewardsModal() {
         resizeMode={ResizeMode.CONTAIN}
         source={require("../Assets/congratulations.mp4")}
         shouldPlay
-        style={{ width: 300, height: 300 }}
+        isLooping={true}
+        style={{ width: 300, height: 300, marginHorizontal: "auto" }}
       />
       <Paragraph fontSize="title" color="lightModeFont">
         Parabéns!

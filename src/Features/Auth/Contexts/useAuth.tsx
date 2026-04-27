@@ -19,6 +19,7 @@ export interface User {
   lives: number;
   achievements: string;
   collectedAchievements: string;
+  reset_lives_at: string;
 }
 
 type AuthProviderValues = {
@@ -49,6 +50,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
 
   async function login(userData: User) {
     await userInfo.set(JSON.stringify(userData));
+
     setUser(userData);
   }
 
@@ -57,7 +59,6 @@ function AuthProvider({ children }: AuthProviderTypes) {
       userInfo,
       userEmailWhileRecovering,
       userToken,
-      userUnit,
       temporaryImageToken,
       refreshToken,
     ];

@@ -1,10 +1,9 @@
-//#region Importações
 import { useEffect, useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useShowLoadingScreen } from "Contexts/useShowLoadingScreen";
+import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { DifficultyService } from "@Auth/Services/DifficultyService";
@@ -19,7 +18,6 @@ const { easy, medium, hard } = SelectDifficultyImages;
 import { GlobalFontColors } from "@Assets/Colors";
 
 import { CardType } from "@Components/CardSwiper/CardType";
-//#endregion
 
 const cardsArray: CardType[] = [
   { id: 1, image: easy, text: "easy", title: "Fácil" },
@@ -32,7 +30,7 @@ export default function DifficultySelectorContainer() {
   const { height } = useWindowDimensions();
 
   const { setUser, userToken, userUnit } = useAuth();
-  const { setShowLoadingScreen } = useShowLoadingScreen();
+  const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
   useEffect(() => {
@@ -47,19 +45,23 @@ export default function DifficultySelectorContainer() {
   }
 
   async function handleSubmit() {
-    if (!getIsConnected()) return;
-    setShowLoadingScreen(true);
+    if (!getIsConnected()) {
+      showStatus("noInternet");
+      return;
+    }
+
+    showStatus("loading");
 
     const token = await userToken.get();
     const body = { difficulty };
-    const { data, status } = await DifficultyService(body, token);
+    const { status } = await DifficultyService(body, token);
 
     if (status < 300) {
       setUser((prev) => ({ ...prev, difficulty }));
       router.replace("/Content");
     }
 
-    setShowLoadingScreen(false);
+    hideStatus();
   }
 
   return (

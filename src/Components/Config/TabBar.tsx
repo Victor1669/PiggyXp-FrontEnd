@@ -27,10 +27,6 @@ const ICON_MAP: Record<string, any> = {
   Profile: { img: perfil, width: 40, height: 40, mt: 0, mb: 0 },
 };
 
-interface MyTabBarProps extends BottomTabBarProps {
-  navBarHeight: Animated.Value;
-}
-
 interface TabItemProps {
   routeName: string;
   isFocused: boolean;
@@ -43,30 +39,14 @@ export default function TabBar({
   state,
   descriptors,
   navigation,
-  navBarHeight,
-}: MyTabBarProps) {
+}: BottomTabBarProps) {
   const pathName = usePathname();
-  const { TABBAR_HEIGHT } = screenValues();
 
   // Esconde a TabBar em rotas específicas
   if (pathName === "/Content/Profile/Config") return null;
 
-  const translateY = navBarHeight.interpolate({
-    inputRange: [0, 30],
-    outputRange: [30, 0],
-    extrapolate: "clamp",
-  });
-
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        {
-          height: TABBAR_HEIGHT,
-          transform: [{ translateY }],
-        },
-      ]}
-    >
+    <View style={styles.container}>
       <View style={styles.content}>
         {state.routes.map((route, index) => {
           const options = descriptors[route.key]
@@ -87,7 +67,7 @@ export default function TabBar({
           );
         })}
       </View>
-    </Animated.View>
+    </View>
   );
 }
 
@@ -121,9 +101,11 @@ function TabItem({ routeName, isFocused, title, onPress }: TabItemProps) {
     </TouchableOpacity>
   );
 }
+const { TABBAR_HEIGHT } = screenValues();
 
 const styles = StyleSheet.create({
   container: {
+    height: TABBAR_HEIGHT,
     position: "absolute",
     bottom: 0,
     left: 0,

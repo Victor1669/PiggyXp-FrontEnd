@@ -107,6 +107,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
 
     (async function () {
       const storedUserUnit = await userUnit.get();
+
       const { data, status } = await TitlesService(difficulty, +storedUserUnit);
 
       setTitle(status < 300 ? data.tittle : "");

@@ -1,31 +1,12 @@
 import { useEffect, useRef } from "react";
 import RN, { Animated, PanResponder, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import { screenValues } from "Config/screenValues";
-const { isDeviceHeigthSmall, deviceHeight, TABBAR_HEIGHT } = screenValues();
-
-import Button from "../Button";
-
 import { BottomSheetStyles } from "./BottomSheet.css";
 
-export default function BottomSheet({
-  onButtonPress,
-  buttonText,
-  textElements,
-  yPosition,
-  height,
-  showSheet,
-  setShowSheet,
-  style,
-  showThumb = true,
-  interactive = true,
-  startSheetTop = height,
-  finalSheetTop = 0,
-}: {
-  onButtonPress: () => void;
-  buttonText: string;
-  textElements: React.ReactNode;
+const { isDeviceHeigthSmall, deviceHeight, TABBAR_HEIGHT } = screenValues();
+
+interface BottomSheetProps {
+  children: React.ReactNode;
   yPosition: Animated.ValueXY;
   height: number;
   showSheet: boolean;
@@ -35,7 +16,20 @@ export default function BottomSheet({
   interactive?: boolean;
   startSheetTop?: number;
   finalSheetTop?: number;
-}) {
+}
+
+export default function BottomSheet({
+  children,
+  yPosition,
+  height,
+  showSheet,
+  setShowSheet,
+  style,
+  showThumb = true,
+  interactive = true,
+  startSheetTop = height,
+  finalSheetTop = 0,
+}: BottomSheetProps) {
   function animateTo(y: number) {
     Animated.spring(yPosition, {
       toValue: { x: 0, y },
@@ -47,30 +41,24 @@ export default function BottomSheet({
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => {
-        return interactive;
+      onStartShouldSetPanResponder: () => interactive,
+      onPanResponderGrant: () => {
+        yPosition.stopAnimation();
       },
-
-      onMoveShouldSetPanResponder: (_, gestureState) => {
-        return interactive && Math.abs(gestureState.dy) > 5;
+      onPanResponderMove: (e, gestureState) => {
+        const newY = finalSheetTop + gestureState.dy;
+        if (newY >= finalSheetTop) {
+          yPosition.setValue({ x: 0, y: newY });
+        } else {
+          yPosition.setValue({ x: 0, y: finalSheetTop });
+        }
       },
-
-      onPanResponderMove: (_, gestureState) => {
-        if (!interactive) return;
-
-        const newY = Math.max(0, gestureState.dy);
-        yPosition.setValue({ x: 0, y: newY + finalSheetTop });
-      },
-
-      onPanResponderRelease: (_, gestureState) => {
-        if (!setShowSheet || !interactive) return;
-
-        if (gestureState.dy > 100 || gestureState.vy > 0.5) {
+      onPanResponderRelease: (e, gestureState) => {
+        if (gestureState.dy > height / 3 || gestureState.vy > 0.5) {
+          if (setShowSheet) setShowSheet(false);
           animateTo(startSheetTop);
-          setShowSheet(false);
         } else {
           animateTo(finalSheetTop);
-          setShowSheet(true);
         }
       },
     }),
@@ -85,30 +73,25 @@ export default function BottomSheet({
   }, [showSheet]);
 
   return (
-    <>
-      <Animated.View
-        style={[
-          style,
-          BottomSheetStyles.container,
-          {
-            height,
-            transform: yPosition.getTranslateTransform(),
-            top:
-              deviceHeight - 3 * TABBAR_HEIGHT + (isDeviceHeigthSmall ? 30 : 0),
-          },
-        ]}
+    <Animated.View
+      style={[
+        style,
+        BottomSheetStyles.container,
+        {
+          height,
+          transform: yPosition.getTranslateTransform(),
+          top:
+            deviceHeight - 3 * TABBAR_HEIGHT + (isDeviceHeigthSmall ? 30 : 0),
+        },
+      ]}
+    >
+      <View
+        style={BottomSheetStyles.interactiveView}
+        {...panResponder.panHandlers}
       >
-        <View
-          style={BottomSheetStyles.interactiveView}
-          {...panResponder.panHandlers}
-        >
-          {showThumb && <View style={BottomSheetStyles.thumb} />}
-        </View>
-        <View>{textElements}</View>
-        <Button style={{ margin: "auto" }} onPress={onButtonPress}>
-          {buttonText}
-        </Button>
-      </Animated.View>
-    </>
+        {showThumb && <View style={BottomSheetStyles.thumb} />}
+      </View>
+      <View style={{ flex: 1 }}>{children}</View>
+    </Animated.View>
   );
 }

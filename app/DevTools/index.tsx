@@ -1,4 +1,4 @@
-import DevToolsContainer from "Features/DevTools/DevToolsContainer";
+import DevToolsContainer from "DevTools/DevToolsContainer";
 
 export default function index() {
   return <DevToolsContainer />;
