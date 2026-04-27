@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
@@ -19,8 +19,10 @@ export default function LoginForm() {
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
+  const { isPreviewBuild } = screenValues();
+
   async function handleSubmit(data: any) {
-    if (env.buildProfile === "preview") {
+    if (isPreviewBuild) {
       await login(PreviewUserInfo);
       router.push("/Content");
       return;
@@ -74,7 +76,7 @@ export default function LoginForm() {
       buttonText="Entrar"
       forgotPasswordText="Esqueceu a senha?"
       forgotPasswordHREF="/SendRecoveryEmail"
-      validationEnabled={env.buildProfile !== "preview"}
+      validationEnabled={!isPreviewBuild}
     />
   );
 }

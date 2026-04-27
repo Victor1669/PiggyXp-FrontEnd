@@ -2,9 +2,11 @@ import { router } from "expo-router";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 import Form from "@Auth/Components/Form/Form";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+
 import { toastMessage } from "Utils/toast";
 
 interface ChangeUserInfoFormProps {
@@ -24,6 +26,8 @@ export default function ChangeUserInfoForm({
   const { user, login } = useAuth();
   const { getIsConnected } = useInternetConnection();
 
+  const { isPreviewBuild } = screenValues();
+
   async function internalSubmit(formData: { Nome: string; Email: string }) {
     if (!getIsConnected()) return;
 
@@ -37,7 +41,7 @@ export default function ChangeUserInfoForm({
       return;
     }
 
-    if (env.buildProfile === "preview") {
+    if (isPreviewBuild) {
       await login({
         ...user,
         name: trimmedName,

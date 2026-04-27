@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
@@ -22,8 +22,10 @@ export default function DefinePhotoForm() {
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
+  const { isPreviewBuild } = screenValues();
+
   async function handleSubmit() {
-    if (env.buildProfile === "preview") {
+    if (isPreviewBuild) {
       await login({ ...user, user_img: imageURI });
       router.push("/Content");
       return;

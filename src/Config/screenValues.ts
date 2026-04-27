@@ -1,5 +1,7 @@
 import { Dimensions } from "react-native";
 
+import { env } from "./env";
+
 import { normalize } from "Helpers/normalizeSize";
 
 export function screenValues() {
@@ -8,6 +10,7 @@ export function screenValues() {
   const deviceWidth = phoneWindow.width;
   const deviceHeight = phoneWindow.height;
   const isDeviceHeigthSmall = phoneWindow.height < 861;
+  const isPreviewBuild = env.buildProfile === "preview";
   const showDevTools = false;
 
   const TABBAR_HEIGHT = 130;
@@ -28,5 +31,6 @@ export function screenValues() {
     fontSizes,
     showDevTools,
     TABBAR_HEIGHT,
+    isPreviewBuild,
   };
 }

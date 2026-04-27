@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
@@ -23,8 +24,10 @@ export default function LoadingLevelContainer() {
   const { actualQuestion } = useLocalSearchParams();
   const { dispatch } = useQuiz();
 
+  const { isPreviewBuild } = screenValues();
+
   useEffect(() => {
-    if (env.buildProfile === "preview") {
+    if (isPreviewBuild) {
       dispatch({ type: "DADOS_CARREGADOS", payload: PreviewLevel });
       router.replace("/Level/LevelTips");
       return;

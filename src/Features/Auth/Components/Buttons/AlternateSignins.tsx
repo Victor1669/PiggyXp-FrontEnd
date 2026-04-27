@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import { router } from "expo-router";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useNativeGoogleAuth } from "@Auth/Hooks/useNativeGoogleAuth";
@@ -25,6 +25,8 @@ export default function AlternateSignins({ text }: AlternateSigninsProps) {
   const { login } = useAuth();
   const { signIn: googleSignIn, user: googleUser } = useNativeGoogleAuth();
   const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
+
+  const { isPreviewBuild } = screenValues();
 
   async function handleGoogleLogin() {
     await googleSignIn();
@@ -70,7 +72,7 @@ export default function AlternateSignins({ text }: AlternateSigninsProps) {
           onPress={handleGoogleLogin}
           imageSource={google}
         />
-        {env.buildProfile !== "preview" && (
+        {!isPreviewBuild && (
           <ImageButton
             size={50}
             onPress={handleFacebookLogin}

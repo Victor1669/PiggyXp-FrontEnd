@@ -1,12 +1,10 @@
 //#region Importações
 import { useEffect } from "react";
-import { Alert, DevSettings } from "react-native";
+import { Alert } from "react-native";
 import * as Updates from "expo-updates";
 
 import { env } from "Config/env";
-
 import { screenValues } from "Config/screenValues";
-const { showDevTools } = screenValues();
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
@@ -20,18 +18,21 @@ import { registerNotificationClickListener } from "Utils/notifications";
 import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
 import ScreenContainer from "@Components/Config/ScreenContainer";
 import DevToolsLink from "DevTools/Components/DevToolsLink";
+
 //#endregion
 
 export default function RootLayout() {
+  const { showDevTools } = screenValues();
+
   useEffect(function warningTimer() {
     const timeOut1 = setTimeout(() => {
-      if (env.buildProfile !== "development") {
+      if (!__DEV__) {
         checkUpdate();
       } else return;
     }, 100);
 
     const timeOut2 = setTimeout(() => {
-      if (env.buildProfile === "development" && showDevTools)
+      if (__DEV__ && showDevTools)
         toastMessage({
           type: "info",
           text: "O Backend está em: " + env.backEndUrl,
@@ -45,7 +46,7 @@ export default function RootLayout() {
   }, []);
 
   async function checkUpdate() {
-    if (env.buildProfile === "development") return;
+    if (__DEV__) return;
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {

@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
 import { api } from "Config/axios";
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { toastMessage } from "Utils/toast";
 
@@ -22,8 +22,9 @@ export async function useFetch({
   showToastMessage,
   logError = true,
 }: useFetchProps) {
+  const { isPreviewBuild } = screenValues();
   try {
-    if (env.buildProfile === "preview") return { data: "", status: 200 };
+    if (isPreviewBuild) return { data: "", status: 200 };
     const config: AxiosRequestConfig = {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,

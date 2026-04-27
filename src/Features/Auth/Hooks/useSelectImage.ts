@@ -4,7 +4,6 @@ import * as ImagePicker from "expo-image-picker";
 
 import { UploadPhotoService } from "@Auth/Services/UploadPhotoService";
 import { toastMessage } from "Utils/toast";
-import { env } from "Config/env";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 

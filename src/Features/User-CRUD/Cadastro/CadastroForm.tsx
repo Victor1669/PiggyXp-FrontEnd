@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
@@ -20,12 +20,14 @@ export default function CadastroForm() {
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
+  const { isPreviewBuild } = screenValues();
+
   async function handleSubmit(formData: {
     Nome: string;
     Email: string;
     Senha: string;
   }) {
-    if (env.buildProfile === "preview") {
+    if (isPreviewBuild) {
       login(PreviewUserInfo);
       router.push("/Cadastro/DefinePhoto");
       return;
@@ -65,7 +67,7 @@ export default function CadastroForm() {
       formFields={[Fields.Nome, Fields.Email, Fields.Senha]}
       onSubmit={handleSubmit}
       buttonText="Criar Conta"
-      validationEnabled={env.buildProfile !== "preview"}
+      validationEnabled={!isPreviewBuild}
     />
   );
 }

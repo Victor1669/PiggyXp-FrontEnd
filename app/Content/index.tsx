@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
@@ -15,8 +15,10 @@ export default function Home() {
   const { getIsConnected } = useInternetConnection();
   const updateUserInfo = useUpdateUserInfo();
 
+  const { isPreviewBuild } = screenValues();
+
   useEffect(() => {
-    if (env.buildProfile === "preview") return;
+    if (isPreviewBuild) return;
     if (!getIsConnected()) return;
 
     (async () => {

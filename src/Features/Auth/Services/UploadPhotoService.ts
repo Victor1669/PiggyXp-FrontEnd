@@ -1,7 +1,6 @@
 import * as FileSystem from "expo-file-system/legacy";
 
 import { env } from "Config/env";
-const BACKEND_ORIGIN = env.backEndUrl;
 
 /**
  *
@@ -20,7 +19,7 @@ export async function UploadPhotoService(
   method: "POST" | "PUT",
 ) {
   const response = await FileSystem.uploadAsync(
-    `${BACKEND_ORIGIN}/api/${backEndURL}`,
+    `${env.backEndUrl}/api/${backEndURL}`,
     imageLocation,
     {
       httpMethod: method,

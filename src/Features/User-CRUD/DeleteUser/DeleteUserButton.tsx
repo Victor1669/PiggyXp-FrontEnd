@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Pressable, View } from "react-native";
 import { router } from "expo-router";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
@@ -22,8 +22,10 @@ export default function DeleteUserButton() {
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
+  const { isPreviewBuild } = screenValues();
+
   async function handleDeleteAccount() {
-    if (env.buildProfile === "preview") {
+    if (isPreviewBuild) {
       await logout();
       router.replace("/Cadastro");
       return;

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { router, Stack, usePathname } from "expo-router";
 
-import { env } from "Config/env";
 import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
@@ -16,6 +15,7 @@ export default function ScreenContainer() {
 
   const {
     fontSizes: { TITLE_FONT_SIZE },
+    isPreviewBuild,
   } = screenValues();
 
   const hideHeaderPages = [
@@ -40,7 +40,7 @@ export default function ScreenContainer() {
       router.replace("/Swiper");
     }, animationDuration);
 
-    if (env.buildProfile === "preview") return () => clearTimeout(timer);
+    if (isPreviewBuild) return () => clearTimeout(timer);
 
     return () => {
       clearTimeout(timer);
