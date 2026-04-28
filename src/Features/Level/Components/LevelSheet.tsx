@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuiz } from "../Contexts/useQuiz";
@@ -14,28 +14,32 @@ export default function LevelSheet() {
   const SHEET_HEIGHT = 300;
   const pan = useRef(new Animated.ValueXY()).current;
   const insets = useSafeAreaInsets();
-  const { questionIndex } = useLocalSearchParams();
-  const { textFeedBack, isAnswered, dispatch, getIsLevelCompleted } = useQuiz();
+
+  const {
+    textFeedBack,
+    isAnswered,
+    dispatch,
+    getIsLevelCompleted,
+    currentQuestionIndex,
+  } = useQuiz();
   const [disableButton, setDisableButton] = useState(false);
 
-  const nextQuestionIndex = +questionIndex + 1;
-  const isLevelCompleted = getIsLevelCompleted(+questionIndex);
+  const isLevelCompleted = getIsLevelCompleted(currentQuestionIndex);
+
+  useEffect(() => {
+    if (!isAnswered) {
+      setDisableButton(false);
+    }
+  }, [isAnswered]);
 
   function handlePassQuestion() {
-    console.log(isLevelCompleted);
     if (isLevelCompleted) {
       dispatch({ type: "QUIZ_ACABOU" });
       router.replace("/Level/LevelConclusion");
     } else {
-      router.replace(`/Level/?questionIndex=${nextQuestionIndex}`);
+      dispatch({ type: "PROXIMA_QUESTAO" });
     }
   }
-
-  useEffect(() => {
-    return () => {
-      setDisableButton(false);
-    };
-  }, []);
 
   return (
     <BottomSheet

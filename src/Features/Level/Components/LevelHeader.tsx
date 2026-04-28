@@ -1,5 +1,4 @@
 import { Pressable, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
 
 import { useQuiz } from "../Contexts/useQuiz";
 import { useStatus } from "Contexts/StatusContext";
@@ -13,21 +12,24 @@ const { container, progressBar, livesContainer, livesImage, exitButton } =
   LevelHeaderStyles;
 
 export default function LevelHeader() {
-  const { questionIndex } = useLocalSearchParams();
-
   const { showStatus } = useStatus();
-  const { questions, lives } = useQuiz();
+  const { questions, lives, currentQuestionIndex } = useQuiz();
+
+  function handleExitPress() {
+    console.log("TEste");
+    showStatus("confirmExit");
+  }
 
   return (
     <View style={container}>
-      <Pressable style={exitButton} onPress={() => showStatus("confirmExit")}>
+      <Pressable style={exitButton} onPress={handleExitPress}>
         <Paragraph fontSize="title" color="grey">
           X
         </Paragraph>
       </Pressable>
       <ProgressBar
         maxValue={questions.length}
-        actualValue={Number(questionIndex)}
+        actualValue={currentQuestionIndex}
         style={progressBar}
       />
       <View style={livesContainer}>

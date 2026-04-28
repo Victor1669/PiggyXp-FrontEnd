@@ -4,7 +4,7 @@ export const QuestionContainerStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    marginVertical: 2 * (StatusBar.currentHeight ?? 20),
+    marginBottom: 2 * (StatusBar.currentHeight ?? 20),
   },
   questionText: {
     marginTop: 80,
