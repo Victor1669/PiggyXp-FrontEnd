@@ -1,40 +1,57 @@
-import { useEffect } from "react";
-import { View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
-
+import { useRef, useEffect } from "react";
+import { View, FlatList } from "react-native";
 import { useQuiz } from "../Contexts/useQuiz";
-
 import QuestionContainer from "../Components/QuestionContainer";
-import Paragraph from "@Components/Paragraph";
 import LevelHeader from "../Components/LevelHeader";
-
-import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
 import LevelSheet from "../Components/LevelSheet";
-const { container, timer } = LevelContainerStyles;
+import CoinRain from "../Components/CoinRain";
+import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
+import { screenValues } from "Config/screenValues";
+
+const { container } = LevelContainerStyles;
+const { deviceWidth } = screenValues();
 
 export default function LevelContainer() {
-  const { questionIndex } = useLocalSearchParams();
-  const { TIMER, dispatch } = useQuiz();
+  const { questions, currentQuestionIndex, dispatch } = useQuiz();
+  const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    if (questionIndex === "0") {
-      dispatch({ type: "QUIZ_COMECOU" });
+    if (questions.length > 0) {
+      flatListRef.current?.scrollToIndex({
+        index: currentQuestionIndex,
+        animated: true,
+      });
     }
-    return () => {
-      dispatch({ type: "PROXIMA_QUESTAO" });
-    };
+  }, [currentQuestionIndex, questions.length]);
+
+  useEffect(() => {
+    dispatch({ type: "QUIZ_COMECOU" });
   }, []);
 
   return (
-    <>
-      <View style={container}>
-        <LevelHeader />
-
-        <Paragraph style={timer}>{TIMER}</Paragraph>
-
-        <QuestionContainer />
-      </View>
+    <View style={container}>
+      <LevelHeader />
+      <CoinRain />
+      <FlatList
+        ref={flatListRef}
+        data={questions}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        scrollEnabled={false}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ index }) => (
+          <View style={{ width: deviceWidth }}>
+            <QuestionContainer index={index} />
+          </View>
+        )}
+        getItemLayout={(_, index) => ({
+          length: deviceWidth,
+          offset: deviceWidth * index,
+          index,
+        })}
+      />
       <LevelSheet />
-    </>
+    </View>
   );
 }

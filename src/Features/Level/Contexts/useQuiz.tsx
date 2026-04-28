@@ -1,9 +1,6 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
-
-import { quizReducer } from "./quizReducer";
-
 import { useAuth } from "Features/Auth/Contexts/useAuth";
-
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { quizReducer } from "./quizReducer";
 import { LevelTypes, QuestionTypes } from "../Types/LevelTypes";
 
 interface QuizProviderValues extends LevelTypes {
@@ -17,13 +14,15 @@ const initialValues: LevelTypes = {
   textFeedBack: "",
   questions: [],
   rightAnswers: 0,
+  coinList: [],
+  currentQuestionIndex: 0,
   isAnswered: false,
   timerActive: false,
   seconds: 0,
   lives: 0,
-  unit: 0,
   difficulty: 0,
   order: 0,
+  unit: 0,
   rewards: { coins: 0, xp: 0 },
   TIMER: "00 : 00",
   losed: false,
@@ -51,7 +50,7 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
   }
 
   function getIsLevelCompleted(questionIndex: number) {
-    return +questionIndex + 1 === questions.length;
+    return questionIndex + 1 === questions.length;
   }
 
   const TIMER_MINUTES = String(Math.floor(seconds / 60)).padStart(2, "0");

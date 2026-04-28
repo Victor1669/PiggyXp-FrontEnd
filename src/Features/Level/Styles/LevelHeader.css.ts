@@ -5,6 +5,7 @@ export const LevelHeaderStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     gap: 15,
+    zIndex: 10,
   },
   exitButton: {
     top: 55,

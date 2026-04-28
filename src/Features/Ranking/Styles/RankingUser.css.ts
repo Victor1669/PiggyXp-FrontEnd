@@ -31,7 +31,7 @@ export const RankingUserStyles = StyleSheet.create({
   numberXpContainer: { flex: 1, justifyContent: "center" },
   numberXp: {
     backgroundColor: "#fff",
-    width: "70%",
+    width: "80%",
     margin: "auto",
     borderRadius: 5,
   },
