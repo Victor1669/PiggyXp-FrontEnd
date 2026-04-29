@@ -12,7 +12,6 @@ export default function LivesTimer() {
     user: { reset_lives_at },
   } = useAuth();
 
-  // Tipamos o estado para aceitar string ou null
   const [timer, setTimer] = useState<string | null>(() =>
     calcLivesTimer(reset_lives_at),
   );

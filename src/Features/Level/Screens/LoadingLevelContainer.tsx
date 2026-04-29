@@ -29,7 +29,9 @@ export default function LoadingLevelContainer() {
   useEffect(() => {
     if (isPreviewBuild) {
       dispatch({ type: "DADOS_CARREGADOS", payload: PreviewLevel });
-      router.replace("/Level/LevelTips");
+      setTimeout(() => {
+        router.replace("/Level/LevelTips");
+      }, 1000);
       return;
     }
     (async () => {

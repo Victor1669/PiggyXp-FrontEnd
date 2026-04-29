@@ -3,7 +3,7 @@ import { router, Stack, usePathname } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
-import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { PreviewUser, useAuth } from "Features/Auth/Contexts/useAuth";
 import { useSplashAnimation } from "@Screens/Splash/Contexts/useSplashAnimation";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
@@ -11,7 +11,7 @@ import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 export default function ScreenContainer() {
   const pathName = usePathname();
   const { layoutAnimation, animationDuration } = useSplashAnimation();
-  const { hasUserInfo } = useAuth();
+  const { hasUserInfo, user } = useAuth();
 
   const {
     fontSizes: { TITLE_FONT_SIZE },
@@ -32,7 +32,7 @@ export default function ScreenContainer() {
   ];
 
   useEffect(() => {
-    if (hasUserInfo || pathName !== "/") {
+    if ((hasUserInfo && (user as PreviewUser).isPreview) || pathName !== "/") {
       return;
     }
 

@@ -11,13 +11,13 @@ import Paragraph from "Components/Paragraph";
 import { PodiumUserContainerStyles } from "../Styles/PodiumUserContainer.css";
 const { container, podiumContainer, positionText } = PodiumUserContainerStyles;
 
-import { UserInfoType } from "../Types/RankingTypes";
+import { RankingUserInfoType } from "../Types/RankingTypes";
 
 export default function PodiumUserContainer({
   podiumUser,
   position,
 }: {
-  podiumUser: UserInfoType;
+  podiumUser: RankingUserInfoType;
   position: 1 | 2 | 3;
 }) {
   const { img } = podiumUser;

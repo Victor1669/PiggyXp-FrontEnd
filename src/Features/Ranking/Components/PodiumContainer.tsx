@@ -10,6 +10,7 @@ const PODIUM_POSITIONS = [2, 1, 3] as const;
 
 export default function PodiumContainer() {
   const { podiumUsers } = useRanking();
+
   return (
     <View style={PodiumContainerStyles.container}>
       {podiumUsers.map((podiumUser, index) => {

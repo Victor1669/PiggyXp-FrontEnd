@@ -9,7 +9,7 @@ import { HomeContentStyles } from "../Styles/HomeContent.css";
 const { sectionTitle, sectionTitleContainer } = HomeContentStyles;
 
 export default function SectionTitle() {
-  const { title } = useLevels();
+  const { unitTitle } = useLevels();
   const { setShowSheet } = useShowSheet();
 
   function handleTitlePress() {
@@ -18,7 +18,7 @@ export default function SectionTitle() {
 
   return (
     <Pressable onPress={handleTitlePress} style={sectionTitleContainer}>
-      <Paragraph style={sectionTitle}>{title}</Paragraph>
+      <Paragraph style={sectionTitle}>{unitTitle}</Paragraph>
     </Pressable>
   );
 }

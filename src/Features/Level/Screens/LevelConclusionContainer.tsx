@@ -2,6 +2,8 @@ import { useState } from "react";
 import { View } from "react-native";
 import { router } from "expo-router";
 
+import { screenValues } from "Config/screenValues";
+
 import { FinishPhaseService } from "../Services/LevelServices";
 
 import { useQuiz } from "../Contexts/useQuiz";
@@ -13,6 +15,7 @@ import Paragraph from "@Components/Paragraph";
 
 import { LevelAssets } from "../Assets/LevelAssets";
 import { LevelConclusionStyles } from "../Styles/LevelConclusionStyles.css";
+import { useInternetConnection } from "Contexts/useInternetConnection";
 const {
   container,
   image,
@@ -28,12 +31,19 @@ export default function LevelConclusionContainer() {
   const { user, userToken } = useAuth();
   const { TIMER, rightAnswers, questions, rewards, difficulty, order, unit } =
     useQuiz();
+  const { getIsConnected } = useInternetConnection();
 
   async function handleFinishLevel() {
+    const { isPreviewBuild } = screenValues();
+
+    if (!getIsConnected()) return;
+
     setIsLoading(true);
 
-    const storedToken = await userToken.get();
-    await FinishPhaseService(difficulty, order, unit, user.id, storedToken);
+    if (!isPreviewBuild) {
+      const storedToken = await userToken.get();
+      await FinishPhaseService(difficulty, order, unit, user.id, storedToken);
+    }
 
     setIsLoading(false);
     router.replace("/Content");

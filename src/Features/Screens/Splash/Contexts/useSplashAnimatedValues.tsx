@@ -16,8 +16,6 @@ interface SplashAnimatedValuesProviderValues {
     y: Animated.AnimatedInterpolation<string>;
     z: Animated.AnimatedInterpolation<string>;
   };
-  questionMarkerRotateZ: Animated.Value;
-  questionMarkerRotateZInterpolated: Animated.AnimatedInterpolation<string>;
   questionMarkerOpacity: Animated.Value;
   splashBackColor: Animated.Value;
   splashBackColorInterpolated: Animated.AnimatedInterpolation<string>;
@@ -88,11 +86,6 @@ function SplashAnimatedValuesProvider({ children }: { children: R.ReactNode }) {
     new Animated.Value(initialQuestionMarkerRotateZ as number),
   ).current;
 
-  const questionMarkerRotateZInterpolated = questionMarkerRotateZ.interpolate({
-    inputRange: [0, 360],
-    outputRange: ["0deg", "360deg"],
-  });
-
   const questionMarkerOpacity = useRef(
     new Animated.Value(initialQuestionMarkerOpacity as number),
   ).current;
@@ -135,8 +128,6 @@ function SplashAnimatedValuesProvider({ children }: { children: R.ReactNode }) {
     logoCoords,
     logoRotate,
     logoRotateInterpolated,
-    questionMarkerRotateZ,
-    questionMarkerRotateZInterpolated,
     questionMarkerOpacity,
     splashBackColor,
     splashBackColorInterpolated,
