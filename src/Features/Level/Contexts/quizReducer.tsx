@@ -1,5 +1,9 @@
 import { Animated, Dimensions } from "react-native";
+
+import { screenValues } from "Config/screenValues";
+
 import { LevelTypes, CoinType } from "../Types/LevelTypes";
+import { PreviewLevel } from "Features/Preview/PreviewLevel";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const COIN_SIZE = 36;
@@ -8,12 +12,14 @@ const FLOOR_Y = 700;
 let globalCoinId = 0;
 
 function generateCoinData(currentQuestionIndex: number): CoinType {
+  const { deviceWidth } = screenValues();
+
   const id = globalCoinId++;
   const laneCount = 8;
   const index = id % laneCount;
 
   const margin = 30;
-  const usableWidth = SCREEN_WIDTH - margin * 2;
+  const usableWidth = deviceWidth - margin * 2;
   const laneWidth = usableWidth / laneCount;
 
   const baseX = margin + laneWidth * index;
@@ -38,22 +44,22 @@ export function quizReducer(state: LevelTypes, action: any): LevelTypes {
 
   switch (type) {
     case "DADOS_CARREGADOS": {
-      const {
-        text: initialText,
-        questions,
-        difficulty,
-        order,
-        unit,
-        rewards,
-      } = payload;
+      const { isPreviewBuild } = screenValues();
+
+      const dataToUse = isPreviewBuild ? PreviewLevel : payload;
+
+      console.log(dataToUse);
+
       return {
         ...state,
-        initialText,
-        questions,
-        difficulty: difficulty ?? state.difficulty,
-        order: order ?? state.order,
-        unit: unit ?? state.unit,
-        rewards: rewards ?? state.rewards,
+        initialText: dataToUse.text || "",
+        questions: dataToUse.questions || [],
+        difficulty: isPreviewBuild
+          ? dataToUse.dificulty
+          : (dataToUse.difficulty ?? state.difficulty),
+        order: dataToUse.order ?? state.order,
+        unit: dataToUse.unit ?? state.unit,
+        rewards: dataToUse.rewards ?? state.rewards,
         coinList: [],
         currentQuestionIndex: 0,
       };

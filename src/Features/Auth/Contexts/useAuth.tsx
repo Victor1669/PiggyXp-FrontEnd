@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import { screenValues } from "Config/screenValues";
+
 import { StoreItem, JWTStoreItem } from "Helpers/StoreItem";
 
+//#region Interfaces e Types
 interface AuthProviderTypes {
   children: React.ReactNode;
 }
@@ -22,6 +25,10 @@ export interface User {
   reset_lives_at: string;
 }
 
+export interface PreviewUser extends User {
+  isPreview: true;
+}
+
 type AuthProviderValues = {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
@@ -36,6 +43,7 @@ type AuthProviderValues = {
   hasUserInfo: boolean;
   hasVerifiedUserInfo: boolean;
 };
+//#endregion
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 
@@ -43,13 +51,15 @@ const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
  * Provider para disponibilizar ações com o usuário atual.
  */
 function AuthProvider({ children }: AuthProviderTypes) {
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User | PreviewUser>({} as User);
   const [hasVerifiedUserInfo, setHasVerifiedUserInfo] = useState(false);
 
   const hasUserInfo = Object.values(user).length > 0;
 
+  const { isPreviewBuild } = screenValues();
+
   async function login(userData: User) {
-    await userInfo.set(JSON.stringify(userData));
+    userInfo.set(JSON.stringify(userData));
 
     setUser(userData);
   }
@@ -79,6 +89,8 @@ function AuthProvider({ children }: AuthProviderTypes) {
   const userToken = new JWTStoreItem("USER_TOKEN");
 
   useEffect(function getUserInfoFromStore() {
+    if (isPreviewBuild) return;
+
     (async () => {
       const [storedUser, storedUnit] = await Promise.all([
         userInfo.get(),

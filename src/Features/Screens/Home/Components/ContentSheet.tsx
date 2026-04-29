@@ -15,7 +15,7 @@ const SHEET_HEIGHT = 300;
 export default function ContentSheet() {
   const pathName = usePathname();
   const { showSheet, setShowSheet } = useShowSheet();
-  const { selectedLevelIndex, levels, title } = useLevels();
+  const { selectedLevelIndex, levels, unitTitle } = useLevels();
   const insets = useSafeAreaInsets();
   const [disableButton, setDisableButton] = useState(false);
 
@@ -69,7 +69,7 @@ export default function ContentSheet() {
       >
         <View style={{ gap: 5 }}>
           <Paragraph fontSize="normal" textAlign="left" fontFamily="madimiOne">
-            {title}
+            {unitTitle}
           </Paragraph>
           <Paragraph fontSize="big" textAlign="left" fontFamily="madimiOne">
             Título teste

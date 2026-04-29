@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import { useNetInfo } from "@react-native-community/netinfo";
-
 import { toastMessage } from "Utils/toast";
 
 interface InternetConnectionData {
@@ -19,7 +18,7 @@ export function InternetConnectionProvider({
   const netInfo = useNetInfo();
 
   const isConnected =
-    netInfo.isConnected === true && netInfo.isInternetReachable === true;
+    netInfo.isConnected === true && netInfo.isInternetReachable !== false;
 
   function getIsConnected() {
     if (!isConnected) {
@@ -27,8 +26,9 @@ export function InternetConnectionProvider({
         type: "error",
         text: "Conecte-se à Internet para continuar!",
       });
+      return false;
     }
-    return isConnected;
+    return true;
   }
 
   return (

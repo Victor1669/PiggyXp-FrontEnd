@@ -12,6 +12,7 @@ import { HomeSliderStyles } from "../Styles/HomeSlider.css";
 
 import { HomeImages } from "../Assets/HomeImages";
 import Paragraph from "@Components/Paragraph";
+import { useEffect, useState } from "react";
 const {
   slider: { coin, section },
 } = HomeImages;
@@ -42,11 +43,22 @@ export function CardTemplate({
 }
 
 export function Card1() {
+  const { userUnit } = useAuth();
+
+  const [selectedUnit, setSelectedUnit] = useState(1);
+
+  useEffect(() => {
+    (async () => {
+      const storedUnit = await userUnit.get();
+      setSelectedUnit(+storedUnit);
+    })();
+  }, [userUnit]);
+
   return (
     <View style={HomeSliderStyles.card1}>
       <View>
         <Paragraph fontSize="small" fontWeight="bold" textAlign="left">
-          Seção 1, unidade 1
+          Unidade {selectedUnit}
         </Paragraph>
         <Paragraph fontWeight="bold" fontSize="big">
           Novos horizontes

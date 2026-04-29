@@ -1,5 +1,8 @@
 import { ScrollView, View } from "react-native";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
@@ -10,11 +13,12 @@ import Offensive from "./Components/Offensive";
 import LivesTimer from "./Components/LivesTimer";
 
 import { ProfileContainerStyles } from "./Styles/ProfileContainer.css";
-import { SafeAreaView } from "react-native-safe-area-context";
 const { content, button } = ProfileContainerStyles;
 
 export default function ProfileContainer() {
   const { logout } = useAuth();
+
+  const { isPreviewBuild } = screenValues();
 
   async function handleLogout() {
     await logout();
@@ -28,7 +32,7 @@ export default function ProfileContainer() {
           <UserInfo />
           <Achievements />
           <Offensive />
-          <LivesTimer />
+          {!isPreviewBuild && <LivesTimer />}
         </View>
         <Button style={button} onPress={handleLogout}>
           Sair

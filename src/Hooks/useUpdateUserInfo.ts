@@ -1,6 +1,6 @@
 import { useAuth, User } from "@Auth/Contexts/useAuth";
 
-import { env } from "Config/env";
+import { screenValues } from "Config/screenValues";
 
 import { GetUserInfo } from "@Auth/Services/UserInfoService";
 import { verifyAchievements } from "../Features/Achievements/AchievementsServices";
@@ -12,7 +12,11 @@ import { notifications } from "Utils/notifications";
 export function useUpdateUserInfo() {
   const { login, user, userToken } = useAuth();
 
+  const { isPreviewBuild } = screenValues();
+
   async function updateUserInfo() {
+    if (isPreviewBuild) return;
+
     const [{ userId }, storedUserToken] = (await Promise.all([
       userToken.decode(),
       userToken.get(),
@@ -21,13 +25,13 @@ export function useUpdateUserInfo() {
     const [
       { data: achievementsData, status: achievementsStatus },
       { data: userInfoData, status: userInfoStatus },
-      { data: userProgressData, status: userProgressStatus },
       _,
+      { data: userProgressData, status: userProgressStatus },
     ] = await Promise.all([
       verifyAchievements(+userId),
       GetUserInfo(userId),
-      GetUserProgress(+userId),
       RegenLivesService(+userId, storedUserToken),
+      GetUserProgress(+userId),
     ]);
 
     if (
@@ -37,10 +41,11 @@ export function useUpdateUserInfo() {
       userProgressData
     ) {
       const newUserInfo: User = {
-        ...(env.buildProfile === "preview" ? user : userInfoData),
         id: +userId,
+        ...userInfoData,
         ...userProgressData,
       };
+
       await login(newUserInfo);
     }
 

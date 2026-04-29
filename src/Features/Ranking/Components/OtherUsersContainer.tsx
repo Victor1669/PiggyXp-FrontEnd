@@ -1,7 +1,8 @@
-import RankingUser from "./RankingUser";
+import { View } from "react-native";
 
 import { useRanking } from "../Contexts/RankingContext";
-import { View } from "react-native";
+
+import RankingUser from "./RankingUser";
 
 export default function OtherUsersContainer() {
   const { otherUsers } = useRanking();

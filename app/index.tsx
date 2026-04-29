@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { router } from "expo-router";
 import { useFonts } from "expo-font";
 
+import { screenValues } from "Config/screenValues";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { RefreshTokenService } from "@Auth/Services/RefreshTokenService";
@@ -12,9 +14,10 @@ import { themeChanger } from "Helpers/themeChanger";
 
 export default function SplashScreen() {
   const { user, refreshToken, userToken, setHasVerifiedUserInfo } = useAuth();
+  const { isPreviewBuild } = screenValues();
 
   // CONFIGURAÇÃO DE FONTES
-  const [loaded, error] = useFonts({
+  useFonts({
     "MadimiOne-Regular": require("../assets/fonts/MadimiOne-Regular.ttf"),
   });
 
@@ -29,6 +32,8 @@ export default function SplashScreen() {
           setHasVerifiedUserInfo(true);
           return;
         }
+
+        if (isPreviewBuild) return;
 
         const { data, status } = await RefreshTokenService(storedRefreshToken);
 

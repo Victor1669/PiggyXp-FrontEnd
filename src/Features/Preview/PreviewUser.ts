@@ -1,6 +1,6 @@
-import { User } from "@Auth/Contexts/useAuth";
+import { PreviewUser } from "@Auth/Contexts/useAuth";
 
-export const PreviewUserInfo: User = {
+export const PreviewUserInfo: PreviewUser = {
   id: 1,
   name: "Usuário",
   email: "emailfake@gmail.com",
@@ -13,4 +13,6 @@ export const PreviewUserInfo: User = {
   lives: 5,
   achievements: "0000000000",
   collectedAchievements: "0000000000",
+  reset_lives_at: "",
+  isPreview: true,
 };

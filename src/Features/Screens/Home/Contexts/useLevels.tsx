@@ -1,5 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import { screenValues } from "Config/screenValues";
+
+import { TitlesService } from "../Services/TitlesService";
+
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+
 import { HomeImages } from "../Assets/HomeImages";
 const {
   content: { star, graphic, trophy },
@@ -11,15 +17,13 @@ const {
 } = GlobalImages;
 
 import { LevelType } from "../Types/LevelType";
-import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { TitlesService } from "../Services/TitlesService";
 
 interface LevelsContextData {
   levels: LevelType[];
   selectedLevelIndex: number;
   setSelectedLevelIndex: React.Dispatch<React.SetStateAction<number>>;
   actualLevel: number;
-  title: string;
+  unitTitle: string;
 }
 
 const LevelsContext = createContext<LevelsContextData>({} as LevelsContextData);
@@ -30,10 +34,12 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
     userUnit,
   } = useAuth();
 
+  const { isPreviewBuild } = screenValues();
+
   const actualLevel = nivel + 1;
 
   const [selectedLevelIndex, setSelectedLevelIndex] = useState(nivel);
-  const [title, setTitle] = useState("");
+  const [unitTitle, setUnitTitle] = useState("");
 
   const levels: LevelType[] = [
     {
@@ -110,7 +116,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
 
       const { data, status } = await TitlesService(difficulty, +storedUserUnit);
 
-      setTitle(status < 300 ? data.tittle : "");
+      setUnitTitle(status < 300 ? data.tittle : "");
     })();
   }, [difficulty]);
 
@@ -121,7 +127,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
         selectedLevelIndex,
         setSelectedLevelIndex,
         actualLevel,
-        title,
+        unitTitle: isPreviewBuild ? "Unidade teste" : unitTitle,
       }}
     >
       {children}
