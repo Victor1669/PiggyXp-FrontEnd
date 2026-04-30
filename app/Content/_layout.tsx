@@ -35,7 +35,7 @@ export default function Layout() {
           headerTitleAlign: "center",
         }}
       />
-      <Tabs.Screen name="Missoes" options={{ title: "Missões" }} />
+      <Tabs.Screen name="Missions" options={{ title: "Missões" }} />
       <Tabs.Screen name="Loja" options={{ title: "Loja" }} />
       <Tabs.Screen name="Profile" options={{ title: "Perfil" }} />
     </Tabs>
