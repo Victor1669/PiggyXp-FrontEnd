@@ -22,7 +22,7 @@ const {
 const ICON_MAP: Record<string, any> = {
   index: { img: home, width: 40, height: 40, mt: 0, mb: 0 },
   Ranking: { img: ranking, width: 35, height: 30, mt: 9, mb: 0 },
-  Missoes: { img: missoes, width: 35, height: 35, mt: 5, mb: 0 },
+  Missions: { img: missoes, width: 35, height: 35, mt: 5, mb: 0 },
   Loja: { img: loja, width: 36, height: 36, mt: 0, mb: 5 },
   Profile: { img: perfil, width: 40, height: 40, mt: 0, mb: 0 },
 };
@@ -42,7 +42,6 @@ export default function TabBar({
 }: BottomTabBarProps) {
   const pathName = usePathname();
 
-  // Esconde a TabBar em rotas específicas
   if (pathName === "/Content/Profile/Config") return null;
 
   return (

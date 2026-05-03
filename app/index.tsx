@@ -28,12 +28,10 @@ export default function SplashScreen() {
       (async () => {
         const storedRefreshToken = await refreshToken.get();
 
-        if (!storedRefreshToken.length) {
+        if (!storedRefreshToken.length || isPreviewBuild) {
           setHasVerifiedUserInfo(true);
           return;
         }
-
-        if (isPreviewBuild) return;
 
         const { data, status } = await RefreshTokenService(storedRefreshToken);
 
