@@ -9,9 +9,10 @@ export function screenValues() {
 
   const deviceWidth = phoneWindow.width;
   const deviceHeight = phoneWindow.height;
+  const deviceScale = phoneWindow.scale;
   const isDeviceHeigthSmall = phoneWindow.height < 861;
   const isPreviewBuild = env.buildProfile === "preview";
-  const showDevTools = false;
+  const showDevTools = true;
 
   const TABBAR_HEIGHT = 130;
 
@@ -32,5 +33,6 @@ export function screenValues() {
     showDevTools,
     TABBAR_HEIGHT,
     isPreviewBuild,
+    deviceScale,
   };
 }
