@@ -19,6 +19,7 @@ export default function SplashScreen() {
   // CONFIGURAÇÃO DE FONTES
   useFonts({
     "MadimiOne-Regular": require("../assets/fonts/MadimiOne-Regular.ttf"),
+    "Mohave-Regular": require("../assets/fonts/Mohave-Regular.ttf"),
   });
 
   useEffect(

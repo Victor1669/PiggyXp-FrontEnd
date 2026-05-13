@@ -29,7 +29,7 @@ export default function Paragraph({
     | "title"
     | (number & {});
   color?: "darkModeFont" | "lightModeFont" | (string & {});
-  fontFamily?: "madimiOne" | undefined;
+  fontFamily?: keyof typeof GlobalFonts | undefined;
   style?: RN.StyleProp<RN.TextStyle>;
   fontWeight?: RN.TextStyle["fontWeight"];
   textAlign?: RN.TextStyle["textAlign"];
