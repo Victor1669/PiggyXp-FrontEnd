@@ -13,6 +13,7 @@ interface ButtonProps {
   shadowColor?: string;
   disabled?: boolean;
   fontSize?: number;
+  numberOfLines?: number | undefined;
 }
 
 export default function Button({
@@ -24,6 +25,7 @@ export default function Button({
   shadowColor = "#2A7121",
   disabled = false,
   fontSize,
+  numberOfLines,
 }: ButtonProps) {
   const [buttonHeight, setButtonHeight] = useState(4);
   const { width } = useWindowDimensions();
@@ -59,9 +61,11 @@ export default function Button({
       ]}
     >
       <Paragraph
+        numberOfLines={numberOfLines}
         fontWeight="bold"
         fontSize={fontSize ? fontSize : "big"}
         color={fontColor}
+        style={{ width: "100%" }}
       >
         {children}
       </Paragraph>
