@@ -4,6 +4,7 @@ import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { LivesTimerStyles } from "../Styles/LivesTimer.css";
 import { calcLivesTimer } from "../Helpers/calcLivesTimer";
 import Paragraph from "Components/Paragraph";
+import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
 
 const { livesTimerContainer, livesTimerContent } = LivesTimerStyles;
 
@@ -11,6 +12,7 @@ export default function LivesTimer() {
   const {
     user: { reset_lives_at },
   } = useAuth();
+  const updateUserInfo = useUpdateUserInfo();
 
   const [timer, setTimer] = useState<string | null>(() =>
     calcLivesTimer(reset_lives_at),
@@ -24,6 +26,12 @@ export default function LivesTimer() {
 
     return () => clearInterval(timerLives);
   }, [reset_lives_at]);
+
+  useEffect(() => {
+    if (!timer) {
+      updateUserInfo();
+    }
+  }, [timer]);
 
   return (
     <View style={livesTimerContainer}>

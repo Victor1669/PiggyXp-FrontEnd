@@ -18,9 +18,13 @@ ROTAS DO BACKEND CONECTADAS:
     /upload-user-img
     /achievements/verify/<userId>
     /achievements/rewards/<userId>
-    /title
+    /titles
     /ranking
     /finish
     /regen
     /live
+
+    /select
+    /getMission/?id=<number>
+    /update-mission
 ```

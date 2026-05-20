@@ -1,9 +1,9 @@
-import { Image, Modal, View } from "react-native";
+import { ActivityIndicator, Modal, View } from "react-native";
 import { useStatus } from "Contexts/StatusContext";
 import Paragraph from "@Components/Paragraph";
 import { LoadingSpinnerStyles } from "./LoadingSpinner.css";
 
-const { container, spinner } = LoadingSpinnerStyles;
+const { container } = LoadingSpinnerStyles;
 
 export default function StatusModal() {
   const { modalType, isVisible } = useStatus();
@@ -12,7 +12,9 @@ export default function StatusModal() {
     return (
       <Modal visible={isVisible} transparent animationType="fade">
         <View style={container}>
-          <Image source={require("./Spinner.gif")} style={spinner} />
+          <View style={{ transform: [{ scale: 2.5 }], marginBottom: 30 }}>
+            <ActivityIndicator size="large" />
+          </View>
           <Paragraph>Carregando...</Paragraph>
         </View>
       </Modal>

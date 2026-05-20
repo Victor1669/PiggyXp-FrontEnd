@@ -6,6 +6,7 @@ import NavigationButton from "./Components/NavigationButton";
 import ShowTokenButton from "./Components/ShowTokenButton";
 import ClearStorageButton from "./Components/ClearStorageButton";
 import ShowPhoneSize from "./Components/ShowPhoneSize";
+import ShowModals from "./Components/ShowModals";
 
 export default function DevToolsContainer() {
   const { showDevTools } = screenValues();
@@ -18,6 +19,7 @@ export default function DevToolsContainer() {
           <ShowTokenButton />
           <ClearStorageButton />
           <ShowPhoneSize />
+          <ShowModals />
         </View>
       );
 }

@@ -47,16 +47,16 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (isPreviewBuild) return;
-    (async () => {
-      setIsLoading(true);
 
-      const { data: rankingUsers }: { data: RankingUserInfoType[] } =
-        await RankingService();
+    setIsLoading(true);
 
-      setRankingUsers(rankingUsers);
+    RankingService().then(
+      ({ data: rankingUsers }: { data: RankingUserInfoType[] }) => {
+        setRankingUsers(rankingUsers);
 
-      setIsLoading(false);
-    })();
+        setIsLoading(false);
+      },
+    );
   }, [user.name, user.user_img, user.xp]);
 
   return (

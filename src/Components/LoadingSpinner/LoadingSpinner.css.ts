@@ -9,8 +9,4 @@ export const LoadingSpinnerStyles = StyleSheet.create({
     justifyContent: "center",
     gap: 15,
   },
-  spinner: {
-    width: 100,
-    height: 100,
-  },
 });

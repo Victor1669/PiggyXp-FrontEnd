@@ -69,7 +69,7 @@ export default {
   expo: {
     name: appName,
     slug: "PiggyXp-FrontEnd",
-    version: "0.5.0",
+    version: "0.6.0",
     orientation: "portrait",
 
     icon: appIcon,

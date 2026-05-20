@@ -16,7 +16,6 @@ export default function LevelHeader() {
   const { questions, lives, currentQuestionIndex } = useQuiz();
 
   function handleExitPress() {
-    console.log("TEste");
     showStatus("confirmExit");
   }
 

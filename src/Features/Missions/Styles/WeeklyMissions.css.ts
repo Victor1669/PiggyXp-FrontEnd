@@ -30,10 +30,4 @@ export const WeeklyMissionsStyles = StyleSheet.create({
     height: 200,
     marginTop: -60,
   },
-  bottomPart: {
-    height: 130,
-    padding: 25,
-    justifyContent: "center",
-    gap: 15,
-  },
 });

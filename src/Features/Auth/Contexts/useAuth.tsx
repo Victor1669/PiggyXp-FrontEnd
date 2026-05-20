@@ -39,6 +39,7 @@ type AuthProviderValues = {
   userEmailWhileRecovering: StoreItem;
   temporaryImageToken: StoreItem;
   refreshToken: StoreItem;
+  updateMissionDay: StoreItem;
   userToken: JWTStoreItem;
   hasUserInfo: boolean;
   hasVerifiedUserInfo: boolean;
@@ -71,6 +72,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
       userToken,
       temporaryImageToken,
       refreshToken,
+      updateMissionDay,
     ];
 
     allUserInfo.forEach(async (storeItem) => {
@@ -84,6 +86,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
   const temporaryImageToken = new StoreItem("TEMPORARY_IMAGE_TOKEN");
   const userInfo = new StoreItem("USER_INFO");
   const userUnit = new StoreItem("USER_UNIT");
+  const updateMissionDay = new StoreItem("UPDATE_MISSION_DAY");
 
   const refreshToken = new JWTStoreItem("REFRESH_TOKEN");
   const userToken = new JWTStoreItem("USER_TOKEN");
@@ -118,6 +121,7 @@ function AuthProvider({ children }: AuthProviderTypes) {
     hasUserInfo,
     hasVerifiedUserInfo,
     setHasVerifiedUserInfo,
+    updateMissionDay,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

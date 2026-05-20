@@ -1,16 +1,18 @@
 import { View } from "react-native";
 
-import Paragraph from "@Components/Paragraph";
-import ProgressBar from "Components/ProgressBar";
+import { useMissions } from "../Contexts/MissionsContext";
+
 import Picture from "@Components/Picture";
 
 import { WeeklyMissionsStyles } from "../Styles/WeeklyMissions.css";
 
-import { GlobalColors } from "Assets/Colors";
 import { MissionAssets } from "../Assets/MissionAssets";
+import WeeklyMissionProgress from "./WeeklyMissionProgress";
 
 export default function WeeklyMissionsContainer() {
-  const { cardContainer, topPart, picture, bottomPart } = WeeklyMissionsStyles;
+  const { cardContainer, topPart, picture } = WeeklyMissionsStyles;
+
+  const { weeklyMissions } = useMissions();
 
   return (
     <View style={cardContainer}>
@@ -22,17 +24,9 @@ export default function WeeklyMissionsContainer() {
         />
       </View>
 
-      <View style={bottomPart}>
-        <Paragraph fontSize="normal" textAlign="left" fontWeight="bold">
-          Ganhe 1000xp
-        </Paragraph>
-
-        <ProgressBar
-          maxValue={1000}
-          actualValue={450}
-          style={{ backgroundColor: GlobalColors.contentBackColor.Dark }}
-        />
-      </View>
+      {weeklyMissions.map((weeklyMission, index) => (
+        <WeeklyMissionProgress weeklyMission={weeklyMission} key={index} />
+      ))}
     </View>
   );
 }

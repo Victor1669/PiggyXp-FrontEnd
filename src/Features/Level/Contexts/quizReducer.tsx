@@ -5,7 +5,6 @@ import { screenValues } from "Config/screenValues";
 import { LevelTypes, CoinType } from "../Types/LevelTypes";
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const COIN_SIZE = 36;
 const FLOOR_Y = 700;
 
@@ -48,15 +47,14 @@ export function quizReducer(state: LevelTypes, action: any): LevelTypes {
 
       const dataToUse = isPreviewBuild ? PreviewLevel : payload;
 
-      console.log(dataToUse);
-
       return {
         ...state,
         initialText: dataToUse.text || "",
         questions: dataToUse.questions || [],
         difficulty: isPreviewBuild
           ? dataToUse.dificulty
-          : (dataToUse.difficulty ?? state.difficulty),
+          : // O cara usa IA no código mas não consegue escrever um inglês certo pqp
+            (dataToUse.dificulty ?? state.difficulty),
         order: dataToUse.order ?? state.order,
         unit: dataToUse.unit ?? state.unit,
         rewards: dataToUse.rewards ?? state.rewards,
