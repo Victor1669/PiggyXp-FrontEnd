@@ -31,7 +31,14 @@
 10.75- Estilização final da Home (Fernandes) FEITO
 
 11- Estilização inicial dos níveis e telas derivadas (Fernandes) FEITO
-11.25- Conexão com o BackEnd para atualizar o usuário (!AGUARDANDO O BACKEND)
-11.5- Estilização final dos níveis (Pereira)
+11.25- Conexão com o BackEnd para atualizar o usuário ao terminar a fase (Fernandes) FEITO
 
-12- Tela de ranking (Vinicius)
+11.5- Estilização final dos níveis (Pereira) FEITO
+
+12- Tela de ranking (Fernandes) FEITO
+
+13- Tela de missões (Fernandes) FEITO
+13.5- Conexão com o backend (Fernandes) FEITO
+
+14- Tela de loja (Fernandes) FEITO
+14.5- Conexão com o backend (Fernandes) AGUARDANDO

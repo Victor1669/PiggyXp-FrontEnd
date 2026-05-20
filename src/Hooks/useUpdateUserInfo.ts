@@ -1,4 +1,4 @@
-import { useAuth, User } from "@Auth/Contexts/useAuth";
+import { useAuth, type User } from "@Auth/Contexts/useAuth";
 
 import { screenValues } from "Config/screenValues";
 
@@ -10,7 +10,7 @@ import { RegenLivesService } from "Features/Auth/Services/RegenLivesService";
 import { notifications } from "Utils/notifications";
 
 export function useUpdateUserInfo() {
-  const { login, user, userToken } = useAuth();
+  const { login, userToken } = useAuth();
 
   const { isPreviewBuild } = screenValues();
 

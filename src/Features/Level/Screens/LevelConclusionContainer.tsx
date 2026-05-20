@@ -16,6 +16,7 @@ import Paragraph from "@Components/Paragraph";
 import { LevelAssets } from "../Assets/LevelAssets";
 import { LevelConclusionStyles } from "../Styles/LevelConclusionStyles.css";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { UpdateMissionsService } from "Features/Missions/Services/MissionServices";
 const {
   container,
   image,
@@ -33,6 +34,8 @@ export default function LevelConclusionContainer() {
     useQuiz();
   const { getIsConnected } = useInternetConnection();
 
+  const { id } = user;
+
   async function handleFinishLevel() {
     const { isPreviewBuild } = screenValues();
 
@@ -42,7 +45,19 @@ export default function LevelConclusionContainer() {
 
     if (!isPreviewBuild) {
       const storedToken = await userToken.get();
-      await FinishPhaseService(difficulty, order, unit, user.id, storedToken);
+
+      await FinishPhaseService(difficulty, order, unit, id, storedToken);
+      await UpdateMissionsService(
+        {
+          acerts: rightAnswers,
+          completePhase: true,
+          completeUnit: order === 10,
+          erro: questions.length - rightAnswers,
+          login: 1,
+          streak: 0,
+        },
+        storedToken,
+      );
     }
 
     setIsLoading(false);

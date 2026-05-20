@@ -1,5 +1,10 @@
+import { MissionsProvider } from "Features/Missions/Contexts/MissionsContext";
 import MissionsContainer from "Features/Missions/MissionsContainer";
 
 export default function Missions() {
-  return <MissionsContainer />;
+  return (
+    <MissionsProvider>
+      <MissionsContainer />
+    </MissionsProvider>
+  );
 }

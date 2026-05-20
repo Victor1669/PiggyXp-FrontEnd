@@ -20,14 +20,21 @@ export default function RankingUser({
   name,
   xp,
   position,
+  isYourUser,
 }: {
   user_img: any;
   name: string;
   xp: number;
   position: number;
+  isYourUser: boolean;
 }) {
   return (
-    <View style={container}>
+    <View
+      style={[
+        container,
+        { backgroundColor: isYourUser ? "#006986" : "#02B1E2" },
+      ]}
+    >
       <View style={imageContainer}>
         <Paragraph fontWeight={"bold"} fontSize={"big"} style={positionNumber}>
           {position}

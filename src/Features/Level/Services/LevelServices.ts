@@ -33,8 +33,6 @@ async function LivesService(token: string, body: { erro: number }) {
     body,
   });
 
-  console.log(response.data);
-
   return response;
 }
 export { GetPhaseService, FinishPhaseService, LivesService };

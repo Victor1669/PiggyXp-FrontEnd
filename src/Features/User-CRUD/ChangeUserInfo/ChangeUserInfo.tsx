@@ -5,7 +5,6 @@ import { router } from "expo-router";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
-import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
 
 import { UpdateUserInfo } from "@Auth/Services/UserInfoService";
 import { toastMessage } from "Utils/toast";
@@ -24,7 +23,6 @@ export default function ChangeUserInfoContainer() {
     "update-user-img",
     "PUT",
   );
-  const updateUserInfo = useUpdateUserInfo();
 
   const [image, setImage] = useState<string>(user.user_img as string);
 
@@ -40,7 +38,7 @@ export default function ChangeUserInfoContainer() {
     const token = await userToken.get();
 
     if (image !== user.user_img) {
-      Promise.all([handleImageSubmit(token), updateUserInfo()]);
+      await handleImageSubmit(token);
     }
 
     const { data, status } = await UpdateUserInfo(user.id, textData, token);

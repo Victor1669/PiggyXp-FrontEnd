@@ -7,7 +7,6 @@ const { deviceWidth } = screenValues();
 export const RankingUserStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "#02B1E2",
     borderRadius: 15,
   },
   imageContainer: {
