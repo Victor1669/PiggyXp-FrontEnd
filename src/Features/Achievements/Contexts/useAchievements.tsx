@@ -1,4 +1,5 @@
-import R, { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import { screenValues } from "Config/screenValues";
 
@@ -9,14 +10,17 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { Achievement } from "../Types/AchievementTypes";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
+import { useAudio } from "Hooks/useAudio";
+import { useInternetConnection } from "Contexts/useInternetConnection";
+import { getAchievementsRewards } from "../AchievementsServices";
 
 interface AchievementsProviderValues {
   showDescription: boolean;
-  setShowDescription: R.Dispatch<R.SetStateAction<boolean>>;
+  setShowDescription: Dispatch<SetStateAction<boolean>>;
   showRewards: boolean;
-  setShowRewards: R.Dispatch<R.SetStateAction<boolean>>;
+  setShowRewards: Dispatch<SetStateAction<boolean>>;
   selectedAchievementIndex: number;
-  setSelectedAchievementIndex: R.Dispatch<R.SetStateAction<number>>;
+  setSelectedAchievementIndex: Dispatch<SetStateAction<number>>;
   selectedAchievement: Achievement;
   achievements: Achievement[];
 }
@@ -25,13 +29,16 @@ const AchievementsContext = createContext<
   AchievementsProviderValues | undefined
 >(undefined);
 
-function AchievementsProvider({ children }: { children: R.ReactNode }) {
+function AchievementsProvider({ children }: { children: ReactNode }) {
   const [showDescription, setShowDescription] = useState(false);
   const [showRewards, setShowRewards] = useState(false);
   const [selectedAchievementIndex, setSelectedAchievementIndex] =
     useState<number>(0);
 
   const { user } = useAuth();
+
+  const { load, stop, play } = useAudio();
+  const { getIsConnected } = useInternetConnection();
 
   const { isPreviewBuild } = screenValues();
 
@@ -40,6 +47,36 @@ function AchievementsProvider({ children }: { children: R.ReactNode }) {
     : formatAchievements(user, achievementsProgress);
 
   const selectedAchievement = achievements?.[selectedAchievementIndex];
+
+  async function handleReceiveRewards() {
+    if (!getIsConnected()) return;
+
+    await getAchievementsRewards(user.id, {
+      achievementId: selectedAchievementIndex,
+    });
+  }
+
+  useEffect(
+    function receiveRewards() {
+      if (!showRewards) return;
+      try {
+        (async () => {
+          await Promise.all([
+            handleReceiveRewards(),
+            load(require("../Assets/applauses.wav")),
+          ]);
+          await play();
+        })();
+      } catch (err) {
+        console.log(err);
+      }
+
+      return () => {
+        stop();
+      };
+    },
+    [showRewards],
+  );
 
   const value: AchievementsProviderValues = {
     showDescription,
