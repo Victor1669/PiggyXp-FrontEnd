@@ -10,6 +10,6 @@ export const QuestionContainerStyles = StyleSheet.create({
     marginTop: 80,
   },
   answersContainer: {
-    gap: 15,
+    gap: 20,
   },
 });

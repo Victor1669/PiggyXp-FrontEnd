@@ -37,7 +37,9 @@ function SplashAnimationProvider({ children }: { children: R.ReactNode }) {
   ];
 
   const animationIndex = useRef(randomNumber(0, animations.length - 1)).current;
-  const pickedAnimation = animations[animationIndex];
+  //const pickedAnimation = animations[animationIndex];
+  // MOSTRAR SÓ A PADRÃO PRA APRESENTAÇÃO
+  const pickedAnimation = animations[0];
 
   const [layoutAnimation, setLayoutAnimation] = useState<StackAnimationTypes>(
     pickedAnimation.initialValues.animationType || "fade",

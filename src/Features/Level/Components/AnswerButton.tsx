@@ -36,8 +36,8 @@ export default function AnswerButton({
       style={{
         backgroundColor: buttonColor.backColor,
         justifyContent: "center",
-        paddingVertical: 5,
-        height: 60,
+        paddingVertical: 15,
+        minHeight: 72,
       }}
       shadowColor={buttonColor.shadowColor}
       onPress={async () => {

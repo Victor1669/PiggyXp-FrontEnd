@@ -6,7 +6,7 @@ import { LevelTypes, CoinType } from "../Types/LevelTypes";
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
 
 const COIN_SIZE = 36;
-const FLOOR_Y = 700;
+const FLOOR_Y = 640;
 
 let globalCoinId = 0;
 
