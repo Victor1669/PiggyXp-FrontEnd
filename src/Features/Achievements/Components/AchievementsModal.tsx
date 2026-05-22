@@ -21,17 +21,21 @@ export default function AchievementModal() {
   return (
     <DefaultModal showModal={showDescription} containerStyle={container}>
       {selectedAchievementIndex !== null ? (
-        <AchievementCard
-          style={card}
-          achievement={selectedAchievement}
-          imageStyle={{ width: 275, height: 275 }}
-          index={selectedAchievementIndex}
-        />
+        <>
+          <Paragraph color="#fff" fontWeight="bold">
+            {selectedAchievement.name}
+          </Paragraph>
+          <AchievementCard
+            style={card}
+            achievement={selectedAchievement}
+            index={selectedAchievementIndex}
+          />
+        </>
       ) : (
         <></>
       )}
       <View style={descriptionView}>
-        <Paragraph color="lightModeFont" fontWeight="600">
+        <Paragraph color="#fff" fontWeight="600">
           {selectedAchievement?.description}
         </Paragraph>
       </View>

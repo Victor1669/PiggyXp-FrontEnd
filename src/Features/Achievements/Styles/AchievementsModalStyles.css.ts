@@ -8,7 +8,7 @@ export const AchievementsModalStyles = StyleSheet.create({
     borderRadius: 20,
   },
 
-  card: { width: "100%", margin: "auto" },
+  card: { margin: "auto" },
 
   descriptionView: {
     width: "100%",
@@ -18,6 +18,6 @@ export const AchievementsModalStyles = StyleSheet.create({
   },
 
   button: {
-    width: "100%",
+    width: "90%",
   },
 });
