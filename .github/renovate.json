@@ -45,7 +45,8 @@
         "jest-expo",
         "typescript",
         "@react-native-community/netinfo",
-        "@react-native-google-signin/google-signin"
+        "@react-native-google-signin/google-signin",
+        "@types/react"
       ],
       "enabled": false
     }
