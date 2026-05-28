@@ -8,6 +8,8 @@ import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import { RankingUserInfoType } from "../Types/RankingTypes";
 
+import { PreviewRanking } from "Features/Preview/PreviewRanking";
+
 type RankingContextType = {
   podiumUsers: RankingUserInfoType[];
   otherUsers: RankingUserInfoType[];
@@ -17,16 +19,9 @@ type RankingContextType = {
 
 const RankingContext = createContext<RankingContextType | null>(null);
 
-const defaultUsers = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  img: null,
-  name: "Teste",
-  xp: 0,
-})) as RankingUserInfoType[];
-
 export function RankingProvider({ children }: { children: React.ReactNode }) {
   const [rankingUsers, setRankingUsers] =
-    useState<RankingUserInfoType[]>(defaultUsers);
+    useState<RankingUserInfoType[]>(PreviewRanking);
   const [isLoading, setIsLoading] = useState(false);
 
   const { isPreviewBuild } = screenValues();

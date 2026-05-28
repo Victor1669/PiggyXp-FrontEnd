@@ -1,13 +1,24 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+
+import { screenValues } from "Config/screenValues";
+
 import { GetMissionsService } from "../Services/MissionServices";
-import { UserMission, MissionFrequency } from "../Types/MissionsTypes";
+
+import { useInternetConnection } from "Contexts/useInternetConnection";
+
+import { UserMission } from "../Types/MissionsTypes";
+
+import { PreviewMissions } from "Features/Preview/PreviewMission";
 
 export function useGetMissions(userId: number) {
-  const [missions, setMissions] = useState<UserMission[]>([]);
+  const [missions, setMissions] = useState<UserMission[]>(PreviewMissions);
   const [isLoading, setIsLoading] = useState(true);
 
+  const { getIsConnected } = useInternetConnection();
+  const { isPreviewBuild } = screenValues();
+
   const fetchMissions = useCallback(async () => {
-    if (!userId) return;
+    if (!userId || isPreviewBuild || !getIsConnected()) return;
 
     setIsLoading(true);
     try {
@@ -27,15 +38,27 @@ export function useGetMissions(userId: number) {
     fetchMissions();
   }, [fetchMissions]);
 
-  const filterByFrequency = (frequency: MissionFrequency) =>
-    missions.filter((m) => m.mission.frequency === frequency);
+  const dailyMissions = useMemo(
+    () => missions.filter((m) => m.mission.frequency === "daily"),
+    [missions],
+  );
+
+  const weeklyMissions = useMemo(
+    () => missions.filter((m) => m.mission.frequency === "weekly"),
+    [missions],
+  );
+
+  const monthlyMissions = useMemo(
+    () => missions.filter((m) => m.mission.frequency === "monthly"),
+    [missions],
+  );
 
   return {
     missions,
     isLoading,
     fetchMissions,
-    dailyMissions: filterByFrequency("daily"),
-    weeklyMissions: filterByFrequency("weekly"),
-    monthlyMissions: filterByFrequency("monthly"),
+    dailyMissions,
+    weeklyMissions,
+    monthlyMissions,
   };
 }
