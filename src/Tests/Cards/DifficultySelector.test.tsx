@@ -19,8 +19,24 @@ jest.mock("../../Features/Auth/Contexts/useAuth", () => ({
   ...jest.requireActual("@Auth/Contexts/useAuth"),
   useAuth: () => ({
     setUser: mockSetUser,
-    userToken: { get: jest.fn().mockResolvedValue("token") },
-    userUnit: { set: jest.fn().mockResolvedValue(undefined) },
+  }),
+}));
+
+jest.mock("Contexts/useStorageItemsContext", () => ({
+  ...jest.requireActual("Contexts/useStorageItemsContext"),
+  useStorageItemsContext: () => ({
+    userInfo: {
+      get: jest.fn().mockResolvedValue(null),
+      set: jest.fn().mockResolvedValue(undefined),
+    },
+    userUnit: {
+      get: jest.fn().mockResolvedValue(null),
+      set: jest.fn().mockResolvedValue(undefined),
+    },
+    userToken: {
+      get: jest.fn().mockResolvedValue("token-falso"),
+    },
+    clearStorage: jest.fn(),
   }),
 }));
 
@@ -35,6 +51,7 @@ jest.mock("Contexts/StatusContext", () => ({
 import { AuthProvider } from "../../Features/Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { StorageItemsContextProvider } from "Contexts/useStorageItemsContext";
 
 import { DifficultyService } from "../../Features/Auth/Services/DifficultyService";
 
@@ -52,11 +69,13 @@ const TOTAL_CARDS = 3;
 
 async function renderDifficultySelector() {
   const renderResult = render(
-    <AuthProvider>
-      <StatusProvider>
-        <DifficultySelector />
-      </StatusProvider>
-    </AuthProvider>,
+    <StorageItemsContextProvider>
+      <AuthProvider>
+        <StatusProvider>
+          <DifficultySelector />
+        </StatusProvider>
+      </AuthProvider>
+    </StorageItemsContextProvider>,
   );
 
   await waitFor(() => {
@@ -113,7 +132,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
     await waitFor(() => {
       expect(DifficultyService).toHaveBeenCalledWith(
         { difficulty: 1 },
-        "token",
+        "token-falso",
       );
       expect(mockSetUser).toHaveBeenCalled();
       expect(mockShowStatus).toHaveBeenCalledWith("loading");

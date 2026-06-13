@@ -7,6 +7,7 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { DeleteUserService } from "@Auth/Services/DeleteUser";
 
@@ -18,9 +19,10 @@ import Paragraph from "@Components/Paragraph";
 export default function DeleteUserButton() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { user, userToken, logout } = useAuth();
+  const { user, logout } = useAuth();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
+  const { userToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 

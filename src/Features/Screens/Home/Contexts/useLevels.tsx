@@ -17,6 +17,7 @@ const {
 } = GlobalImages;
 
 import { LevelType } from "../Types/LevelType";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 interface LevelsContextData {
   levels: LevelType[];
@@ -31,8 +32,8 @@ const LevelsContext = createContext<LevelsContextData>({} as LevelsContextData);
 export function LevelsProvider({ children }: { children: React.ReactNode }) {
   const {
     user: { nivel, difficulty },
-    userUnit,
   } = useAuth();
+  const { userUnit } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 

@@ -16,7 +16,7 @@ export interface CoinType {
   swing: number;
 }
 
-export interface LevelTypes {
+export interface LevelContextValues {
   initialText: string;
   textFeedBack: string;
   rightAnswers: number;

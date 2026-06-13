@@ -1,19 +1,18 @@
 import React, { createContext, useContext, ReactNode, useEffect } from "react";
-import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { UserMission } from "../Types/MissionsTypes";
-import { SelectMissionService } from "../Services/MissionServices";
-import { useGetMissions } from "../Hooks/useGetMissions";
-import { StoreItem } from "Helpers/StoreItem";
 
+import { SelectMissionService } from "../Services/MissionServices";
+
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+
+import { useGetMissions } from "../Hooks/useGetMissions";
+
+import { UserMission } from "../Types/MissionsTypes";
 interface MissionsContextData {
-  missions: UserMission[];
   dailyMissions: UserMission[];
   weeklyMissions: UserMission[];
   monthlyMissions: UserMission[];
   isLoading: boolean;
-  refreshMissions: () => Promise<void>;
-  updateMissionDay: StoreItem;
-  handleSelectMissions: () => Promise<void>;
 }
 
 interface UpdateDay {
@@ -26,12 +25,12 @@ const MissionsContext = createContext<MissionsContextData | undefined>(
 );
 
 export function MissionsProvider({ children }: { children: ReactNode }) {
-  const { user, userToken, updateMissionDay } = useAuth();
+  const { user } = useAuth();
+  const { updateMissionDay, userToken } = useStorageItemsContext();
 
   const { id } = user;
 
   const {
-    missions,
     isLoading,
     fetchMissions,
     dailyMissions,
@@ -85,14 +84,10 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value: MissionsContextData = {
-    missions,
     dailyMissions,
     weeklyMissions,
     monthlyMissions,
     isLoading,
-    refreshMissions: fetchMissions,
-    updateMissionDay,
-    handleSelectMissions,
   };
 
   return (

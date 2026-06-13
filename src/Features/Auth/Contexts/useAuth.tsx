@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { screenValues } from "Config/screenValues";
 
-import { StoreItem, JWTStoreItem } from "Helpers/StoreItem";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 //#region Interfaces e Types
 interface AuthProviderTypes {
@@ -35,12 +35,6 @@ type AuthProviderValues = {
   setHasVerifiedUserInfo: React.Dispatch<React.SetStateAction<boolean>>;
   login: (userData: User) => Promise<void>;
   logout: () => Promise<void>;
-  userUnit: StoreItem;
-  userEmailWhileRecovering: StoreItem;
-  temporaryImageToken: StoreItem;
-  refreshToken: StoreItem;
-  updateMissionDay: StoreItem;
-  userToken: JWTStoreItem;
   hasUserInfo: boolean;
   hasVerifiedUserInfo: boolean;
 };
@@ -52,6 +46,7 @@ const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
  * Provider para disponibilizar ações com o usuário atual.
  */
 function AuthProvider({ children }: AuthProviderTypes) {
+  const { userUnit, userInfo, clearStorage } = useStorageItemsContext();
   const [user, setUser] = useState<User | PreviewUser>({} as User);
   const [hasVerifiedUserInfo, setHasVerifiedUserInfo] = useState(false);
 
@@ -66,30 +61,10 @@ function AuthProvider({ children }: AuthProviderTypes) {
   }
 
   async function logout() {
-    const allUserInfo = [
-      userInfo,
-      userEmailWhileRecovering,
-      userToken,
-      temporaryImageToken,
-      refreshToken,
-      updateMissionDay,
-    ];
-
-    allUserInfo.forEach(async (storeItem) => {
-      await storeItem.delete();
-    });
+    await clearStorage();
 
     setUser({} as User);
   }
-
-  const userEmailWhileRecovering = new StoreItem("RECOVERY_EMAIL");
-  const temporaryImageToken = new StoreItem("TEMPORARY_IMAGE_TOKEN");
-  const userInfo = new StoreItem("USER_INFO");
-  const userUnit = new StoreItem("USER_UNIT");
-  const updateMissionDay = new StoreItem("UPDATE_MISSION_DAY");
-
-  const refreshToken = new JWTStoreItem("REFRESH_TOKEN");
-  const userToken = new JWTStoreItem("USER_TOKEN");
 
   useEffect(function getUserInfoFromStore() {
     if (isPreviewBuild) return;
@@ -113,15 +88,9 @@ function AuthProvider({ children }: AuthProviderTypes) {
     setUser,
     login,
     logout,
-    userEmailWhileRecovering,
-    userUnit,
-    temporaryImageToken,
-    refreshToken,
-    userToken,
     hasUserInfo,
     hasVerifiedUserInfo,
     setHasVerifiedUserInfo,
-    updateMissionDay,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

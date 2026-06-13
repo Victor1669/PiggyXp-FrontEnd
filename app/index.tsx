@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { screenValues } from "Config/screenValues";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { RefreshTokenService } from "@Auth/Services/RefreshTokenService";
 import { toastMessage } from "Utils/toast";
@@ -13,7 +14,8 @@ import SplashContainer from "@Screens/Splash/SplashContainer";
 import { themeChanger } from "Helpers/themeChanger";
 
 export default function SplashScreen() {
-  const { user, refreshToken, userToken, setHasVerifiedUserInfo } = useAuth();
+  const { user, setHasVerifiedUserInfo } = useAuth();
+  const { refreshToken, userToken } = useStorageItemsContext();
   const { isPreviewBuild } = screenValues();
 
   // CONFIGURAÇÃO DE FONTES

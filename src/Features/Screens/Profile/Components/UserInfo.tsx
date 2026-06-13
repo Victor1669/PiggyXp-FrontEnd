@@ -1,4 +1,3 @@
-//#region Importações
 import { useEffect, useState } from "react";
 import { Image, View, Pressable, ImageBackground } from "react-native";
 import { usePathname, router } from "expo-router";
@@ -12,10 +11,8 @@ import { UserInfoStyles } from "../Styles/UserInfo.css";
 const { userInfoBackground, profilePicture, profileConfig, profileEmail } =
   UserInfoStyles;
 
-import { GlobalImages } from "@Assets/GlobalImages";
 import { ProfileImages } from "@Assets/ProfileImages";
 const { userInfoDetail, config } = ProfileImages;
-//#endregion
 
 export default function UserInfo() {
   const pathName = usePathname();

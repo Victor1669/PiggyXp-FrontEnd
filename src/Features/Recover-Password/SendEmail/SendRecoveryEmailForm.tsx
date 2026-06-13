@@ -1,8 +1,8 @@
 import { router } from "expo-router";
 
 import { useStatus } from "Contexts/StatusContext";
-import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { Fields } from "@Auth/Schemas/SchemaFields";
 import { SendRecoveryEmail } from "@Auth/Services/RecoveryService";
@@ -10,7 +10,7 @@ import { SendRecoveryEmail } from "@Auth/Services/RecoveryService";
 import Form from "@Auth/Components/Form/Form";
 
 export default function SendRecoveryEmailForm() {
-  const { userEmailWhileRecovering } = useAuth();
+  const { userEmailWhileRecovering } = useStorageItemsContext();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 

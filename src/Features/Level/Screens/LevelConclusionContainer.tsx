@@ -5,18 +5,18 @@ import { router } from "expo-router";
 import { screenValues } from "Config/screenValues";
 
 import { FinishPhaseService } from "../Services/LevelServices";
+import { UpdateMissionsService } from "Features/Missions/Services/MissionServices";
 
 import { useQuiz } from "../Contexts/useQuiz";
 import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import Button from "@Components/Button";
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
-import { LevelAssets } from "../Assets/LevelAssets";
 import { LevelConclusionStyles } from "../Styles/LevelConclusionStyles.css";
-import { useInternetConnection } from "Contexts/useInternetConnection";
-import { UpdateMissionsService } from "Features/Missions/Services/MissionServices";
 const {
   container,
   image,
@@ -26,10 +26,13 @@ const {
   conclusionButton,
 } = LevelConclusionStyles;
 
+import { LevelAssets } from "../Assets/LevelAssets";
+
 export default function LevelConclusionContainer() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user, userToken } = useAuth();
+  const { user } = useAuth();
+  const { userToken } = useStorageItemsContext();
   const { TIMER, rightAnswers, questions, rewards, difficulty, order, unit } =
     useQuiz();
   const { getIsConnected } = useInternetConnection();

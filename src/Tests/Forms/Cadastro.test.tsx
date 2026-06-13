@@ -2,6 +2,7 @@ import { render } from "@testing-library/react-native";
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
+import { StorageItemsContextProvider } from "Contexts/useStorageItemsContext";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
 
@@ -22,11 +23,13 @@ const registrationData = {
 
 const renderCadastro = () =>
   render(
-    <AuthProvider>
-      <StatusProvider>
-        <Cadastro />
-      </StatusProvider>
-    </AuthProvider>,
+    <StorageItemsContextProvider>
+      <AuthProvider>
+        <StatusProvider>
+          <Cadastro />
+        </StatusProvider>
+      </AuthProvider>
+    </StorageItemsContextProvider>,
   );
 
 describe("CadastroForm & UserRegister", () => {

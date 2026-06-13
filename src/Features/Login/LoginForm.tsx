@@ -5,6 +5,7 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStatus } from "Contexts/StatusContext";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { GetUserInfo } from "@Auth/Services/UserInfoService";
 import { UserLogin } from "@Auth/Services/LoginService";
@@ -15,7 +16,8 @@ import { Fields } from "@Auth/Schemas/SchemaFields";
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 
 export default function LoginForm() {
-  const { refreshToken, userToken, login } = useAuth();
+  const { login } = useAuth();
+  const { refreshToken, userToken } = useStorageItemsContext();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 

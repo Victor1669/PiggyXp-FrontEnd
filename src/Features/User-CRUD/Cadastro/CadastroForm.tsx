@@ -5,6 +5,7 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
 import { toastMessage } from "Utils/toast";
@@ -16,9 +17,10 @@ import { Fields } from "@Auth/Schemas/SchemaFields";
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 
 export default function CadastroForm() {
-  const { temporaryImageToken, login } = useAuth();
+  const { login } = useAuth();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
+  const { temporaryImageToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 

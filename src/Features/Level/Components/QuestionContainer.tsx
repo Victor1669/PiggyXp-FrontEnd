@@ -1,13 +1,8 @@
 import { View } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-
 import { useQuiz } from "../Contexts/useQuiz";
-import { useAuth } from "Features/Auth/Contexts/useAuth";
 
-import { LivesService } from "../Services/LevelServices";
-
-import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
+import { useAnswerValidation } from "../Hooks/useAnswerValidation";
 
 import AnswerButton from "./AnswerButton";
 import Paragraph from "@Components/Paragraph";
@@ -17,28 +12,11 @@ import { QuestionContainerStyles } from "../Styles/QuestionContainer.css";
 const { answersContainer, container, questionText } = QuestionContainerStyles;
 
 export default function QuestionContainer({ index }: { index: number }) {
-  const { userToken } = useAuth();
-  const { getQuestion, isAnswered, dispatch, rewards } = useQuiz();
+  const { getQuestion, isAnswered } = useQuiz();
+
   const actualQuestion = getQuestion(index);
-  const updateUserInfo = useUpdateUserInfo();
 
-  const { isPreviewBuild } = screenValues();
-
-  async function handleAnswerValidation(answerIndex: number) {
-    if (actualQuestion.rightAnswerIndex === answerIndex) {
-      dispatch({
-        type: "ACERTOU_QUESTAO",
-        payload: { multiplier: rewards.coins / 10 },
-      });
-    } else {
-      dispatch({ type: "ERROU_QUESTAO" });
-      if (!isPreviewBuild) {
-        const storedToken = await userToken.get();
-        await LivesService(storedToken, { erro: 1 });
-        await updateUserInfo();
-      }
-    }
-  }
+  const answerValidation = useAnswerValidation(index);
 
   return (
     <View style={container}>
@@ -50,9 +28,10 @@ export default function QuestionContainer({ index }: { index: number }) {
             disabled={isAnswered}
             answerIndex={i}
             rightAnswer={actualQuestion.rightAnswerIndex}
-            text={answer}
-            onPress={() => handleAnswerValidation(i)}
-          />
+            onPress={() => answerValidation(i)}
+          >
+            {answer}
+          </AnswerButton>
         ))}
       </View>
     </View>

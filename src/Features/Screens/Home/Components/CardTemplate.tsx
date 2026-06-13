@@ -1,18 +1,20 @@
 //#region Importações
 import { View } from "react-native";
+import { useEffect, useState } from "react";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { screenValues } from "Config/screenValues";
 
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+
 import ProgressBar from "@Components/ProgressBar";
 import Picture from "@Components/Picture";
+import Paragraph from "@Components/Paragraph";
 
 import { HomeSliderStyles } from "../Styles/HomeSlider.css";
 
 import { HomeImages } from "../Assets/HomeImages";
-import Paragraph from "@Components/Paragraph";
-import { useEffect, useState } from "react";
 const {
   slider: { coin, section },
 } = HomeImages;
@@ -43,7 +45,7 @@ export function CardTemplate({
 }
 
 export function Card1() {
-  const { userUnit } = useAuth();
+  const { userUnit } = useStorageItemsContext();
 
   const [selectedUnit, setSelectedUnit] = useState(1);
 

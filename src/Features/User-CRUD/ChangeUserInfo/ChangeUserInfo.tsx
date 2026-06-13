@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { router } from "expo-router";
 
+import { UpdateUserInfo } from "@Auth/Services/UserInfoService";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
-import { UpdateUserInfo } from "@Auth/Services/UserInfoService";
 import { toastMessage } from "Utils/toast";
 
 import ChangeImageButton from "@Screens/Profile/Components/ChangeImageButton";
@@ -17,8 +20,9 @@ import { ChangeUserInfoStyles } from "Features/User-CRUD/ChangeUserInfo/ChangeUs
 const { container } = ChangeUserInfoStyles;
 
 export default function ChangeUserInfoContainer() {
-  const { user, logout, login, userToken } = useAuth();
+  const { user, logout, login } = useAuth();
   const { showStatus, hideStatus } = useStatus();
+  const { userToken } = useStorageItemsContext();
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
     "update-user-img",
     "PUT",
@@ -44,22 +48,29 @@ export default function ChangeUserInfoContainer() {
     const { data, status } = await UpdateUserInfo(user.id, textData, token);
 
     if (data.message === "jwt expired" || data === "jwt expired") {
-      toastMessage({
-        type: "error",
-        text: "Token expirado, refaça o login antes!",
-      });
-      await logout();
-      router.replace("/Login");
-      hideStatus();
+      jwtExpiredHandler();
       return;
     }
 
     if (status < 300) {
       await login({ ...user, ...textData, user_img: image });
-      hasChangedEmail ? await logout() : router.push("/Content/Profile");
-      if (hasChangedEmail) router.replace("/Login");
+
+      if (hasChangedEmail) {
+        await logout();
+        router.replace("/Login");
+      } else router.push("/Content/Profile");
     }
 
+    hideStatus();
+  }
+
+  async function jwtExpiredHandler() {
+    toastMessage({
+      type: "error",
+      text: "Token expirado, refaça o login antes!",
+    });
+    await logout();
+    router.replace("/Login");
     hideStatus();
   }
 

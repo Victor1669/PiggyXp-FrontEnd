@@ -1,15 +1,17 @@
-import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { createContext, useContext, useEffect, useReducer } from "react";
-import { quizReducer } from "./quizReducer";
-import { LevelTypes, QuestionTypes } from "../Types/LevelTypes";
 
-interface QuizProviderValues extends LevelTypes {
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { quizReducer } from "./quizReducer";
+
+import { LevelContextValues, QuestionTypes } from "../Types/LevelTypes";
+
+interface QuizProviderValues extends LevelContextValues {
   dispatch: React.Dispatch<any>;
   getQuestion: (questionIndex: number) => QuestionTypes;
   getIsLevelCompleted: (questionIndex: number) => boolean;
 }
 
-const initialValues: LevelTypes = {
+const initialValues: LevelContextValues = {
   initialText: "",
   textFeedBack: "",
   questions: [],

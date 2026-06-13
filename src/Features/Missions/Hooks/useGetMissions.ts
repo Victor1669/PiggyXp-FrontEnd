@@ -54,7 +54,6 @@ export function useGetMissions(userId: number) {
   );
 
   return {
-    missions,
     isLoading,
     fetchMissions,
     dailyMissions,
