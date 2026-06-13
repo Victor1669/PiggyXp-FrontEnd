@@ -3,8 +3,8 @@ import { Pressable, View } from "react-native";
 import { router } from "expo-router";
 
 import { useStatus } from "Contexts/StatusContext";
-import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import {
   resendRecoveryEmail,
@@ -23,7 +23,7 @@ export default function CodeVerifierForm() {
   const LENGTH = 4;
   const [code, setCode] = useState<string[]>(Array(LENGTH).fill(""));
 
-  const { userEmailWhileRecovering } = useAuth();
+  const { userEmailWhileRecovering } = useStorageItemsContext();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 

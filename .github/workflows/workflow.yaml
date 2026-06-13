@@ -35,6 +35,28 @@ jobs:
       - name: Rodar testes
         run: pnpm test
 
+      - name: DEBUG - expo config
+        run: |
+          echo "=== expo config --json (via eas-cli internamente, com EXPO_DEBUG) ==="
+          EXPO_DEBUG=true npx eas-cli@latest build:list \
+            --platform=android \
+            --profile=preview \
+            --status=finished \
+            --limit=1 \
+            --non-interactive \
+            --json || true
+
+          echo ""
+          echo "=== node node_modules/expo/bin/cli config --json (direto) ==="
+          node node_modules/expo/bin/cli config --json || true
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_PUBLIC_FACEBOOK_APP_ID: ${{ secrets.EXPO_PUBLIC_FACEBOOK_APP_ID }}
+          EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN: ${{ secrets.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN }}
+          EXPO_PUBLIC_EAS_BUILD_PROFILE: ${{ secrets.EXPO_PUBLIC_EAS_BUILD_PROFILE }}
+          EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID }}
+          EXPO_PUBLIC_CLOUDINARY_BASE_LINK: ${{ secrets.EXPO_PUBLIC_CLOUDINARY_BASE_LINK }}
+
       - name: Prebuild do Android
         run: pnpm expo prebuild --platform android
         env:
@@ -59,27 +81,79 @@ jobs:
       - name: Pegar link do APK e atualizar na Vercel
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
-          APK_URL=$(curl -s -X POST "https://api.expo.dev/graphql" \
-            -H "Authorization: Bearer ${{ secrets.EXPO_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "query": "{ app { byId(appId: \"${{ secrets.EXPO_APP_ID }}\") { builds(limit: 1, offset: 0, filter: { platform: ANDROID, buildProfile: \"preview\" }) { artifacts { buildUrl } } } } }"
-            }' | jq -r '.data.app.byId.builds[0].artifacts.buildUrl')
+          set -uo pipefail
 
-          echo "APK_URL: $APK_URL"
+          # Pega a build mais recente do perfil "preview" para Android
+          BUILD_JSON=$(npx --yes eas-cli@latest build:list \
+            --platform=android \
+            --profile=preview \
+            --status=finished \
+            --limit=1 \
+            --non-interactive \
+            --json 2>&1) || {
+              echo "Falha no build:list. Saída completa:"
+              echo "$BUILD_JSON"
+              exit 1
+            }
 
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "ERRO: VERCEL_TOKEN está vazio!"
-          else
-            echo "VERCEL_TOKEN ok"
+          APK_URL=$(echo "$BUILD_JSON" | jq -r '.[0].artifacts.buildUrl // "null"')
+          EXPIRATION=$(echo "$BUILD_JSON" | jq -r '.[0].expirationDate // "null"')
+
+          echo "APK_URL atual: $APK_URL"
+          echo "Expira em: $EXPIRATION"
+
+          NOW=$(date -u +%s)
+          NEEDS_NEW_BUILD="false"
+
+          if [ "$APK_URL" = "null" ] || [ -z "$APK_URL" ]; then
+            echo "Nenhuma build encontrada."
+            NEEDS_NEW_BUILD="true"
+          elif [ "$EXPIRATION" != "null" ]; then
+            EXP_TS=$(date -u -d "$EXPIRATION" +%s)
+            if [ "$EXP_TS" -le "$NOW" ]; then
+              echo "Build expirada."
+              NEEDS_NEW_BUILD="true"
+            fi
           fi
 
-          curl -X PATCH "https://api.vercel.com/v9/projects/piggy-xp-landing-page/env/z8Y29dQ9D0TfKeLF" \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+          if [ "$NEEDS_NEW_BUILD" = "true" ]; then
+            echo "Disparando nova build..."
+            NEW_BUILD_JSON=$(EXPO_PUBLIC_EAS_BUILD_PROFILE=preview npx --yes eas-cli@latest build \
+              --platform=android \
+              --profile=preview \
+              --non-interactive \
+              --wait \
+              --json 2>&1) || {
+                echo "Falha no eas build. Saída completa:"
+                echo "$NEW_BUILD_JSON"
+                exit 1
+              }
+
+            APK_URL=$(echo "$NEW_BUILD_JSON" | jq -r '.[0].artifacts.buildUrl // .artifacts.buildUrl // "null"')
+            echo "Nova APK_URL: $APK_URL"
+          fi
+
+          if [ -z "$APK_URL" ] || [ "$APK_URL" = "null" ]; then
+            echo "ERRO: não foi possível obter uma APK_URL válida."
+            exit 1
+          fi
+
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "ERRO: VERCEL_TOKEN está vazio!"
+            exit 1
+          fi
+
+          curl -sf -X PATCH "https://api.vercel.com/v9/projects/piggy-xp-landing-page/env/z8Y29dQ9D0TfKeLF" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
             -H "Content-Type: application/json" \
             -d "{\"value\": \"$APK_URL\"}"
 
-          curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
+          curl -sf -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          EXPO_PUBLIC_FACEBOOK_APP_ID: ${{ secrets.EXPO_PUBLIC_FACEBOOK_APP_ID }}
+          EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN: ${{ secrets.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN }}
+          EXPO_PUBLIC_EAS_BUILD_PROFILE: ${{ secrets.EXPO_PUBLIC_EAS_BUILD_PROFILE }}
+          EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID }}
+          EXPO_PUBLIC_CLOUDINARY_BASE_LINK: ${{ secrets.EXPO_PUBLIC_CLOUDINARY_BASE_LINK }}

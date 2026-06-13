@@ -5,6 +5,8 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
 import Button from "@Components/Button";
@@ -14,13 +16,14 @@ import { ImageUploaderButton } from "./ImageUploaderButton";
 import { ImageContainer } from "../../Auth/Components/ImageContainer";
 
 export default function DefinePhotoForm() {
-  const { temporaryImageToken, login, user } = useAuth();
+  const { login, user } = useAuth();
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
     "upload-user-img",
     "POST",
   );
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
+  const { temporaryImageToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 

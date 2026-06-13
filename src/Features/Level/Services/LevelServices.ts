@@ -35,4 +35,5 @@ async function LivesService(token: string, body: { erro: number }) {
 
   return response;
 }
+
 export { GetPhaseService, FinishPhaseService, LivesService };

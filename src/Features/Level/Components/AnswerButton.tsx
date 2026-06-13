@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { StyleProp, ViewStyle } from "react-native";
 
 import { screenValues } from "Config/screenValues";
 
@@ -9,14 +10,14 @@ import { GlobalFontColors } from "@Assets/Colors";
 export default function AnswerButton({
   answerIndex,
   rightAnswer,
-  text,
+  children,
   onPress,
   disabled,
 }: {
   answerIndex: number;
   rightAnswer: number;
   onPress: () => void;
-  text: string;
+  children: string;
   disabled: boolean;
 }) {
   const {
@@ -28,28 +29,32 @@ export default function AnswerButton({
     shadowColor: "rgba(101,101,101, 0.78)",
   });
 
+  const STYLES: StyleProp<ViewStyle> = {
+    backgroundColor: buttonColor.backColor,
+    justifyContent: "center",
+    paddingVertical: 15,
+    minHeight: 72,
+  };
+
+  async function handlePress() {
+    onPress();
+    setButtonColor({ backColor: "green", shadowColor: "green" });
+
+    if (answerIndex !== rightAnswer) {
+      setButtonColor({ backColor: "red", shadowColor: "red" });
+    }
+  }
+
   return (
     <Button
       disabled={disabled}
       fontColor={GlobalFontColors.Dark}
       fontSize={SMALL_FONT_SIZE}
-      style={{
-        backgroundColor: buttonColor.backColor,
-        justifyContent: "center",
-        paddingVertical: 15,
-        minHeight: 72,
-      }}
+      style={STYLES}
       shadowColor={buttonColor.shadowColor}
-      onPress={async () => {
-        onPress();
-        setButtonColor({ backColor: "green", shadowColor: "green" });
-
-        if (answerIndex !== rightAnswer) {
-          setButtonColor({ backColor: "red", shadowColor: "red" });
-        }
-      }}
+      onPress={handlePress}
     >
-      {text}
+      {children}
     </Button>
   );
 }

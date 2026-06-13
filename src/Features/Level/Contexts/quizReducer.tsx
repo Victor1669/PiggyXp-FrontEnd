@@ -1,42 +1,13 @@
-import { Animated, Dimensions } from "react-native";
-
 import { screenValues } from "Config/screenValues";
 
-import { LevelTypes, CoinType } from "../Types/LevelTypes";
+import { LevelContextValues } from "../Types/LevelTypes";
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
+import { generateCoinData } from "../Utils/generateCoinData";
 
-const COIN_SIZE = 36;
-const FLOOR_Y = 640;
-
-let globalCoinId = 0;
-
-function generateCoinData(currentQuestionIndex: number): CoinType {
-  const { deviceWidth } = screenValues();
-
-  const id = globalCoinId++;
-  const laneCount = 8;
-  const index = id % laneCount;
-
-  const margin = 30;
-  const usableWidth = deviceWidth - margin * 2;
-  const laneWidth = usableWidth / laneCount;
-
-  const baseX = margin + laneWidth * index;
-  const jitter = Math.random() * (laneWidth * 0.7);
-  const x = baseX + jitter;
-
-  return {
-    id,
-    translateY: new Animated.Value(-COIN_SIZE),
-    translateX: new Animated.Value(x),
-    floorY: FLOOR_Y + Math.random() * 20 - currentQuestionIndex * 10,
-    delay: index * 80 + Math.random() * 120,
-    x,
-    swing: Math.random() > 0.5 ? 12 : -12,
-  };
-}
-
-export function quizReducer(state: LevelTypes, action: any): LevelTypes {
+export function quizReducer(
+  state: LevelContextValues,
+  action: any,
+): LevelContextValues {
   const { seconds, rightAnswers, lives, coinList, currentQuestionIndex } =
     state;
   const { type, payload } = action;
@@ -98,8 +69,9 @@ export function quizReducer(state: LevelTypes, action: any): LevelTypes {
         isAnswered: false,
         currentQuestionIndex: currentQuestionIndex + 1,
       };
-    case "QUIZ_ACABOU":
+    case "QUIZ_ACABOU": {
       return { ...state, timerActive: false };
+    }
     default:
       return state;
   }

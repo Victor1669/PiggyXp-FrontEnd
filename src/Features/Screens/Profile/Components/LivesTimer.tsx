@@ -1,37 +1,14 @@
-import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { LivesTimerStyles } from "../Styles/LivesTimer.css";
-import { calcLivesTimer } from "../Helpers/calcLivesTimer";
+
 import Paragraph from "Components/Paragraph";
-import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
+
+import { LivesTimerStyles } from "../Styles/LivesTimer.css";
+import { useLivesTimer } from "../Hooks/useLivesTimer";
 
 const { livesTimerContainer, livesTimerContent } = LivesTimerStyles;
 
 export default function LivesTimer() {
-  const {
-    user: { reset_lives_at },
-  } = useAuth();
-  const updateUserInfo = useUpdateUserInfo();
-
-  const [timer, setTimer] = useState<string | null>(() =>
-    calcLivesTimer(reset_lives_at),
-  );
-
-  useEffect(() => {
-    const timerLives = setInterval(() => {
-      const timerDate = calcLivesTimer(reset_lives_at);
-      setTimer(timerDate);
-    }, 1000);
-
-    return () => clearInterval(timerLives);
-  }, [reset_lives_at]);
-
-  useEffect(() => {
-    if (!timer) {
-      updateUserInfo();
-    }
-  }, [timer]);
+  const { timer } = useLivesTimer();
 
   return (
     <View style={livesTimerContainer}>

@@ -3,16 +3,19 @@ import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import { screenValues } from "Config/screenValues";
 
-import { achievementsProgress } from "../Content/achievementsProgress";
-import { formatAchievements } from "../Helpers/formatAchievements";
+import { getAchievementsRewards } from "../AchievementsServices";
+
+import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useAuth } from "@Auth/Contexts/useAuth";
 
-import { Achievement } from "../Types/AchievementTypes";
+import { useAudio } from "Hooks/useAudio";
+
+import { formatAchievements } from "../Helpers/formatAchievements";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
-import { useAudio } from "Hooks/useAudio";
-import { useInternetConnection } from "Contexts/useInternetConnection";
-import { getAchievementsRewards } from "../AchievementsServices";
+import { achievementsProgress } from "../Content/achievementsProgress";
+
+import { Achievement } from "../Types/AchievementTypes";
 
 interface AchievementsProviderValues {
   showDescription: boolean;

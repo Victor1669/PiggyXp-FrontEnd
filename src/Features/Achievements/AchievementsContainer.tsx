@@ -1,6 +1,7 @@
 //#region Importações
 import { useEffect, useRef } from "react";
 import { FlatList, StyleSheet } from "react-native";
+import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useAchievements } from "./Contexts/useAchievements";
@@ -17,7 +18,7 @@ import NotificationButton from "./Components/NotificationButton";
 //#endregion
 
 export default function AchievementsContainer() {
-  const { user } = useAuth();
+  const { user, hasUserInfo } = useAuth();
   const { achievements } = useAchievements();
   const updateUserInfo = useUpdateUserInfo();
 
@@ -30,6 +31,11 @@ export default function AchievementsContainer() {
 
   useEffect(
     function updateAchievementsStatus() {
+      if (!hasUserInfo) {
+        router.replace("/");
+        return;
+      }
+
       (async () => {
         await updateUserInfo();
       })();
@@ -37,32 +43,33 @@ export default function AchievementsContainer() {
     [user.collectedAchievements],
   );
 
-  return (
-    <>
-      {<NotificationButton />}
-      <Paragraph style={{ marginTop: 25 }}>
-        Dica: {tips[tipsIndex.current]}
-      </Paragraph>
-      <FlatList
-        data={achievements}
-        numColumns={2}
-        style={achievementsContainerStyles.cardsContainer}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(_, key) => String(key)}
-        renderItem={({ index, item }) => {
-          return (
-            <AchievementCard
-              imagePressEnabled
-              achievement={item}
-              index={index}
-            />
-          );
-        }}
-      />
-      <AchievementModal />
-      <RewardsModal />
-    </>
-  );
+  if (hasUserInfo)
+    return (
+      <>
+        {<NotificationButton />}
+        <Paragraph style={{ marginTop: 25 }}>
+          Dica: {tips[tipsIndex.current]}
+        </Paragraph>
+        <FlatList
+          data={achievements}
+          numColumns={2}
+          style={achievementsContainerStyles.cardsContainer}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(_, key) => String(key)}
+          renderItem={({ index, item }) => {
+            return (
+              <AchievementCard
+                imagePressEnabled
+                achievement={item}
+                index={index}
+              />
+            );
+          }}
+        />
+        <AchievementModal />
+        <RewardsModal />
+      </>
+    );
 }
 
 const achievementsContainerStyles = StyleSheet.create({

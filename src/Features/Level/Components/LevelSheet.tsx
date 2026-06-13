@@ -1,30 +1,22 @@
 import { useRef, useState, useEffect } from "react";
-import { router } from "expo-router";
 import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useQuiz } from "../Contexts/useQuiz";
+
 import BottomSheet from "Components/BottomSheet/BottomSheet";
 import Paragraph from "Components/Paragraph";
 import Button from "Components/Button";
+
 import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
+import { useFinishLevel } from "../Hooks/useFinishLevel";
 
 const { bottomSheet } = LevelContainerStyles;
 
 export default function LevelSheet() {
-  const SHEET_HEIGHT = 300;
-  const pan = useRef(new Animated.ValueXY()).current;
-  const insets = useSafeAreaInsets();
-
-  const {
-    textFeedBack,
-    isAnswered,
-    dispatch,
-    getIsLevelCompleted,
-    currentQuestionIndex,
-  } = useQuiz();
+  const { textFeedBack, isAnswered, dispatch } = useQuiz();
+  const { finishLevel, isLevelCompleted } = useFinishLevel();
   const [disableButton, setDisableButton] = useState(false);
-
-  const isLevelCompleted = getIsLevelCompleted(currentQuestionIndex);
 
   useEffect(() => {
     if (!isAnswered) {
@@ -34,24 +26,14 @@ export default function LevelSheet() {
 
   function handlePassQuestion() {
     if (isLevelCompleted) {
-      dispatch({ type: "QUIZ_ACABOU" });
-      router.replace("/Level/LevelConclusion");
+      finishLevel();
     } else {
       dispatch({ type: "PROXIMA_QUESTAO" });
     }
   }
 
   return (
-    <BottomSheet
-      style={bottomSheet}
-      height={SHEET_HEIGHT}
-      yPosition={pan}
-      showSheet={isAnswered}
-      showThumb={false}
-      interactive={false}
-      startSheetTop={SHEET_HEIGHT + 90}
-      finalSheetTop={insets.bottom + 85}
-    >
+    <SheetContainer>
       <View
         style={{ flex: 1, justifyContent: "space-between", paddingBottom: 20 }}
       >
@@ -68,6 +50,29 @@ export default function LevelSheet() {
           {isLevelCompleted ? "Concluir Nível" : "Próxima questão"}
         </Button>
       </View>
+    </SheetContainer>
+  );
+}
+
+function SheetContainer({ children }: { children: React.ReactNode }) {
+  const { isAnswered } = useQuiz();
+
+  const SHEET_HEIGHT = 300;
+  const pan = useRef(new Animated.ValueXY()).current;
+  const insets = useSafeAreaInsets();
+
+  return (
+    <BottomSheet
+      style={bottomSheet}
+      height={SHEET_HEIGHT}
+      yPosition={pan}
+      showSheet={isAnswered}
+      showThumb={false}
+      interactive={false}
+      startSheetTop={SHEET_HEIGHT + 90}
+      finalSheetTop={insets.bottom + 85}
+    >
+      {children}
     </BottomSheet>
   );
 }

@@ -7,10 +7,13 @@ import { verifyAchievements } from "../Features/Achievements/AchievementsService
 import { GetUserProgress } from "@Auth/Services/UserProgressService";
 import { RegenLivesService } from "Features/Auth/Services/RegenLivesService";
 
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+
 import { notifications } from "Utils/notifications";
 
 export function useUpdateUserInfo() {
-  const { login, userToken } = useAuth();
+  const { login } = useAuth();
+  const { userToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 

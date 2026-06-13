@@ -15,17 +15,17 @@ const {
   dayCircle,
 } = OffensiveStyles;
 
-export default function Offensive() {
-  const offensiveDays = [
-    { initials: "Seg", completed: false },
-    { initials: "Ter", completed: false },
-    { initials: "Qua", completed: false },
-    { initials: "Qui", completed: false },
-    { initials: "Sex", completed: false },
-    { initials: "Sab", completed: false },
-    { initials: "Dom", completed: false },
-  ];
+const offensiveDays = [
+  { initials: "Seg", completed: false },
+  { initials: "Ter", completed: false },
+  { initials: "Qua", completed: false },
+  { initials: "Qui", completed: false },
+  { initials: "Sex", completed: false },
+  { initials: "Sab", completed: false },
+  { initials: "Dom", completed: false },
+];
 
+export default function Offensive() {
   const { height } = useWindowDimensions();
 
   return (
