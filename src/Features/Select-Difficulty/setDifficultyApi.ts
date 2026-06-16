@@ -1,6 +1,6 @@
 import { useFetch } from "@Auth/Hooks/useFetch";
 
-export async function DifficultyService(
+export async function setDifficultyApi(
   body: { difficulty: number },
   token: string,
 ) {

@@ -7,15 +7,15 @@ import {
   cleanup,
 } from "@testing-library/react-native";
 
-jest.mock("@Auth/Services/DifficultyService", () => ({
-  DifficultyService: jest.fn(),
+jest.mock("Features/Select-Difficulty/setDifficultyApi", () => ({
+  setDifficultyApi: jest.fn(),
 }));
 
 jest.mock("Contexts/useInternetConnection", () => ({
   useInternetConnection: jest.fn(),
 }));
 
-jest.mock("../../Features/Auth/Contexts/useAuth", () => ({
+jest.mock("Features/Auth/Contexts/useAuth", () => ({
   ...jest.requireActual("@Auth/Contexts/useAuth"),
   useAuth: () => ({
     setUser: mockSetUser,
@@ -53,7 +53,7 @@ import { StatusProvider } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { StorageItemsContextProvider } from "Contexts/useStorageItemsContext";
 
-import { DifficultyService } from "../../Features/Auth/Services/DifficultyService";
+import { setDifficultyApi } from "../../Features/Select-Difficulty/setDifficultyApi";
 
 import DifficultySelector from "@App/Login/DifficultySelector";
 
@@ -114,7 +114,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
   });
 
   it("deve definir a dificuldade com sucesso", async () => {
-    (DifficultyService as jest.Mock).mockResolvedValue({
+    (setDifficultyApi as jest.Mock).mockResolvedValue({
       data: { message: "Dificuldade definida com sucesso!" },
       status: 200,
     });
@@ -130,7 +130,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
     });
 
     await waitFor(() => {
-      expect(DifficultyService).toHaveBeenCalledWith(
+      expect(setDifficultyApi).toHaveBeenCalledWith(
         { difficulty: 1 },
         "token-falso",
       );
@@ -150,7 +150,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
     fireEvent.press(getByText("Continuar"));
 
     await waitFor(() => {
-      expect(DifficultyService).not.toHaveBeenCalled();
+      expect(setDifficultyApi).not.toHaveBeenCalled();
       expect(mockShowStatus).toHaveBeenCalledWith("noInternet");
     });
   });

@@ -10,10 +10,13 @@ const SHEET_HEIGHT = 300;
 export function useHomeSheet() {
   const pathName = usePathname();
   const [disableButton, setDisableButton] = useState(false);
-
   const { setShowSheet } = useShowSheet();
+
   const { selectedLevelIndex, levels } = useLevels();
   const selectedLevel = levels[selectedLevelIndex];
+
+  const isRepeatingLevel = !selectedLevel?.isPathLocked || false;
+
   const pan = useRef(new Animated.ValueXY({ x: 0, y: SHEET_HEIGHT })).current;
 
   function startLevel() {
@@ -21,7 +24,7 @@ export function useHomeSheet() {
     setDisableButton(true);
 
     router.push(
-      `/Level/LoadingLevel/?actualQuestion=${selectedLevelIndex + 1}`,
+      `/Level/LoadingLevel/?actualQuestion=${selectedLevelIndex + 1}&isRepeatingLevel=${isRepeatingLevel}`,
     );
   }
 
@@ -47,5 +50,6 @@ export function useHomeSheet() {
     startLevel,
     SHEET_HEIGHT,
     animatedValue: pan,
+    isRepeatingLevel,
   };
 }

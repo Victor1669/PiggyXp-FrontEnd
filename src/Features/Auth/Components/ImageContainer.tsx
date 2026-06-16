@@ -1,4 +1,4 @@
-import RN, { Image, View } from "react-native";
+import { Image, StyleProp, View, ViewStyle } from "react-native";
 
 import { DefinePhotoFormStyles } from "../../User-CRUD/Cadastro/DefinePhoto.css";
 const { uploadImageContainer } = DefinePhotoFormStyles;
@@ -7,7 +7,7 @@ import { AuthImages } from "@Auth/Assets/AuthImages";
 
 interface ImageContainerTypes {
   image: string;
-  style?: RN.StyleProp<RN.ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function ImageContainer({ image, style }: ImageContainerTypes) {
@@ -34,7 +34,7 @@ export function ImageContainer({ image, style }: ImageContainerTypes) {
           height: hasImage ? TOTAL_CONTAINER_SIZE : IMAGE_SIZE,
           borderRadius: hasImage ? 100 : 0,
         }}
-        source={hasImage ? { uri: image } : AuthImages.uploadPhoto}
+        source={hasImage ? { uri: image } : { uri: AuthImages.uploadPhoto }}
       />
     </View>
   );

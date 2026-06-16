@@ -9,13 +9,13 @@ import Paragraph from "Components/Paragraph";
 import Button from "Components/Button";
 
 import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
-import { useFinishLevel } from "../Hooks/useFinishLevel";
+import { useFinishQuiz } from "../Hooks/useFinishQuiz";
 
 const { bottomSheet } = LevelContainerStyles;
 
 export default function LevelSheet() {
   const { textFeedBack, isAnswered, dispatch } = useQuiz();
-  const { finishLevel, isLevelCompleted } = useFinishLevel();
+  const { finishLevel, isLevelCompleted } = useFinishQuiz();
   const [disableButton, setDisableButton] = useState(false);
 
   useEffect(() => {

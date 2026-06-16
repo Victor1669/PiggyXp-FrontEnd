@@ -7,7 +7,7 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStatus } from "Contexts/StatusContext";
 import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
-import { GetUserInfo } from "@Auth/Services/UserInfoService";
+import { getUserInfoApi } from "@Auth/Services/UserInfoService";
 import { UserLogin } from "@Auth/Services/LoginService";
 
 import Form from "@Auth/Components/Form/Form";
@@ -62,7 +62,7 @@ export default function LoginForm() {
 
     const { userId } = (await userToken.decode()) as { userId: string };
 
-    const { data: user, status } = await GetUserInfo(userId);
+    const { data: user, status } = await getUserInfoApi(userId);
 
     if (status < 300) {
       router.replace(

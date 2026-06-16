@@ -1,16 +1,8 @@
-import { useState } from "react";
 import { View } from "react-native";
-import { router } from "expo-router";
-
-import { screenValues } from "Config/screenValues";
-
-import { FinishPhaseService } from "../Services/LevelServices";
-import { UpdateMissionsService } from "Features/Missions/Services/MissionServices";
 
 import { useQuiz } from "../Contexts/useQuiz";
-import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
-import { useInternetConnection } from "Contexts/useInternetConnection";
+
+import { useFinishLevel } from "../Hooks/useFinishLevel";
 
 import Button from "@Components/Button";
 import Picture from "@Components/Picture";
@@ -29,50 +21,19 @@ const {
 import { LevelAssets } from "../Assets/LevelAssets";
 
 export default function LevelConclusionContainer() {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { user } = useAuth();
-  const { userToken } = useStorageItemsContext();
-  const { TIMER, rightAnswers, questions, rewards, difficulty, order, unit } =
+  const { TIMER, rightAnswers, questions, rewards, isRepeatingLevel } =
     useQuiz();
-  const { getIsConnected } = useInternetConnection();
 
-  const { id } = user;
+  const { finishLevel, isLoading, generateFinishPhrase } = useFinishLevel();
 
-  async function handleFinishLevel() {
-    const { isPreviewBuild } = screenValues();
-
-    if (!getIsConnected()) return;
-
-    setIsLoading(true);
-
-    if (!isPreviewBuild) {
-      const storedToken = await userToken.get();
-
-      await FinishPhaseService(difficulty, order, unit, id, storedToken);
-      await UpdateMissionsService(
-        {
-          acerts: rightAnswers,
-          completePhase: true,
-          completeUnit: order === 10,
-          erro: questions.length - rightAnswers,
-          login: 1,
-          streak: 0,
-        },
-        storedToken,
-      );
-    }
-
-    setIsLoading(false);
-    router.replace("/Content");
-  }
+  const finishPhrase = generateFinishPhrase();
 
   return (
     <View style={container}>
       <Picture folder="" source={LevelAssets.homem} style={image} />
 
       <Paragraph style={conclusionMessage} fontSize="big">
-        Impressionante, você é fora da curva!
+        {finishPhrase}
       </Paragraph>
 
       <View style={textsContainer}>
@@ -85,13 +46,21 @@ export default function LevelConclusionContainer() {
         </Paragraph>
 
         <View style={rewardsTexts}>
-          <Paragraph fontWeight="bold">+{rewards.coins} coins</Paragraph>
-          <Paragraph fontWeight="bold">+{rewards.xp} xp</Paragraph>
+          <Paragraph fontWeight="bold">
+            +{isRepeatingLevel ? 0 : rewards.coins} coins
+          </Paragraph>
+          <Paragraph fontWeight="bold">
+            +{isRepeatingLevel ? 0 : rewards.xp} xp
+          </Paragraph>
         </View>
       </View>
 
-      <Button onPress={handleFinishLevel} style={conclusionButton}>
-        {isLoading ? "Carregando..." : "Receber xp"}
+      <Button onPress={finishLevel} style={conclusionButton}>
+        {isLoading
+          ? "Carregando..."
+          : isRepeatingLevel
+            ? "Finalizar"
+            : "Receber xp"}
       </Button>
     </View>
   );

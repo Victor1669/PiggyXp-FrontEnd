@@ -12,11 +12,11 @@ import GameOverModal from "Features/Level/Components/GameOverModal";
 export default function QuizScreen() {
   const navigation = useNavigation();
   const { showStatus, isVisible } = useStatus();
-  const { timerActive } = useQuiz();
+  const { isTimerActive } = useQuiz();
 
   useEffect(() => {
     const backAction = () => {
-      if (timerActive) {
+      if (isTimerActive) {
         showStatus("confirmExit");
         return true;
       }
@@ -32,7 +32,7 @@ export default function QuizScreen() {
       const actionType = e.data.action.type;
       const isExiting = actionType === "GO_BACK" || actionType === "POP";
 
-      if (!timerActive || !isExiting || isVisible) return;
+      if (!isTimerActive || !isExiting || isVisible) return;
 
       e.preventDefault();
       showStatus("confirmExit");
@@ -42,7 +42,7 @@ export default function QuizScreen() {
       backHandler.remove();
       unsubscribe();
     };
-  }, [timerActive, navigation, isVisible]);
+  }, [isTimerActive, navigation, isVisible]);
 
   return (
     <>

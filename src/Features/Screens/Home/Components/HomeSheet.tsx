@@ -1,8 +1,10 @@
-import { Animated, View } from "react-native";
+import { Animated, StyleProp, View, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 import { useLevels } from "../Contexts/useLevels";
 import { useShowSheet } from "../Contexts/useShowSheet";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import { useHomeSheet } from "../Hooks/useHomeSheet";
 
@@ -11,10 +13,22 @@ import Paragraph from "@Components/Paragraph";
 import Button from "@Components/Button";
 
 export default function HomeSheet() {
-  const { selectedLevel, disableButton, startLevel, animatedValue } =
-    useHomeSheet();
+  const { user } = useAuth();
+  const {
+    selectedLevel,
+    disableButton,
+    startLevel,
+    animatedValue,
+    isRepeatingLevel,
+  } = useHomeSheet();
 
   const { levels, unitTitle } = useLevels();
+
+  const semVida = !user.lives;
+
+  const corBotao: StyleProp<ViewStyle> = {
+    backgroundColor: semVida ? "gold" : "",
+  };
 
   return (
     <HomeSheetContainer animatedValue={animatedValue}>
@@ -39,10 +53,15 @@ export default function HomeSheet() {
 
         <Button
           disabled={disableButton}
-          style={{ margin: "auto" }}
-          onPress={startLevel}
+          style={[
+            {
+              margin: "auto",
+            },
+            { ...(corBotao.backgroundColor ? corBotao : {}) },
+          ]}
+          onPress={semVida ? () => router.push("/Content/Loja") : startLevel}
         >
-          Iniciar
+          {semVida ? "Sem vidas" : isRepeatingLevel ? "Refazer" : "Iniciar"}
         </Button>
       </View>
     </HomeSheetContainer>

@@ -1,30 +1,76 @@
+import { useState } from "react";
 import { router } from "expo-router";
 
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import { screenValues } from "Config/screenValues";
+
+import { FinishPhaseService, LivesService } from "../Services/LevelServices";
+import { UpdateMissionsService } from "Features/Missions/Services/MissionServices";
+
+import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useQuiz } from "../Contexts/useQuiz";
-
-import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
-
-import { LivesService } from "../Services/LevelServices";
+import { useInternetConnection } from "Contexts/useInternetConnection";
+import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 export function useFinishLevel() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { getIsConnected } = useInternetConnection();
   const { userToken } = useStorageItemsContext();
-  const updateUserInfo = useUpdateUserInfo();
-  const { dispatch, getIsLevelCompleted, currentQuestionIndex } = useQuiz();
+  const {
+    user: { id },
+  } = useAuth();
+  const { rightAnswers, questions, difficulty, order, unit, seconds } =
+    useQuiz();
 
-  const isLevelCompleted = getIsLevelCompleted(currentQuestionIndex);
+  const errors = questions.length - rightAnswers;
 
-  async function finishLevel() {
-    const storedToken = await userToken.get();
+  function generateFinishPhrase() {
+    const correactAnsersRatio = rightAnswers / questions.length;
 
-    dispatch({ type: "QUIZ_ACABOU" });
+    if (seconds < 60) {
+      return "Na velocidade do som!";
+    } else if (seconds < 120) {
+      return "Que velocidade!";
+    }
 
-    await LivesService(storedToken, { erro: 1 });
-
-    await updateUserInfo();
-
-    router.replace("/Level/LevelConclusion");
+    if (correactAnsersRatio >= 0.9) {
+      return "Impressionante, você é fora da curva!";
+    } else if (correactAnsersRatio >= 0.7) {
+      return "Aprendendo cada vez mais!";
+    } else return "O importante é não desistir!";
   }
 
-  return { finishLevel, isLevelCompleted };
+  async function finishLevel() {
+    const { isPreviewBuild } = screenValues();
+
+    if (!getIsConnected()) return;
+
+    setIsLoading(true);
+
+    if (!isPreviewBuild) {
+      const storedToken = await userToken.get();
+
+      if (errors > 0) {
+        await LivesService(storedToken, { erro: errors });
+      }
+
+      await FinishPhaseService(difficulty, order, unit, id, storedToken);
+      await UpdateMissionsService(
+        {
+          acerts: rightAnswers,
+          completePhase: true,
+          completeUnit: order === 10,
+          erro: errors,
+          login: 1,
+          streak: 0,
+        },
+        storedToken,
+      );
+    }
+
+    setIsLoading(false);
+    router.replace("/Content");
+  }
+
+  return { finishLevel, isLoading, generateFinishPhrase, errors };
 }

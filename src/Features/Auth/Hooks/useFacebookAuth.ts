@@ -7,10 +7,10 @@ import {
   Settings,
 } from "react-native-fbsdk-next";
 
-import { type User } from "@Auth/Contexts/useAuth";
+import { UserType } from "../Types/UserType";
 
 export function useFacebookAuth() {
-  const [user, setUser] = useState<User | {}>({});
+  const [user, setUser] = useState<UserType | {}>({});
 
   const signIn = async () => {
     try {

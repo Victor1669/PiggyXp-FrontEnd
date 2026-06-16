@@ -3,23 +3,17 @@ import { ScrollView } from "react-native";
 import { useShowSheet } from "../Contexts/useShowSheet";
 import { useLevels } from "../Contexts/useLevels";
 
-import { screenValues } from "Config/screenValues";
-
 import { getPathDirection } from "../Helpers/getPathDirection";
 
 import SectionLevel from "../Components/SectionLevel";
 import SectionTitle from "../Components/SectionTitle";
 
+import { HomeContentStyles } from "../Styles/HomeContent.css";
+const { scrollView } = HomeContentStyles;
+
 export default function HomeContent() {
   const { setShowSheet } = useShowSheet();
   const { levels } = useLevels();
-
-  const { deviceWidth, deviceHeight } = screenValues();
-
-  const SCROLLVIEW_STYLES = {
-    width: deviceWidth * 0.9,
-    height: deviceHeight * 0.68,
-  };
 
   const CONTENT_STYLES = {
     height: levels.length * 130,
@@ -33,7 +27,7 @@ export default function HomeContent() {
     <>
       <SectionTitle />
       <ScrollView
-        style={SCROLLVIEW_STYLES}
+        style={scrollView}
         contentContainerStyle={CONTENT_STYLES}
         onScrollBeginDrag={handleScrollBegin}
         showsVerticalScrollIndicator={false}

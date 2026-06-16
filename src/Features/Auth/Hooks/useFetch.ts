@@ -55,10 +55,10 @@ export async function useFetch({
     if (logError) {
       const errObj = err?.response?.data;
       errMessage = errObj?.message || errObj?.error || err.message || errObj;
-      console.log("Erro na rota " + rota);
-      console.log(err);
-      console.log(errObj);
-      console.log(errObj?.message);
+      console.log("============================== Erro na rota " + rota);
+      console.log("============================== " + err);
+      console.log("============================== " + errObj);
+      console.log("============================== " + errObj?.message);
     }
 
     if (showToastMessage) {

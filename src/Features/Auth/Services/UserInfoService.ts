@@ -1,13 +1,6 @@
 import { useFetch } from "@Auth/Hooks/useFetch";
 
-export { GetUserInfo, UpdateUserInfo };
-
-/**
- *
- * @param userId
- * @returns
- */
-async function GetUserInfo(userId: string) {
+async function getUserInfoApi(userId: string) {
   const response = await useFetch({
     method: "get",
     rota: `userInfo/?userId=${userId}`,
@@ -15,14 +8,7 @@ async function GetUserInfo(userId: string) {
   return response;
 }
 
-/**
- *
- * @param userID
- * @param body
- * @param token
- * @returns
- */
-async function UpdateUserInfo(userID: number, body: any, token: string) {
+async function updateUserInfoApi(userID: number, body: any, token: string) {
   const response = await useFetch({
     method: "put",
     rota: `updateUser/${userID}`,
@@ -33,3 +19,5 @@ async function UpdateUserInfo(userID: number, body: any, token: string) {
 
   return response;
 }
+
+export { getUserInfoApi, updateUserInfoApi };

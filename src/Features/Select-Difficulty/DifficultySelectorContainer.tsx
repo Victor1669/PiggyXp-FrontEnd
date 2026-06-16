@@ -8,39 +8,18 @@ import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
-import { DifficultyService } from "@Auth/Services/DifficultyService";
+import { setDifficultyApi } from "Features/Select-Difficulty/setDifficultyApi";
 
 import { requestNotificationPermission } from "Utils/notifications";
+import { generateCards } from "./generateCards";
 
 import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
 import Button from "@Components/Button";
-import { CardType } from "@Components/CardSwiper/CardType";
 
-import { SelectDifficultyImages } from "./Assets/SelectDifficultyImages";
-const { easy, medium, hard } = SelectDifficultyImages;
 import { GlobalFontColors } from "@Assets/Colors";
 //#endregion
 
-const cardsArray: CardType[] = [
-  {
-    id: 1,
-    image: easy,
-    text: "Uma jornada tranquila para quem está começando. Menos pressão, foco total e aprendizado",
-    title: "Fácil",
-  },
-  {
-    id: 2,
-    image: medium,
-    text: " O desafio equilibrado. Aqui as questões exigem mais atenção para manter suas vidas e progredir nas unidades",
-    title: "Médio",
-  },
-  {
-    id: 3,
-    image: hard,
-    text: "Questões complexas e ritmo acelerado para quem quer conquistar as recompensas mais altas do ranking",
-    title: "Difícil",
-  },
-];
+const cardsArray = generateCards();
 
 export default function DifficultySelectorContainer() {
   const [difficulty, setDifficulty] = useState<number>(0);
@@ -72,7 +51,7 @@ export default function DifficultySelectorContainer() {
 
     const token = await userToken.get();
     const body = { difficulty };
-    const { status } = await DifficultyService(body, token);
+    const { status } = await setDifficultyApi(body, token);
 
     if (status < 300) {
       setUser((prev) => ({ ...prev, difficulty }));
