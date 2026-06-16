@@ -21,32 +21,41 @@ import { LevelAssets } from "../Assets/LevelAssets";
 
 export default function LoadingLevelContainer() {
   const { user } = useAuth();
-  const { actualQuestion } = useLocalSearchParams();
+  const { actualQuestion, isRepeatingLevel } = useLocalSearchParams();
   const { dispatch } = useQuiz();
 
   const { isPreviewBuild } = screenValues();
 
+  function startPreviewLevel() {
+    dispatch({ type: "DADOS_CARREGADOS", payload: PreviewLevel });
+    setTimeout(() => {
+      router.replace("/Level/LevelTips");
+    }, 1000);
+  }
+
+  async function startProductionLevel() {
+    const { data, status } = await GetPhaseService(
+      user.difficulty,
+      Number(actualQuestion),
+    );
+
+    if (Boolean(isRepeatingLevel)) {
+      dispatch({ type: "REPETIU_FASE" });
+    }
+
+    if (status < 300) {
+      dispatch({ type: "DADOS_CARREGADOS", payload: data });
+      router.replace("/Level/LevelTips");
+    } else {
+      toastMessage({ type: "error", text: data });
+      router.replace("/Content");
+    }
+  }
+
   useEffect(() => {
     if (isPreviewBuild) {
-      dispatch({ type: "DADOS_CARREGADOS", payload: PreviewLevel });
-      setTimeout(() => {
-        router.replace("/Level/LevelTips");
-      }, 1000);
-      return;
-    }
-    (async () => {
-      const { data, status } = await GetPhaseService(
-        user.difficulty,
-        Number(actualQuestion),
-      );
-      if (status < 300) {
-        dispatch({ type: "DADOS_CARREGADOS", payload: data });
-        router.replace("/Level/LevelTips");
-      } else {
-        toastMessage({ type: "error", text: data });
-        router.replace("/Content");
-      }
-    })();
+      startPreviewLevel();
+    } else startProductionLevel();
   }, []);
 
   return (

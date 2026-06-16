@@ -122,14 +122,43 @@ jobs:
               --platform=android \
               --profile=preview \
               --non-interactive \
-              --wait \
+              --no-wait \
               --json 2>&1) || {
-                echo "Falha no eas build. Saída completa:"
+                echo "Falha ao disparar eas build. Saída completa:"
                 echo "$NEW_BUILD_JSON"
                 exit 1
               }
 
-            APK_URL=$(echo "$NEW_BUILD_JSON" | jq -r '.[0].artifacts.buildUrl // .artifacts.buildUrl // "null"')
+            BUILD_ID=$(echo "$NEW_BUILD_JSON" | jq -r '.[0].id // .id // "null"')
+
+            if [ -z "$BUILD_ID" ] || [ "$BUILD_ID" = "null" ]; then
+              echo "ERRO: não foi possível obter o ID da nova build."
+              echo "$NEW_BUILD_JSON"
+              exit 1
+            fi
+
+            echo "Build disparada, ID: $BUILD_ID. Aguardando finalizar..."
+
+            STATUS="IN_QUEUE"
+            while [ "$STATUS" != "FINISHED" ]; do
+              if [ "$STATUS" = "ERRORED" ] || [ "$STATUS" = "CANCELED" ]; then
+                echo "Build falhou com status: $STATUS"
+                exit 1
+              fi
+
+              sleep 30
+
+              BUILD_VIEW_JSON=$(npx --yes eas-cli@latest build:view "$BUILD_ID" --json 2>&1) || {
+                echo "Falha no build:view. Saída completa:"
+                echo "$BUILD_VIEW_JSON"
+                exit 1
+              }
+
+              STATUS=$(echo "$BUILD_VIEW_JSON" | jq -r '.status // "UNKNOWN"')
+              echo "Status atual: $STATUS"
+            done
+
+            APK_URL=$(echo "$BUILD_VIEW_JSON" | jq -r '.artifacts.buildUrl // "null"')
             echo "Nova APK_URL: $APK_URL"
           fi
 

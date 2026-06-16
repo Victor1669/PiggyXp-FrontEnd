@@ -20,6 +20,8 @@ export default function AnswerButton({
   children: string;
   disabled: boolean;
 }) {
+  const [buttonPressed, setButtonPressed] = useState(false);
+
   const {
     fontSizes: { SMALL_FONT_SIZE },
   } = screenValues();
@@ -37,17 +39,17 @@ export default function AnswerButton({
   };
 
   async function handlePress() {
+    setButtonPressed(true);
     onPress();
-    setButtonColor({ backColor: "green", shadowColor: "green" });
 
     if (answerIndex !== rightAnswer) {
       setButtonColor({ backColor: "red", shadowColor: "red" });
-    }
+    } else setButtonColor({ backColor: "green", shadowColor: "green" });
   }
 
   return (
     <Button
-      disabled={disabled}
+      disabled={disabled || buttonPressed}
       fontColor={GlobalFontColors.Dark}
       fontSize={SMALL_FONT_SIZE}
       style={STYLES}

@@ -24,7 +24,8 @@ export interface LevelContextValues {
   coinList: CoinType[];
   currentQuestionIndex: number;
   isAnswered: boolean;
-  timerActive: boolean;
+  isTimerActive: boolean;
+  isRepeatingLevel: boolean;
   seconds: number;
   lives: number;
   difficulty: number;

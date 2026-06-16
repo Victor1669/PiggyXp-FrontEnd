@@ -2,6 +2,7 @@ import { useFetch } from "@Auth/Hooks/useFetch";
 
 export async function GetUserProgress(userId: number): Promise<{
   data: {
+    id: number;
     nivel: number;
     xp: number;
     coins: number;
@@ -11,7 +12,7 @@ export async function GetUserProgress(userId: number): Promise<{
 }> {
   const response = await useFetch({
     method: "get",
-    rota: `progressInfo/?progressId=${userId}`,
+    rota: `progressInfo/?userId=${userId}`,
   });
 
   return response;

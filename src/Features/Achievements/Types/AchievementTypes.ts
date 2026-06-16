@@ -1,4 +1,4 @@
-import { User } from "@Auth/Contexts/useAuth";
+import { UserType } from "Features/Auth/Types/UserType";
 
 export type Achievement = {
   isCompleted: number;
@@ -11,6 +11,6 @@ export type Achievement = {
 
 export type AchievementProgress = {
   name: string;
-  userField: keyof User;
+  userField: keyof UserType;
   total: number;
 };

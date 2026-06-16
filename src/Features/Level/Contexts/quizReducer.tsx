@@ -36,7 +36,7 @@ export function quizReducer(
     case "ATUALIZAR_VIDAS":
       return { ...state, lives: payload };
     case "QUIZ_COMECOU":
-      return { ...state, timerActive: true };
+      return { ...state, isTimerActive: true };
     case "TICK":
       return { ...state, seconds: seconds + 1 };
     case "ERROU_QUESTAO": {
@@ -70,7 +70,10 @@ export function quizReducer(
         currentQuestionIndex: currentQuestionIndex + 1,
       };
     case "QUIZ_ACABOU": {
-      return { ...state, timerActive: false };
+      return { ...state, isTimerActive: false };
+    }
+    case "REPETIU_FASE": {
+      return { ...state, isRepeatingLevel: true };
     }
     default:
       return state;

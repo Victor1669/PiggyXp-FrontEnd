@@ -1,14 +1,15 @@
-import { User } from "@Auth/Contexts/useAuth";
+import { AchievementsImages } from "../Assets/AchievementsImages";
+
 import type {
   Achievement,
   AchievementProgress,
 } from "../Types/AchievementTypes";
+import type { UserType } from "Features/Auth/Types/UserType";
 
-import { AchievementsImages } from "../Assets/AchievementsImages";
 import { AchievementsDescriptions } from "../Content/AchievementsDescriptions";
 
 export function formatAchievements(
-  user: User,
+  user: UserType,
   progressConfig: AchievementProgress[],
 ): Achievement[] {
   const statusArray = user.achievements?.split("");

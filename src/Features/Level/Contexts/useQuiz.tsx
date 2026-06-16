@@ -19,7 +19,8 @@ const initialValues: LevelContextValues = {
   coinList: [],
   currentQuestionIndex: 0,
   isAnswered: false,
-  timerActive: false,
+  isTimerActive: false,
+  isRepeatingLevel: false,
   seconds: 0,
   lives: 0,
   difficulty: 0,
@@ -39,13 +40,11 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
     lives: user?.lives ?? 0,
   });
 
-  const { seconds, timerActive, questions } = state;
+  const { seconds, isTimerActive, questions } = state;
 
-  useEffect(() => {
-    if (user?.lives !== undefined) {
-      dispatch({ type: "ATUALIZAR_VIDAS", payload: user.lives });
-    }
-  }, [user?.lives]);
+  const TIMER_MINUTES = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const TIMER_SECONDS = String(seconds % 60).padStart(2, "0");
+  const TIMER_STRING = `${TIMER_MINUTES} : ${TIMER_SECONDS}`;
 
   function getQuestion(questionIndex: number) {
     return questions[+questionIndex];
@@ -55,17 +54,19 @@ function QuizProvider({ children }: { children: React.ReactNode }) {
     return questionIndex + 1 === questions.length;
   }
 
-  const TIMER_MINUTES = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const TIMER_SECONDS = String(seconds % 60).padStart(2, "0");
-  const TIMER_STRING = `${TIMER_MINUTES} : ${TIMER_SECONDS}`;
+  useEffect(() => {
+    if (user?.lives !== undefined) {
+      dispatch({ type: "ATUALIZAR_VIDAS", payload: user.lives });
+    }
+  }, [user?.lives]);
 
   useEffect(() => {
-    if (!timerActive) return;
+    if (!isTimerActive) return;
     const interval = setInterval(() => {
       dispatch({ type: "TICK" });
     }, 1000);
     return () => clearInterval(interval);
-  }, [timerActive]);
+  }, [isTimerActive]);
 
   const value: QuizProviderValues = {
     ...state,

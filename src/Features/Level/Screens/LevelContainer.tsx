@@ -12,7 +12,8 @@ const { container } = LevelContainerStyles;
 const { deviceWidth } = screenValues();
 
 export default function LevelContainer() {
-  const { questions, currentQuestionIndex, dispatch } = useQuiz();
+  const { questions, currentQuestionIndex, dispatch, isRepeatingLevel } =
+    useQuiz();
   const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {

@@ -3,10 +3,10 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import { env } from "Config/env";
 
-import { type User } from "@Auth/Contexts/useAuth";
+import { UserType } from "../Types/UserType";
 
 export const useNativeGoogleAuth = () => {
-  const [user, setUser] = useState<User | {}>({});
+  const [user, setUser] = useState<UserType | {}>({});
 
   useEffect(() => {
     GoogleSignin.configure({

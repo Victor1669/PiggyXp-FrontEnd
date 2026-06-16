@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
+import { screenValues } from "Config/screenValues";
+
 import { GlobalColors, GlobalFontColors } from "Assets/Colors";
+
+const { deviceWidth, deviceHeight } = screenValues();
 
 export const HomeContentStyles = StyleSheet.create({
   sectionTitleContainer: {
@@ -15,5 +19,9 @@ export const HomeContentStyles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: GlobalColors.contentBackColor.Dark,
     transform: [{ translateY: 10 }],
+  },
+  scrollView: {
+    width: deviceWidth * 0.9,
+    height: deviceHeight * 0.68,
   },
 });

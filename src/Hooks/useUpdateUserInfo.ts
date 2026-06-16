@@ -1,15 +1,18 @@
-import { useAuth, type User } from "@Auth/Contexts/useAuth";
+import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { screenValues } from "Config/screenValues";
 
-import { GetUserInfo } from "@Auth/Services/UserInfoService";
+import { getUserInfoApi } from "@Auth/Services/UserInfoService";
 import { verifyAchievements } from "../Features/Achievements/AchievementsServices";
 import { GetUserProgress } from "@Auth/Services/UserProgressService";
 import { RegenLivesService } from "Features/Auth/Services/RegenLivesService";
+import { updateNivelApi } from "Features/Screens/Home/Services/HomeServices";
 
 import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { notifications } from "Utils/notifications";
+
+import { UserType } from "Features/Auth/Types/UserType";
 
 export function useUpdateUserInfo() {
   const { login } = useAuth();
@@ -30,23 +33,30 @@ export function useUpdateUserInfo() {
       { data: userInfoData, status: userInfoStatus },
       _,
       { data: userProgressData, status: userProgressStatus },
+      { data: updateNivelData, status: updateNivelStatus },
     ] = await Promise.all([
       verifyAchievements(+userId),
-      GetUserInfo(userId),
+      getUserInfoApi(userId),
       RegenLivesService(+userId, storedUserToken),
       GetUserProgress(+userId),
+      updateNivelApi(storedUserToken),
     ]);
 
     if (
       userInfoStatus < 300 &&
       userProgressStatus < 300 &&
       achievementsStatus < 300 &&
-      userProgressData
+      userProgressData &&
+      updateNivelStatus < 300
     ) {
-      const newUserInfo: User = {
+      const { nivel } = updateNivelData;
+      const { id, ...userProgress } = userProgressData;
+
+      const newUserInfo: UserType = {
         id: +userId,
         ...userInfoData,
-        ...userProgressData,
+        ...userProgress,
+        nivel,
       };
 
       await login(newUserInfo);
