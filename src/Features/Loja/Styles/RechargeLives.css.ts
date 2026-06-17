@@ -29,11 +29,21 @@ export const RechargeLivesStyles = StyleSheet.create({
     padding: 15,
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 30,
+    gap: 20,
     width: deviceWidth * 0.45 - 5,
   },
   cardPicture: {
     width: 90,
     height: 90,
+  },
+  purchaseButton: {
+    width: "100%",
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: "#76CF6B",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
   },
 });

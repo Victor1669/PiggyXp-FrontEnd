@@ -1,25 +1,21 @@
 import { View, FlatList } from "react-native";
+
 import Paragraph from "@Components/Paragraph";
 import Picture from "@Components/Picture";
-import Button from "Components/Button";
-import { RechargeLivesStyles } from "../Styles/RechargeLives.css";
+import ProductCard from "../Components/ProductCard";
 
-// Mock temporário para os itens da loja
-const RECHARGE_OPTIONS = [
-  { id: "1", label: "1 Vida", price: "50", icon: "coracaoVermelho" },
-  { id: "2", label: "3 Vidas", price: "120", icon: "quatroCoracoes" },
+import { RechargeLivesStyles } from "../Styles/RechargeLives.css";
+const { container, introWrapper, introPicture, introTextWrapper } =
+  RechargeLivesStyles;
+
+import { ProductType } from "../Types/ProductType";
+
+const RECHARGE_OPTIONS: ProductType[] = [
+  { id: 1, label: "2 Vidas", price: 100, icon: "coracaoVermelho" },
+  { id: 2, label: "4 Vidas", price: 200, icon: "quatroCoracoes" },
 ];
 
 export default function RechargeLives() {
-  const {
-    container,
-    introWrapper,
-    introPicture,
-    introTextWrapper,
-    card,
-    cardPicture,
-  } = RechargeLivesStyles;
-
   return (
     <View style={container}>
       <View style={introWrapper}>
@@ -38,23 +34,9 @@ export default function RechargeLives() {
         data={RECHARGE_OPTIONS}
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => String(item.id)}
         contentContainerStyle={{ gap: 10 }}
-        renderItem={({ item }) => (
-          <View style={card}>
-            <Picture folder="loja" source={item.icon} style={cardPicture} />
-            <Paragraph fontWeight="bold" fontSize="small">
-              {item.label}
-            </Paragraph>
-            <Button
-              fontColor="#fff"
-              style={{ width: "100%" }}
-              onPress={() => {}}
-            >
-              {"R$ " + item.price}
-            </Button>
-          </View>
-        )}
+        renderItem={({ item }) => <ProductCard product={item} />}
       />
     </View>
   );

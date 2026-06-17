@@ -39,7 +39,7 @@ export default function LoadingLevelContainer() {
       Number(actualQuestion),
     );
 
-    if (Boolean(isRepeatingLevel)) {
+    if (toBoolean(isRepeatingLevel as string)) {
       dispatch({ type: "REPETIU_FASE" });
     }
 
@@ -50,6 +50,10 @@ export default function LoadingLevelContainer() {
       toastMessage({ type: "error", text: data });
       router.replace("/Content");
     }
+  }
+
+  function toBoolean(str: string) {
+    return str?.toLowerCase() === "true";
   }
 
   useEffect(() => {

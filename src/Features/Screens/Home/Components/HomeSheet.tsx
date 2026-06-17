@@ -39,13 +39,11 @@ export default function HomeSheet() {
           paddingVertical: 10,
         }}
       >
-        <View style={{ gap: 5 }}>
+        <View style={{ gap: 30 }}>
           <Paragraph fontSize="normal" textAlign="left" fontFamily="madimiOne">
             {unitTitle}
           </Paragraph>
-          <Paragraph fontSize="big" textAlign="left" fontFamily="madimiOne">
-            Título teste
-          </Paragraph>
+
           <Paragraph fontSize="small" textAlign="left" fontFamily="madimiOne">
             Lição {selectedLevel?.id} de {levels.length}
           </Paragraph>

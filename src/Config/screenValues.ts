@@ -12,7 +12,7 @@ export function screenValues() {
   const deviceScale = phoneWindow.scale;
   const isDeviceHeigthSmall = phoneWindow.height < 861;
   const isPreviewBuild = env.buildProfile === "preview";
-  const showDevTools = true;
+  const showDevTools = false;
 
   const TABBAR_HEIGHT = 130;
 
