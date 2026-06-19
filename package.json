@@ -1,7 +1,7 @@
 {
   "name": "piggyxp-frontend",
   "version": "0.8.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "android": "expo run:android",
     "test": "jest --verbose --detectOpenHandles",

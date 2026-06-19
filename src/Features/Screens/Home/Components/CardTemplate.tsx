@@ -52,7 +52,7 @@ export function Card1() {
   useEffect(() => {
     (async () => {
       const storedUnit = await userUnit.get();
-      setSelectedUnit(+storedUnit);
+      setSelectedUnit(+storedUnit || 1);
     })();
   }, [userUnit]);
 
@@ -78,13 +78,19 @@ export function Card1() {
 export function Card2() {
   const { user } = useAuth();
 
+  const { nivel, xp, coins, xpProximoNivel } = user;
+
   return (
     <View style={HomeSliderStyles.card3}>
       <View style={{ gap: 5 }}>
         <Paragraph fontSize="small" fontWeight="bold" textAlign="left">
-          Nível: {user.nivel} XP: {user.xp}
+          Nível: {nivel} XP: {xp}
         </Paragraph>
-        <ProgressBar style={{ width: 200 }} maxValue={10} actualValue={1} />
+        <ProgressBar
+          style={{ width: 200 }}
+          maxValue={xpProximoNivel}
+          actualValue={xp}
+        />
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <Picture
@@ -92,7 +98,7 @@ export function Card2() {
           folder="home/slider"
           source={coin}
         />
-        <Paragraph fontSize="big">{user.coins}</Paragraph>
+        <Paragraph fontSize="big">{coins}</Paragraph>
       </View>
     </View>
   );

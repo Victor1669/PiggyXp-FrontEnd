@@ -1,19 +1,21 @@
 import { useRef, useEffect } from "react";
 import { View, FlatList } from "react-native";
+
+import { screenValues } from "Config/screenValues";
+const { deviceWidth } = screenValues();
+
 import { useQuiz } from "../Contexts/useQuiz";
+
 import QuestionContainer from "../Components/QuestionContainer";
 import LevelHeader from "../Components/LevelHeader";
 import LevelSheet from "../Components/LevelSheet";
 import CoinRain from "../Components/CoinRain";
-import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
-import { screenValues } from "Config/screenValues";
 
+import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
 const { container } = LevelContainerStyles;
-const { deviceWidth } = screenValues();
 
 export default function LevelContainer() {
-  const { questions, currentQuestionIndex, dispatch, isRepeatingLevel } =
-    useQuiz();
+  const { questions, currentQuestionIndex, dispatch } = useQuiz();
   const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {

@@ -49,7 +49,7 @@ export function useUpdateUserInfo() {
       userProgressData &&
       updateNivelStatus < 300
     ) {
-      const { nivel } = updateNivelData;
+      const { nivel, xpNecessario } = updateNivelData;
       const { id, ...userProgress } = userProgressData;
 
       const newUserInfo: UserType = {
@@ -57,6 +57,7 @@ export function useUpdateUserInfo() {
         ...userInfoData,
         ...userProgress,
         nivel,
+        xpProximoNivel: xpNecessario,
       };
 
       await login(newUserInfo);

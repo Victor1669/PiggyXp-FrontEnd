@@ -13,6 +13,7 @@ export interface UserType {
   achievements: string;
   collectedAchievements: string;
   reset_lives_at: string;
+  xpProximoNivel: number;
 }
 
 export interface PreviewUserType extends UserType {

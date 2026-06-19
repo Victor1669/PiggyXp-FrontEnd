@@ -10,8 +10,9 @@ const { container, headerText } = MissionsHeaderStyles;
 export default function MissionsHeader() {
   return (
     <View style={container}>
-      <Paragraph textAlign="left" fontWeight="bold" style={headerText}>
-        Recompensa disponível ao concluir.
+      <Paragraph style={headerText}>
+        Dica: As recompensas das missões são adicionadas automaticamente assim
+        que forem cumpridas
       </Paragraph>
 
       <DailyMissionsContainer />

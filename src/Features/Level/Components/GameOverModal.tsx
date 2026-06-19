@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import { router } from "expo-router";
 
 import { useStatus } from "Contexts/StatusContext";
 import { useQuiz } from "../Contexts/useQuiz";
 
 import DefaultModal from "Components/DefaultModal";
-import Paragraph from "Components/Paragraph";
 import Button from "@Components/Button";
+
+import { LevelAssets } from "../Assets/LevelAssets";
+const { gameOver } = LevelAssets;
 
 export default function GameOverModal() {
   const { modalType, showStatus, hideStatus, isVisible } = useStatus();
@@ -19,42 +21,42 @@ export default function GameOverModal() {
     }
   }, [losed]);
 
-  async function handleGoHome() {
+  async function handleFinishQuiz() {
     hideStatus();
     dispatch({ type: "QUIZ_ACABOU" });
-
-    router.replace("/Content");
   }
 
   return (
     <DefaultModal
       showModal={isVisible && modalType === "gameOver"}
       animationType="slide"
-      onClose={handleGoHome}
+      onClose={() => {
+        handleFinishQuiz();
+        router.replace("/Content");
+      }}
     >
       <View style={{ alignItems: "center", gap: 15, paddingHorizontal: 10 }}>
-        <Paragraph
-          fontSize="big"
-          textAlign="center"
-          style={{ fontWeight: "bold" }}
+        <Image style={{ width: 300, height: 300 }} source={gameOver} />
+
+        <Button
+          onPress={() => {
+            handleFinishQuiz();
+            router.replace("/Content/Loja");
+          }}
         >
-          Fim de jogo!
-        </Paragraph>
-
-        <Paragraph textAlign="center">
-          Infelizmente suas vidas acabaram.
-        </Paragraph>
-
-        <View style={{ width: "100%", gap: 10, marginTop: 10 }}>
-          <Button
-            onPress={handleGoHome}
-            style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-            shadowColor="transparent"
-            fontColor="#fff"
-          >
-            Voltar ao Início
-          </Button>
-        </View>
+          Comprar mais vidas
+        </Button>
+        <Button
+          onPress={() => {
+            handleFinishQuiz();
+            router.replace("/Content");
+          }}
+          style={{ backgroundColor: "rgb(255, 255, 255)" }}
+          shadowColor="transparent"
+          fontColor="#000"
+        >
+          Voltar ao Início
+        </Button>
       </View>
     </DefaultModal>
   );

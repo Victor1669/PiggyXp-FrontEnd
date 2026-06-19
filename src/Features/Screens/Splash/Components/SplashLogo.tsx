@@ -21,7 +21,7 @@ export default function SplashLogo() {
       { rotateX: logoRotateInterpolated.x },
       { rotateY: logoRotateInterpolated.y },
       { rotateZ: logoRotateInterpolated.z },
-      { scale: CAN_RUN_ANIMATION ? logoScale : 0 },
+      { scale: CAN_RUN_ANIMATION ? logoScale : 1 },
     ],
     width: 200,
     height: 200,

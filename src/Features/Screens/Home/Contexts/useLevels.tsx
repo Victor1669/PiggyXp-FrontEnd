@@ -36,16 +36,21 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
 
   const levels = generateLevels(actualLevel);
 
+  async function updateTitle() {
+    const storedUserUnit = await userUnit.get();
+
+    const { data, status } = await getTitleApi(
+      difficulty,
+      +storedUserUnit || 1,
+    );
+
+    setUnitTitle(status < 300 ? data.tittle : "");
+  }
+
   useEffect(() => {
     if (typeof difficulty !== "number") return;
 
-    (async function () {
-      const storedUserUnit = await userUnit.get();
-
-      const { data, status } = await getTitleApi(difficulty, +storedUserUnit);
-
-      setUnitTitle(status < 300 ? data.tittle : "");
-    })();
+    updateTitle();
   }, [difficulty]);
 
   return (

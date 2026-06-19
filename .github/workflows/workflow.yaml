@@ -15,6 +15,19 @@ jobs:
       matrix:
         node-version: [20.x]
 
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      EXPO_PUBLIC_FACEBOOK_APP_ID: ${{ secrets.EXPO_PUBLIC_FACEBOOK_APP_ID }}
+      EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN: ${{ secrets.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN }}
+      EXPO_PUBLIC_EAS_BUILD_PROFILE: ${{ secrets.EXPO_PUBLIC_EAS_BUILD_PROFILE }}
+      EXPO_PUBLIC_BACKEND_URL: ${{ secrets.EXPO_PUBLIC_BACKEND_URL }}
+      EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID }}
+      EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID }}
+      EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID }}
+      EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID }}
+      EXPO_PUBLIC_CLOUDINARY_BASE_LINK: ${{ secrets.EXPO_PUBLIC_CLOUDINARY_BASE_LINK }}
+
     steps:
       - uses: actions/checkout@v6
 
@@ -32,65 +45,43 @@ jobs:
       - name: Instalar dependências
         run: pnpm install --no-frozen-lockfile
 
-      # - name: Rodar testes
-      #   run: pnpm test
+      - name: Rodar testes
+        run: pnpm test
 
-      # - name: Prebuild do Android
-      #   run: pnpm expo prebuild --platform android
-      #   env:
-      #     EXPO_PUBLIC_FACEBOOK_APP_ID: ${{ secrets.EXPO_PUBLIC_FACEBOOK_APP_ID }}
-      #     EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN: ${{ secrets.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN }}
-      #     EXPO_PUBLIC_EAS_BUILD_PROFILE: ${{ secrets.EXPO_PUBLIC_EAS_BUILD_PROFILE }}
-      #     EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID: ${{secrets.EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID}}
-      #     EXPO_PUBLIC_CLOUDINARY_BASE_LINK: ${{secrets.EXPO_PUBLIC_CLOUDINARY_BASE_LINK}}
+      - name: Prebuild do Android
+        run: pnpm expo prebuild --platform android
 
-      # - name: Publicar Update no EAS (Production e Preview)
-      #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      #   run: |
-      #     EXPO_PUBLIC_EAS_BUILD_PROFILE=production npx --yes eas-cli@latest update --branch production --message "${{ github.event.head_commit.message }}"
-      #     EXPO_PUBLIC_EAS_BUILD_PROFILE=preview npx --yes eas-cli@latest update --branch preview --message "${{ github.event.head_commit.message }}"
-      #   env:
-      #     EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      #     EXPO_PUBLIC_FACEBOOK_APP_ID: ${{ secrets.EXPO_PUBLIC_FACEBOOK_APP_ID }}
-      #     EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN: ${{ secrets.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN }}
-      #     EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID }}
-      #     EXPO_PUBLIC_CLOUDINARY_BASE_LINK: ${{ secrets.EXPO_PUBLIC_CLOUDINARY_BASE_LINK }}
+      - name: Publicar Update no EAS (Production e Preview)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: |
+          EXPO_PUBLIC_EAS_BUILD_PROFILE=production npx --yes eas-cli@latest update --branch production --message "${{ github.event.head_commit.message }}"
+          EXPO_PUBLIC_EAS_BUILD_PROFILE=preview npx --yes eas-cli@latest update --branch preview --message "${{ github.event.head_commit.message }}"
 
       - name: Executar Build no EAS
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          EXPO_PUBLIC_FACEBOOK_APP_ID: ${{ secrets.EXPO_PUBLIC_FACEBOOK_APP_ID }}
-          EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN: ${{ secrets.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN }}
-          EXPO_PUBLIC_EAS_BUILD_PROFILE: ${{ secrets.EXPO_PUBLIC_EAS_BUILD_PROFILE }}
-          EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID }}
-          EXPO_PUBLIC_CLOUDINARY_BASE_LINK: ${{ secrets.EXPO_PUBLIC_CLOUDINARY_BASE_LINK }}
         run: |
-          LAST_BUILD=$(npx --yes eas-cli@latest build:list --platform android --buildProfile preview --limit 1 --json --non-interactive 2>/dev/null | grep '\[.*\]' || echo "[]")
+          LAST_BUILD=$(npx --yes eas-cli@latest build:list --platform android --buildProfile production --limit 1 --json --non-interactive 2>/dev/null | grep '\[.*\]' || echo "[]")
 
           BUILD_ID=$(echo $LAST_BUILD | jq -r '.[0].id // empty')
           BUILD_STATUS=$(echo $LAST_BUILD | jq -r '.[0].status // "unknown"')
 
           if [ -z "$BUILD_ID" ] || [ "$BUILD_STATUS" != "finished" ]; then
-            npx --yes eas-cli@latest build --platform android --profile preview --non-interactive --wait
+            npx --yes eas-cli@latest build --platform android --profile production --non-interactive --wait
           fi
 
       - name: Pegar link do APK e atualizar na Vercel
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           APK_URL=$(curl -s -X POST "https://api.expo.dev/graphql" \
-            -H "Authorization: Bearer ${{ secrets.EXPO_TOKEN }}" \
+            -H "Authorization: Bearer $EXPO_TOKEN" \
             -H "Content-Type: application/json" \
             -d '{
-              "query": "{ app { byId(appId: \"${{ secrets.EXPO_APP_ID }}\") { builds(limit: 1, offset: 0, filter: { platform: ANDROID, buildProfile: \"preview\" }) { artifacts { buildUrl } } } } }"
+              "query": "{ app { byId(appId: \"${{ secrets.EXPO_APP_ID }}\") { builds(limit: 1, offset: 0, filter: { platform: ANDROID, buildProfile: \"production\" }) { artifacts { buildUrl } } } } }"
             }' | jq -r '.data.app.byId.builds[0].artifacts.buildUrl')
 
           curl -X PATCH "https://api.vercel.com/v9/projects/piggy-xp-landing-page/env/z8Y29dQ9D0TfKeLF" \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
             -H "Content-Type: application/json" \
             -d "{\"value\": \"$APK_URL\"}"
 
           curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
