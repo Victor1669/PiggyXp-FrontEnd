@@ -3,15 +3,19 @@ import { router, Stack, usePathname } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
-import { PreviewUser, useAuth } from "Features/Auth/Contexts/useAuth";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useSplashAnimation } from "@Screens/Splash/Contexts/useSplashAnimation";
 
 import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 
+import { PreviewUserType } from "Features/Auth/Types/UserType";
+import { useStatus } from "Contexts/StatusContext";
+
 export default function ScreenContainer() {
   const pathName = usePathname();
   const { layoutAnimation, animationDuration } = useSplashAnimation();
-  const { hasUserInfo, user } = useAuth();
+  const { hasUserInfo, user, hasVerifiedUserInfo } = useAuth();
+  const { showStatus } = useStatus();
 
   const {
     fontSizes: { TITLE_FONT_SIZE },
@@ -32,12 +36,19 @@ export default function ScreenContainer() {
   ];
 
   useEffect(() => {
-    if ((hasUserInfo && (user as PreviewUser).isPreview) || pathName !== "/") {
+    if (
+      (hasUserInfo && (user as PreviewUserType).isPreview) ||
+      pathName !== "/"
+    ) {
       return;
     }
 
     const timer = setTimeout(() => {
-      router.replace("/Swiper");
+      if (hasVerifiedUserInfo) {
+        router.replace("/Swiper");
+      } else {
+        showStatus("loading");
+      }
     }, animationDuration);
 
     if (isPreviewBuild) return () => clearTimeout(timer);
@@ -45,7 +56,7 @@ export default function ScreenContainer() {
     return () => {
       clearTimeout(timer);
     };
-  }, [animationDuration, hasUserInfo, pathName]);
+  }, [animationDuration, hasUserInfo, pathName, hasVerifiedUserInfo]);
 
   return (
     <Stack

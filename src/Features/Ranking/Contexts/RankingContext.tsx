@@ -5,6 +5,7 @@ import { screenValues } from "Config/screenValues";
 import { RankingService } from "../Services/RankingService";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { useStatus } from "Contexts/StatusContext";
 
 import { RankingUserInfoType } from "../Types/RankingTypes";
 
@@ -14,7 +15,6 @@ type RankingContextType = {
   podiumUsers: RankingUserInfoType[];
   otherUsers: RankingUserInfoType[];
   isYourUserInRanking: boolean;
-  isLoading: boolean;
 };
 
 const RankingContext = createContext<RankingContextType | null>(null);
@@ -22,11 +22,11 @@ const RankingContext = createContext<RankingContextType | null>(null);
 export function RankingProvider({ children }: { children: React.ReactNode }) {
   const [rankingUsers, setRankingUsers] =
     useState<RankingUserInfoType[]>(PreviewRanking);
-  const [isLoading, setIsLoading] = useState(false);
 
   const { isPreviewBuild } = screenValues();
 
   const { user } = useAuth();
+  const { showStatus, hideStatus } = useStatus();
 
   const firstPlace = rankingUsers[0] ?? {};
   const secondPlace = rankingUsers[1] ?? {};
@@ -43,15 +43,15 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isPreviewBuild) return;
 
-    setIsLoading(true);
+    showStatus("loading");
 
-    RankingService().then(
-      ({ data: rankingUsers }: { data: RankingUserInfoType[] }) => {
+    RankingService()
+      .then(({ data: rankingUsers }: { data: RankingUserInfoType[] }) => {
         setRankingUsers(rankingUsers);
-
-        setIsLoading(false);
-      },
-    );
+      })
+      .finally(() => {
+        hideStatus();
+      });
   }, [user.name, user.user_img, user.xp]);
 
   return (
@@ -60,7 +60,6 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
         podiumUsers,
         otherUsers,
         isYourUserInRanking,
-        isLoading,
       }}
     >
       {children}

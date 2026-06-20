@@ -30,8 +30,6 @@ if (!EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID) {
 if (!EXPO_PUBLIC_CLOUDINARY_BASE_LINK) {
   throw new Error("EXPO_PUBLIC_CLOUDINARY_BASE_LINK não definido!");
 }
-
-console.log("URL do back: " + EXPO_PUBLIC_BACKEND_URL);
 if (!EXPO_PUBLIC_BACKEND_URL) {
   throw new Error("EXPO_PUBLIC_BACKEND_URL não definido!");
 }

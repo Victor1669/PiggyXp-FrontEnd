@@ -13,24 +13,23 @@ const { container, contentContainer, placeHolder, scrollContainer } =
   RankingContainerStyles;
 
 export default function RankingContainer() {
-  const { isLoading, isYourUserInRanking } = useRanking();
+  const { isYourUserInRanking } = useRanking();
 
-  if (!isLoading)
-    return (
-      <View style={container}>
-        <ScrollView
-          style={scrollContainer}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={contentContainer}
-        >
-          <PodiumContainer />
-          <Divider />
-          <OtherUsersContainer />
-          {isYourUserInRanking && (
-            <Paragraph style={placeHolder}>PiggyXP, 2026 by VSS</Paragraph>
-          )}
-        </ScrollView>
-        {isYourUserInRanking || <YourUserOutOfRanking />}
-      </View>
-    );
+  return (
+    <View style={container}>
+      <ScrollView
+        style={scrollContainer}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={contentContainer}
+      >
+        <PodiumContainer />
+        <Divider />
+        <OtherUsersContainer />
+        {isYourUserInRanking && (
+          <Paragraph style={placeHolder}>PiggyXP, 2026 by VSS</Paragraph>
+        )}
+      </ScrollView>
+      {isYourUserInRanking || <YourUserOutOfRanking />}
+    </View>
+  );
 }

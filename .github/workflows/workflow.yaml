@@ -60,13 +60,17 @@ jobs:
       - name: Executar Build no EAS
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
-          LAST_BUILD=$(npx --yes eas-cli@latest build:list --platform android --buildProfile production --limit 1 --json --non-interactive 2>/dev/null | grep '\[.*\]' || echo "[]")
+          LAST_BUILD=$(npx --yes eas-cli@latest build:list --platform android --buildProfile production --limit 1 --json --non-interactive 2>/dev/null || echo "[]")
 
-          BUILD_ID=$(echo $LAST_BUILD | jq -r '.[0].id // empty')
-          BUILD_STATUS=$(echo $LAST_BUILD | jq -r '.[0].status // "unknown"')
+          BUILD_STATUS=$(echo $LAST_BUILD | jq -r '.[0].status // "unknown" | ascii_downcase')
 
-          if [ -z "$BUILD_ID" ] || [ "$BUILD_STATUS" != "finished" ]; then
+          echo "Status da última build de produção: $BUILD_STATUS"
+
+          if [ "$BUILD_STATUS" != "finished" ]; then
+            echo "Nenhuma build finalizada encontrada. Iniciando nova build..."
             npx --yes eas-cli@latest build --platform android --profile production --non-interactive --wait
+          else
+            echo "Build de produção já está em dia (status: finished). Pulando build."
           fi
 
       - name: Pegar link do APK e atualizar na Vercel

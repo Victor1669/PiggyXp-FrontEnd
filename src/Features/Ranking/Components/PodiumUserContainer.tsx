@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
-import RN, { Animated, StyleSheet, View } from "react-native";
+import { Animated, StyleSheet, View, ViewStyle } from "react-native";
+
+import { useStatus } from "Contexts/StatusContext";
+
+import { usePodiumScaleAnimation } from "../Hooks/usePodiumScaleAnimation";
 
 import { getByPosition } from "../Helpers/getByPosition";
 import { AnimateSpringUtil } from "Utils/animationUtils";
-import { usePodiumScaleAnimation } from "../Hooks/usePodiumScaleAnimation";
 
 import RankingPodiumUser from "./RankingPodiumUser";
 import Paragraph from "Components/Paragraph";
@@ -20,19 +23,20 @@ export default function PodiumUserContainer({
   podiumUser: RankingUserInfoType;
   position: 1 | 2 | 3;
 }) {
-  const { img } = podiumUser;
-  const userImg = img?.length ? { uri: img } : undefined;
-
   const viewHeight = useRef(new Animated.Value(0)).current;
   const scaleAnim = usePodiumScaleAnimation(position);
+  const { isVisible } = useStatus();
+
+  const { img } = podiumUser;
+  const userImg = img?.length ? { uri: img } : undefined;
 
   const finalHeight = getByPosition(150, 125, 100, position);
 
   const podiumColor = getByPosition("gold", "silver", "#CD7F32", position);
 
-  const podiumBarStyle: RN.ViewStyle = {
+  const podiumBarStyle: ViewStyle = {
     ...styles.podiumBar,
-    height: viewHeight,
+    height: isVisible ? 0 : viewHeight,
     backgroundColor: podiumColor,
   };
 

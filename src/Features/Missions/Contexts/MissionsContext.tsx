@@ -1,9 +1,11 @@
-import React, { createContext, useContext, ReactNode, useEffect } from "react";
+import { createContext, useContext, ReactNode, useEffect } from "react";
+import { usePathname } from "expo-router";
 
 import { SelectMissionService } from "../Services/MissionServices";
 
-import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+import { useStatus } from "Contexts/StatusContext";
 
 import { useGetMissions } from "../Hooks/useGetMissions";
 
@@ -12,7 +14,6 @@ interface MissionsContextData {
   dailyMissions: UserMission[];
   weeklyMissions: UserMission[];
   monthlyMissions: UserMission[];
-  isLoading: boolean;
 }
 
 interface UpdateDay {
@@ -25,21 +26,29 @@ const MissionsContext = createContext<MissionsContextData | undefined>(
 );
 
 export function MissionsProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
   const { updateMissionDay, userToken } = useStorageItemsContext();
-
-  const { id } = user;
-
   const {
-    isLoading,
-    fetchMissions,
-    dailyMissions,
-    weeklyMissions,
-    monthlyMissions,
-  } = useGetMissions(id);
+    user: { id },
+  } = useAuth();
+  const { showStatus, hideStatus } = useStatus();
+
+  const pathname = usePathname();
+
+  const { fetchMissions, dailyMissions, weeklyMissions, monthlyMissions } =
+    useGetMissions(id);
+
+  function getActualDay(): UpdateDay {
+    const dateNow = new Date();
+
+    return {
+      day: dateNow.getDate(),
+      month: dateNow.getMonth(),
+    };
+  }
 
   async function handleSelectMissions() {
     try {
+      showStatus("loading");
       const token = await userToken.get();
       const { status } = await SelectMissionService({ id }, token);
 
@@ -52,17 +61,16 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error("Erro ao processar missão:", error);
+    } finally {
+      hideStatus();
     }
   }
 
-  function getActualDay(): UpdateDay {
-    const dateNow = new Date();
-
-    return {
-      day: dateNow.getDate(),
-      month: dateNow.getMonth(),
-    };
-  }
+  useEffect(() => {
+    if (pathname === "/Content/Missions") {
+      fetchMissions();
+    }
+  }, [pathname, fetchMissions]);
 
   useEffect(() => {
     updateMissionDay.get().then((lastUpdateString) => {
@@ -71,23 +79,26 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
       if (lastUpdateString.length) {
         lastUpdate = JSON.parse(lastUpdateString);
       } else {
-        handleSelectMissions();
+        setTimeout(() => {
+          handleSelectMissions();
+        }, 1000);
         lastUpdate = getActualDay();
       }
 
       const now = getActualDay();
 
       if (lastUpdate.day !== now.day || lastUpdate.month !== now.month) {
-        handleSelectMissions();
+        setTimeout(() => {
+          handleSelectMissions();
+        }, 1000);
       }
     });
-  }, []);
+  }, [pathname]);
 
   const value: MissionsContextData = {
     dailyMissions,
     weeklyMissions,
     monthlyMissions,
-    isLoading,
   };
 
   return (

@@ -16,7 +16,7 @@ export default function LoginContainer() {
         <LoginForm />
       </View>
       <NaoTemContaText />
-      <AlternateSignins text="Logar com" />
+      {/*<AlternateSignins text="Logar com" />*/}
     </>
   );
 }

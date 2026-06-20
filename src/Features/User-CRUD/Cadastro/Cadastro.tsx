@@ -16,7 +16,7 @@ export default function CadastroContainer() {
         <CadastroForm />
         <JaTemContaText />
       </View>
-      <AlternateSignins text="Criar conta com" />
+      {/*<AlternateSignins text="Criar conta com" />*/}
     </>
   );
 }

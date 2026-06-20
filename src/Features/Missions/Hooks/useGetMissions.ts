@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
+import { usePathname } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
@@ -12,15 +13,18 @@ import { PreviewMissions } from "Features/Preview/PreviewMission";
 
 export function useGetMissions(userId: number) {
   const [missions, setMissions] = useState<UserMission[]>(PreviewMissions);
-  const [isLoading, setIsLoading] = useState(true);
 
   const { getIsConnected } = useInternetConnection();
+
+  const pathname = usePathname();
+
   const { isPreviewBuild } = screenValues();
 
   const fetchMissions = useCallback(async () => {
+    if (pathname !== "/Content/Missions") return;
+
     if (!userId || isPreviewBuild || !getIsConnected()) return;
 
-    setIsLoading(true);
     try {
       const { data, status } = await GetMissionsService(userId);
 
@@ -29,14 +33,8 @@ export function useGetMissions(userId: number) {
       }
     } catch (error) {
       console.error("Erro ao carregar missões:", error);
-    } finally {
-      setIsLoading(false);
     }
-  }, [userId]);
-
-  useEffect(() => {
-    fetchMissions();
-  }, [fetchMissions]);
+  }, [userId, pathname]);
 
   const dailyMissions = useMemo(
     () => missions.filter((m) => m.mission.frequency === "daily"),
@@ -54,7 +52,6 @@ export function useGetMissions(userId: number) {
   );
 
   return {
-    isLoading,
     fetchMissions,
     dailyMissions,
     weeklyMissions,
