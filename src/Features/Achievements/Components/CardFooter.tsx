@@ -10,6 +10,7 @@ import { AchievementsStyles } from "../Styles/AchievementsCardsStyles.css";
 const { progressBar } = AchievementsStyles;
 
 import { Achievement } from "../Types/AchievementTypes";
+import { useState } from "react";
 
 export default function CardFooter({
   achievement,
@@ -19,6 +20,8 @@ export default function CardFooter({
   index: number;
 }) {
   const { setShowRewards, setSelectedAchievementIndex } = useAchievements();
+
+  const [disableButton, setDisableButton] = useState(false);
 
   const {
     isCollectable,
@@ -30,6 +33,7 @@ export default function CardFooter({
 
   function handlePressCollectable() {
     if (isFinished || !isCollectable) return;
+    setDisableButton(true);
     setShowRewards(true);
     setSelectedAchievementIndex(index);
   }
@@ -45,7 +49,7 @@ export default function CardFooter({
           }}
           fontSize={20}
           shadowColor={buttonColor.shadowColor}
-          disabled={!isCollectable}
+          disabled={disableButton || !isCollectable}
           onPress={handlePressCollectable}
         >
           {isFinished ? "Coletado" : isCollectable ? "Coletar" : ""}

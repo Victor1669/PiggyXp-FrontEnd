@@ -5,6 +5,8 @@ import { Link } from "expo-router";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useShowSheet } from "../Contexts/useShowSheet";
 
+import { useValidateLives } from "../Hooks/useValidateLives";
+
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
@@ -24,6 +26,8 @@ export default function HomeHeader() {
   const { user } = useAuth();
   const { setShowSheet } = useShowSheet();
 
+  const { isLoading } = useValidateLives();
+
   return (
     <TouchableWithoutFeedback onPress={() => setShowSheet(false)}>
       <View style={container}>
@@ -32,7 +36,7 @@ export default function HomeHeader() {
         </Link>
         <View style={livesImageContainer}>
           <Paragraph color="#F24822" fontSize="big">
-            {user.lives ?? 5}
+            {isLoading ? "..." : (user.lives ?? 5)}
           </Paragraph>
           <Picture folder="home" style={livesImage} source={HomeImages.lives} />
         </View>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "expo-router";
 
 import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
@@ -10,11 +10,13 @@ import { LivesService } from "Features/Level/Services/LevelServices";
 export function useValidateLives() {
   const { temporaryErrorCount, userToken } = useStorageItemsContext();
   const updateUserInfo = useUpdateUserInfo();
-
   const pathname = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function verificarSeUsuarioSaiu() {
+      setIsLoading(true);
+
       const [errorCount, storedUserToken] = await Promise.all([
         temporaryErrorCount.get(),
         userToken.get(),
@@ -25,13 +27,13 @@ export function useValidateLives() {
 
         temporaryErrorCount.delete();
       }
-      await atualizarInformacoesDoUsuario();
-    }
-
-    async function atualizarInformacoesDoUsuario() {
       await updateUserInfo();
+
+      setIsLoading(false);
     }
 
     if (pathname === "/Content") verificarSeUsuarioSaiu();
   }, [pathname]);
+
+  return { isLoading };
 }

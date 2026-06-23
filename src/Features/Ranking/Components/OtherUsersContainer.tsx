@@ -10,23 +10,23 @@ export default function OtherUsersContainer() {
   const { user: yourUser } = useAuth();
 
   return (
-    <View style={{ width: "100%", gap: 15 }}>
+    <View style={{ width: "100%" }}>
       {otherUsers.map((user, index) => {
-        const { img, xp, name } = user;
-        const USER_IMG = img?.length ? { uri: img } : undefined;
+        const { img, xp, name, nivel } = user;
+        const user_img = img?.length ? { uri: img } : undefined;
         const position = index + 4;
         const isYourUser = yourUser.name === name && yourUser.xp === xp;
 
-        return (
-          <RankingUser
-            key={index}
-            name={name}
-            xp={xp}
-            position={position}
-            user_img={USER_IMG}
-            isYourUser={isYourUser}
-          />
-        );
+        const rankingUser = {
+          name,
+          isYourUser,
+          nivel,
+          position,
+          user_img,
+          xp,
+        };
+
+        return <RankingUser key={index} {...rankingUser} />;
       })}
     </View>
   );

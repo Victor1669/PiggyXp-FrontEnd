@@ -4,6 +4,7 @@ interface RankingUserInfoType {
   id: number;
   position: number;
   xp: number;
+  nivel: number;
 }
 
 export type { RankingUserInfoType };

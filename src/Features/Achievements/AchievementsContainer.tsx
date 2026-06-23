@@ -46,7 +46,7 @@ export default function AchievementsContainer() {
   if (hasUserInfo)
     return (
       <>
-        {<NotificationButton />}
+        <NotificationButton />
         <Paragraph style={{ marginTop: 25 }}>
           Dica: {tips[tipsIndex.current]}
         </Paragraph>

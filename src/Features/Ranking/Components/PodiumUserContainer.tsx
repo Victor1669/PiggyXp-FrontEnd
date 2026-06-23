@@ -62,7 +62,7 @@ export default function PodiumUserContainer({
         <Animated.View style={podiumBarStyle}>
           <Paragraph
             fontSize="title"
-            color="lightModeFont"
+            color="#000"
             textAlignVertical="center"
             style={positionText}
           >

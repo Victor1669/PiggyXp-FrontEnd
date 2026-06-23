@@ -1,38 +1,60 @@
 import { StyleSheet } from "react-native";
-
 import { screenValues } from "Config/screenValues";
 
 const { deviceWidth } = screenValues();
 
 export const RankingUserStyles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     borderRadius: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    marginVertical: 6,
   },
-  imageContainer: {
+  firstRow: {
     flexDirection: "row",
-    width: deviceWidth * 0.3,
+    alignItems: "center",
   },
-  positionNumber: { width: 30, margin: 20 },
-  userImage: {
-    width: 50,
-    height: 50,
+  imageSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: deviceWidth * 0.25,
+    gap: 20,
+  },
+  position: {
+    width: 32,
+    textAlign: "center",
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: "white",
-    margin: "auto",
-    borderRadius: 30,
   },
-  textContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  usernameContainer: {
     flex: 1,
+    paddingHorizontal: 12,
   },
-  userName: { width: deviceWidth * 0.3 },
-  numberXpContainer: { flex: 1, justifyContent: "center" },
-  numberXp: {
+  chevron: {
+    width: 12,
+    height: 12,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: "#fff",
+    transform: [{ rotate: "45deg" }],
+    position: "absolute",
+    right: 8,
+  },
+  secondRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginTop: 8,
+    width: "100%",
+  },
+  xpContainer: {
     backgroundColor: "#fff",
-    width: "80%",
-    margin: "auto",
     borderRadius: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
   },
-  xpText: { marginRight: 20 },
 });

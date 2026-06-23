@@ -12,6 +12,7 @@ export const RankingContainerStyles = StyleSheet.create({
   contentContainer: {
     alignItems: "center",
     paddingBottom: 2 * TABBAR_HEIGHT - 20,
+    paddingTop: 50,
   },
   dividerContainer: {
     borderColor: "#fff",

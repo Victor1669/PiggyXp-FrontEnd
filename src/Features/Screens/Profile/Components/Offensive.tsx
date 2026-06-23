@@ -17,7 +17,7 @@ const {
 
 const offensiveDays = [
   { initials: "Seg", completed: false },
-  { initials: "Ter", completed: false },
+  { initials: "Ter", completed: true },
   { initials: "Qua", completed: false },
   { initials: "Qui", completed: false },
   { initials: "Sex", completed: false },
@@ -44,7 +44,13 @@ export default function Offensive() {
             <View
               style={[
                 dayCircle,
-                { backgroundColor: i % 2 ? "#999999" : "#38AFC4" },
+                {
+                  backgroundColor: day.completed
+                    ? "rgb(255, 174, 0)"
+                    : i % 2
+                      ? "#999999"
+                      : "#38AFC4",
+                },
               ]}
               key={i}
             >

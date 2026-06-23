@@ -21,11 +21,13 @@ export default function RankingPodiumUser({
   name,
   xp,
   position,
+  nivel,
 }: {
   userImg: ImageSourcePropType | undefined;
   name: string;
   xp: number;
   position: 1 | 2 | 3;
+  nivel: number;
 }) {
   const imageContainerSource = getByPosition(ouro, prata, bronze, position);
 
@@ -41,6 +43,7 @@ export default function RankingPodiumUser({
       <View>
         <Paragraph numberOfLines={1}>{name}</Paragraph>
         <Paragraph fontSize="verySmall">{xp} xp</Paragraph>
+        <Paragraph fontSize="verySmall">Nível: {nivel}</Paragraph>
       </View>
     </View>
   );
