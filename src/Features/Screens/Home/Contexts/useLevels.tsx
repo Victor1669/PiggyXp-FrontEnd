@@ -17,6 +17,7 @@ interface LevelsContextData {
   setSelectedLevelIndex: React.Dispatch<React.SetStateAction<number>>;
   actualLevel: number;
   unitTitle: string;
+  isLoading: boolean;
 }
 
 const LevelsContext = createContext<LevelsContextData>({} as LevelsContextData);
@@ -33,10 +34,13 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
 
   const [selectedLevelIndex, setSelectedLevelIndex] = useState(nivel_ph);
   const [unitTitle, setUnitTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const levels = generateLevels(actualLevel);
 
   async function updateTitle() {
+    setIsLoading(true);
+
     const storedUserUnit = await userUnit.get();
 
     const { data, status } = await getTitleApi(
@@ -45,6 +49,8 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
     );
 
     setUnitTitle(status < 300 ? data.tittle : "");
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -61,6 +67,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
         setSelectedLevelIndex,
         actualLevel,
         unitTitle: isPreviewBuild ? "Unidade teste" : unitTitle,
+        isLoading,
       }}
     >
       {children}

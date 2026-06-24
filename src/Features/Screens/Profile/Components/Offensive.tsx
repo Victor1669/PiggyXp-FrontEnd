@@ -15,12 +15,17 @@ const {
   dayCircle,
 } = OffensiveStyles;
 
-const offensiveDays = [
+interface DayType {
+  initials: string;
+  completed: boolean;
+}
+
+const offensiveDays: DayType[] = [
   { initials: "Seg", completed: false },
-  { initials: "Ter", completed: true },
+  { initials: "Ter", completed: false },
   { initials: "Qua", completed: false },
   { initials: "Qui", completed: false },
-  { initials: "Sex", completed: false },
+  { initials: "Sex", completed: true },
   { initials: "Sab", completed: false },
   { initials: "Dom", completed: false },
 ];
@@ -41,24 +46,29 @@ export default function Offensive() {
         />
         <View style={offensiveList}>
           {offensiveDays.map((day, i) => (
-            <View
-              style={[
-                dayCircle,
-                {
-                  backgroundColor: day.completed
-                    ? "rgb(255, 174, 0)"
-                    : i % 2
-                      ? "#999999"
-                      : "#38AFC4",
-                },
-              ]}
-              key={i}
-            >
-              <Paragraph fontSize="verySmall">{day.initials[0]}</Paragraph>
-            </View>
+            <OffensiveDay isEven={i % 2 === 0} day={day} key={i} />
           ))}
         </View>
       </View>
+    </View>
+  );
+}
+
+function OffensiveDay({ day, isEven }: { day: DayType; isEven: boolean }) {
+  return (
+    <View
+      style={[
+        dayCircle,
+        {
+          backgroundColor: day.completed
+            ? "rgb(255, 174, 0)"
+            : isEven
+              ? "#38AFC4"
+              : "#999999",
+        },
+      ]}
+    >
+      <Paragraph fontSize="verySmall">{day.initials[0]}</Paragraph>
     </View>
   );
 }

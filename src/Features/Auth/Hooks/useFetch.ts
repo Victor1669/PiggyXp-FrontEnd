@@ -52,6 +52,9 @@ export async function useFetch({
     };
   } catch (err: any) {
     let errMessage;
+
+    const status = err.response?.status || 500;
+
     if (logError) {
       const errObj = err?.response?.data;
       errMessage = errObj?.message || errObj?.error || err.message || errObj;
@@ -61,14 +64,19 @@ export async function useFetch({
       console.log("============================== " + errObj?.message);
     }
 
-    if (showToastMessage) {
+    if (status >= 500) {
+      toastMessage({
+        type: "error",
+        text: "Erro no servidor, tente novamente mais tarde",
+      });
+    } else if (showToastMessage) {
       toastMessage({
         type: "error",
         text: errMessage,
       });
     }
     return {
-      status: err.response?.status || 500,
+      status,
       data: errMessage,
     };
   }

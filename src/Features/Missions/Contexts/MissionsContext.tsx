@@ -1,11 +1,16 @@
-import { createContext, useContext, ReactNode, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { usePathname } from "expo-router";
 
 import { SelectMissionService } from "../Services/MissionServices";
 
 import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { useStatus } from "Contexts/StatusContext";
 
 import { useGetMissions } from "../Hooks/useGetMissions";
 
@@ -14,6 +19,7 @@ interface MissionsContextData {
   dailyMissions: UserMission[];
   weeklyMissions: UserMission[];
   monthlyMissions: UserMission[];
+  isLoading: boolean;
 }
 
 interface UpdateDay {
@@ -30,7 +36,7 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
   const {
     user: { id },
   } = useAuth();
-  const { showStatus, hideStatus } = useStatus();
+  const [isLoading, setIsLoading] = useState(false);
 
   const pathname = usePathname();
 
@@ -48,7 +54,7 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
 
   async function handleSelectMissions() {
     try {
-      showStatus("loading");
+      setIsLoading(true);
       const token = await userToken.get();
       const { status } = await SelectMissionService({ id }, token);
 
@@ -62,7 +68,7 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("Erro ao processar missão:", error);
     } finally {
-      hideStatus();
+      setIsLoading(false);
     }
   }
 
@@ -99,6 +105,7 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
     dailyMissions,
     weeklyMissions,
     monthlyMissions,
+    isLoading,
   };
 
   return (

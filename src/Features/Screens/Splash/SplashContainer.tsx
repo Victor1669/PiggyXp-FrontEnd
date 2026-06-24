@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { Animated } from "react-native";
+import { Animated, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { env } from "Config/env";
 
 import { useSplashAnimation } from "./Contexts/useSplashAnimation";
 import { useSplashAnimatedValues } from "./Contexts/useSplashAnimatedValues";
@@ -9,6 +12,7 @@ import SplashLogo from "./Components/SplashLogo";
 import SplashParticles from "./Components/SplashParticles";
 import SplashTitle from "./Components/SplashTitle";
 import QuestionMarker from "./Components/QuestionMarker";
+import Paragraph from "Components/Paragraph";
 
 import { SplashStyles } from "./SplashScreen.css";
 const { container } = SplashStyles;
@@ -44,6 +48,16 @@ export default function Splash() {
       <SplashLogo />
       <SplashParticles />
       <SplashTitle />
+      <AppVersion />
     </Animated.View>
+  );
+}
+
+function AppVersion() {
+  const insets = useSafeAreaInsets();
+  return (
+    <View style={{ position: "absolute", bottom: insets.bottom, left: 15 }}>
+      <Paragraph color="#000">v{env.version}</Paragraph>
+    </View>
   );
 }

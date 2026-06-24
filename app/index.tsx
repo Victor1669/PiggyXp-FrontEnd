@@ -48,7 +48,7 @@ export default function SplashScreen() {
         } else {
           toastMessage({
             type: "error",
-            text: "Sessão expirou, refaça o login!",
+            text: "Erro ao manter sessão, refaça o login!",
           });
           router.replace("/Login");
         }

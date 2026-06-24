@@ -1,7 +1,5 @@
 //#region Importações
 import { useEffect } from "react";
-import { Alert } from "react-native";
-import * as Updates from "expo-updates";
 
 import { env } from "Config/env";
 import { screenValues } from "Config/screenValues";
@@ -26,12 +24,6 @@ export default function RootLayout() {
   const { showDevTools } = screenValues();
 
   useEffect(function warningTimer() {
-    const timeOut1 = setTimeout(() => {
-      if (!__DEV__) {
-        checkUpdate();
-      } else return;
-    }, 100);
-
     const timeOut2 = setTimeout(() => {
       if (__DEV__ && showDevTools)
         toastMessage({
@@ -41,22 +33,9 @@ export default function RootLayout() {
     }, 1000);
 
     return () => {
-      clearTimeout(timeOut1);
       clearTimeout(timeOut2);
     };
   }, []);
-
-  async function checkUpdate() {
-    if (__DEV__) return;
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      if (update.isAvailable) {
-        Alert.alert("Nova atualização disponível, feche e abra o app!");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   useEffect(() => {
     const subscription = registerNotificationClickListener();

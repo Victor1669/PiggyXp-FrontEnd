@@ -9,10 +9,8 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { UserMission } from "../Types/MissionsTypes";
 
-import { PreviewMissions } from "Features/Preview/PreviewMission";
-
 export function useGetMissions(userId: number) {
-  const [missions, setMissions] = useState<UserMission[]>(PreviewMissions);
+  const [missions, setMissions] = useState<UserMission[]>([]);
 
   const { getIsConnected } = useInternetConnection();
 

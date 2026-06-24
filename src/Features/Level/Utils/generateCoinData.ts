@@ -5,12 +5,16 @@ import { screenValues } from "Config/screenValues";
 import { CoinType } from "../Types/LevelTypes";
 
 const COIN_SIZE = 36;
-const FLOOR_Y = 640;
 
 let globalCoinId = 0;
 
 export function generateCoinData(currentQuestionIndex: number): CoinType {
-  const { deviceWidth } = screenValues();
+  const { deviceWidth, deviceHeight } = screenValues();
+
+  /**
+   * ALTURA DA TELA ONDE AS MOEDAS VÃO FICAR
+   */
+  const FLOOR_Y = deviceHeight * 0.65;
 
   const id = globalCoinId++;
   const laneCount = 8;

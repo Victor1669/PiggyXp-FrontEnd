@@ -41,14 +41,16 @@ export default function PodiumUserContainer({
   };
 
   useEffect(() => {
-    AnimateSpringUtil({
-      animatedValue: viewHeight,
-      speed: 3,
-      bounciness: 10,
-      toValue: finalHeight,
-      useNativeDriver: false,
-      delay: 900 - position * 200,
-    });
+    if (!isVisible) {
+      AnimateSpringUtil({
+        animatedValue: viewHeight,
+        speed: 3,
+        bounciness: 10,
+        toValue: finalHeight,
+        useNativeDriver: false,
+        delay: 900 - position * 200,
+      });
+    }
   }, [viewHeight, finalHeight, position]);
 
   return (

@@ -3,11 +3,10 @@ import { View } from "react-native";
 import { useMissions } from "../Contexts/MissionsContext";
 
 import Picture from "@Components/Picture";
+import WeeklyMissionProgress from "./WeeklyMissionProgress";
 
 import { WeeklyMissionsStyles } from "../Styles/WeeklyMissions.css";
-
 import { MissionAssets } from "../Assets/MissionAssets";
-import WeeklyMissionProgress from "./WeeklyMissionProgress";
 
 export default function WeeklyMissionsContainer() {
   const { cardContainer, topPart, picture } = WeeklyMissionsStyles;
