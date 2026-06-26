@@ -75,7 +75,6 @@ export default function BottomSheet({
   return (
     <Animated.View
       style={[
-        style,
         BottomSheetStyles.container,
         {
           height,
@@ -83,6 +82,7 @@ export default function BottomSheet({
           top:
             deviceHeight - 3 * TABBAR_HEIGHT + (isDeviceHeigthSmall ? 30 : 0),
         },
+        style,
       ]}
     >
       <View

@@ -1,18 +1,22 @@
-import { StatusBar, StyleSheet } from "react-native";
+import { screenValues } from "Config/screenValues";
+import { StyleSheet } from "react-native";
+
+const { deviceWidth } = screenValues();
 
 export const LevelHeaderStyles = StyleSheet.create({
   container: {
+    width: "90%",
+    marginInline: "auto",
     flexDirection: "row",
-    justifyContent: "center",
-    gap: 15,
+    justifyContent: "space-around",
     zIndex: 10,
   },
   exitButton: {
     top: 55,
   },
   progressBar: {
-    width: 250,
-    top: (StatusBar.currentHeight ?? 40) + 5,
+    width: deviceWidth * 0.5,
+    top: 55,
     alignSelf: "center",
   },
   livesContainer: {

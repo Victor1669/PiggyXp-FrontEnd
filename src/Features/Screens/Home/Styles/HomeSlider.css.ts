@@ -1,19 +1,14 @@
 import { StyleSheet } from "react-native";
 
 export const HomeSliderStyles = StyleSheet.create({
-  card1: {
+  unitCard: {
     flex: 1,
-    justifyContent: "space-around",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-around",
     gap: 35,
   },
-  card2: {
-    flex: 1,
-    paddingLeft: 20,
-    justifyContent: "center",
-  },
-  card3: {
+  progressCard: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",

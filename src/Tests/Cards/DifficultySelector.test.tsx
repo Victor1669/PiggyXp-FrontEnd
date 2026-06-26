@@ -22,6 +22,20 @@ jest.mock("Features/Auth/Contexts/useAuth", () => ({
   }),
 }));
 
+jest.mock("Hooks/useAutoSlider", () => ({
+  useAutoSlider: () => {
+    const { useState } = require("react");
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    return {
+      flatListRef: { current: null },
+      currentIndex,
+      isUserInteracting: false,
+      handleUserInteractionStart: jest.fn(),
+      handleScrollEnd: (index: number) => setCurrentIndex(index),
+    };
+  },
+}));
 jest.mock("Contexts/useStorageItemsContext", () => ({
   ...jest.requireActual("Contexts/useStorageItemsContext"),
   useStorageItemsContext: () => ({

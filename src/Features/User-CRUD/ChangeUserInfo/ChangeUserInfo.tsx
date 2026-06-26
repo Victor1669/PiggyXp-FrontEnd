@@ -15,6 +15,7 @@ import { toastMessage } from "Utils/toast";
 import ChangeImageButton from "@Screens/Profile/Components/ChangeImageButton";
 import ChangeUserInfoForm from "Features/User-CRUD/ChangeUserInfo/ChangeUserInfoForm";
 import DeleteUserButton from "Features/User-CRUD/DeleteUser/DeleteUserButton";
+import ChangeDifficultyButton from "Features/Select-Difficulty/ChangeDifficulty/ChangeDifficultyButton";
 
 import { ChangeUserInfoStyles } from "Features/User-CRUD/ChangeUserInfo/ChangeUserInfo.css";
 const { container } = ChangeUserInfoStyles;
@@ -81,6 +82,7 @@ export default function ChangeUserInfoContainer() {
         onProductionSubmit={handleProductionSubmit}
         currentImage={image}
       />
+      <ChangeDifficultyButton />
       <DeleteUserButton />
     </ScrollView>
   );

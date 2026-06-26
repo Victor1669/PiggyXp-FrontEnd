@@ -8,6 +8,8 @@ export const QuestionContainerStyles = StyleSheet.create({
   },
   questionText: {
     marginTop: 80,
+    marginInline: "auto",
+    width: "90%",
   },
   answersContainer: {
     gap: 20,

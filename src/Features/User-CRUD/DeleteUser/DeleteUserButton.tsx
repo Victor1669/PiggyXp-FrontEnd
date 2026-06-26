@@ -60,7 +60,7 @@ export default function DeleteUserButton() {
       <Button
         fontColor="#fff"
         shadowColor="rgb(139, 0, 0)"
-        style={{ backgroundColor: "rgb(255, 57, 57)" }}
+        style={{ backgroundColor: "rgb(255, 57, 57)", marginBottom: 50 }}
         onPress={() => setShowDeleteModal(true)}
       >
         Apagar conta

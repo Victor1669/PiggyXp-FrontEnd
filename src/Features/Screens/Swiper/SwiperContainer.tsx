@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { View, FlatList, Dimensions } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Dimensions } from "react-native";
 
 import useSplashAnimation from "@Screens/Splash/Contexts/useSplashAnimation";
 
@@ -9,84 +9,59 @@ import { SwiperStyles } from "./SwiperContainer.css";
 
 import { cards } from "./Content/CardsContent";
 import { SkipCardsButton } from "./Components/SkipCardsButton";
-
-const CARDS_LIMIT = cards.length - 1;
+import { useAutoSlider } from "@Hooks/useAutoSlider";
 
 const screenWidth = Dimensions.get("screen").width;
 
 export default function SwiperContainer() {
-  const [cardIndex, setCardIndex] = useState(0);
-  const [isTimerEnabled, setIsTimerEnabled] = useState(true);
   const [isSkipButtonEnabled, setIsSkipButtonEnabled] = useState(false);
 
   const { setLayoutAnimation } = useSplashAnimation();
 
-  const cardSwiperRef = useRef<FlatList>(null);
-  const cardIntervalRef = useRef<number>(null);
+  const {
+    flatListRef,
+    currentIndex: cardIndex,
+    isUserInteracting,
+    handleUserInteractionStart,
+    handleScrollEnd,
+  } = useAutoSlider({
+    totalItems: cards.length,
+    delay: 3000,
+    bounce: false,
+    peek: true,
+    itemWidth: screenWidth,
+  });
 
-  const isOnLastCard = cardIndex === CARDS_LIMIT;
+  const isOnLastCard = cardIndex === cards.length - 1;
 
-  useEffect(function createCardInterval() {
+  useEffect(() => {
     setTimeout(() => {
       setLayoutAnimation("fade");
     }, 0);
-    if (!isTimerEnabled) return;
-    cardIntervalRef.current = setInterval(() => {
-      setCardIndex((prev) => {
-        const next = prev + 1 > CARDS_LIMIT ? 0 : prev + 1;
-
-        return next;
-      });
-    }, 3000);
-
-    return () => {
-      clearInterval(cardIntervalRef.current ?? undefined);
-    };
   }, []);
 
   useEffect(() => {
-    const flatList = cardSwiperRef.current;
     if (isOnLastCard) {
       setIsSkipButtonEnabled(true);
     }
-    if (!flatList || !isTimerEnabled) return;
+  }, [isOnLastCard]);
 
-    const animationSteps = [
-      { offset: screenWidth * cardIndex, delay: 0 },
-      { offset: screenWidth * cardIndex + 40, delay: 1000 },
-      { offset: screenWidth * cardIndex, delay: 1400 },
-    ];
-
-    const timeouts = animationSteps.map(({ offset, delay }) =>
-      setTimeout(() => {
-        flatList.scrollToOffset({ offset, animated: true });
-      }, delay),
-    );
-
-    return () => timeouts.forEach(clearTimeout);
-  }, [cardIndex, isTimerEnabled]);
-
-  function handleTouchStart() {
-    setIsTimerEnabled(false);
-    clearInterval(cardIntervalRef.current ?? undefined);
-  }
-
-  function handleScroll(cardIndex: number) {
-    if (isTimerEnabled) return;
-    setCardIndex(cardIndex);
+  function handleScroll(index: number) {
+    if (!isUserInteracting) return;
+    handleScrollEnd(index);
   }
 
   return (
     <View style={SwiperStyles.container}>
       <View style={SwiperStyles.content}>
         <CardSwiper
-          ref={cardSwiperRef}
+          ref={flatListRef}
           testId="SwiperContainer"
           imgFolder="start"
           cardsArray={cards}
           actualIndex={cardIndex}
           onScroll={handleScroll}
-          onTouchStart={handleTouchStart}
+          onTouchStart={handleUserInteractionStart}
           dotsContainerStyle={{ marginBottom: isSkipButtonEnabled ? 0 : 100 }}
         />
         {isSkipButtonEnabled && <SkipCardsButton />}

@@ -19,8 +19,15 @@ export function useFinishLevel() {
   const {
     user: { id },
   } = useAuth();
-  const { rightAnswers, questions, difficulty, order, unit, seconds } =
-    useQuiz();
+  const {
+    rightAnswers,
+    questions,
+    difficulty,
+    order,
+    unit,
+    seconds,
+    isRepeatingLevel,
+  } = useQuiz();
 
   const errors = questions.length - rightAnswers;
 
@@ -54,18 +61,20 @@ export function useFinishLevel() {
         await LivesService(storedToken, { erro: errors });
       }
 
-      await FinishPhaseService(difficulty, order, unit, id, storedToken);
-      await UpdateMissionsService(
-        {
-          acerts: rightAnswers,
-          completePhase: true,
-          completeUnit: order === 10,
-          erro: errors,
-          login: 1,
-          streak: 0,
-        },
-        storedToken,
-      );
+      if (!isRepeatingLevel) {
+        await FinishPhaseService(difficulty, order, unit, id, storedToken);
+        await UpdateMissionsService(
+          {
+            acerts: rightAnswers,
+            completePhase: true,
+            completeUnit: order === 10,
+            erro: errors,
+            login: 1,
+            streak: 0,
+          },
+          storedToken,
+        );
+      }
     }
 
     setIsLoading(false);

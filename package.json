@@ -30,7 +30,8 @@
       "^Helpers/(.*)$": "<rootDir>/src/Helpers/$1",
       "^Components/(.*)$": "<rootDir>/src/Components/$1",
       "^Config/(.*)$": "<rootDir>/src/Config/$1",
-      "^Contexts/(.*)$": "<rootDir>/src/Contexts/$1"
+      "^Contexts/(.*)$": "<rootDir>/src/Contexts/$1",
+      "^Hooks/(.*)$": "<rootDir>/src/Hooks/$1"
     }
   },
   "dependencies": {

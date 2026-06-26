@@ -37,7 +37,16 @@ export default function LevelSheet() {
       <View
         style={{ flex: 1, justifyContent: "space-between", paddingBottom: 20 }}
       >
-        <Paragraph>{textFeedBack}</Paragraph>
+        <View
+          style={{
+            backgroundColor:
+              textFeedBack === "Acertou!" ? "rgb(0, 58, 0)" : "rgb(58, 0, 0)",
+            padding: 10,
+            borderRadius: 15,
+          }}
+        >
+          <Paragraph>{textFeedBack}</Paragraph>
+        </View>
         <Button
           disabled={disableButton}
           style={{ margin: "auto" }}
@@ -55,7 +64,7 @@ export default function LevelSheet() {
 }
 
 function SheetContainer({ children }: { children: React.ReactNode }) {
-  const { isAnswered } = useQuiz();
+  const { isAnswered, textFeedBack } = useQuiz();
 
   const SHEET_HEIGHT = 300;
   const pan = useRef(new Animated.ValueXY()).current;
@@ -63,7 +72,15 @@ function SheetContainer({ children }: { children: React.ReactNode }) {
 
   return (
     <BottomSheet
-      style={bottomSheet}
+      style={[
+        bottomSheet,
+        {
+          backgroundColor:
+            textFeedBack === "Acertou!"
+              ? "rgba(0, 102, 0, 0.8)"
+              : "rgba(139, 0, 0, 0.8)",
+        },
+      ]}
       height={SHEET_HEIGHT}
       yPosition={pan}
       showSheet={isAnswered}

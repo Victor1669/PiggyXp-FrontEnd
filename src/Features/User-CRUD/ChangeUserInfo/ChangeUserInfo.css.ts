@@ -5,10 +5,10 @@ export const ChangeUserInfoStyles = StyleSheet.create({
     paddingVertical: 40,
     justifyContent: "center",
     alignItems: "center",
-    gap: 50,
   },
   imageField: {
     height: 210,
+    marginBottom: 30,
   },
   selectImageButton: {
     backgroundColor: "#fff",
