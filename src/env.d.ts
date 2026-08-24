@@ -1,4 +1,4 @@
-/* DECLARAÇÃO DE VARIÁVEIS DE AMBIENTE PARA AS CONFIGURAÇÕES DO APP */
+/* DECLARAÇÃO DE VARIÁVEIS DE AMBIENTE PARA AS CONFIGURAÇÕES DO APP  */
 declare namespace NodeJS {
   interface ProcessEnv {
     EXPO_PUBLIC_EAS_BUILD_PROFILE: "development" | "preview" | "production";

@@ -7,7 +7,7 @@ export const GoogleSignin = {
         id: "mock-user-id",
         email: "mock@example.com",
         name: "Mock User",
-        photo: "https://example.com/photo.jpg",
+        photo: "https://example.com/photo.jpg ",
       },
       idToken: "mock-id-token",
     }),

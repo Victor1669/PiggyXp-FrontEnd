@@ -70,7 +70,7 @@ jobs:
             echo "Nenhuma build finalizada encontrada. Iniciando nova build..."
             npx --yes eas-cli@latest build --platform android --profile production --non-interactive --wait
           else
-            echo "Build de produção já está em dia (status: finished). Pulando build."
+            echo "Build de produção já está em dia (status: finished). Pulando build. "
           fi
 
       - name: Pegar link do APK e atualizar na Vercel

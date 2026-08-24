@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View } from "react-native";
 
 import { useQuiz } from "../Contexts/useQuiz";
@@ -26,7 +27,15 @@ export default function LevelConclusionContainer() {
 
   const { finishLevel, isLoading, generateFinishPhrase } = useFinishLevel();
 
+  const [disableButton, setDisableButton] = useState(false);
+
   const finishPhrase = generateFinishPhrase();
+
+  function handleFinishLevel() {
+    setDisableButton(true);
+
+    finishLevel();
+  }
 
   return (
     <View style={container}>
@@ -55,7 +64,11 @@ export default function LevelConclusionContainer() {
         </View>
       </View>
 
-      <Button onPress={finishLevel} style={conclusionButton}>
+      <Button
+        disabled={disableButton}
+        onPress={handleFinishLevel}
+        style={conclusionButton}
+      >
         {isLoading
           ? "Carregando..."
           : isRepeatingLevel

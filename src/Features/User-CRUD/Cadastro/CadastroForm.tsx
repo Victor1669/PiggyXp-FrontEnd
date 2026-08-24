@@ -15,6 +15,7 @@ import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
+import { Alert } from "react-native";
 
 export default function CadastroForm() {
   const { login } = useAuth();
@@ -52,6 +53,13 @@ export default function CadastroForm() {
 
     if (registerStatus < 300) {
       registerSuccess(registerData);
+    } else {
+      Alert.alert(
+        "Erro: " +
+          registerData +
+          "\nMensagem: " +
+          (registerData?.message ?? ""),
+      );
     }
 
     hideStatus();
