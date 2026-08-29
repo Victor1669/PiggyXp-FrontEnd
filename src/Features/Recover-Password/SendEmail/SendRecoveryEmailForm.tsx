@@ -1,8 +1,9 @@
 import { router } from "expo-router";
 
+import { setStorageItem, STORAGE_KEYS } from "Utils/securestore";
+
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { Fields } from "@Auth/Schemas/SchemaFields";
 import { SendRecoveryEmail } from "@Auth/Services/RecoveryService";
@@ -10,7 +11,6 @@ import { SendRecoveryEmail } from "@Auth/Services/RecoveryService";
 import Form from "@Auth/Components/Form/Form";
 
 export default function SendRecoveryEmailForm() {
-  const { userEmailWhileRecovering } = useStorageItemsContext();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
@@ -27,7 +27,7 @@ export default function SendRecoveryEmailForm() {
     const { status } = await SendRecoveryEmail(body);
 
     if (status < 300) {
-      await userEmailWhileRecovering.set(body.email);
+      await setStorageItem(STORAGE_KEYS.recoveryEmail, body.email);
       router.replace("/SendRecoveryEmail/CodeVerifier");
     }
 

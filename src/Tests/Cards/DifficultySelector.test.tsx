@@ -36,23 +36,6 @@ jest.mock("Hooks/useAutoSlider", () => ({
     };
   },
 }));
-jest.mock("Contexts/useStorageItemsContext", () => ({
-  ...jest.requireActual("Contexts/useStorageItemsContext"),
-  useStorageItemsContext: () => ({
-    userInfo: {
-      get: jest.fn().mockResolvedValue(null),
-      set: jest.fn().mockResolvedValue(undefined),
-    },
-    userUnit: {
-      get: jest.fn().mockResolvedValue(null),
-      set: jest.fn().mockResolvedValue(undefined),
-    },
-    userToken: {
-      get: jest.fn().mockResolvedValue("token-falso"),
-    },
-    clearStorage: jest.fn(),
-  }),
-}));
 
 jest.mock("Contexts/StatusContext", () => ({
   ...jest.requireActual("Contexts/StatusContext"),
@@ -65,7 +48,6 @@ jest.mock("Contexts/StatusContext", () => ({
 import { AuthProvider } from "../../Features/Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { StorageItemsContextProvider } from "Contexts/useStorageItemsContext";
 
 import { setDifficultyApi } from "../../Features/Select-Difficulty/setDifficultyApi";
 
@@ -83,13 +65,11 @@ const TOTAL_CARDS = 3;
 
 async function renderDifficultySelector() {
   const renderResult = render(
-    <StorageItemsContextProvider>
-      <AuthProvider>
-        <StatusProvider>
-          <DifficultySelector />
-        </StatusProvider>
-      </AuthProvider>
-    </StorageItemsContextProvider>,
+    <AuthProvider>
+      <StatusProvider>
+        <DifficultySelector />
+      </StatusProvider>
+    </AuthProvider>,
   );
 
   await waitFor(() => {

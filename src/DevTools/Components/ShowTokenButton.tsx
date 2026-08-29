@@ -1,12 +1,10 @@
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 import Button from "Components/Button";
 
 export default function ShowTokenButton() {
-  const { userToken } = useStorageItemsContext();
-
   async function handleShowToken() {
-    const token = await userToken.get();
+    const token = await getStorageItem(STORAGE_KEYS.userToken);
     console.log(token);
   }
 

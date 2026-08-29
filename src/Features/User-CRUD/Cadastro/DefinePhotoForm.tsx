@@ -5,7 +5,6 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
@@ -14,6 +13,11 @@ import Paragraph from "@Components/Paragraph";
 import { ImageUploaderButton } from "./ImageUploaderButton";
 
 import { ImageContainer } from "../../Auth/Components/ImageContainer";
+import {
+  deleteStorageItem,
+  getStorageItem,
+  STORAGE_KEYS,
+} from "Utils/securestore";
 
 export default function DefinePhotoForm() {
   const { login, user } = useAuth();
@@ -23,7 +27,6 @@ export default function DefinePhotoForm() {
   );
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
-  const { temporaryImageToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 
@@ -41,10 +44,10 @@ export default function DefinePhotoForm() {
 
     showStatus("loading");
 
-    const userToken = await temporaryImageToken.get();
+    const imageToken = await getStorageItem(STORAGE_KEYS.temporaryImageToken);
 
-    await handleImageSubmit(userToken);
-    await temporaryImageToken.delete();
+    await handleImageSubmit(imageToken ?? "");
+    await deleteStorageItem(STORAGE_KEYS.temporaryImageToken);
 
     router.replace("/Login");
 

@@ -8,7 +8,7 @@ import { GetUserProgress } from "@Auth/Services/UserProgressService";
 import { RegenLivesService } from "Features/Auth/Services/RegenLivesService";
 import { updateNivelApi } from "Features/Screens/Home/Services/HomeServices";
 
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import { STORAGE_KEYS, getStorageItem, decodeToken } from "Utils/securestore";
 
 import { notifications } from "Utils/notifications";
 
@@ -16,17 +16,22 @@ import { UserType } from "Features/Auth/Types/UserType";
 
 export function useUpdateUserInfo() {
   const { login } = useAuth();
-  const { userToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 
   async function updateUserInfo() {
     if (isPreviewBuild) return;
 
-    const [{ userId }, storedUserToken] = (await Promise.all([
-      userToken.decode(),
-      userToken.get(),
-    ])) as [{ userId: string }, storedUserToken: string];
+    const [decodedToken, storedUserToken] = await Promise.all([
+      decodeToken<{ userId: string }>(STORAGE_KEYS.userToken),
+      getStorageItem(STORAGE_KEYS.userToken),
+    ]);
+
+    if (!storedUserToken) {
+      return;
+    }
+
+    const { userId } = decodedToken!;
 
     const [
       { data: achievementsData, status: achievementsStatus },

@@ -1,11 +1,14 @@
 import { screenValues } from "Config/screenValues";
 
 import { useQuiz } from "../Contexts/useQuiz";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import {
+  getStorageItem,
+  setStorageItem,
+  STORAGE_KEYS,
+} from "Utils/securestore";
 
 export function useAnswerValidation(index: number) {
   const { getQuestion, dispatch, rewards } = useQuiz();
-  const { temporaryErrorCount } = useStorageItemsContext();
 
   const actualQuestion = getQuestion(index);
 
@@ -20,8 +23,14 @@ export function useAnswerValidation(index: number) {
     } else {
       dispatch({ type: "ERROU_QUESTAO" });
       if (!isPreviewBuild) {
-        const errosAtuais = +(await temporaryErrorCount.get());
-        temporaryErrorCount.set(String(errosAtuais + 1));
+        const currentErrorCount = Number(
+          await getStorageItem(STORAGE_KEYS.temporaryErrorCount),
+        );
+
+        await setStorageItem(
+          STORAGE_KEYS.temporaryErrorCount,
+          String(currentErrorCount + 1),
+        );
       }
     }
   };

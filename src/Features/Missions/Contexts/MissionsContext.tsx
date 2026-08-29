@@ -9,7 +9,12 @@ import { usePathname } from "expo-router";
 
 import { SelectMissionService } from "../Services/MissionServices";
 
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import {
+  STORAGE_KEYS,
+  getStorageItem,
+  setStorageItem,
+} from "Utils/securestore";
+
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import { useGetMissions } from "../Hooks/useGetMissions";
@@ -32,7 +37,6 @@ const MissionsContext = createContext<MissionsContextData | undefined>(
 );
 
 export function MissionsProvider({ children }: { children: ReactNode }) {
-  const { updateMissionDay, userToken } = useStorageItemsContext();
   const {
     user: { id },
   } = useAuth();
@@ -55,15 +59,20 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
   async function handleSelectMissions() {
     try {
       setIsLoading(true);
-      const token = await userToken.get();
-      const { status } = await SelectMissionService({ id }, token);
+
+      const userToken = await getStorageItem(STORAGE_KEYS.userToken);
+
+      const { status } = await SelectMissionService({ id }, userToken ?? "");
 
       if (status < 300) {
         await fetchMissions();
 
         const updateDay = getActualDay();
 
-        updateMissionDay.set(JSON.stringify(updateDay));
+        await setStorageItem(
+          STORAGE_KEYS.updateMissionDay,
+          JSON.stringify(updateDay),
+        );
       }
     } catch (error) {
       console.error("Erro ao processar missão:", error);
@@ -79,15 +88,16 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
   }, [pathname, fetchMissions]);
 
   useEffect(() => {
-    updateMissionDay.get().then((lastUpdateString) => {
+    getStorageItem(STORAGE_KEYS.updateMissionDay).then((lastUpdateString) => {
       let lastUpdate: UpdateDay;
 
-      if (lastUpdateString.length) {
+      if (lastUpdateString) {
         lastUpdate = JSON.parse(lastUpdateString);
       } else {
         setTimeout(() => {
           handleSelectMissions();
         }, 1000);
+
         lastUpdate = getActualDay();
       }
 

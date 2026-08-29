@@ -2,7 +2,6 @@ import { render } from "@testing-library/react-native";
 
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
-import { StorageItemsContextProvider } from "Contexts/useStorageItemsContext";
 
 import { useFetch } from "@Auth/Hooks/useFetch";
 import { fieldValidations, FieldName } from "../Helpers/fieldValidations";
@@ -20,13 +19,11 @@ const userData = { email: "usuario@email.com", password: "senha123" };
 
 const renderLogin = () =>
   render(
-    <StorageItemsContextProvider>
-      <AuthProvider>
-        <StatusProvider>
-          <Login />
-        </StatusProvider>
-      </AuthProvider>
-    </StorageItemsContextProvider>,
+    <AuthProvider>
+      <StatusProvider>
+        <Login />
+      </StatusProvider>
+    </AuthProvider>,
   );
 
 describe("LoginForm & UserLogin", () => {

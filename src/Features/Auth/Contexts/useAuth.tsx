@@ -1,10 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { screenValues } from "Config/screenValues";
+import {
+  getStorageItem,
+  setStorageItem,
+  clearStorage,
+  STORAGE_KEYS,
+} from "Utils/securestore";
 
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
-
-import { UserType, PreviewUserType } from "../Types/UserType";
+import { UserType } from "../Types/UserType";
 
 type AuthProviderValues = {
   user: UserType;
@@ -18,20 +22,16 @@ type AuthProviderValues = {
 
 const AuthContext = createContext<AuthProviderValues | undefined>(undefined);
 
-/**
- * Provider para disponibilizar ações com o usuário atual.
- */
 function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { userUnit, userInfo, clearStorage } = useStorageItemsContext();
-  const [user, setUser] = useState<UserType | PreviewUserType>({} as UserType);
+  const [user, setUser] = useState<UserType>({} as UserType);
   const [hasVerifiedUserInfo, setHasVerifiedUserInfo] = useState(false);
-
-  const hasUserInfo = Object.values(user).length > 0;
 
   const { isPreviewBuild } = screenValues();
 
+  const hasUserInfo = Object.values(user).length > 0;
+
   async function login(userData: UserType) {
-    userInfo.set(JSON.stringify(userData));
+    await setStorageItem(STORAGE_KEYS.userInfo, JSON.stringify(userData));
 
     setUser(userData);
   }
@@ -42,22 +42,26 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser({} as UserType);
   }
 
-  useEffect(function getUserInfoFromStore() {
+  useEffect(() => {
     if (isPreviewBuild) return;
 
-    (async () => {
+    async function getUserInfoFromStore() {
       const [storedUser, storedUnit] = await Promise.all([
-        userInfo.get(),
-        userUnit.get(),
+        getStorageItem(STORAGE_KEYS.userInfo),
+        getStorageItem(STORAGE_KEYS.userUnit),
       ]);
 
       if (!storedUnit) {
-        await userUnit.set("1");
+        await setStorageItem(STORAGE_KEYS.userUnit, "1");
       }
 
-      setUser(JSON.parse(storedUser || "{}"));
-    })();
-  }, []);
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }
+
+    getUserInfoFromStore();
+  }, [isPreviewBuild]);
 
   const value: AuthProviderValues = {
     user,
@@ -72,14 +76,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-/**
- * Hook para manutenção de dados do usuário.
- */
 function useAuth() {
   const context = useContext(AuthContext);
 
-  if (context === undefined)
+  if (context === undefined) {
     throw new Error("AuthContext usado fora do AuthProvider!");
+  }
 
   return context;
 }

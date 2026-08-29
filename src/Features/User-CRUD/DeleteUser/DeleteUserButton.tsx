@@ -7,7 +7,6 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { DeleteUserService } from "@Auth/Services/DeleteUser";
 
@@ -15,6 +14,7 @@ import { toastMessage } from "Utils/toast";
 
 import Button from "@Components/Button";
 import Paragraph from "@Components/Paragraph";
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 export default function DeleteUserButton() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -22,7 +22,6 @@ export default function DeleteUserButton() {
   const { user, logout } = useAuth();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
-  const { userToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 
@@ -40,8 +39,9 @@ export default function DeleteUserButton() {
 
     showStatus("loading");
 
-    const token = await userToken.get();
-    const { data, status } = await DeleteUserService(user.id, token);
+    const token = await getStorageItem(STORAGE_KEYS.userToken);
+
+    const { data, status } = await DeleteUserService(user.id, token ?? "");
 
     if (status < 300) {
       await logout();

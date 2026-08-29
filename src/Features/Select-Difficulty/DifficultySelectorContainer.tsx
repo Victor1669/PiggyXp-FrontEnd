@@ -2,10 +2,15 @@ import { useEffect } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { router } from "expo-router";
 
+import {
+  STORAGE_KEYS,
+  getStorageItem,
+  setStorageItem,
+} from "Utils/securestore";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 import { useAutoSlider } from "Hooks/useAutoSlider";
 
 import { setDifficultyApi } from "Features/Select-Difficulty/setDifficultyApi";
@@ -26,7 +31,6 @@ export default function DifficultySelectorContainer() {
   const { setUser } = useAuth();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
-  const { userUnit, userToken } = useStorageItemsContext();
 
   const {
     currentIndex: difficulty,
@@ -41,10 +45,9 @@ export default function DifficultySelectorContainer() {
   });
 
   useEffect(() => {
-    (async () => {
-      await requestNotificationPermission();
-      await userUnit.set("1");
-    })();
+    requestNotificationPermission().then(() =>
+      setStorageItem(STORAGE_KEYS.userUnit, "1"),
+    );
   }, []);
 
   async function handleSubmit() {
@@ -55,8 +58,9 @@ export default function DifficultySelectorContainer() {
 
     showStatus("loading");
 
-    const token = await userToken.get();
-    const { status } = await setDifficultyApi({ difficulty }, token);
+    const token = await getStorageItem(STORAGE_KEYS.userToken);
+
+    const { status } = await setDifficultyApi({ difficulty }, token ?? "");
 
     if (status < 300) {
       setUser((prev) => ({ ...prev, difficulty }));

@@ -7,17 +7,20 @@ import { screenValues } from "Config/screenValues";
 import { RefreshTokenService } from "@Auth/Services/RefreshTokenService";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 import { useStatus } from "Contexts/StatusContext";
 
 import { toastMessage } from "Utils/toast";
+import {
+  getStorageItem,
+  setStorageItem,
+  STORAGE_KEYS,
+} from "Utils/securestore";
 import { themeChanger } from "Helpers/themeChanger";
 
 import SplashContainer from "@Screens/Splash/SplashContainer";
 
 export default function SplashScreen() {
   const { user, setHasVerifiedUserInfo } = useAuth();
-  const { refreshToken, userToken } = useStorageItemsContext();
   const { isPreviewBuild } = screenValues();
   const { hideStatus } = useStatus();
 
@@ -32,9 +35,11 @@ export default function SplashScreen() {
       themeChanger("splash");
 
       (async () => {
-        const storedRefreshToken = await refreshToken.get();
+        const storedRefreshToken = await getStorageItem(
+          STORAGE_KEYS.refreshToken,
+        );
 
-        if (!storedRefreshToken.length || isPreviewBuild) {
+        if (storedRefreshToken === null || isPreviewBuild) {
           setHasVerifiedUserInfo(true);
           return;
         }
@@ -42,7 +47,7 @@ export default function SplashScreen() {
         const { data, status } = await RefreshTokenService(storedRefreshToken);
 
         if (status < 300) {
-          await userToken.set(data.accessToken);
+          await setStorageItem(STORAGE_KEYS.userToken, data.accessToken);
           hideStatus();
           router.replace("/Content");
         } else {

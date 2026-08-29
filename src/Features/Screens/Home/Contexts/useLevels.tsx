@@ -4,8 +4,9 @@ import { screenValues } from "Config/screenValues";
 
 import { getTitleApi } from "../Services/HomeServices";
 
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
+
 import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { generateLevels } from "../Helpers/generateLevels";
 
@@ -26,7 +27,6 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
   const {
     user: { nivel_ph, difficulty },
   } = useAuth();
-  const { userUnit } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 
@@ -41,14 +41,13 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
   async function updateTitle() {
     setIsLoading(true);
 
-    const storedUserUnit = await userUnit.get();
+    const userUnit = await getStorageItem(STORAGE_KEYS.userUnit);
 
-    const { data, status } = await getTitleApi(
-      difficulty,
-      +storedUserUnit || 1,
-    );
+    if (userUnit) {
+      const { data, status } = await getTitleApi(difficulty, +userUnit || 1);
 
-    setUnitTitle(status < 300 ? data.tittle : "");
+      setUnitTitle(status < 300 ? data.tittle : "");
+    }
 
     setIsLoading(false);
   }

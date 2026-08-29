@@ -9,13 +9,12 @@ import { UpdateMissionsService } from "Features/Missions/Services/MissionService
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useQuiz } from "../Contexts/useQuiz";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 export function useFinishLevel() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { getIsConnected } = useInternetConnection();
-  const { userToken } = useStorageItemsContext();
   const {
     user: { id },
   } = useAuth();
@@ -54,9 +53,9 @@ export function useFinishLevel() {
 
     setIsLoading(true);
 
-    if (!isPreviewBuild) {
-      const storedToken = await userToken.get();
+    const storedToken = await getStorageItem(STORAGE_KEYS.userToken);
 
+    if (!isPreviewBuild && storedToken) {
       if (errors > 0) {
         await LivesService(storedToken, { erro: errors });
       }

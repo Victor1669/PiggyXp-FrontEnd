@@ -2,9 +2,15 @@ import { useState } from "react";
 import { Pressable, View } from "react-native";
 import { router } from "expo-router";
 
+import {
+  deleteStorageItem,
+  getStorageItem,
+  STORAGE_KEYS,
+} from "Utils/securestore";
+import { toastMessage } from "Utils/toast";
+
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import {
   resendRecoveryEmail,
@@ -17,13 +23,13 @@ import Form from "@Auth/Components/Form/Form";
 import Paragraph from "@Components/Paragraph";
 
 import { CodeVerifierStyles } from "Features/Recover-Password/CodeVerifier/CodeVerifier.css";
+
 const { textContainer } = CodeVerifierStyles;
 
 export default function CodeVerifierForm() {
   const LENGTH = 4;
   const [code, setCode] = useState<string[]>(Array(LENGTH).fill(""));
 
-  const { userEmailWhileRecovering } = useStorageItemsContext();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
@@ -48,7 +54,7 @@ export default function CodeVerifierForm() {
 
     if (status < 300) {
       router.replace("/Login");
-      await userEmailWhileRecovering.delete();
+      await deleteStorageItem(STORAGE_KEYS.recoveryEmail);
     }
 
     hideStatus();
@@ -62,8 +68,18 @@ export default function CodeVerifierForm() {
 
     showStatus("loading");
 
-    const email = await userEmailWhileRecovering.get();
-    await resendRecoveryEmail({ email });
+    const recoveryEmail = await getStorageItem(STORAGE_KEYS.recoveryEmail);
+
+    if (!recoveryEmail) {
+      toastMessage({
+        type: "error",
+        text: "Sessão de recuperação inválida, solicite um novo código!",
+      });
+      hideStatus();
+      return;
+    }
+
+    await resendRecoveryEmail({ email: recoveryEmail });
 
     hideStatus();
   }

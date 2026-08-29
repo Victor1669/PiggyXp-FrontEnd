@@ -4,9 +4,10 @@ import { router } from "expo-router";
 
 import { updateUserInfoApi } from "@Auth/Services/UserInfoService";
 
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
+
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
@@ -23,7 +24,6 @@ const { container } = ChangeUserInfoStyles;
 export default function ChangeUserInfoContainer() {
   const { user, logout, login } = useAuth();
   const { showStatus, hideStatus } = useStatus();
-  const { userToken } = useStorageItemsContext();
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
     "update-user-img",
     "PUT",
@@ -40,13 +40,17 @@ export default function ChangeUserInfoContainer() {
     hasChangedEmail: boolean,
   ) {
     showStatus("loading");
-    const token = await userToken.get();
+    const userToken = await getStorageItem(STORAGE_KEYS.userToken);
 
     if (image !== user.user_img) {
-      await handleImageSubmit(token);
+      await handleImageSubmit(userToken ?? "");
     }
 
-    const { data, status } = await updateUserInfoApi(user.id, textData, token);
+    const { data, status } = await updateUserInfoApi(
+      user.id,
+      textData,
+      userToken ?? "",
+    );
 
     if (data.message === "jwt expired" || data === "jwt expired") {
       jwtExpiredHandler();

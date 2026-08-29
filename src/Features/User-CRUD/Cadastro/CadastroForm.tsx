@@ -5,7 +5,6 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { UserRegister } from "@Auth/Services/CadastroService";
 import { toastMessage } from "Utils/toast";
@@ -15,13 +14,12 @@ import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
-import { Alert } from "react-native";
+import { setStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 export default function CadastroForm() {
   const { login } = useAuth();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
-  const { temporaryImageToken } = useStorageItemsContext();
 
   const { isPreviewBuild } = screenValues();
 
@@ -53,13 +51,6 @@ export default function CadastroForm() {
 
     if (registerStatus < 300) {
       registerSuccess(registerData);
-    } else {
-      Alert.alert(
-        "Erro: " +
-          registerData +
-          "\nMensagem: " +
-          (registerData?.message ?? ""),
-      );
     }
 
     hideStatus();
@@ -67,7 +58,7 @@ export default function CadastroForm() {
 
   async function registerSuccess(registerData: any) {
     const { token } = registerData;
-    await temporaryImageToken.set(token);
+    await setStorageItem(STORAGE_KEYS.temporaryImageToken, token);
     router.replace("/Cadastro/DefinePhoto");
     toastMessage({ type: "success", text: registerData.message });
   }

@@ -1,11 +1,13 @@
 import { router } from "expo-router";
+import { jwtDecode } from "jwt-decode";
 
 import { screenValues } from "Config/screenValues";
+
+import { STORAGE_KEYS, setStorageItem } from "Utils/securestore";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStatus } from "Contexts/StatusContext";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
 
 import { getUserInfoApi } from "@Auth/Services/UserInfoService";
 import { UserLogin } from "@Auth/Services/LoginService";
@@ -17,7 +19,6 @@ import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 
 export default function LoginForm() {
   const { login } = useAuth();
-  const { refreshToken, userToken } = useStorageItemsContext();
   const { showStatus, hideStatus } = useStatus();
   const { getIsConnected } = useInternetConnection();
 
@@ -57,10 +58,12 @@ export default function LoginForm() {
   }) {
     const { refreshToken: rfValue, token } = loginData;
 
-    await refreshToken.set(rfValue);
-    await userToken.set(token);
+    await Promise.all([
+      setStorageItem(STORAGE_KEYS.refreshToken, rfValue),
+      setStorageItem(STORAGE_KEYS.userToken, token),
+    ]);
 
-    const { userId } = (await userToken.decode()) as { userId: string };
+    const { userId } = jwtDecode<{ userId: string }>(token);
 
     const { data: user, status } = await getUserInfoApi(userId);
 
@@ -68,7 +71,9 @@ export default function LoginForm() {
       router.replace(
         user.first_login ? "/Login/DifficultySelector" : "/Content",
       );
-    } else router.replace("/Login");
+    } else {
+      router.replace("/Login");
+    }
   }
 
   return (

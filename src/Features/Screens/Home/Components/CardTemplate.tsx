@@ -1,9 +1,11 @@
 import { View } from "react-native";
 import { useEffect, useState } from "react";
 
-import { useAuth } from "@Auth/Contexts/useAuth";
 import { screenValues } from "Config/screenValues";
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
+
+import { useAuth } from "@Auth/Contexts/useAuth";
 
 import ProgressBar from "@Components/ProgressBar";
 import Picture from "@Components/Picture";
@@ -41,7 +43,6 @@ export function SliderCardTemplate({
 }
 
 export function UnitCard() {
-  const { userUnit } = useStorageItemsContext();
   const [selectedUnit, setSelectedUnit] = useState(1);
   const {
     user: { difficulty },
@@ -61,11 +62,12 @@ export function UnitCard() {
   }
 
   useEffect(() => {
-    (async () => {
-      const storedUnit = await userUnit.get();
-      setSelectedUnit(+storedUnit || 1);
-    })();
-  }, [userUnit]);
+    getStorageItem(STORAGE_KEYS.userUnit).then((userUnit) => {
+      if (userUnit) {
+        setSelectedUnit(Number(userUnit) || 1);
+      }
+    });
+  }, []);
 
   return (
     <View style={HomeSliderStyles.unitCard}>

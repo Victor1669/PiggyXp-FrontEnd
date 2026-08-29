@@ -9,7 +9,6 @@ import { StatusProvider } from "Contexts/StatusContext";
 import { InternetConnectionProvider } from "Contexts/useInternetConnection";
 import { SplashAnimationProvider } from "@Screens/Splash/Contexts/useSplashAnimation";
 import { SplashAnimatedValuesProvider } from "Features/Screens/Splash/Contexts/useSplashAnimatedValues";
-import { StorageItemsContextProvider } from "Contexts/useStorageItemsContext";
 
 import { ToastContainer, toastMessage } from "Utils/toast";
 import { registerNotificationClickListener } from "Utils/notifications";
@@ -44,20 +43,18 @@ export default function RootLayout() {
 
   return (
     <InternetConnectionProvider>
-      <StorageItemsContextProvider>
-        <AuthProvider>
-          <StatusProvider>
-            <SplashAnimationProvider>
-              <SplashAnimatedValuesProvider>
-                <ScreenContainer />
-              </SplashAnimatedValuesProvider>
-            </SplashAnimationProvider>
-            <ToastContainer />
-            <LoadingSpinner />
-            <DevToolsLink />
-          </StatusProvider>
-        </AuthProvider>
-      </StorageItemsContextProvider>
+      <AuthProvider>
+        <StatusProvider>
+          <SplashAnimationProvider>
+            <SplashAnimatedValuesProvider>
+              <ScreenContainer />
+            </SplashAnimatedValuesProvider>
+          </SplashAnimationProvider>
+          <ToastContainer />
+          <LoadingSpinner />
+          <DevToolsLink />
+        </StatusProvider>
+      </AuthProvider>
     </InternetConnectionProvider>
   );
 }

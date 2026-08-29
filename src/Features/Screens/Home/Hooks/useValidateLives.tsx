@@ -1,38 +1,44 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "expo-router";
 
-import { useStorageItemsContext } from "Contexts/useStorageItemsContext";
+import {
+  STORAGE_KEYS,
+  deleteStorageItem,
+  getStorageItem,
+} from "Utils/securestore";
 
 import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
 
 import { LivesService } from "Features/Level/Services/LevelServices";
 
 export function useValidateLives() {
-  const { temporaryErrorCount, userToken } = useStorageItemsContext();
   const updateUserInfo = useUpdateUserInfo();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function verificarSeUsuarioSaiu() {
-      setIsLoading(true);
+    if (pathname !== "/Content") return;
 
-      const [errorCount, storedUserToken] = await Promise.all([
-        temporaryErrorCount.get(),
-        userToken.get(),
-      ]);
+    setIsLoading(true);
 
-      if (errorCount.length) {
-        await LivesService(storedUserToken, { erro: +errorCount });
+    Promise.all([
+      getStorageItem(STORAGE_KEYS.temporaryErrorCount),
+      getStorageItem(STORAGE_KEYS.userToken),
+    ])
+      .then(async ([errorCount, storedUserToken]) => {
+        if (errorCount && storedUserToken) {
+          await LivesService(storedUserToken, {
+            erro: Number(errorCount),
+          });
 
-        temporaryErrorCount.delete();
-      }
-      await updateUserInfo();
+          await deleteStorageItem(STORAGE_KEYS.temporaryErrorCount);
+        }
 
-      setIsLoading(false);
-    }
-
-    if (pathname === "/Content") verificarSeUsuarioSaiu();
+        await updateUserInfo();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [pathname]);
 
   return { isLoading };

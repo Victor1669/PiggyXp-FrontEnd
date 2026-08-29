@@ -1,26 +1,37 @@
 import * as SecureStore from "expo-secure-store";
+import { jwtDecode } from "jwt-decode";
 
-export { getSecureStoreItem, setSecureStoreItem, deleteSecureStoreItem };
+export const STORAGE_KEYS = {
+  recoveryEmail: "RECOVERY_EMAIL",
+  temporaryImageToken: "TEMPORARY_IMAGE_TOKEN",
+  updateMissionDay: "UPDATE_MISSION_DAY",
+  userUnit: "USER_UNIT",
+  userInfo: "USER_INFO",
+  temporaryErrorCount: "TEMPORARY_ERROR_COUNT",
+  userToken: "USER_TOKEN",
+  refreshToken: "REFRESH_TOKEN",
+} as const;
 
-interface SecureStoreItemTypes {
-  itemName: string;
+export async function getStorageItem(key: string) {
+  return await SecureStore.getItemAsync(key);
 }
 
-interface setSecureStoreItemTypes extends SecureStoreItemTypes {
-  newValue: string;
+export async function setStorageItem(key: string, value: string) {
+  await SecureStore.setItemAsync(key, value);
 }
 
-async function getSecureStoreItem({ itemName }: SecureStoreItemTypes) {
-  return (await SecureStore.getItemAsync(itemName)) ?? "";
+export async function deleteStorageItem(key: string) {
+  await SecureStore.deleteItemAsync(key);
 }
 
-async function setSecureStoreItem({
-  itemName,
-  newValue,
-}: setSecureStoreItemTypes) {
-  await SecureStore.setItemAsync(itemName, newValue);
+export async function clearStorage() {
+  await Promise.all(Object.values(STORAGE_KEYS).map(deleteStorageItem));
 }
 
-async function deleteSecureStoreItem({ itemName }: SecureStoreItemTypes) {
-  await SecureStore.deleteItemAsync(itemName);
+export async function decodeToken<T = object>(key: string) {
+  const token = await getStorageItem(key);
+
+  if (!token) return null;
+
+  return jwtDecode<T>(token);
 }
