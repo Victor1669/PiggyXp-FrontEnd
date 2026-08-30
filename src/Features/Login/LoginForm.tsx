@@ -9,13 +9,14 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStatus } from "Contexts/StatusContext";
 
-import { getUserInfoApi } from "@Auth/Services/UserInfoService";
 import { UserLogin } from "@Auth/Services/LoginService";
 
 import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
+
+import { getUserInfoApi } from "Features/Auth/Services/UserInfoService";
 
 export default function LoginForm() {
   const { login } = useAuth();

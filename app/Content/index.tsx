@@ -21,9 +21,7 @@ export default function Home() {
     if (isPreviewBuild) return;
     if (!getIsConnected()) return;
 
-    (async () => {
-      await updateUserInfo();
-    })();
+    updateUserInfo();
   }, []);
 
   return (

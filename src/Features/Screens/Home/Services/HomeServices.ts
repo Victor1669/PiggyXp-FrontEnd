@@ -9,22 +9,10 @@ export async function getTitleApi(difficulty: number, unit: number) {
   return response;
 }
 
-interface UpdateNivelApiReturn {
-  status: number;
-  data: {
-    message: string;
-    nivel: number;
-    xpAtual: number;
-    xpNecessario: number;
-  };
-}
-
-export async function updateNivelApi(
-  token: string,
-): Promise<UpdateNivelApiReturn> {
-  const response = await useFetch({
-    method: "put",
-    rota: `nivel`,
+export async function homeApi(token: string) {
+  const response = useFetch({
+    method: "get",
+    rota: "home",
     token,
   });
 

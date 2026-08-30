@@ -21,7 +21,7 @@ export function usePurchase() {
       toastMessage({ type: "success", text: "Compra realizada com sucesso!" });
     }
 
-    updateUserInfo();
+    await updateUserInfo();
 
     hideStatus();
   }

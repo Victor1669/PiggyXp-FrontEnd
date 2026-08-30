@@ -6,17 +6,11 @@ interface SelectMissionValues {
   status: number;
 }
 
-const SelectMissionService = async (
-  body: {
-    id: number;
-  },
-  token: string,
-) => {
+const SelectMissionService = async (token: string) => {
   const res = await useFetch({
     method: "put",
     rota: `select`,
     token,
-    body,
   });
 
   return res;

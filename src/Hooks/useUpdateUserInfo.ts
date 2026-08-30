@@ -2,17 +2,12 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { screenValues } from "Config/screenValues";
 
-import { getUserInfoApi } from "@Auth/Services/UserInfoService";
-import { verifyAchievements } from "../Features/Achievements/AchievementsServices";
-import { GetUserProgress } from "@Auth/Services/UserProgressService";
-import { RegenLivesService } from "Features/Auth/Services/RegenLivesService";
-import { updateNivelApi } from "Features/Screens/Home/Services/HomeServices";
+import { homeApi } from "Features/Screens/Home/Services/HomeServices";
+import { regenLivesApi } from "Features/Auth/Services/RegenLivesService";
 
-import { STORAGE_KEYS, getStorageItem, decodeToken } from "Utils/securestore";
+import { STORAGE_KEYS, getStorageItem } from "Utils/securestore";
 
 import { notifications } from "Utils/notifications";
-
-import { UserType } from "Features/Auth/Types/UserType";
 
 export function useUpdateUserInfo() {
   const { login } = useAuth();
@@ -22,60 +17,27 @@ export function useUpdateUserInfo() {
   async function updateUserInfo() {
     if (isPreviewBuild) return;
 
-    const [decodedToken, storedUserToken] = await Promise.all([
-      decodeToken<{ userId: string }>(STORAGE_KEYS.userToken),
-      getStorageItem(STORAGE_KEYS.userToken),
-    ]);
+    const storedUserToken = await getStorageItem(STORAGE_KEYS.userToken);
 
     if (!storedUserToken) {
       return;
     }
 
-    const { userId } = decodedToken!;
+    await regenLivesApi(storedUserToken);
+    const { data, status } = await homeApi(storedUserToken);
 
-    const [
-      { data: achievementsData, status: achievementsStatus },
-      { data: userInfoData, status: userInfoStatus },
-      _,
-      { data: userProgressData, status: userProgressStatus },
-      { data: updateNivelData, status: updateNivelStatus },
-    ] = await Promise.all([
-      verifyAchievements(+userId),
-      getUserInfoApi(userId),
-      RegenLivesService(+userId, storedUserToken),
-      GetUserProgress(+userId),
-      updateNivelApi(storedUserToken),
-    ]);
+    if (status < 300) {
+      const { newAchievements, ...userInfo } = data;
 
-    if (
-      userInfoStatus < 300 &&
-      userProgressStatus < 300 &&
-      achievementsStatus < 300 &&
-      userProgressData &&
-      updateNivelStatus < 300
-    ) {
-      const { nivel, xpNecessario } = updateNivelData;
-      const { id, ...userProgress } = userProgressData;
+      await login(userInfo);
 
-      const newUserInfo: UserType = {
-        id: +userId,
-        ...userInfoData,
-        ...userProgress,
-        nivel,
-        xpProximoNivel: xpNecessario,
-      };
-
-      await login(newUserInfo);
-    }
-
-    const newAchievements = achievementsData?.newAchievements;
-
-    if (newAchievements && newAchievements !== "0000000010") {
-      notifications(
-        "Conquista nova!",
-        "Verifique sua tela de conquistas para receber a recompensa",
-        "/Achievements",
-      );
+      if (newAchievements && newAchievements !== "0000000010") {
+        notifications(
+          "Conquista nova!",
+          "Verifique sua tela de conquistas para receber a recompensa",
+          "/Achievements",
+        );
+      }
     }
   }
 

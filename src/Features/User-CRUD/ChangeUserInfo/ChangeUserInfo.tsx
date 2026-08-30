@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { router } from "expo-router";
 
-import { updateUserInfoApi } from "@Auth/Services/UserInfoService";
+import { updateUserInfoApi } from "Features/Auth/Services/UserInfoService";
 
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 

@@ -62,7 +62,9 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
 
       const userToken = await getStorageItem(STORAGE_KEYS.userToken);
 
-      const { status } = await SelectMissionService({ id }, userToken ?? "");
+      console.log(userToken);
+
+      const { status } = await SelectMissionService(userToken ?? "");
 
       if (status < 300) {
         await fetchMissions();

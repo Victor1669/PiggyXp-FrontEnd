@@ -1,4 +1,3 @@
-//#region Mocks e importações
 import {
   render,
   waitFor,
@@ -37,6 +36,12 @@ jest.mock("Hooks/useAutoSlider", () => ({
   },
 }));
 
+jest.mock("Utils/securestore", () => ({
+  ...jest.requireActual("Utils/securestore"),
+  getStorageItem: jest.fn(),
+  setStorageItem: jest.fn().mockResolvedValue(undefined),
+}));
+
 jest.mock("Contexts/StatusContext", () => ({
   ...jest.requireActual("Contexts/StatusContext"),
   useStatus: () => ({
@@ -48,6 +53,7 @@ jest.mock("Contexts/StatusContext", () => ({
 import { AuthProvider } from "../../Features/Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
+import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 import { setDifficultyApi } from "../../Features/Select-Difficulty/setDifficultyApi";
 
@@ -59,7 +65,6 @@ import { expectDots } from "../Helpers/expectDots";
 const mockSetUser = jest.fn();
 const mockShowStatus = jest.fn();
 const mockHideStatus = jest.fn();
-//#endregion
 
 const TOTAL_CARDS = 3;
 
@@ -84,6 +89,10 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
     jest.clearAllMocks();
     (useInternetConnection as jest.Mock).mockReturnValue({
       getIsConnected: () => true,
+    });
+    (getStorageItem as jest.Mock).mockImplementation((key: string) => {
+      if (key === STORAGE_KEYS.userToken) return Promise.resolve("token-falso");
+      return Promise.resolve(null);
     });
   });
 

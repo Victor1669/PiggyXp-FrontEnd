@@ -36,9 +36,7 @@ export default function AchievementsContainer() {
         return;
       }
 
-      (async () => {
-        await updateUserInfo();
-      })();
+      updateUserInfo();
     },
     [user.collectedAchievements],
   );

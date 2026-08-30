@@ -18,5 +18,5 @@ export const env: envTypes = {
   androidPackage: extra?.androidPackage,
   backEndUrl: extra?.backEndUrl,
   cloudinaryLink: extra?.cloudinaryBaseLink,
-  version: Constants.expoConfig?.version || "0.0.0",
+  version: Constants.expoConfig?.version || "1.0.0",
 };
