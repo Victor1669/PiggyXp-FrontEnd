@@ -13,9 +13,9 @@ import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import {
-  resendRecoveryEmail,
-  ResetPassword,
-} from "@Auth/Services/RecoveryService";
+  resetPasswordApi,
+  sendRecoveryEmailApi,
+} from "Services/recoveryServices";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import CodeInput from "Features/Recover-Password/CodeVerifier/CodeInput";
@@ -50,7 +50,7 @@ export default function CodeVerifierForm() {
 
     const reqBody = { code: codeString, confirmPassword, newPassword };
 
-    const { status } = await ResetPassword(reqBody);
+    const { status } = await resetPasswordApi(reqBody);
 
     if (status < 300) {
       router.replace("/Login");
@@ -79,7 +79,7 @@ export default function CodeVerifierForm() {
       return;
     }
 
-    await resendRecoveryEmail({ email: recoveryEmail });
+    await sendRecoveryEmailApi({ email: recoveryEmail });
 
     hideStatus();
   }

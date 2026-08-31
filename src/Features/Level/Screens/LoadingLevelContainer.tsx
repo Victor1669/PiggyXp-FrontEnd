@@ -8,7 +8,7 @@ import { screenValues } from "Config/screenValues";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
-import { GetPhaseService } from "Features/Level/Services/LevelServices";
+import { getPhaseApi } from "Services/levelServices";
 
 import { toastMessage } from "Utils/toast";
 
@@ -34,7 +34,7 @@ export default function LoadingLevelContainer() {
   }
 
   async function startProductionLevel() {
-    const { data, status } = await GetPhaseService(
+    const { data, status } = await getPhaseApi(
       user.difficulty,
       Number(actualQuestion),
     );

@@ -2,16 +2,7 @@ import * as FileSystem from "expo-file-system/legacy";
 
 import { env } from "Config/env";
 
-/**
- *
- * @param imageLocation
- * @param token
- * @param mimeType
- * @param backEndURL
- * @param method
- * @returns
- */
-export async function UploadPhotoService(
+export async function uploadPhotoApi(
   imageLocation: string,
   token: string,
   mimeType: string,

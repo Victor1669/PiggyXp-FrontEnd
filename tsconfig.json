@@ -21,6 +21,7 @@
         "./src/Features/Auth/Styles/*",
         "./src/Features/Screens/Styles/*"
       ],
+      "@Services/*": ["./src/Services/*"],
       "@Utils/*": ["./src/Utils/*"]
     }
   }

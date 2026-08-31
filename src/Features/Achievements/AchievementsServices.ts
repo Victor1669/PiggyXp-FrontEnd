@@ -1,8 +1,8 @@
-import { useFetch } from "@Auth/Hooks/useFetch";
+import { fetchApi } from "Utils/fetchApi";
 
 export async function verifyAchievements(userId: number) {
-  const res = await useFetch({
-    rota: `achievements/verify/${userId}`,
+  const res = await fetchApi({
+    route: `achievements/verify/${userId}`,
     method: "post",
   });
 
@@ -13,8 +13,8 @@ export async function getAchievementsRewards(
   userId: number,
   body: { achievementId: number },
 ) {
-  const res = await useFetch({
-    rota: `achievements/rewards/${userId}`,
+  const res = await fetchApi({
+    route: `achievements/rewards/${userId}`,
     method: "post",
     body,
   });

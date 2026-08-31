@@ -9,14 +9,13 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStatus } from "Contexts/StatusContext";
 
-import { UserLogin } from "@Auth/Services/LoginService";
+import { loginApi, type LoginApiResponse } from "@Services/loginApi";
+import { getUserInfoApi } from "@Services/userInfoServices";
 
 import Form from "@Auth/Components/Form/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
-
-import { getUserInfoApi } from "Features/Auth/Services/UserInfoService";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -40,7 +39,7 @@ export default function LoginForm() {
     showStatus("loading");
 
     const { Email: email, Senha: password } = data;
-    const { data: loginData, status: loginStatus } = await UserLogin({
+    const { data: loginData, status: loginStatus } = await loginApi({
       email,
       password,
     });
@@ -52,11 +51,7 @@ export default function LoginForm() {
     hideStatus();
   }
 
-  async function loginSuccess(loginData: {
-    message: string;
-    refreshToken: string;
-    token: string;
-  }) {
+  async function loginSuccess(loginData: LoginApiResponse) {
     const { refreshToken: rfValue, token } = loginData;
 
     await Promise.all([

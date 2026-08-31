@@ -1,9 +1,8 @@
-import { purchaseApi } from "../Services/LojaServices";
+import { fetchApi } from "Utils/fetchApi";
 
 import { useStatus } from "Contexts/StatusContext";
 
 import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
-import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 import { toastMessage } from "Utils/toast";
 
@@ -13,9 +12,8 @@ export function usePurchase() {
 
   async function purchase(productId: number) {
     showStatus("loading");
-    const userToken = (await getStorageItem(STORAGE_KEYS.userToken)) ?? "";
 
-    const { status } = await purchaseApi(userToken, productId);
+    const { status } = await purchaseApi(productId);
 
     if (status < 300) {
       toastMessage({ type: "success", text: "Compra realizada com sucesso!" });
@@ -27,4 +25,16 @@ export function usePurchase() {
   }
 
   return purchase;
+}
+
+export function purchaseApi(productId: number) {
+  const response = fetchApi({
+    route: "purchases/coins",
+    method: "post",
+    body: {
+      productId,
+    },
+  });
+
+  return response;
 }

@@ -3,13 +3,12 @@ import { router } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
-import { FinishPhaseService, LivesService } from "../Services/LevelServices";
-import { UpdateMissionsService } from "Features/Missions/Services/MissionServices";
+import { finishPhaseApi, livesApi } from "../../../Services/levelServices";
+import { updateMissionsApi } from "Services/missionServices";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useQuiz } from "../Contexts/useQuiz";
 import { useInternetConnection } from "Contexts/useInternetConnection";
-import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 export function useFinishLevel() {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,26 +52,21 @@ export function useFinishLevel() {
 
     setIsLoading(true);
 
-    const storedToken = await getStorageItem(STORAGE_KEYS.userToken);
-
-    if (!isPreviewBuild && storedToken) {
+    if (!isPreviewBuild) {
       if (errors > 0) {
-        await LivesService(storedToken, { erro: errors });
+        await livesApi({ erro: errors });
       }
 
       if (!isRepeatingLevel) {
-        await FinishPhaseService(difficulty, order, unit, id, storedToken);
-        await UpdateMissionsService(
-          {
-            acerts: rightAnswers,
-            completePhase: true,
-            completeUnit: order === 10,
-            erro: errors,
-            login: 1,
-            streak: 0,
-          },
-          storedToken,
-        );
+        await finishPhaseApi(difficulty, order, unit, id);
+        await updateMissionsApi({
+          acerts: rightAnswers,
+          completePhase: true,
+          completeUnit: order === 10,
+          erro: errors,
+          login: 1,
+          streak: 0,
+        });
       }
     }
 

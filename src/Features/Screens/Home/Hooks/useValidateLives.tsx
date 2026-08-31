@@ -9,7 +9,7 @@ import {
 
 import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
 
-import { LivesService } from "Features/Level/Services/LevelServices";
+import { livesApi } from "Services/levelServices";
 
 export function useValidateLives() {
   const updateUserInfo = useUpdateUserInfo();
@@ -21,13 +21,10 @@ export function useValidateLives() {
 
     setIsLoading(true);
 
-    Promise.all([
-      getStorageItem(STORAGE_KEYS.temporaryErrorCount),
-      getStorageItem(STORAGE_KEYS.userToken),
-    ])
-      .then(async ([errorCount, storedUserToken]) => {
-        if (errorCount && storedUserToken) {
-          await LivesService(storedUserToken, {
+    getStorageItem(STORAGE_KEYS.temporaryErrorCount)
+      .then(async (errorCount) => {
+        if (errorCount) {
+          await livesApi({
             erro: Number(errorCount),
           });
 

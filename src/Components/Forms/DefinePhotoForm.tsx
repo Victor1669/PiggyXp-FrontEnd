@@ -1,6 +1,13 @@
+import { Pressable, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
+
+import {
+  deleteStorageItem,
+  getStorageItem,
+  STORAGE_KEYS,
+} from "Utils/securestore";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
@@ -10,14 +17,10 @@ import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
 import Button from "@Components/Button";
 import Paragraph from "@Components/Paragraph";
-import { ImageUploaderButton } from "./ImageUploaderButton";
+import Picture from "Components/Picture";
 
-import { ImageContainer } from "../../Auth/Components/ImageContainer";
-import {
-  deleteStorageItem,
-  getStorageItem,
-  STORAGE_KEYS,
-} from "Utils/securestore";
+import { ImageContainer } from "../../Features/Auth/Components/ImageContainer";
+import { AuthImages } from "Features/Auth/Assets/AuthImages";
 
 export default function DefinePhotoForm() {
   const { login, user } = useAuth();
@@ -67,3 +70,42 @@ export default function DefinePhotoForm() {
     </>
   );
 }
+
+export function ImageUploaderButton({
+  onPress,
+}: {
+  onPress: () => Promise<void>;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        { opacity: pressed ? 0.8 : 1 },
+        Styles.uploadButton,
+      ]}
+    >
+      <Picture
+        folder="auth"
+        source={AuthImages.upload}
+        style={{ width: 40, height: 40 }}
+      />
+      <Paragraph>Upload da sua foto</Paragraph>
+    </Pressable>
+  );
+}
+
+const Styles = StyleSheet.create({
+  uploadButton: {
+    width: "90%",
+    backgroundColor: "rgb(255,255,255,0.30)",
+    borderRadius: 10,
+    borderColor: "#fff",
+    borderWidth: 0.5,
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+});

@@ -2,18 +2,14 @@ import { useEffect } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { router } from "expo-router";
 
-import {
-  STORAGE_KEYS,
-  getStorageItem,
-  setStorageItem,
-} from "Utils/securestore";
+import { STORAGE_KEYS, setStorageItem } from "Utils/securestore";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useAutoSlider } from "Hooks/useAutoSlider";
 
-import { setDifficultyApi } from "Features/Select-Difficulty/setDifficultyApi";
+import { changeDifficultyApi } from "@Services/changeDifficultyApi";
 
 import { requestNotificationPermission } from "Utils/notifications";
 import { generateCards } from "./generateCards";
@@ -58,9 +54,7 @@ export default function DifficultySelectorContainer() {
 
     showStatus("loading");
 
-    const token = await getStorageItem(STORAGE_KEYS.userToken);
-
-    const { status } = await setDifficultyApi({ difficulty }, token ?? "");
+    const { status } = await changeDifficultyApi({ difficulty });
 
     if (status < 300) {
       setUser((prev) => ({ ...prev, difficulty }));

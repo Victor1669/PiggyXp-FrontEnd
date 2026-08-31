@@ -1,7 +1,7 @@
-import { Image, StyleProp, View, ViewStyle } from "react-native";
+import { Image, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { DefinePhotoFormStyles } from "../../User-CRUD/Cadastro/DefinePhoto.css";
-const { uploadImageContainer } = DefinePhotoFormStyles;
+import { screenValues } from "Config/screenValues";
+const { isDeviceHeigthSmall } = screenValues();
 
 import { AuthImages } from "@Auth/Assets/AuthImages";
 
@@ -24,7 +24,7 @@ export function ImageContainer({ image, style }: ImageContainerTypes) {
           width: TOTAL_CONTAINER_SIZE,
           height: TOTAL_CONTAINER_SIZE,
         },
-        uploadImageContainer,
+        DefinePhotoFormStyles.uploadImageContainer,
         style,
       ]}
     >
@@ -39,3 +39,11 @@ export function ImageContainer({ image, style }: ImageContainerTypes) {
     </View>
   );
 }
+
+const DefinePhotoFormStyles = StyleSheet.create({
+  uploadImageContainer: {
+    backgroundColor: "#B4B4B4",
+    borderRadius: "50%",
+    marginVertical: isDeviceHeigthSmall ? 10 : 75,
+  },
+});

@@ -1,9 +1,4 @@
-import RN, {
-  Dimensions,
-  FlatList,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import RN, { Dimensions, FlatList, View } from "react-native";
 
 import Card from "./Card";
 

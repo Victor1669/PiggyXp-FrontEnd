@@ -3,7 +3,7 @@ import { usePathname } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
 
-import { GetMissionsService } from "../Services/MissionServices";
+import { getMissionsApi } from "../../../Services/missionServices";
 
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
@@ -24,7 +24,7 @@ export function useGetMissions(userId: number) {
     if (!userId || isPreviewBuild || !getIsConnected()) return;
 
     try {
-      const { data, status } = await GetMissionsService(userId);
+      const { data, status } = await getMissionsApi(userId);
 
       if (status < 300) {
         setMissions(data);

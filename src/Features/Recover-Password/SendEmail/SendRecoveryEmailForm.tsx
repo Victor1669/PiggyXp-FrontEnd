@@ -6,7 +6,7 @@ import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { Fields } from "@Auth/Schemas/SchemaFields";
-import { SendRecoveryEmail } from "@Auth/Services/RecoveryService";
+import { sendRecoveryEmailApi } from "Services/recoveryServices";
 
 import Form from "@Auth/Components/Form/Form";
 
@@ -24,7 +24,7 @@ export default function SendRecoveryEmailForm() {
 
     const body = { email: formData.Email };
 
-    const { status } = await SendRecoveryEmail(body);
+    const { status } = await sendRecoveryEmailApi(body);
 
     if (status < 300) {
       await setStorageItem(STORAGE_KEYS.recoveryEmail, body.email);

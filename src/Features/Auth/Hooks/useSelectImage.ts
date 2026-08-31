@@ -2,7 +2,7 @@ import { useState } from "react";
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
-import { UploadPhotoService } from "@Auth/Services/UploadPhotoService";
+import { uploadPhotoApi } from "Services/uploadPhotoApi";
 import { toastMessage } from "Utils/toast";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
@@ -56,7 +56,7 @@ function useSelectImage(backEndURL: string, method: "POST" | "PUT") {
       return;
     }
 
-    const { body, status } = await UploadPhotoService(
+    const { body, status } = await uploadPhotoApi(
       imageLocation,
       token,
       mimeType,

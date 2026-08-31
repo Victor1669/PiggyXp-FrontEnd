@@ -3,9 +3,7 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { screenValues } from "Config/screenValues";
 
 import { homeApi } from "Features/Screens/Home/Services/HomeServices";
-import { regenLivesApi } from "Features/Auth/Services/RegenLivesService";
-
-import { STORAGE_KEYS, getStorageItem } from "Utils/securestore";
+import { regenLivesApi } from "Services/regenLivesApi";
 
 import { notifications } from "Utils/notifications";
 
@@ -17,14 +15,8 @@ export function useUpdateUserInfo() {
   async function updateUserInfo() {
     if (isPreviewBuild) return;
 
-    const storedUserToken = await getStorageItem(STORAGE_KEYS.userToken);
-
-    if (!storedUserToken) {
-      return;
-    }
-
-    await regenLivesApi(storedUserToken);
-    const { data, status } = await homeApi(storedUserToken);
+    await regenLivesApi();
+    const { data, status } = await homeApi();
 
     if (status < 300) {
       const { newAchievements, ...userInfo } = data;

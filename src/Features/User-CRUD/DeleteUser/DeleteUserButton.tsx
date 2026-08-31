@@ -8,13 +8,12 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
-import { DeleteUserService } from "@Auth/Services/DeleteUser";
+import { deleteUserApi } from "Services/deleteUserApi";
 
 import { toastMessage } from "Utils/toast";
 
 import Button from "@Components/Button";
 import Paragraph from "@Components/Paragraph";
-import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 export default function DeleteUserButton() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -39,15 +38,13 @@ export default function DeleteUserButton() {
 
     showStatus("loading");
 
-    const token = await getStorageItem(STORAGE_KEYS.userToken);
-
-    const { data, status } = await DeleteUserService(user.id, token ?? "");
+    const { data, status } = await deleteUserApi(user.id);
 
     if (status < 300) {
       await logout();
       toastMessage({ type: "success", text: data.message });
       router.replace("/Cadastro");
-    } else if (data === "jwt expired") {
+    } else if (data.message === "jwt expired") {
       toastMessage({ type: "info", text: "Token expirado, refaça o login!" });
       router.replace("/Login");
     }

@@ -4,7 +4,7 @@ import { useFonts } from "expo-font";
 
 import { screenValues } from "Config/screenValues";
 
-import { RefreshTokenService } from "@Auth/Services/RefreshTokenService";
+import { refreshTokenApi } from "Services/refreshTokenApi";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
@@ -44,7 +44,7 @@ export default function SplashScreen() {
           return;
         }
 
-        const { data, status } = await RefreshTokenService(storedRefreshToken);
+        const { data, status } = await refreshTokenApi(storedRefreshToken);
 
         if (status < 300) {
           await setStorageItem(STORAGE_KEYS.userToken, data.accessToken);

@@ -1,18 +1,17 @@
 import { render } from "@testing-library/react-native";
 
+import { cadastroApi } from "@Services/cadastroApi";
+
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
 
-import { UserRegister } from "@Auth/Services/CadastroService";
-
 import { submitInputAndExpectError } from "../Helpers/submitInputAndExpectError";
 import { fieldValidations, FieldName } from "../Helpers/fieldValidations";
+
 import Cadastro from "@App/Cadastro";
 
-jest.mock("@Auth/Services/CadastroService");
-const mockUserRegister = UserRegister as jest.MockedFunction<
-  typeof UserRegister
->;
+jest.mock("@Services/cadastroApi");
+const mockcadastroApi = cadastroApi as jest.MockedFunction<typeof cadastroApi>;
 
 const registrationData = {
   Nome: "Victor",
@@ -29,7 +28,7 @@ const renderCadastro = () =>
     </AuthProvider>,
   );
 
-describe("CadastroForm & UserRegister", () => {
+describe("CadastroForm & cadastroApi", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -40,7 +39,6 @@ describe("CadastroForm & UserRegister", () => {
       expect(await findByText("Já tem uma conta?")).toBeTruthy();
     });
 
-    // VALIDAÇÃO DE CAMPOS
     const fields: FieldName[] = ["Nome", "Email", "Senha"];
     fields.forEach((field) => {
       it(`deve validar o campo de ${field}`, async () => {
@@ -58,9 +56,13 @@ describe("CadastroForm & UserRegister", () => {
     });
   });
 
-  describe("Serviço de Cadastro (UserRegister)", () => {
+  describe("Serviço de Cadastro (cadastroApi)", () => {
     const setupRegisterMock = (data: object, status: number) => {
-      mockUserRegister.mockResolvedValueOnce({ data, status });
+      mockcadastroApi.mockResolvedValueOnce({
+        status,
+        success: status < 300,
+        data: data as any,
+      });
     };
 
     it("deve processar o cadastro com sucesso", async () => {
@@ -70,7 +72,7 @@ describe("CadastroForm & UserRegister", () => {
       };
       setupRegisterMock(successData, 201);
 
-      const result = await UserRegister({
+      const result = await cadastroApi({
         name: registrationData.Nome,
         email: registrationData.Email,
         password: registrationData.Senha,
@@ -84,7 +86,7 @@ describe("CadastroForm & UserRegister", () => {
       const errorData = { message: "Email já cadastrado!" };
       setupRegisterMock(errorData, 500);
 
-      const result = await UserRegister({
+      const result = await cadastroApi({
         name: "Victor",
         email: "repetido@email.com",
         password: "123",
@@ -98,7 +100,7 @@ describe("CadastroForm & UserRegister", () => {
       const errorData = { message: "Nome de usuário já existente" };
       setupRegisterMock(errorData, 500);
 
-      const result = await UserRegister({
+      const result = await cadastroApi({
         name: "VictorExistente",
         email: "novo@email.com",
         password: "123",
@@ -109,9 +111,9 @@ describe("CadastroForm & UserRegister", () => {
     });
 
     it("deve falhar se houver erro de conexão ou exceção", async () => {
-      mockUserRegister.mockRejectedValueOnce(new Error("Falha na API"));
+      mockcadastroApi.mockRejectedValueOnce(new Error("Falha na API"));
 
-      await expect(UserRegister(registrationData as any)).rejects.toThrow(
+      await expect(cadastroApi(registrationData as any)).rejects.toThrow(
         "Falha na API",
       );
     });

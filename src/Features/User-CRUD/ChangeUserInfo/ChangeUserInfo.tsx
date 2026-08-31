@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { router } from "expo-router";
 
-import { updateUserInfoApi } from "Features/Auth/Services/UserInfoService";
+import { updateUserInfoApi } from "Services/userInfoServices";
 
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
@@ -46,13 +46,9 @@ export default function ChangeUserInfoContainer() {
       await handleImageSubmit(userToken ?? "");
     }
 
-    const { data, status } = await updateUserInfoApi(
-      user.id,
-      textData,
-      userToken ?? "",
-    );
+    const { data, status } = await updateUserInfoApi(user.id, textData);
 
-    if (data.message === "jwt expired" || data === "jwt expired") {
+    if (data.message === "jwt expired" || data.message === "jwt expired") {
       jwtExpiredHandler();
       return;
     }

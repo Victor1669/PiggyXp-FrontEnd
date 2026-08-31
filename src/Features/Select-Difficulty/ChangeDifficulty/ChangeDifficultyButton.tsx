@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { Pressable } from "react-native";
+
+import { changeDifficultyApi } from "@Services/changeDifficultyApi";
+
 import Button from "Components/Button";
 import DefaultModal from "Components/DefaultModal";
-import { useState } from "react";
-import { setDifficultyApi } from "../setDifficultyApi";
 import Paragraph from "Components/Paragraph";
-import { Pressable, Text } from "react-native";
-import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 export default function ChangeDifficultyButton() {
   const [showModal, setShowModal] = useState(false);
@@ -16,11 +17,7 @@ export default function ChangeDifficultyButton() {
   }
 
   async function handleSelectDifficulty(difficulty: number) {
-    const userToken = await getStorageItem(STORAGE_KEYS.userToken);
-
-    if (userToken) {
-      await setDifficultyApi({ difficulty }, userToken);
-    }
+    await changeDifficultyApi({ difficulty });
 
     close();
   }

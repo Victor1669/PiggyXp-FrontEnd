@@ -1,19 +1,22 @@
-import { useFetch } from "@Auth/Hooks/useFetch";
+import { fetchApi } from "Utils/fetchApi";
+import { UserType } from "Features/Auth/Types/UserType";
 
 export async function getTitleApi(difficulty: number, unit: number) {
-  const response = await useFetch({
+  const response = await fetchApi({
     method: "get",
-    rota: `title?difficulty=${difficulty}&unit=${unit}`,
+    route: `title?difficulty=${difficulty}&unit=${unit}`,
   });
 
   return response;
 }
 
-export async function homeApi(token: string) {
-  const response = useFetch({
+export async function homeApi() {
+  const response = await fetchApi<
+    object,
+    UserType & { newAchievements: string }
+  >({
     method: "get",
-    rota: "home",
-    token,
+    route: "home",
   });
 
   return response;

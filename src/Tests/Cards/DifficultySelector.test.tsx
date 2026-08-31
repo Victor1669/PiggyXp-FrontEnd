@@ -6,8 +6,8 @@ import {
   cleanup,
 } from "@testing-library/react-native";
 
-jest.mock("Features/Select-Difficulty/setDifficultyApi", () => ({
-  setDifficultyApi: jest.fn(),
+jest.mock("@Services/changeDifficultyApi", () => ({
+  changeDifficultyApi: jest.fn(),
 }));
 
 jest.mock("Contexts/useInternetConnection", () => ({
@@ -55,7 +55,7 @@ import { StatusProvider } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
-import { setDifficultyApi } from "../../Features/Select-Difficulty/setDifficultyApi";
+import { changeDifficultyApi } from "../../Services/changeDifficultyApi";
 
 import DifficultySelector from "@App/Login/DifficultySelector";
 
@@ -91,7 +91,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
       getIsConnected: () => true,
     });
     (getStorageItem as jest.Mock).mockImplementation((key: string) => {
-      if (key === STORAGE_KEYS.userToken) return Promise.resolve("token-falso");
+      if (key === STORAGE_KEYS.userToken) return Promise.resolve();
       return Promise.resolve(null);
     });
   });
@@ -117,7 +117,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
   });
 
   it("deve definir a dificuldade com sucesso", async () => {
-    (setDifficultyApi as jest.Mock).mockResolvedValue({
+    (changeDifficultyApi as jest.Mock).mockResolvedValue({
       data: { message: "Dificuldade definida com sucesso!" },
       status: 200,
     });
@@ -133,10 +133,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
     });
 
     await waitFor(() => {
-      expect(setDifficultyApi).toHaveBeenCalledWith(
-        { difficulty: 1 },
-        "token-falso",
-      );
+      expect(changeDifficultyApi).toHaveBeenCalledWith({ difficulty: 1 });
       expect(mockSetUser).toHaveBeenCalled();
       expect(mockShowStatus).toHaveBeenCalledWith("loading");
       expect(mockHideStatus).toHaveBeenCalled();
@@ -153,7 +150,7 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
     fireEvent.press(getByText("Continuar"));
 
     await waitFor(() => {
-      expect(setDifficultyApi).not.toHaveBeenCalled();
+      expect(changeDifficultyApi).not.toHaveBeenCalled();
       expect(mockShowStatus).toHaveBeenCalledWith("noInternet");
     });
   });

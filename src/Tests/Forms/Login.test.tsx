@@ -1,19 +1,20 @@
 import { render } from "@testing-library/react-native";
 
+import { loginApi } from "@Services/loginApi";
+
+import { fetchApi } from "@Utils/fetchApi";
+
 import { AuthProvider } from "@Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
 
-import { useFetch } from "@Auth/Hooks/useFetch";
 import { fieldValidations, FieldName } from "../Helpers/fieldValidations";
 
 import { submitInputAndExpectError } from "../Helpers/submitInputAndExpectError";
 
-import { UserLogin } from "@Auth/Services/LoginService";
-
 import Login from "@App/Login";
 
-jest.mock("@Auth/Hooks/useFetch");
-const mockUseFetch = useFetch as jest.MockedFunction<typeof useFetch>;
+jest.mock("@Utils/fetchApi");
+const mockfetchApi = fetchApi as jest.MockedFunction<typeof fetchApi>;
 
 const userData = { email: "usuario@email.com", password: "senha123" };
 
@@ -26,7 +27,7 @@ const renderLogin = () =>
     </AuthProvider>,
   );
 
-describe("LoginForm & UserLogin", () => {
+describe("LoginForm & loginApi", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -54,28 +55,33 @@ describe("LoginForm & UserLogin", () => {
     });
   });
 
-  describe("Serviço de Autenticação (UserLogin)", () => {
+  describe("Serviço de Autenticação (loginApi)", () => {
     const setupFetchMock = (data: object, status = 200) => {
-      mockUseFetch.mockResolvedValueOnce({ status, data });
+      mockfetchApi.mockResolvedValueOnce({
+        status,
+        success: status < 300,
+        data: data as any,
+      });
     };
 
     it("deve chamar a API com os parâmetros de login corretos", async () => {
       setupFetchMock({ token: "fake" });
-      await UserLogin(userData);
+      await loginApi(userData);
 
-      expect(mockUseFetch).toHaveBeenCalledWith({
-        method: "post",
-        rota: "login",
-        body: userData,
-        showToastMessage: true,
-      });
+      expect(mockfetchApi).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: "post",
+          route: "login",
+          body: userData,
+        }),
+      );
     });
 
     it("deve retornar os dados em caso de sucesso", async () => {
       const successData = { token: "t1", refreshToken: "r1", message: "Ok" };
       setupFetchMock(successData);
 
-      const result = await UserLogin(userData);
+      const result = await loginApi(userData);
       expect(result.data).toEqual(successData);
     });
 
@@ -83,13 +89,13 @@ describe("LoginForm & UserLogin", () => {
       const errorData = { error: "Incorreto" };
       setupFetchMock(errorData, 401);
 
-      const result = await UserLogin(userData);
+      const result = await loginApi(userData);
       expect(result.data).toEqual(errorData);
     });
 
     it("deve lançar exceção em caso de erro crítico de rede", async () => {
-      mockUseFetch.mockRejectedValueOnce(new Error("Network Error"));
-      await expect(UserLogin(userData)).rejects.toThrow("Network Error");
+      mockfetchApi.mockRejectedValueOnce(new Error("Network Error"));
+      await expect(loginApi(userData)).rejects.toThrow("Network Error");
     });
   });
 });

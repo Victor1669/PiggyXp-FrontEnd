@@ -7,7 +7,7 @@ import {
 } from "react";
 import { usePathname } from "expo-router";
 
-import { SelectMissionService } from "../Services/MissionServices";
+import { selectMissionApi } from "../../../Services/missionServices";
 
 import {
   STORAGE_KEYS,
@@ -60,11 +60,7 @@ export function MissionsProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true);
 
-      const userToken = await getStorageItem(STORAGE_KEYS.userToken);
-
-      console.log(userToken);
-
-      const { status } = await SelectMissionService(userToken ?? "");
+      const { status } = await selectMissionApi();
 
       if (status < 300) {
         await fetchMissions();

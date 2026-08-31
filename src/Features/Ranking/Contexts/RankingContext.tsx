@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { screenValues } from "Config/screenValues";
 
-import { RankingService } from "../Services/RankingService";
+import { fetchApi } from "Utils/fetchApi";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
@@ -45,7 +45,7 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
 
     showStatus("loading");
 
-    RankingService()
+    rankingApi()
       .then(({ data: rankingUsers }: { data: RankingUserInfoType[] }) => {
         setRankingUsers(rankingUsers);
       })
@@ -74,4 +74,13 @@ export function useRanking() {
     throw new Error("RankingContext usado fora do RankingProvider!");
 
   return context;
+}
+
+async function rankingApi() {
+  const response = await fetchApi<object, RankingUserInfoType[]>({
+    method: "get",
+    route: "ranking",
+  });
+
+  return response;
 }

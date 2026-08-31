@@ -6,7 +6,7 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
 import { useInternetConnection } from "Contexts/useInternetConnection";
 
-import { UserRegister } from "@Auth/Services/CadastroService";
+import { cadastroApi } from "@Services/cadastroApi";
 import { toastMessage } from "Utils/toast";
 
 import Form from "@Auth/Components/Form/Form";
@@ -43,7 +43,7 @@ export default function CadastroForm() {
 
     const { Nome: name, Email: email, Senha: password } = formData;
 
-    const { data: registerData, status: registerStatus } = await UserRegister({
+    const { data: registerData, status: registerStatus } = await cadastroApi({
       name: name.trim(),
       email,
       password,
