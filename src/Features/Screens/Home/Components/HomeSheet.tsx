@@ -8,9 +8,9 @@ import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import { useHomeSheet } from "../Hooks/useHomeSheet";
 
-import BottomSheet from "@Components/BottomSheet/BottomSheet";
+import BottomSheet from "Components/BottomSheet";
 import Paragraph from "@Components/Paragraph";
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 
 export default function HomeSheet() {
   const { user } = useAuth();

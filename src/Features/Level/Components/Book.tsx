@@ -25,59 +25,71 @@ export default function Book({ leftText, rightText }: BookProps) {
 
   if (!hasRightPage) {
     return (
-      <View style={styles.outerWrapper}>
+      <View style={outerWrapper}>
         <FlippableCard leftText={leftText} />
       </View>
     );
   }
 
   return (
-    <View style={styles.outerWrapper}>
-      <View style={styles.coverWrapper}>
+    <View style={outerWrapper}>
+      <View style={coverWrapper}>
         <ScrollView
           horizontal
           pagingEnabled={false}
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
-          style={styles.scrollView}
+          style={scrollView}
           contentContainerStyle={{ width: bookWidth }}
           decelerationRate="normal"
         >
-          <View
-            style={[styles.book, { width: bookWidth, height: BOOK_HEIGHT }]}
-          >
-            <View style={[styles.page, { width: PAGE_WIDTH }]}>
-              <View style={styles.pageHeader}>
-                <Text style={styles.pageNumber}>1</Text>
-                <View style={styles.pageHeaderLine} />
+          <View style={[book, { width: bookWidth, height: BOOK_HEIGHT }]}>
+            <View style={[page, { width: PAGE_WIDTH }]}>
+              <View style={pageHeader}>
+                <Text style={pageNumber}>1</Text>
+                <View style={pageHeaderLine} />
               </View>
-              <Text style={styles.paragraph}>{leftText}</Text>
-              <View style={styles.pageFooter}>
-                <View style={styles.pageFooterLine} />
+              <Text style={paragraph}>{leftText}</Text>
+              <View style={pageFooter}>
+                <View style={pageFooterLine} />
               </View>
             </View>
 
-            <View style={styles.spine} />
+            <View style={spine} />
 
-            <View style={[styles.page, { width: PAGE_WIDTH }]}>
-              <View style={styles.pageHeader}>
-                <View style={styles.pageHeaderLine} />
-                <Text style={styles.pageNumber}>2</Text>
+            <View style={[page, { width: PAGE_WIDTH }]}>
+              <View style={pageHeader}>
+                <View style={pageHeaderLine} />
+                <Text style={pageNumber}>2</Text>
               </View>
-              <Text style={styles.paragraph}>{rightText}</Text>
-              <View style={styles.pageFooter}>
-                <View style={styles.pageFooterLine} />
+              <Text style={paragraph}>{rightText}</Text>
+              <View style={pageFooter}>
+                <View style={pageFooterLine} />
               </View>
             </View>
           </View>
         </ScrollView>
       </View>
-      <Text style={styles.hint}>← arraste para explorar →</Text>
+      <Text style={hint}>← arraste para explorar →</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const {
+  book,
+  coverWrapper,
+  hint,
+  outerWrapper,
+  page,
+  pageFooter,
+  pageFooterLine,
+  pageHeader,
+  pageHeaderLine,
+  pageNumber,
+  paragraph,
+  scrollView,
+  spine,
+} = StyleSheet.create({
   outerWrapper: {
     marginHorizontal: 24,
     gap: 14,

@@ -1,5 +1,5 @@
 import React from "react";
-import RN, { Modal, View, StatusBar, StyleSheet } from "react-native";
+import RN, { Modal, View, StatusBar } from "react-native";
 
 interface DefaultModalProps {
   children: React.ReactNode;
@@ -24,17 +24,20 @@ export default function DefaultModal({
       animationType={animationType}
       onRequestClose={onClose}
     >
-      <View style={[styles.overlay, modalStyle]}>{children}</View>
+      <View
+        style={[
+          {
+            flex: 1,
+            backgroundColor: "#000000cc",
+            justifyContent: "center",
+            paddingTop: StatusBar.currentHeight,
+            paddingBottom: 60,
+          },
+          modalStyle,
+        ]}
+      >
+        {children}
+      </View>
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: "#000000cc",
-    justifyContent: "center",
-    paddingTop: StatusBar.currentHeight,
-    paddingBottom: 60,
-  },
-});

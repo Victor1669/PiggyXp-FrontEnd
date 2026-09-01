@@ -1,10 +1,7 @@
-import { Pressable } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import { ImageContainer } from "../../../Auth/Components/ImageContainer";
 import Picture from "@Components/Picture";
-
-import { ChangeUserInfoStyles } from "../../../User-CRUD/ChangeUserInfo/ChangeUserInfo.css";
-const { imageField, selectImageButton, imageContainer } = ChangeUserInfoStyles;
 
 import { AuthImages } from "@Auth/Assets/AuthImages";
 
@@ -18,13 +15,13 @@ export default function ChangeImageButton({
   image,
 }: ChangeImageButtonProps) {
   return (
-    <Pressable onPress={onPress} style={imageField}>
+    <Pressable onPress={onPress} style={Styles.imageField}>
       <Pressable
         onPress={(e) => {
           e.stopPropagation();
           onPress();
         }}
-        style={selectImageButton}
+        style={Styles.selectImageButton}
       >
         <Picture
           style={{ width: 15, height: 15 }}
@@ -32,7 +29,26 @@ export default function ChangeImageButton({
           source={AuthImages.edit}
         />
       </Pressable>
-      <ImageContainer image={image} style={imageContainer} />
+      <ImageContainer image={image} style={Styles.imageContainer} />
     </Pressable>
   );
 }
+
+const Styles = StyleSheet.create({
+  imageField: {
+    height: 210,
+    marginBottom: 30,
+  },
+  selectImageButton: {
+    backgroundColor: "#fff",
+    margin: 15,
+    padding: 7,
+    borderRadius: 50,
+    zIndex: 1,
+    position: "absolute",
+    right: 0,
+  },
+  imageContainer: {
+    marginVertical: 0,
+  },
+});

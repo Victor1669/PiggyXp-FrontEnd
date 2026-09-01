@@ -1,12 +1,11 @@
-import { Pressable } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import { useShowSheet } from "../Contexts/useShowSheet";
 import { useLevels } from "../Contexts/useLevels";
 
 import Paragraph from "@Components/Paragraph";
 
-import { HomeContentStyles } from "../Styles/HomeContent.css";
-const { sectionTitle, sectionTitleContainer } = HomeContentStyles;
+import { GlobalColors, GlobalFontColors } from "Assets/Colors";
 
 export default function SectionTitle() {
   const { unitTitle } = useLevels();
@@ -22,3 +21,19 @@ export default function SectionTitle() {
     </Pressable>
   );
 }
+
+const { sectionTitle, sectionTitleContainer } = StyleSheet.create({
+  sectionTitleContainer: {
+    width: "92%",
+    borderBottomWidth: 2,
+    borderBottomColor: GlobalFontColors.Dark,
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    width: "auto",
+    margin: "auto",
+    paddingHorizontal: 10,
+    backgroundColor: GlobalColors.contentBackColor.Dark,
+    transform: [{ translateY: 10 }],
+  },
+});

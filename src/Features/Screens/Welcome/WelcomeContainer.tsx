@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { View, Image } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
 import { themeChanger } from "Helpers/themeChanger";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import Paragraph from "@Components/Paragraph";
 
-import { WelcomeContainerStyles } from "./WelcomeContainer.css";
-const { container, text, buttons } = WelcomeContainerStyles;
+import { GlobalColors } from "Assets/Colors";
 
 export default function WelcomeContainer() {
   useEffect(() => {
@@ -31,3 +30,19 @@ export default function WelcomeContainer() {
     </View>
   );
 }
+
+const { buttons, container, text } = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: GlobalColors.contentBackColor.Dark,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    width: "60%",
+    marginVertical: 50,
+  },
+  buttons: {
+    marginVertical: 10,
+  },
+});

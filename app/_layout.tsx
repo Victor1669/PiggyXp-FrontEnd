@@ -1,4 +1,3 @@
-//#region Importações
 import { useEffect } from "react";
 
 import { env } from "Config/env";
@@ -13,11 +12,9 @@ import { SplashAnimatedValuesProvider } from "Features/Screens/Splash/Contexts/u
 import { ToastContainer, toastMessage } from "Utils/toast";
 import { registerNotificationClickListener } from "Utils/notifications";
 
-import LoadingSpinner from "@Components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "Components/LoadingSpinner";
 import ScreenContainer from "@Components/Config/ScreenContainer";
 import DevToolsLink from "DevTools/Components/DevToolsLink";
-
-//#endregion
 
 export default function RootLayout() {
   const { showDevTools } = screenValues();

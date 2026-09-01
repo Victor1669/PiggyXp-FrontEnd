@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 
 import HomeHeader from "./Layout/HomeHeader";
 import HomeSlider from "./Layout/HomeSlider";
@@ -8,7 +8,14 @@ import ContentSheet from "./Components/HomeSheet";
 
 export default function HomeContainer() {
   return (
-    <View style={HomeStyles.container}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 20,
+      }}
+    >
       <HomeHeader />
       <HomeSlider />
       <HomeContent />
@@ -16,12 +23,3 @@ export default function HomeContainer() {
     </View>
   );
 }
-
-const HomeStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
-  },
-});

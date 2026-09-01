@@ -4,7 +4,7 @@ import { router } from "expo-router";
 
 import { AnimationUtil } from "Utils/animationUtils";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 
 export function SkipCardsButton() {
   const buttonOpacity = useRef(new Animated.Value(0)).current;

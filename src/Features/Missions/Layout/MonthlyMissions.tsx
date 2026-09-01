@@ -1,12 +1,9 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useMissions } from "../Contexts/MissionsContext";
 
 import Paragraph from "@Components/Paragraph";
 import MonthlyMissionsContainer from "../Components//MonthlyMissionsContainer";
-
-import { MonthlyMissionsStyles } from "../Styles/MonthlyMissions.css";
-const { container, title } = MonthlyMissionsStyles;
 
 export default function MonthlyMissions() {
   const { isLoading } = useMissions();
@@ -22,3 +19,14 @@ export default function MonthlyMissions() {
       </View>
     );
 }
+
+export const { container, title } = StyleSheet.create({
+  container: {
+    paddingHorizontal: "5%",
+    marginVertical: 20,
+    paddingBottom: 40,
+  },
+  title: {
+    marginBottom: 20,
+  },
+});

@@ -63,14 +63,14 @@ export default function CodeInput({
   }
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={[container, containerStyle]}>
       {code.map((digit, index) => (
         <TextInput
           key={index}
           ref={(ref) => {
             inputs.current[index] = ref;
           }}
-          style={[styles.input, digit !== "" && styles.inputFilled]}
+          style={[input, digit !== "" && inputFilled]}
           value={digit}
           onChangeText={(text) => handleChange(text, index)}
           onKeyPress={(event) => handleKeyPress(event, index)}
@@ -85,7 +85,7 @@ export default function CodeInput({
   );
 }
 
-const styles = StyleSheet.create({
+const { container, input, inputFilled } = StyleSheet.create({
   container: {
     width: "90%",
     margin: "auto",

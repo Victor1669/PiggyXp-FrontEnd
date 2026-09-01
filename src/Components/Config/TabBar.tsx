@@ -33,7 +33,6 @@ interface TabItemProps {
   title?: string;
   onPress: () => void;
 }
-//#endregion
 
 export default function TabBar({
   state,
@@ -45,8 +44,8 @@ export default function TabBar({
   if (pathName === "/Content/Profile/Config") return null;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <View style={container}>
+      <View style={content}>
         {state.routes.map((route, index) => {
           const options = descriptors[route.key]
             .options as BottomTabNavigationOptions & { href?: string | null };
@@ -70,20 +69,13 @@ export default function TabBar({
   );
 }
 
-/**
- * Componente interno para cada botão da TabBar
- */
 function TabItem({ routeName, isFocused, title, onPress }: TabItemProps) {
   const iconData = ICON_MAP[routeName];
 
   if (!iconData) return null;
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.7}
-      style={styles.tabItem}
-    >
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={tabItem}>
       <Picture
         source={iconData.img}
         folder="tabbar"
@@ -102,7 +94,7 @@ function TabItem({ routeName, isFocused, title, onPress }: TabItemProps) {
 }
 const { TABBAR_HEIGHT } = screenValues();
 
-const styles = StyleSheet.create({
+const { container, content, tabItem } = StyleSheet.create({
   container: {
     height: TABBAR_HEIGHT,
     position: "absolute",

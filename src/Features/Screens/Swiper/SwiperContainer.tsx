@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { View, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
+
+import { screenValues } from "Config/screenValues";
+const { deviceHeight, deviceWidth } = screenValues();
 
 import useSplashAnimation from "@Screens/Splash/Contexts/useSplashAnimation";
-
-import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
-
-import { SwiperStyles } from "./SwiperContainer.css";
-
-import { cards } from "./Content/CardsContent";
-import { SkipCardsButton } from "./Components/SkipCardsButton";
 import { useAutoSlider } from "@Hooks/useAutoSlider";
 
-const screenWidth = Dimensions.get("screen").width;
+import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
+import { SkipCardsButton } from "./Components/SkipCardsButton";
+
+import { cards } from "./Content/CardsContent";
+
+import { GlobalColors } from "@Assets/Colors";
 
 export default function SwiperContainer() {
   const [isSkipButtonEnabled, setIsSkipButtonEnabled] = useState(false);
@@ -29,7 +30,7 @@ export default function SwiperContainer() {
     delay: 3000,
     bounce: false,
     peek: true,
-    itemWidth: screenWidth,
+    itemWidth: deviceWidth,
   });
 
   const isOnLastCard = cardIndex === cards.length - 1;
@@ -52,8 +53,8 @@ export default function SwiperContainer() {
   }
 
   return (
-    <View style={SwiperStyles.container}>
-      <View style={SwiperStyles.content}>
+    <View style={container}>
+      <View style={content}>
         <CardSwiper
           ref={flatListRef}
           testId="SwiperContainer"
@@ -69,3 +70,14 @@ export default function SwiperContainer() {
     </View>
   );
 }
+
+const { container, content } = StyleSheet.create({
+  container: {
+    height: deviceHeight,
+    backgroundColor: GlobalColors.splashBackColor,
+    justifyContent: "center",
+  },
+  content: {
+    height: deviceHeight * 0.9,
+  },
+});

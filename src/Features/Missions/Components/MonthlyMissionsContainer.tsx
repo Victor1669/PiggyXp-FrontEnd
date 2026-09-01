@@ -1,15 +1,12 @@
 import { Fragment } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useMissions } from "../Contexts/MissionsContext";
 
 import MonthlyMissionProgress from "./MonthlyMissionProgress";
-
-import { MonthlyMissionsStyles } from "../Styles/MonthlyMissions.css";
+import { GlobalColors } from "Assets/Colors";
 
 export default function MonthlyMissionsContainer() {
-  const { sectionContainer, separator } = MonthlyMissionsStyles;
-
   const { monthlyMissions } = useMissions();
 
   return (
@@ -24,3 +21,23 @@ export default function MonthlyMissionsContainer() {
     </View>
   );
 }
+
+export const { separator, sectionContainer } = StyleSheet.create({
+  sectionContainer: {
+    backgroundColor: GlobalColors.sectionBackColor,
+    borderRadius: 24,
+    paddingVertical: 20,
+    gap: 0,
+    borderWidth: 2,
+    borderColor: "#FFFFFF",
+    overflow: "hidden",
+  },
+
+  separator: {
+    height: 2,
+    backgroundColor: "#FFFFFF",
+    width: "100%",
+    marginBottom: 20,
+    marginTop: 40,
+  },
+});

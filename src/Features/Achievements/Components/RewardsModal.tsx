@@ -5,7 +5,7 @@ import { useAchievements } from "../Contexts/useAchievements";
 
 import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import DefaultModal from "@Components/DefaultModal";
 import Paragraph from "@Components/Paragraph";
 
@@ -20,37 +20,42 @@ export default function RewardsModal() {
   }
 
   return (
-    <DefaultModal
-      showModal={showRewards}
-      containerStyle={styles.modalContainer}
-    >
-      <View style={styles.videoContainer}>
+    <DefaultModal showModal={showRewards} containerStyle={modalContainer}>
+      <View style={videoContainer}>
         <Video
           resizeMode={ResizeMode.CONTAIN}
           source={require("../Assets/congratulations.mp4")}
           shouldPlay
           isLooping={true}
-          style={styles.video}
+          style={video}
         />
       </View>
 
-      <View style={styles.textContainer}>
-        <Paragraph fontSize="title" color="lightModeFont" style={styles.title}>
+      <View style={textContainer}>
+        <Paragraph fontSize="title" color="lightModeFont" style={title}>
           Parabéns!
         </Paragraph>
-        <Paragraph style={styles.subtitle}>
+        <Paragraph style={subtitle}>
           Você desbloqueou uma nova conquista e sua recompensa já está pronta.
         </Paragraph>
       </View>
 
-      <Button style={styles.button} onPress={handleUpdateRewards}>
+      <Button style={button} onPress={handleUpdateRewards}>
         Coletar recompensa
       </Button>
     </DefaultModal>
   );
 }
 
-const styles = StyleSheet.create({
+const {
+  button,
+  modalContainer,
+  subtitle,
+  textContainer,
+  title,
+  video,
+  videoContainer,
+} = StyleSheet.create({
   modalContainer: {
     alignItems: "center",
     backgroundColor: "#ffffff",

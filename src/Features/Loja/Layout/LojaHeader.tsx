@@ -1,12 +1,11 @@
-import { View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
+
+import { useAuth } from "Features/Auth/Contexts/useAuth";
+
 import Paragraph from "@Components/Paragraph";
 import Picture from "@Components/Picture";
-import { useAuth } from "Features/Auth/Contexts/useAuth";
-import { LojaHeaderStyles } from "../Styles/LojaHeader.css";
 
 export default function LojaHeader() {
-  const { container, topWrapper, textWrapper, headerPicture } =
-    LojaHeaderStyles;
   return (
     <View style={container}>
       <View style={topWrapper}>
@@ -32,7 +31,6 @@ export default function LojaHeader() {
 
 function CoinContainer() {
   const { user } = useAuth();
-  const { coinContainer, coinIcon } = LojaHeaderStyles;
   return (
     <View style={coinContainer}>
       <Picture folder="home" source="slider/coin" style={coinIcon} />
@@ -42,3 +40,49 @@ function CoinContainer() {
     </View>
   );
 }
+
+const {
+  coinContainer,
+  coinIcon,
+  container,
+  headerPicture,
+  textWrapper,
+  topWrapper,
+} = StyleSheet.create({
+  container: {
+    paddingHorizontal: "5%",
+    paddingTop: (StatusBar.currentHeight ?? 55) + 20,
+    paddingBottom: 30,
+    backgroundColor: "#314A63",
+    gap: 20,
+  },
+  topWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  textWrapper: {
+    flex: 1,
+    gap: 5,
+  },
+  headerPicture: {
+    width: 120,
+    height: 120,
+  },
+  coinContainer: {
+    width: "100%",
+    backgroundColor: "#02B1E2",
+
+    borderRadius: 25,
+    padding: 20,
+
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
+  },
+  coinIcon: {
+    width: 50,
+    height: 50,
+  },
+});

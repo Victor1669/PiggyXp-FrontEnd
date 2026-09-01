@@ -1,12 +1,9 @@
-import { View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 
 import { useMissions } from "../Contexts/MissionsContext";
 
 import Paragraph from "@Components/Paragraph";
 import DailyMissionsContainer from "../Components/DailyMissionsContainer";
-
-import { MissionsHeaderStyles } from "../Styles/MissionsHeader.css";
-const { container, headerText } = MissionsHeaderStyles;
 
 export default function MissionsHeader() {
   const { isLoading } = useMissions();
@@ -23,3 +20,14 @@ export default function MissionsHeader() {
       </View>
     );
 }
+
+const { container, headerText } = StyleSheet.create({
+  container: {
+    backgroundColor: "#314A63",
+    paddingHorizontal: "5%",
+    paddingTop: (StatusBar.currentHeight ?? 55) + 20,
+  },
+  headerText: {
+    marginBottom: 20,
+  },
+});

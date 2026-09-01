@@ -19,12 +19,8 @@ import {
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import CodeInput from "Features/Recover-Password/CodeVerifier/CodeInput";
-import Form from "@Auth/Components/Form/Form";
+import Form from "Components/Forms/Form";
 import Paragraph from "@Components/Paragraph";
-
-import { CodeVerifierStyles } from "Features/Recover-Password/CodeVerifier/CodeVerifier.css";
-
-const { textContainer } = CodeVerifierStyles;
 
 export default function CodeVerifierForm() {
   const LENGTH = 4;
@@ -92,7 +88,13 @@ export default function CodeVerifierForm() {
         setCode={setCode}
         length={LENGTH}
       />
-      <View style={textContainer}>
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 10,
+          marginHorizontal: "auto",
+        }}
+      >
         <Paragraph>Não recebeu o email?</Paragraph>
         <Pressable onPress={resendEmail}>
           <Paragraph style={{ textDecorationLine: "underline" }}>

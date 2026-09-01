@@ -3,7 +3,7 @@ import type { StyleProp, ViewStyle } from "react-native";
 
 import { screenValues } from "Config/screenValues";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 
 import { GlobalFontColors } from "@Assets/Colors";
 

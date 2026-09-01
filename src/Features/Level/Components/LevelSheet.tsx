@@ -3,15 +3,11 @@ import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useQuiz } from "../Contexts/useQuiz";
-
-import BottomSheet from "Components/BottomSheet/BottomSheet";
-import Paragraph from "Components/Paragraph";
-import Button from "Components/Button";
-
-import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
 import { useFinishQuiz } from "../Hooks/useFinishQuiz";
 
-const { bottomSheet } = LevelContainerStyles;
+import BottomSheet from "Components/BottomSheet";
+import Paragraph from "Components/Paragraph";
+import Button from "Components/Buttons/Button";
 
 export default function LevelSheet() {
   const { textFeedBack, isAnswered, dispatch } = useQuiz();
@@ -73,12 +69,13 @@ function SheetContainer({ children }: { children: React.ReactNode }) {
   return (
     <BottomSheet
       style={[
-        bottomSheet,
         {
           backgroundColor:
             textFeedBack === "Acertou!"
               ? "rgba(0, 102, 0, 0.8)"
               : "rgba(139, 0, 0, 0.8)",
+          paddingHorizontal: 20,
+          bottom: 0,
         },
       ]}
       height={SHEET_HEIGHT}

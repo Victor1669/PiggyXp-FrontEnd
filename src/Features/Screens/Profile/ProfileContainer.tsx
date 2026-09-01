@@ -1,24 +1,20 @@
-import { ScrollView, View } from "react-native";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { screenValues } from "Config/screenValues";
+const { isPreviewBuild, isDeviceHeigthSmall } = screenValues();
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import UserInfo from "./Components/UserInfo";
 import Achievements from "./Components/Achievements";
 import Offensive from "./Components/Offensive";
 import LivesTimer from "./Components/LivesTimer";
 
-import { ProfileContainerStyles } from "./Styles/ProfileContainer.css";
-const { content, button } = ProfileContainerStyles;
-
 export default function ProfileContainer() {
   const { logout } = useAuth();
-
-  const { isPreviewBuild } = screenValues();
 
   async function handleLogout() {
     await logout();
@@ -41,3 +37,16 @@ export default function ProfileContainer() {
     </SafeAreaView>
   );
 }
+
+export const { button, content } = StyleSheet.create({
+  content: {
+    paddingTop: StatusBar.currentHeight || 50,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: isDeviceHeigthSmall ? 20 : 5,
+  },
+  button: {
+    width: "90%",
+    marginVertical: 30,
+  },
+});

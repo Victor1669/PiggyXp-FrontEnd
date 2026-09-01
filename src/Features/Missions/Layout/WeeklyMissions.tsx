@@ -1,12 +1,9 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useMissions } from "../Contexts/MissionsContext";
 
 import Paragraph from "@Components/Paragraph";
 import WeeklyMissionsContainer from "../Components/WeeklyMissionsContainer";
-
-import { WeeklyMissionsStyles } from "../Styles/WeeklyMissions.css";
-const { container, title } = WeeklyMissionsStyles;
 
 export default function WeeklyMissions() {
   const { isLoading } = useMissions();
@@ -22,3 +19,13 @@ export default function WeeklyMissions() {
       </View>
     );
 }
+
+const { container, title } = StyleSheet.create({
+  container: {
+    paddingHorizontal: "5%",
+    marginVertical: 30,
+  },
+  title: {
+    marginBottom: 20,
+  },
+});

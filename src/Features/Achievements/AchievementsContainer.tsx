@@ -1,6 +1,5 @@
-//#region Importações
 import { useEffect, useRef } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
@@ -15,7 +14,6 @@ import { AchievementCard } from "./Components/AchievementsCard";
 import RewardsModal from "./Components/RewardsModal";
 import Paragraph from "@Components/Paragraph";
 import NotificationButton from "./Components/NotificationButton";
-//#endregion
 
 export default function AchievementsContainer() {
   const { user, hasUserInfo } = useAuth();
@@ -51,7 +49,11 @@ export default function AchievementsContainer() {
         <FlatList
           data={achievements}
           numColumns={2}
-          style={achievementsContainerStyles.cardsContainer}
+          style={{
+            marginHorizontal: 10,
+            marginTop: 10,
+            marginBottom: 50,
+          }}
           showsVerticalScrollIndicator={false}
           keyExtractor={(_, key) => String(key)}
           renderItem={({ index, item }) => {
@@ -69,11 +71,3 @@ export default function AchievementsContainer() {
       </>
     );
 }
-
-const achievementsContainerStyles = StyleSheet.create({
-  cardsContainer: {
-    marginHorizontal: 10,
-    marginTop: 10,
-    marginBottom: 50,
-  },
-});

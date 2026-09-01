@@ -1,16 +1,14 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useMissions } from "../Contexts/MissionsContext";
 
 import Picture from "@Components/Picture";
 import WeeklyMissionProgress from "./WeeklyMissionProgress";
 
-import { WeeklyMissionsStyles } from "../Styles/WeeklyMissions.css";
 import { MissionAssets } from "../Assets/MissionAssets";
+import { GlobalColors } from "Assets/Colors";
 
 export default function WeeklyMissionsContainer() {
-  const { cardContainer, topPart, picture } = WeeklyMissionsStyles;
-
   const { weeklyMissions } = useMissions();
 
   return (
@@ -29,3 +27,27 @@ export default function WeeklyMissionsContainer() {
     </View>
   );
 }
+
+const { cardContainer, picture, topPart } = StyleSheet.create({
+  cardContainer: {
+    overflow: "visible",
+    marginTop: 40,
+    backgroundColor: GlobalColors.sectionBackColor,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: "#ffffff",
+  },
+  topPart: {
+    backgroundColor: "#FFFFFF",
+    height: 175,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+    borderRadius: 10,
+  },
+  picture: {
+    width: 200,
+    height: 200,
+    marginTop: -60,
+  },
+});

@@ -5,7 +5,7 @@ import { useStatus } from "Contexts/StatusContext";
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
 import Paragraph from "Components/Paragraph";
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import DefaultModal from "Components/DefaultModal";
 
 import { LevelAssets } from "../Assets/LevelAssets";

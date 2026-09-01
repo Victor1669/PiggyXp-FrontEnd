@@ -1,15 +1,8 @@
-import {
-  Image,
-  ImageBackground,
-  ImageSourcePropType,
-  View,
-} from "react-native";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 
 import { getByPosition } from "../Helpers/getByPosition";
 
 import Paragraph from "Components/Paragraph";
-
-import { RankingPodiumUserStyles } from "../Styles/RankingPodiumUser.css";
 
 import { RankingAssets } from "../Assets/RankingAssets";
 const {
@@ -23,7 +16,7 @@ export default function RankingPodiumUser({
   position,
   nivel,
 }: {
-  userImg: ImageSourcePropType | undefined;
+  userImg: any;
   name: string;
   xp: number;
   position: 1 | 2 | 3;
@@ -32,12 +25,9 @@ export default function RankingPodiumUser({
   const imageContainerSource = getByPosition(ouro, prata, bronze, position);
 
   return (
-    <View style={RankingPodiumUserStyles.container}>
-      <ImageBackground
-        style={RankingPodiumUserStyles.imageBackground}
-        source={imageContainerSource}
-      >
-        <Image style={RankingPodiumUserStyles.userImage} source={userImg} />
+    <View style={container}>
+      <ImageBackground style={imageBackground} source={imageContainerSource}>
+        <Image style={userImage as any} source={userImg} />
       </ImageBackground>
 
       <View>
@@ -48,3 +38,19 @@ export default function RankingPodiumUser({
     </View>
   );
 }
+
+const { container, imageBackground, userImage } = StyleSheet.create({
+  container: { width: `100%` },
+  imageBackground: {
+    width: 110,
+    height: 110,
+    margin: "auto",
+  },
+  userImage: {
+    width: 50,
+    height: 50,
+    backgroundColor: "#fff",
+    margin: "auto",
+    borderRadius: 50,
+  },
+});

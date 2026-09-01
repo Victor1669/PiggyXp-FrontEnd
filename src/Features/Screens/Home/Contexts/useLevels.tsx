@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { screenValues } from "Config/screenValues";
 
-import { getTitleApi } from "../Services/HomeServices";
+import { getTitleApi } from "../../../../Services/homeServices";
 
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 

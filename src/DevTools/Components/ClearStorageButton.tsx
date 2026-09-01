@@ -1,4 +1,4 @@
-import Button from "Components/Button";
+import Button from "Components/Buttons/Button";
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 export default function ClearStorageButton() {

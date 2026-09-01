@@ -1,19 +1,11 @@
-import { useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 
 import Picture from "@Components/Picture";
-
-import { OffensiveStyles } from "../Styles/Offensive.css";
 
 import { ProfileImages } from "@Assets/ProfileImages";
 import Paragraph from "@Components/Paragraph";
 
-const {
-  offensiveContainer,
-  offensiveListContainer,
-  offensiveImage,
-  offensiveList,
-  dayCircle,
-} = OffensiveStyles;
+import { GlobalColors } from "@Assets/Colors";
 
 interface DayType {
   initials: string;
@@ -72,3 +64,47 @@ function OffensiveDay({ day, isEven }: { day: DayType; isEven: boolean }) {
     </View>
   );
 }
+
+const {
+  dayCircle,
+  offensiveContainer,
+  offensiveImage,
+  offensiveList,
+  offensiveListContainer,
+} = StyleSheet.create({
+  offensiveContainer: {
+    width: "90%",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  offensiveListContainer: {
+    backgroundColor: GlobalColors.sectionBackColor,
+    borderWidth: 2,
+    borderColor: "#fff",
+    borderRadius: 15,
+    flexDirection: "row",
+  },
+  offensiveImage: {
+    width: 75,
+    height: 75,
+  },
+  offensiveList: {
+    width: "73%",
+    height: "80%",
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: "#fff",
+    position: "absolute",
+    right: 10,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+  },
+  dayCircle: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    padding: 5,
+  },
+});

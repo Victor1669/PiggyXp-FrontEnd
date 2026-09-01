@@ -1,4 +1,4 @@
-import Button from "Components/Button";
+import Button from "Components/Buttons/Button";
 
 import { screenValues } from "Config/screenValues";
 import { Alert } from "react-native";

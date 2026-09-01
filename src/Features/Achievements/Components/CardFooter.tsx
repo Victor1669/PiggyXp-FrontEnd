@@ -1,16 +1,13 @@
-import { useAchievements } from "../Contexts/useAchievements";
+import { useState } from "react";
 
+import { useAchievements } from "../Contexts/useAchievements";
 import useAchievementCard from "../Hooks/useAchievementCard";
 
-import Button from "Components/Button";
+import Button from "Components/Buttons/Button";
 import ProgressBar from "Components/ProgressBar";
 import Paragraph from "Components/Paragraph";
 
-import { AchievementsStyles } from "../Styles/AchievementsCardsStyles.css";
-const { progressBar } = AchievementsStyles;
-
 import { Achievement } from "../Types/AchievementTypes";
-import { useState } from "react";
 
 export default function CardFooter({
   achievement,
@@ -59,7 +56,7 @@ export default function CardFooter({
           <ProgressBar
             actualValue={actualProgress}
             maxValue={totalProgress}
-            style={progressBar}
+            style={{ margin: 5, width: "90%" }}
           />
           <Paragraph>
             {actualProgress !== null && actualProgress !== undefined

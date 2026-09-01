@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 
 import { useQuiz } from "../Contexts/useQuiz";
 
@@ -6,10 +6,6 @@ import { useAnswerValidation } from "../Hooks/useAnswerValidation";
 
 import AnswerButton from "./AnswerButton";
 import Paragraph from "@Components/Paragraph";
-
-import { QuestionContainerStyles } from "../Styles/QuestionContainer.css";
-
-const { answersContainer, container, questionText } = QuestionContainerStyles;
 
 export default function QuestionContainer({ index }: { index: number }) {
   const { getQuestion, isAnswered } = useQuiz();
@@ -37,3 +33,19 @@ export default function QuestionContainer({ index }: { index: number }) {
     </View>
   );
 }
+
+const { answersContainer, container, questionText } = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    marginBottom: 2 * (StatusBar.currentHeight ?? 20),
+  },
+  questionText: {
+    marginTop: 80,
+    marginInline: "auto",
+    width: "90%",
+  },
+  answersContainer: {
+    gap: 20,
+  },
+});

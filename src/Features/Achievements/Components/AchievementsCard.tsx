@@ -1,13 +1,14 @@
-import { Pressable, View } from "react-native";
-import type { ViewStyle, StyleProp, ImageStyle } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import type { ViewStyle, StyleProp } from "react-native";
+
+import { screenValues } from "Config/screenValues";
+const { deviceWidth } = screenValues();
+const CARD_IMAGE_SIZE = deviceWidth * 0.4;
 
 import { useAchievements } from "../Contexts/useAchievements";
 
 import Picture from "@Components/Picture";
 import CardFooter from "./CardFooter";
-
-import { AchievementsStyles } from "../Styles/AchievementsCardsStyles.css";
-const { card, cardImage } = AchievementsStyles;
 
 import { Achievement } from "../Types/AchievementTypes";
 
@@ -58,3 +59,26 @@ function CardImage({
     </Pressable>
   );
 }
+
+const { card, cardImage } = StyleSheet.create({
+  card: {
+    margin: 5,
+    padding: 15,
+    justifyContent: "space-between",
+    alignItems: "center",
+
+    width: 196,
+    height: 196,
+    marginTop: 20,
+    marginBottom: 80,
+    backgroundColor: "#1F3B66",
+    borderRadius: "50%",
+    boxShadow: "0 4px 4px black",
+  },
+  cardImage: {
+    width: CARD_IMAGE_SIZE,
+    height: CARD_IMAGE_SIZE,
+    marginBottom: 20,
+    top: -7,
+  },
+});

@@ -1,23 +1,13 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useQuiz } from "../Contexts/useQuiz";
 
 import { useFinishLevel } from "../Hooks/useFinishLevel";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
-
-import { LevelConclusionStyles } from "../Styles/LevelConclusionStyles.css";
-const {
-  container,
-  image,
-  conclusionMessage,
-  textsContainer,
-  rewardsTexts,
-  conclusionButton,
-} = LevelConclusionStyles;
 
 import { LevelAssets } from "../Assets/LevelAssets";
 
@@ -78,3 +68,36 @@ export default function LevelConclusionContainer() {
     </View>
   );
 }
+
+const {
+  conclusionButton,
+  conclusionMessage,
+  container,
+  image,
+  rewardsTexts,
+  textsContainer,
+} = StyleSheet.create({
+  container: {
+    gap: 50,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: "70%",
+    aspectRatio: 16 / 9,
+  },
+  conclusionMessage: {
+    marginHorizontal: 75,
+  },
+  rewardsTexts: {
+    flexDirection: "row",
+    gap: 70,
+  },
+  textsContainer: {
+    gap: 20,
+  },
+  conclusionButton: {
+    marginTop: 50,
+  },
+});

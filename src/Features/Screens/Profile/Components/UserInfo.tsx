@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Image, View, Pressable, ImageBackground } from "react-native";
+import {
+  Image,
+  View,
+  Pressable,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { usePathname, router } from "expo-router";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
@@ -7,12 +14,10 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
-import { UserInfoStyles } from "../Styles/UserInfo.css";
-const { userInfoBackground, profilePicture, profileConfig, profileEmail } =
-  UserInfoStyles;
-
 import { ProfileImages } from "@Assets/ProfileImages";
 const { userInfoDetail, config } = ProfileImages;
+
+const USER_PROFILE_PICTURE_SIZE = Dimensions.get("screen").width / 4.5;
 
 export default function UserInfo() {
   const pathName = usePathname();
@@ -35,7 +40,7 @@ export default function UserInfo() {
   return (
     <View style={{ width: "90%" }}>
       <ImageBackground style={userInfoBackground} source={userInfoDetail}>
-        <Image style={profilePicture} source={imageSrc} />
+        <Image style={profilePicture as any} source={imageSrc} />
         <Pressable
           disabled={btnDisabled}
           style={profileConfig}
@@ -65,3 +70,31 @@ export default function UserInfo() {
     </View>
   );
 }
+
+const { profileConfig, profileEmail, profilePicture, userInfoBackground } =
+  StyleSheet.create({
+    userInfoBackground: {
+      padding: 15,
+      paddingTop: 20,
+      marginTop: 20,
+    },
+    profilePicture: {
+      width: USER_PROFILE_PICTURE_SIZE,
+      height: USER_PROFILE_PICTURE_SIZE,
+      backgroundColor: "#e7e7e7",
+      borderRadius: USER_PROFILE_PICTURE_SIZE / 2,
+      borderWidth: 4,
+      borderColor: "#8E8E8E",
+      position: "absolute",
+      left: 15,
+      top: -(USER_PROFILE_PICTURE_SIZE / 2),
+    },
+    profileConfig: {
+      margin: 15,
+      position: "absolute",
+      right: 0,
+    },
+    profileEmail: {
+      fontSize: 16,
+    },
+  });

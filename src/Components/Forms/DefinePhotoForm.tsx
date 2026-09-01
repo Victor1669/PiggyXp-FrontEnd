@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 import { router } from "expo-router";
 
 import { screenValues } from "Config/screenValues";
@@ -15,7 +15,7 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import Paragraph from "@Components/Paragraph";
 import Picture from "Components/Picture";
 
@@ -80,8 +80,20 @@ export function ImageUploaderButton({
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
-        { opacity: pressed ? 0.8 : 1 },
-        Styles.uploadButton,
+        {
+          opacity: pressed ? 0.8 : 1,
+          width: "90%",
+          backgroundColor: "rgb(255,255,255,0.30)",
+          borderRadius: 10,
+          borderColor: "#fff",
+          borderWidth: 0.5,
+          padding: 10,
+          marginTop: 20,
+          marginBottom: 100,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+        },
       ]}
     >
       <Picture
@@ -93,19 +105,3 @@ export function ImageUploaderButton({
     </Pressable>
   );
 }
-
-const Styles = StyleSheet.create({
-  uploadButton: {
-    width: "90%",
-    backgroundColor: "rgb(255,255,255,0.30)",
-    borderRadius: 10,
-    borderColor: "#fff",
-    borderWidth: 0.5,
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 100,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-});

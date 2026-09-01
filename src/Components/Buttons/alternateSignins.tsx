@@ -9,7 +9,7 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 import { useNativeGoogleAuth } from "@Auth/Hooks/useNativeGoogleAuth";
 import { useFacebookAuth } from "@Auth/Hooks/useFacebookAuth";
 
-import ImageButton from "./ImageButton";
+import ImageButton from "./imageButton";
 import Paragraph from "@Components/Paragraph";
 
 import { AuthImages } from "@Assets/AuthImages";

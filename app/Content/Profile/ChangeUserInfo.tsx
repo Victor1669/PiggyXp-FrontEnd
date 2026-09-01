@@ -14,14 +14,11 @@ import { useSelectImage } from "@Auth/Hooks/useSelectImage";
 import { toastMessage } from "Utils/toast";
 
 import ChangeImageButton from "@Screens/Profile/Components/ChangeImageButton";
-import ChangeUserInfoForm from "Features/User-CRUD/ChangeUserInfo/ChangeUserInfoForm";
-import DeleteUserButton from "Features/User-CRUD/DeleteUser/DeleteUserButton";
-import ChangeDifficultyButton from "Features/Select-Difficulty/ChangeDifficulty/ChangeDifficultyButton";
+import ChangeUserInfoForm from "Components/Forms/ChangeUserInfoForm";
+import DeleteUserButton from "Components/Buttons/deleteUserButton";
+import ChangeDifficultyButton from "Components/Buttons/changeDifficultybutton";
 
-import { ChangeUserInfoStyles } from "Features/User-CRUD/ChangeUserInfo/ChangeUserInfo.css";
-const { container } = ChangeUserInfoStyles;
-
-export default function ChangeUserInfoContainer() {
+export default function ChangeUserInfo() {
   const { user, logout, login } = useAuth();
   const { showStatus, hideStatus } = useStatus();
   const { handleImageSending, handleImageSubmit, imageURI } = useSelectImage(
@@ -76,7 +73,14 @@ export default function ChangeUserInfoContainer() {
   }
 
   return (
-    <ScrollView style={{ width: "100%" }} contentContainerStyle={container}>
+    <ScrollView
+      style={{ width: "100%" }}
+      contentContainerStyle={{
+        paddingVertical: 40,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <ChangeImageButton onPress={handleImageSending} image={image} />
       <ChangeUserInfoForm
         onProductionSubmit={handleProductionSubmit}

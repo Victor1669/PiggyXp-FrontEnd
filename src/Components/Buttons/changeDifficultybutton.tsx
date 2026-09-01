@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Pressable } from "react-native";
 
-import { changeDifficultyApi } from "@Services/changeDifficultyApi";
+import { changeDifficultyApi } from "Services/changeDifficultyApi";
 
-import Button from "Components/Button";
 import DefaultModal from "Components/DefaultModal";
 import Paragraph from "Components/Paragraph";
+import Button from "Components/Buttons/Button";
 
 export default function ChangeDifficultyButton() {
   const [showModal, setShowModal] = useState(false);
@@ -44,8 +44,7 @@ export default function ChangeDifficultyButton() {
           Fácil
         </Button>
         <Button
-          style={{ backgroundColor: "gold" }}
-          shadowColor="rgb(182, 139, 0)"
+          type="warning"
           onPress={() => {
             handleSelectDifficulty(1);
           }}
@@ -53,9 +52,7 @@ export default function ChangeDifficultyButton() {
           Médio
         </Button>
         <Button
-          style={{ backgroundColor: "rgb(175, 1, 1)" }}
-          shadowColor="rgb(92, 0, 0)"
-          fontColor="#fff"
+          type="red"
           onPress={() => {
             handleSelectDifficulty(2);
           }}

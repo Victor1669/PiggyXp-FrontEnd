@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 
-import Button from "Components/Button";
+import Button from "Components/Buttons/Button";
 
 export default function NavigationButton() {
   return <Button onPress={() => router.push("/_sitemap")}>Navegar</Button>;

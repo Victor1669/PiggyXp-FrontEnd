@@ -9,7 +9,7 @@ export default function Picture({
 }: {
   source: string;
   folder: string;
-  style?: RN.StyleProp<RN.ImageStyle>;
+  style?: RN.StyleProp<any>;
 }) {
   const uri = `${env.cloudinaryLink}/${folder}/${source}`;
 

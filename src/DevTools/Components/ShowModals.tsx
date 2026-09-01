@@ -1,4 +1,4 @@
-import Button from "Components/Button";
+import Button from "Components/Buttons/Button";
 import { ModalType, useStatus } from "Contexts/StatusContext";
 import { View } from "react-native";
 

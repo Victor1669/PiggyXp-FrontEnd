@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 
-import AlternateSignins from "@Auth/Components/Buttons/AlternateSignins";
+import AlternateSignins from "Components/Buttons/alternateSignins";
 import LoginForm from "Components/Forms/LoginForm";
 
 import { GlobalFontColors } from "@Assets/Colors";
@@ -9,7 +9,7 @@ import { GlobalFontColors } from "@Assets/Colors";
 export default function Login() {
   return (
     <>
-      <View style={Styles.formContainer}>
+      <View style={formContainer}>
         <LoginForm />
       </View>
       <NaoTemContaText />
@@ -20,7 +20,7 @@ export default function Login() {
 
 function NaoTemContaText() {
   return (
-    <View style={Styles.naoTemConta}>
+    <View style={naoTemConta}>
       <Text style={{ color: GlobalFontColors.Dark }}>Não tem uma conta? </Text>
       <Link
         href="/Cadastro"
@@ -35,7 +35,7 @@ function NaoTemContaText() {
   );
 }
 
-const Styles = StyleSheet.create({
+const { formContainer, naoTemConta } = StyleSheet.create({
   formContainer: {
     marginTop: 40,
     gap: 20,

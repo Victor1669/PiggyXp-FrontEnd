@@ -8,7 +8,7 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 import { sendRecoveryEmailApi } from "Services/recoveryServices";
 
-import Form from "@Auth/Components/Form/Form";
+import Form from "Components/Forms/Form";
 
 export default function SendRecoveryEmailForm() {
   const { showStatus, hideStatus } = useStatus();

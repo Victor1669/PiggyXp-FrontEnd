@@ -2,7 +2,7 @@ import { useAuth } from "@Auth/Contexts/useAuth";
 
 import { screenValues } from "Config/screenValues";
 
-import { homeApi } from "Features/Screens/Home/Services/HomeServices";
+import { homeApi } from "Services/homeServices";
 import { regenLivesApi } from "Services/regenLivesApi";
 
 import { notifications } from "Utils/notifications";

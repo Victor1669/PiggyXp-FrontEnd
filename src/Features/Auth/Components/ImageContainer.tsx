@@ -1,4 +1,4 @@
-import { Image, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Image, StyleProp, View, ViewStyle } from "react-native";
 
 import { screenValues } from "Config/screenValues";
 const { isDeviceHeigthSmall } = screenValues();
@@ -23,8 +23,10 @@ export function ImageContainer({ image, style }: ImageContainerTypes) {
           padding: hasImage ? 0 : IMAGE_CONTAINER_PADDING,
           width: TOTAL_CONTAINER_SIZE,
           height: TOTAL_CONTAINER_SIZE,
+          backgroundColor: "#B4B4B4",
+          borderRadius: "50%",
+          marginVertical: isDeviceHeigthSmall ? 10 : 75,
         },
-        DefinePhotoFormStyles.uploadImageContainer,
         style,
       ]}
     >
@@ -39,11 +41,3 @@ export function ImageContainer({ image, style }: ImageContainerTypes) {
     </View>
   );
 }
-
-const DefinePhotoFormStyles = StyleSheet.create({
-  uploadImageContainer: {
-    backgroundColor: "#B4B4B4",
-    borderRadius: "50%",
-    marginVertical: isDeviceHeigthSmall ? 10 : 75,
-  },
-});

@@ -32,10 +32,10 @@ export default function ProgressBar({
     maxValue > 0 ? (actualValue / maxValue) * containerWidth : 0;
 
   return (
-    <View onLayout={handleLayout} style={[styles.container, style]}>
+    <View onLayout={handleLayout} style={[container, style]}>
       <View
         style={[
-          styles.bar,
+          bar,
           {
             width: progressWidth,
           },
@@ -43,7 +43,7 @@ export default function ProgressBar({
       />
 
       {children && (
-        <View style={styles.textOverlay}>
+        <View style={textOverlay}>
           <Paragraph
             style={{ mixBlendMode: "difference" }}
             fontSize="small"
@@ -57,7 +57,7 @@ export default function ProgressBar({
   );
 }
 
-const styles = StyleSheet.create({
+const { bar, container, textOverlay } = StyleSheet.create({
   container: {
     height: 30,
     borderRadius: 50,

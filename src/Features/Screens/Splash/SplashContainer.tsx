@@ -14,9 +14,6 @@ import SplashTitle from "./Components/SplashTitle";
 import QuestionMarker from "./Components/QuestionMarker";
 import Paragraph from "Components/Paragraph";
 
-import { SplashStyles } from "./SplashScreen.css";
-const { container } = SplashStyles;
-
 import { GlobalColors } from "Assets/Colors";
 
 export default function Splash() {
@@ -28,11 +25,13 @@ export default function Splash() {
   const isQuestionAnimation = animationIndex === 6;
 
   const SPLASH_CONTAINER_STYLES = [
-    container,
     {
       backgroundColor: CAN_RUN_ANIMATION
         ? splashBackColorInterpolated
         : GlobalColors.splashBackColor,
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
     },
   ];
 
@@ -43,7 +42,7 @@ export default function Splash() {
   }, [hasUserInfo, hasVerifiedUserInfo]);
 
   return (
-    <Animated.View style={SPLASH_CONTAINER_STYLES}>
+    <Animated.View style={SPLASH_CONTAINER_STYLES as any}>
       {isQuestionAnimation && <QuestionMarker />}
       <SplashLogo />
       <SplashParticles />

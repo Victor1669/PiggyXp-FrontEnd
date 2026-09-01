@@ -11,9 +11,6 @@ import { AnimateSpringUtil } from "Utils/animationUtils";
 import RankingPodiumUser from "./RankingPodiumUser";
 import Paragraph from "Components/Paragraph";
 
-import { PodiumUserContainerStyles } from "../Styles/PodiumUserContainer.css";
-const { container, podiumContainer, positionText } = PodiumUserContainerStyles;
-
 import { RankingUserInfoType } from "../Types/RankingTypes";
 
 export default function PodiumUserContainer({
@@ -35,7 +32,7 @@ export default function PodiumUserContainer({
   const podiumColor = getByPosition("gold", "silver", "#CD7F32", position);
 
   const podiumBarStyle: ViewStyle = {
-    ...styles.podiumBar,
+    width: "100%",
     height: isVisible ? 0 : viewHeight,
     backgroundColor: podiumColor,
   };
@@ -76,8 +73,13 @@ export default function PodiumUserContainer({
   );
 }
 
-const styles = StyleSheet.create({
-  podiumBar: {
-    width: "100%",
+const { container, podiumContainer, positionText } = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    alignSelf: "flex-end",
+    gap: 20,
+    width: `30%`,
   },
+  podiumContainer: { justifyContent: "flex-end" },
+  positionText: { flex: 1 },
 });

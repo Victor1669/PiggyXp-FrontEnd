@@ -11,9 +11,6 @@ import LevelHeader from "../Components/LevelHeader";
 import LevelSheet from "../Components/LevelSheet";
 import CoinRain from "../Components/CoinRain";
 
-import { LevelContainerStyles } from "../Styles/LevelContainerStyles.css";
-const { container } = LevelContainerStyles;
-
 export default function LevelContainer() {
   const { questions, currentQuestionIndex, dispatch } = useQuiz();
   const flatListRef = useRef<FlatList>(null);
@@ -32,7 +29,12 @@ export default function LevelContainer() {
   }, []);
 
   return (
-    <View style={container}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+      }}
+    >
       <LevelHeader />
       <CoinRain />
       <FlatList

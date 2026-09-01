@@ -6,7 +6,7 @@ import { useStatus } from "Contexts/StatusContext";
 import { useQuiz } from "../Contexts/useQuiz";
 
 import DefaultModal from "Components/DefaultModal";
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 
 import { LevelAssets } from "../Assets/LevelAssets";
 const { gameOver } = LevelAssets;

@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { Fields } from "@Auth/Schemas/SchemaFields";
-import Form from "@Auth/Components/Form/Form";
+import Form from "Components/Forms/Form";
 
 import { screenValues } from "Config/screenValues";
 

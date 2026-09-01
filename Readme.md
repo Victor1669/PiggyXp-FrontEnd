@@ -50,7 +50,6 @@ O Expo Go não será usado devido à limitações técnicas, tais como:
 ## 📖 Bibliotecas:
 
 ```
-Normais
 axios:                                              Requisições e interceptadores.
 jwt-decode:                                         Decodificação de tokens JWT.
 expo-router:                                        Roteamento nativo baseado em arquivos.
@@ -68,6 +67,7 @@ react-hook-form:                                    Gestão de formulários din�
 react-native-fbsdk-next:                            Autenticação com Facebook.
 
 Desenvolvimento
+
 typescript:                                         Tipagem estática para uma aplicação mais robusta.
 jest:                                               Framework para testes unitários e de integração.
 @testing-library/react-native:                      Testes de componentes focados no comportamento do usuário.
@@ -98,7 +98,6 @@ jest:                                               Framework para testes unitá
 - .js: Arquivos de configurações
 - .jsx: Arquivos que representam as telas
 - .ts: Services e Hooks
-- .css.ts: Arquivos de estilização (JAMAIS CRIE UM DESSES DENTRO DE app/)
 - .test.js: Arquivos de teste
 - .tsx: Qualquer arquivo que não se encaixe nos outros requisitos
 
@@ -113,11 +112,16 @@ O arquivo .env precisa estar na raiz do projeto
 ### Variáveis usadas:
 
 ```
+- EXPO_PUBLIC_EAS_BUILD_PROFILE             Tipo de build (development | production | preview)
 - EXPO_PUBLIC_BACKEND_URL                   URL onde o BackEnd está hospedado/rodando
-- EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID      ID do cliente android no Google Cloud
-- EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID          ID do cliente iOS no Google Cloud
-- EXPO_PUBLIC_FACEBOOK_APP_ID               ID do app no Meta Developers
-- EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN         Token de cliente do app
+- EXPO_PUBLIC_CLOUDINARY_BASE_LINK          URL do cloudinary para imagens
+
+IDs do cliente android no Google Cloud (Opcional):
+
+- EXPO_PUBLIC_PRODUCTION_GOOGLE_ANDROID_CLIENT_ID
+- EXPO_PUBLIC_PREVIEW_GOOGLE_ANDROID_CLIENT_ID
+- EXPO_PUBLIC_DEVELOPMENT_GOOGLE_ANDROID_CLIENT_ID
+- EXPO_PUBLIC_WEB_GOOGLE_ANDROID_CLIENT_ID
 ```
 
 ## 🗃️ Arquitetura do projeto (esboço):
@@ -129,16 +133,15 @@ O arquivo .env precisa estar na raiz do projeto
 ├── 📁 assets           -> Pasta principal de imagens
 ├── 📁 src              -> Pasta onde a maioria do conteúdo vai estar
 │   ├── 📁 Components   -> Pedaços de interface
-|   |   └── 📄 *.css.ts   -> Arquivo com a estilização da página
 │   ├── 📁 Features     -> Cada feature estará aqui
 │   └── 📁 Hooks        -> Lógica reutilizável
 │   └── 📁 Services     -> Conexão com o BackEnd
 │   └── 📁 Contexts     -> Gerenciamento de estado avançado
-│   └── 📁 Styles       -> Estilização
-│   └── 📁 Utils        -> Funções simples que podem ser usadas independentemente do projeto (Ex: uma função que converte a data em um certo formato)
+│   └── 📁 Services     -> Gerenciamento centralizado de requisições
+│   └── 📁 Utils        -> Funções simples que podem ser usadas independentemente do projeto
 │   └── 📁 Helpers      -> Funções específicas reutilizáveis feitas pro projeto/regra de negócios
 │   └── 📁 Tests        -> Testes unitários pro CI/CD
-│   └── 📁 Schemas  -> Validações para formulários
+│   └── 📁 Schemas      -> Validações para formulários
 │   └── 📁 Types        -> Tipos personalizados comuns
 ├── ⚙️ .gitignore       -> Arquivo que lista o que NÃO deve ir pro repositório na hora do git push
 ├── 📝 Readme.md        -> Arquivo com informações do projeto (O que você está lendo agora)

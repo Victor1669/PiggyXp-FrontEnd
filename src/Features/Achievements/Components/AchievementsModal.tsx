@@ -1,12 +1,9 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import DefaultModal from "@Components/DefaultModal";
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import Paragraph from "@Components/Paragraph";
 import { AchievementCard } from "./AchievementsCard";
-
-import { AchievementsModalStyles } from "../Styles/AchievementsModalStyles.css";
-const { container, card, descriptionView, button } = AchievementsModalStyles;
 
 import { useAchievements } from "../Contexts/useAchievements";
 
@@ -45,3 +42,25 @@ export default function AchievementModal() {
     </DefaultModal>
   );
 }
+
+const { button, card, container, descriptionView } = StyleSheet.create({
+  container: {
+    backgroundColor: "#bbbbbb",
+    paddingHorizontal: 10,
+    paddingVertical: 30,
+    borderRadius: 20,
+  },
+
+  card: { margin: "auto" },
+
+  descriptionView: {
+    width: "100%",
+    marginHorizontal: "auto",
+    marginBottom: 25,
+    padding: 15,
+  },
+
+  button: {
+    width: "90%",
+  },
+});

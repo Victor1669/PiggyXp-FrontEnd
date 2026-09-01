@@ -1,15 +1,10 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Paragraph from "@Components/Paragraph";
 import Picture from "@Components/Picture";
 import PackageCard from "../Components/PackageCard";
 
-import { ShopPackagesStyles } from "../Styles/ShopPackages.css";
-
 export default function ShopPackages() {
-  const { container, introWrapper, introPicture, introTextWrapper } =
-    ShopPackagesStyles;
-
   return (
     <View style={container}>
       <View style={introWrapper}>
@@ -28,3 +23,25 @@ export default function ShopPackages() {
     </View>
   );
 }
+
+const { container, introPicture, introTextWrapper, introWrapper } =
+  StyleSheet.create({
+    container: {
+      paddingHorizontal: "5%",
+      marginVertical: 20,
+      paddingBottom: 40,
+    },
+    introWrapper: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 15,
+      marginBottom: 20,
+    },
+    introPicture: {
+      width: 60,
+      height: 60,
+    },
+    introTextWrapper: {
+      flex: 1,
+    },
+  });

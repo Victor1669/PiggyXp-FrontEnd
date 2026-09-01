@@ -12,7 +12,7 @@ import { useStatus } from "Contexts/StatusContext";
 import { loginApi, type LoginApiResponse } from "@Services/loginApi";
 import { getUserInfoApi } from "@Services/userInfoServices";
 
-import Form from "@Auth/Components/Form/Form";
+import Form from "Components/Forms/Form";
 import { Fields } from "@Auth/Schemas/SchemaFields";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";

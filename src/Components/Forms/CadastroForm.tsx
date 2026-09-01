@@ -9,7 +9,7 @@ import { useInternetConnection } from "Contexts/useInternetConnection";
 import { cadastroApi } from "@Services/cadastroApi";
 import { toastMessage } from "Utils/toast";
 
-import Form from "@Auth/Components/Form/Form";
+import Form from "Components/Forms/Form";
 
 import { Fields } from "@Auth/Schemas/SchemaFields";
 

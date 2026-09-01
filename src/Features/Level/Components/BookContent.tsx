@@ -21,24 +21,24 @@ interface BookContentProps {
 
 export default function BookContent({ leftText }: BookContentProps) {
   return (
-    <View style={[styles.coverWrapper, { width: CARD_WIDTH }]}>
+    <View style={[coverWrapper, { width: CARD_WIDTH }]}>
       <View
         style={[
-          styles.book,
+          book,
           {
             width: FULL_INNER,
             height: BOOK_HEIGHT - COVER_PADDING - COVER_BORDER,
           },
         ]}
       >
-        <View style={[styles.page, { width: FULL_INNER }]}>
-          <View style={styles.pageHeader}>
-            <Text style={styles.pageNumber}>1</Text>
-            <View style={styles.pageHeaderLine} />
+        <View style={[page, { width: FULL_INNER }]}>
+          <View style={pageHeader}>
+            <Text style={pageNumber}>1</Text>
+            <View style={pageHeaderLine} />
           </View>
-          <Text style={styles.paragraph}>{leftText}</Text>
-          <View style={styles.pageFooter}>
-            <View style={styles.pageFooterLine} />
+          <Text style={paragraph}>{leftText}</Text>
+          <View style={pageFooter}>
+            <View style={pageFooterLine} />
           </View>
         </View>
       </View>
@@ -46,7 +46,17 @@ export default function BookContent({ leftText }: BookContentProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const {
+  book,
+  coverWrapper,
+  page,
+  pageFooter,
+  pageFooterLine,
+  pageHeader,
+  pageHeaderLine,
+  pageNumber,
+  paragraph,
+} = StyleSheet.create({
   coverWrapper: {
     backgroundColor: BROWN_MID,
     padding: 18,

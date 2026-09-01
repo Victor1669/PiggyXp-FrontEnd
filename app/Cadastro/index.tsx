@@ -2,14 +2,14 @@ import { Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 
 import CadastroForm from "Components/Forms/CadastroForm";
-import AlternateSignins from "@Auth/Components/Buttons/AlternateSignins";
+import AlternateSignins from "Components/Buttons/alternateSignins";
 
 import { GlobalFontColors } from "@Assets/Colors";
 
 export default function Cadastro() {
   return (
     <>
-      <View style={Styles.formContainer}>
+      <View style={formContainer}>
         <CadastroForm />
         <JaTemContaText />
       </View>
@@ -19,7 +19,7 @@ export default function Cadastro() {
 }
 function JaTemContaText() {
   return (
-    <View style={Styles.jaTemConta}>
+    <View style={jaTemConta}>
       <Text style={{ color: GlobalFontColors.Dark }}>Já tem uma conta? </Text>
       <Link
         href="/Login"
@@ -34,7 +34,7 @@ function JaTemContaText() {
   );
 }
 
-const Styles = StyleSheet.create({
+const { formContainer, jaTemConta } = StyleSheet.create({
   formContainer: {
     marginTop: 40,
     gap: 20,

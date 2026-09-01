@@ -5,7 +5,7 @@ import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
 import { textFormatter } from "../Utils/textFormatter";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import Book from "../Components/Book";
 
 export default function LevelTipsContainer() {

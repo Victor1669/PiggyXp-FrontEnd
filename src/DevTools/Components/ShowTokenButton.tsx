@@ -1,6 +1,6 @@
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
-import Button from "Components/Button";
+import Button from "Components/Buttons/Button";
 
 export default function ShowTokenButton() {
   async function handleShowToken() {

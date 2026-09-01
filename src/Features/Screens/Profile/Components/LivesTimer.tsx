@@ -1,11 +1,10 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Paragraph from "Components/Paragraph";
 
-import { LivesTimerStyles } from "../Styles/LivesTimer.css";
 import { useLivesTimer } from "../Hooks/useLivesTimer";
 
-const { livesTimerContainer, livesTimerContent } = LivesTimerStyles;
+import { GlobalColors } from "Assets/Colors";
 
 export default function LivesTimer() {
   const { timer } = useLivesTimer();
@@ -26,3 +25,16 @@ export default function LivesTimer() {
     </View>
   );
 }
+
+const { livesTimerContainer, livesTimerContent } = StyleSheet.create({
+  livesTimerContainer: { width: "90%", marginTop: 10 },
+
+  livesTimerContent: {
+    height: 80,
+    marginTop: 10,
+    backgroundColor: GlobalColors.sectionBackColor,
+    borderColor: "#fff",
+    borderWidth: 2,
+    borderRadius: 15,
+  },
+});

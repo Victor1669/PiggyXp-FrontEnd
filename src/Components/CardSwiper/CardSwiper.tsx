@@ -1,8 +1,6 @@
-import RN, { Dimensions, FlatList, View } from "react-native";
+import RN, { Dimensions, FlatList, StyleSheet, View } from "react-native";
 
 import Card from "./Card";
-
-import { CardSwiperStyles } from "./CardSwiper.css";
 
 import { CardType } from "./CardType";
 
@@ -82,13 +80,13 @@ function DotsContainer({
   style: RN.StyleProp<RN.ViewStyle>;
 }) {
   return (
-    <View style={[CardSwiperStyles.dotsContainer, { width }, style]}>
+    <View style={[dotsContainer, { width }, style]}>
       {array.map((_, i) => (
         <View
           key={i}
           testID={`dot-${i}`}
           style={[
-            CardSwiperStyles.dot,
+            dot,
             { backgroundColor: i === actualIndex ? "#fff" : "#000" },
           ]}
         />
@@ -96,3 +94,18 @@ function DotsContainer({
     </View>
   );
 }
+
+const { dot, dotsContainer } = StyleSheet.create({
+  dotsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 50,
+    marginHorizontal: 5,
+    marginVertical: 10,
+  },
+});

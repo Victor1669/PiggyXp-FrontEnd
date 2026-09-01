@@ -1,6 +1,6 @@
 import { RegisterOptions } from "react-hook-form";
 
-import { FieldProps } from "@Auth/Components/Form/Form";
+import { FieldProps } from "Components/Forms/Form";
 
 const FieldsValidation: Record<string, RegisterOptions> = {
   Nome: {

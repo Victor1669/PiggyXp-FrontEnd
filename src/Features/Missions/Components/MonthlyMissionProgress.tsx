@@ -1,11 +1,11 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Paragraph from "Components/Paragraph";
 import Picture from "Components/Picture";
 import ProgressBar from "Components/ProgressBar";
 
-import { MonthlyMissionsStyles } from "../Styles/MonthlyMissions.css";
 import { MissionAssets } from "../Assets/MissionAssets";
+import { GlobalColors } from "Assets/Colors";
 
 import { UserMission } from "../Types/MissionsTypes";
 
@@ -14,9 +14,6 @@ export default function MonthlyMissionProgress({
 }: {
   monthlyMission: UserMission;
 }) {
-  const { missionItem, progressWrapper, progressBar, rewardIcon } =
-    MonthlyMissionsStyles;
-
   const { mission, progress } = monthlyMission;
   const { name, target } = mission;
   return (
@@ -42,3 +39,31 @@ export default function MonthlyMissionProgress({
     </View>
   );
 }
+
+const CHEST_SIZE = 60;
+
+export const { missionItem, progressWrapper, progressBar, rewardIcon } =
+  StyleSheet.create({
+    missionItem: {
+      gap: 10,
+      paddingHorizontal: 20,
+    },
+
+    progressWrapper: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+    },
+    progressBar: {
+      flex: 1,
+      backgroundColor: GlobalColors.contentBackColor.Dark,
+    },
+    rewardIcon: {
+      position: "absolute",
+      right: 0,
+      transform: [{ translateY: -5 }],
+      width: CHEST_SIZE,
+      height: CHEST_SIZE,
+      borderRadius: 8,
+    },
+  });

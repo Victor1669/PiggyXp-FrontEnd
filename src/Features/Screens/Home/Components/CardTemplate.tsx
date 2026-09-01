@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 
 import { screenValues } from "Config/screenValues";
@@ -11,7 +11,6 @@ import ProgressBar from "@Components/ProgressBar";
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
-import { HomeSliderStyles } from "../Styles/HomeSlider.css";
 import { HomeImages } from "../Assets/HomeImages";
 
 const {
@@ -70,7 +69,7 @@ export function UnitCard() {
   }, []);
 
   return (
-    <View style={HomeSliderStyles.unitCard}>
+    <View style={unitCard}>
       <View>
         <Paragraph fontSize="small" fontWeight="bold" textAlign="left">
           Unidade {selectedUnit} - {generateDifficultyName(difficulty)}
@@ -93,7 +92,7 @@ export function ProgressCard() {
   const { nivel, xp, coins, xpProximoNivel } = user;
 
   return (
-    <View style={HomeSliderStyles.progressCard}>
+    <View style={progressCard}>
       <View style={{ gap: 5 }}>
         <Paragraph fontSize="small" fontWeight="bold" textAlign="left">
           Nível: {nivel} XP: {xp}
@@ -115,3 +114,20 @@ export function ProgressCard() {
     </View>
   );
 }
+
+const { progressCard, unitCard } = StyleSheet.create({
+  unitCard: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    gap: 35,
+  },
+  progressCard: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+  },
+});

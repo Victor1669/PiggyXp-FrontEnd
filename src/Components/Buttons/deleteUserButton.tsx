@@ -12,7 +12,7 @@ import { deleteUserApi } from "Services/deleteUserApi";
 
 import { toastMessage } from "Utils/toast";
 
-import Button from "@Components/Button";
+import Button from "Components/Buttons/Button";
 import Paragraph from "@Components/Paragraph";
 
 export default function DeleteUserButton() {
@@ -55,9 +55,8 @@ export default function DeleteUserButton() {
   return (
     <>
       <Button
-        fontColor="#fff"
-        shadowColor="rgb(139, 0, 0)"
-        style={{ backgroundColor: "rgb(255, 57, 57)", marginBottom: 50 }}
+        type="danger"
+        style={{ marginBottom: 50 }}
         onPress={() => setShowDeleteModal(true)}
       >
         Apagar conta
