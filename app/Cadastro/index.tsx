@@ -4,8 +4,6 @@ import { Link } from "expo-router";
 import CadastroForm from "Components/Forms/CadastroForm";
 import AlternateSignins from "Components/Buttons/alternateSignins";
 
-import { GlobalFontColors } from "@Assets/Colors";
-
 export default function Cadastro() {
   return (
     <>
@@ -20,11 +18,11 @@ export default function Cadastro() {
 function JaTemContaText() {
   return (
     <View style={jaTemConta}>
-      <Text style={{ color: GlobalFontColors.Dark }}>Já tem uma conta? </Text>
+      <Text style={{ color: "#fff" }}>Já tem uma conta? </Text>
       <Link
         href="/Login"
         style={{
-          color: GlobalFontColors.Dark,
+          color: "#fff",
           textDecorationLine: "underline",
         }}
       >

@@ -1,4 +1,3 @@
-import { GlobalColors } from "@Assets/Colors";
 import { useRef } from "react";
 import {
   View,
@@ -8,6 +7,8 @@ import {
   ViewStyle,
 } from "react-native";
 
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 interface CodeInputProps {
   length: number;
   code: string[];
@@ -104,7 +105,7 @@ const { container, input, inputFilled } = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    backgroundColor: GlobalColors.sectionBackColor,
+    backgroundColor: colors.sectionBackColor,
   },
   inputFilled: {
     borderColor: "#007AFF",

@@ -1,4 +1,4 @@
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { useQuiz } from "../Contexts/useQuiz";
 import {
@@ -12,8 +12,6 @@ export function useAnswerValidation(index: number) {
 
   const actualQuestion = getQuestion(index);
 
-  const { isPreviewBuild } = screenValues();
-
   return async function answerValidation(answerIndex: number) {
     if (actualQuestion.rightAnswerIndex === answerIndex) {
       dispatch({
@@ -22,7 +20,7 @@ export function useAnswerValidation(index: number) {
       });
     } else {
       dispatch({ type: "ERROU_QUESTAO" });
-      if (!isPreviewBuild) {
+      if (!AppConfig.isPreviewBuild) {
         const currentErrorCount = Number(
           await getStorageItem(STORAGE_KEYS.temporaryErrorCount),
         );

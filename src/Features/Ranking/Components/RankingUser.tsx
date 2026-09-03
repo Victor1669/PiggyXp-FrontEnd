@@ -7,8 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 import Paragraph from "Components/Paragraph";
 
@@ -121,7 +120,7 @@ export const {
   imageSection: {
     flexDirection: "row",
     alignItems: "center",
-    width: deviceWidth * 0.25,
+    width: AppConfig.deviceWidth * 0.25,
     gap: 20,
   },
   position: {

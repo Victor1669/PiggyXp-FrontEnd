@@ -1,11 +1,12 @@
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 
-import Picture from "@Components/Picture";
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
-import { ProfileImages } from "@Assets/ProfileImages";
+import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
-import { GlobalColors } from "@Assets/Colors";
+import { ProfileImages } from "@Assets/ProfileImages";
 
 interface DayType {
   initials: string;
@@ -78,7 +79,7 @@ const {
     marginTop: 10,
   },
   offensiveListContainer: {
-    backgroundColor: GlobalColors.sectionBackColor,
+    backgroundColor: colors.sectionBackColor,
     borderWidth: 2,
     borderColor: "#fff",
     borderRadius: 15,

@@ -1,11 +1,13 @@
 import { StyleSheet, View } from "react-native";
 
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
+
 import Paragraph from "Components/Paragraph";
 import Picture from "Components/Picture";
 import ProgressBar from "Components/ProgressBar";
 
 import { MissionAssets } from "../Assets/MissionAssets";
-import { GlobalColors } from "Assets/Colors";
 
 import { UserMission } from "../Types/MissionsTypes";
 
@@ -56,7 +58,7 @@ export const { missionItem, progressWrapper, progressBar, rewardIcon } =
     },
     progressBar: {
       flex: 1,
-      backgroundColor: GlobalColors.contentBackColor.Dark,
+      backgroundColor: colors.contentBackColor.Dark,
     },
     rewardIcon: {
       position: "absolute",

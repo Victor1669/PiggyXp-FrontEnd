@@ -1,9 +1,8 @@
-//#region Importações
 import { useEffect } from "react";
 import { View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
@@ -17,14 +16,11 @@ import Paragraph from "@Components/Paragraph";
 
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
 import { LevelAssets } from "../Assets/LevelAssets";
-//#endregion
 
 export default function LoadingLevelContainer() {
   const { user } = useAuth();
   const { actualQuestion, isRepeatingLevel } = useLocalSearchParams();
   const { dispatch } = useQuiz();
-
-  const { isPreviewBuild } = screenValues();
 
   function startPreviewLevel() {
     dispatch({ type: "DADOS_CARREGADOS", payload: PreviewLevel });
@@ -47,7 +43,7 @@ export default function LoadingLevelContainer() {
       dispatch({ type: "DADOS_CARREGADOS", payload: data });
       router.replace("/Level/LevelTips");
     } else {
-      toastMessage({ type: "error", text: data });
+      toastMessage({ type: "error", text: data.message });
       router.replace("/Content");
     }
   }
@@ -57,7 +53,7 @@ export default function LoadingLevelContainer() {
   }
 
   useEffect(() => {
-    if (isPreviewBuild) {
+    if (AppConfig.isPreviewBuild) {
       startPreviewLevel();
     } else startProductionLevel();
   }, []);

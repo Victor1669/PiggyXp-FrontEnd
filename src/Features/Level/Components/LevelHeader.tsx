@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet, View } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 import { useQuiz } from "../Contexts/useQuiz";
 import { useStatus } from "Contexts/StatusContext";
@@ -51,7 +50,7 @@ const { container, exitButton, livesContainer, livesImage, progressBar } =
       top: 55,
     },
     progressBar: {
-      width: deviceWidth * 0.5,
+      width: AppConfig.deviceWidth * 0.5,
       top: 55,
       alignSelf: "center",
     },

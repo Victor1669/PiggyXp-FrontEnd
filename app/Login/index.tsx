@@ -4,8 +4,6 @@ import { Link } from "expo-router";
 import AlternateSignins from "Components/Buttons/alternateSignins";
 import LoginForm from "Components/Forms/LoginForm";
 
-import { GlobalFontColors } from "@Assets/Colors";
-
 export default function Login() {
   return (
     <>
@@ -21,11 +19,11 @@ export default function Login() {
 function NaoTemContaText() {
   return (
     <View style={naoTemConta}>
-      <Text style={{ color: GlobalFontColors.Dark }}>Não tem uma conta? </Text>
+      <Text style={{ color: "#fff" }}>Não tem uma conta? </Text>
       <Link
         href="/Cadastro"
         style={{
-          color: GlobalFontColors.Dark,
+          color: "#fff",
           textDecorationLine: "underline",
         }}
       >

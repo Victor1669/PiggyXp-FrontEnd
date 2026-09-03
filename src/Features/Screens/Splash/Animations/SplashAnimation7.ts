@@ -1,5 +1,5 @@
-import { screenValues } from "Config/screenValues";
-const { deviceHeight } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceHeight } = AppConfig;
 
 import { AnimationUtil, AnimateXYUtil } from "@Utils/animationUtils";
 

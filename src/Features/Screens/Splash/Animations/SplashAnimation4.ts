@@ -1,7 +1,7 @@
 import { Easing } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceHeight } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceHeight } = AppConfig;
 
 import {
   AnimationUtil,

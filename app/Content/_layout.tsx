@@ -1,18 +1,13 @@
 import { Tabs } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import { MissionsProvider } from "Features/Missions/Contexts/MissionsContext";
 
 import TabBar from "@Components/Config/TabBar";
 
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-
 export default function Layout() {
-  const {
-    fontSizes: { TITLE_FONT_SIZE },
-  } = screenValues();
-
   return (
     <MissionsProvider>
       <Tabs
@@ -20,7 +15,7 @@ export default function Layout() {
         screenOptions={{
           headerShown: false,
           sceneStyle: {
-            backgroundColor: GlobalColors.contentBackColor.Dark,
+            backgroundColor: colors.contentBackColor.Dark,
           },
         }}
       >
@@ -31,11 +26,11 @@ export default function Layout() {
             title: "Ranking",
             headerShown: true,
             headerStyle: {
-              backgroundColor: GlobalColors.contentBackColor.Dark,
+              backgroundColor: colors.contentBackColor.Dark,
             },
             headerTitleStyle: {
-              color: GlobalFontColors.Dark,
-              fontSize: TITLE_FONT_SIZE,
+              color: "#fff",
+              fontSize: AppConfig.fontSizes.TITLE_FONT_SIZE,
             },
             headerTitleAlign: "center",
           }}

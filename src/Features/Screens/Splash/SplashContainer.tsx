@@ -3,6 +3,8 @@ import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { env } from "Config/env";
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import { useSplashAnimation } from "./Contexts/useSplashAnimation";
 import { useSplashAnimatedValues } from "./Contexts/useSplashAnimatedValues";
@@ -13,8 +15,6 @@ import SplashParticles from "./Components/SplashParticles";
 import SplashTitle from "./Components/SplashTitle";
 import QuestionMarker from "./Components/QuestionMarker";
 import Paragraph from "Components/Paragraph";
-
-import { GlobalColors } from "Assets/Colors";
 
 export default function Splash() {
   const { hasUserInfo, hasVerifiedUserInfo } = useAuth();
@@ -28,7 +28,7 @@ export default function Splash() {
     {
       backgroundColor: CAN_RUN_ANIMATION
         ? splashBackColorInterpolated
-        : GlobalColors.splashBackColor,
+        : colors.splashBackColor,
       flex: 1,
       justifyContent: "center",
       alignItems: "center",

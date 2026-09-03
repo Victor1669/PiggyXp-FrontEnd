@@ -1,8 +1,7 @@
-import RN, { Text } from "react-native";
+import { StyleProp, Text, TextStyle } from "react-native";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
-import { GlobalFontColors } from "@Assets/Colors";
 import { GlobalFonts } from "@Assets/fonts/Fonts";
 
 export default function Paragraph({
@@ -12,7 +11,7 @@ export default function Paragraph({
   fontSize = "normal",
   fontFamily,
   fontWeight,
-  color = "darkModeFont",
+  color = "#fff",
   textAlign = "center",
   textAlignVertical = "center",
   style,
@@ -28,23 +27,21 @@ export default function Paragraph({
     | "bigger"
     | "title"
     | (number & {});
-  color?: "darkModeFont" | "lightModeFont" | (string & {});
+  color?: string;
   fontFamily?: keyof typeof GlobalFonts | undefined;
-  style?: RN.StyleProp<RN.TextStyle>;
-  fontWeight?: RN.TextStyle["fontWeight"];
-  textAlign?: RN.TextStyle["textAlign"];
-  textAlignVertical?: RN.TextStyle["textAlignVertical"];
+  style?: StyleProp<TextStyle>;
+  fontWeight?: TextStyle["fontWeight"];
+  textAlign?: TextStyle["textAlign"];
+  textAlignVertical?: TextStyle["textAlignVertical"];
 }) {
   const {
-    fontSizes: {
-      VERY_SMALL_FONT_SIZE: verySmall,
-      SMALL_FONT_SIZE: small,
-      DEFAULT_FONT_SIZE: normal,
-      BIG_FONT_SIZE: big,
-      BIGGER_FONT_SIZE: bigger,
-      TITLE_FONT_SIZE: title,
-    },
-  } = screenValues();
+    VERY_SMALL_FONT_SIZE: verySmall,
+    SMALL_FONT_SIZE: small,
+    DEFAULT_FONT_SIZE: normal,
+    BIG_FONT_SIZE: big,
+    BIGGER_FONT_SIZE: bigger,
+    TITLE_FONT_SIZE: title,
+  } = AppConfig.fontSizes;
 
   const fontSizeMap = {
     verySmall,
@@ -55,17 +52,10 @@ export default function Paragraph({
     title,
   } satisfies Record<typeof fontSize, number>;
 
-  const { Dark, Light } = GlobalFontColors;
-
   const TEXT_STYLES = [
     {
       fontSize: typeof fontSize === "number" ? fontSize : fontSizeMap[fontSize],
-      color:
-        color === "darkModeFont"
-          ? Dark
-          : color === "lightModeFont"
-            ? Light
-            : color,
+      color,
       fontFamily: fontFamily ? GlobalFonts[fontFamily] : undefined,
       fontWeight,
       textAlign,

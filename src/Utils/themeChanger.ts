@@ -2,17 +2,18 @@ import * as SystemUI from "expo-system-ui";
 import * as NavigationBar from "expo-navigation-bar";
 import * as StatusBar from "expo-status-bar";
 
-import { GlobalColors } from "@Assets/Colors";
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 export async function themeChanger(theme: "splash" | "dark" | "light") {
   if (theme === "splash") {
-    StatusBar.setStatusBarBackgroundColor(GlobalColors.splashBackColor);
+    StatusBar.setStatusBarBackgroundColor(colors.splashBackColor);
     StatusBar.setStatusBarStyle("dark");
     NavigationBar.setStyle("dark");
-    SystemUI.setBackgroundColorAsync(GlobalColors.splashBackColor);
+    SystemUI.setBackgroundColorAsync(colors.splashBackColor);
   } else if (theme === "dark") {
-    StatusBar.setStatusBarBackgroundColor(GlobalColors.contentBackColor.Dark);
+    StatusBar.setStatusBarBackgroundColor(colors.contentBackColor.Dark);
     StatusBar.setStatusBarStyle("light");
-    SystemUI.setBackgroundColorAsync(GlobalColors.contentBackColor.Dark);
+    SystemUI.setBackgroundColorAsync(colors.contentBackColor.Dark);
   }
 }

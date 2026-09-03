@@ -1,6 +1,7 @@
 import { Animated } from "react-native";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { deviceWidth, deviceHeight } = AppConfig;
 
 import { CoinType } from "../Types/LevelTypes";
 
@@ -9,8 +10,6 @@ const COIN_SIZE = 36;
 let globalCoinId = 0;
 
 export function generateCoinData(currentQuestionIndex: number): CoinType {
-  const { deviceWidth, deviceHeight } = screenValues();
-
   /**
    * ALTURA DA TELA ONDE AS MOEDAS VÃO FICAR
    */

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import RN, { View, Pressable } from "react-native";
+import { View, Pressable, GestureResponderEvent } from "react-native";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import Picture from "@Components/Picture";
 
@@ -19,19 +19,18 @@ export default function HexagonButton({
 }: {
   position: "flex-start" | "center" | "flex-end";
   isLocked: boolean;
-  onPress: (e: RN.GestureResponderEvent) => void;
+  onPress: (e: GestureResponderEvent) => void;
   imgFolder: string;
   img: string;
 }) {
   const [showShadow, setShowShadow] = useState(false);
 
-  const { isDeviceHeigthSmall } = screenValues();
-
   return (
     <View
       style={{
         alignSelf: position,
-        marginHorizontal: isDeviceHeigthSmall ? 0 : 15,
+
+        marginHorizontal: AppConfig.isDeviceHeightSmall ? 0 : 15,
         position: "relative",
       }}
     >

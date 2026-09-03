@@ -2,8 +2,8 @@ import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { screenValues } from "Config/screenValues";
-const { isPreviewBuild, isDeviceHeigthSmall } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { isPreviewBuild, isDeviceHeightSmall } = AppConfig;
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 
@@ -43,7 +43,7 @@ export const { button, content } = StyleSheet.create({
     paddingTop: StatusBar.currentHeight || 50,
     alignItems: "center",
     justifyContent: "flex-start",
-    gap: isDeviceHeigthSmall ? 20 : 5,
+    gap: isDeviceHeightSmall ? 20 : 5,
   },
   button: {
     width: "90%",

@@ -1,7 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { deviceWidth } = AppConfig;
 
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
@@ -24,8 +25,6 @@ export function SliderCardTemplate({
   children: React.ReactNode;
   backgroundColor: string;
 }) {
-  const { deviceWidth } = screenValues();
-
   return (
     <View
       style={{

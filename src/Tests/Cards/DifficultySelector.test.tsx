@@ -10,10 +10,6 @@ jest.mock("@Services/changeDifficultyApi", () => ({
   changeDifficultyApi: jest.fn(),
 }));
 
-jest.mock("Contexts/useInternetConnection", () => ({
-  useInternetConnection: jest.fn(),
-}));
-
 jest.mock("Features/Auth/Contexts/useAuth", () => ({
   ...jest.requireActual("@Auth/Contexts/useAuth"),
   useAuth: () => ({
@@ -52,7 +48,6 @@ jest.mock("Contexts/StatusContext", () => ({
 
 import { AuthProvider } from "../../Features/Auth/Contexts/useAuth";
 import { StatusProvider } from "Contexts/StatusContext";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 import { changeDifficultyApi } from "../../Services/changeDifficultyApi";
@@ -87,9 +82,6 @@ async function renderDifficultySelector() {
 describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (useInternetConnection as jest.Mock).mockReturnValue({
-      getIsConnected: () => true,
-    });
     (getStorageItem as jest.Mock).mockImplementation((key: string) => {
       if (key === STORAGE_KEYS.userToken) return Promise.resolve();
       return Promise.resolve(null);
@@ -137,21 +129,6 @@ describe("DifficultySelectorContainer - Seleção de dificuldade", () => {
       expect(mockSetUser).toHaveBeenCalled();
       expect(mockShowStatus).toHaveBeenCalledWith("loading");
       expect(mockHideStatus).toHaveBeenCalled();
-    });
-  });
-
-  it("não deve chamar a API se não houver conexão", async () => {
-    (useInternetConnection as jest.Mock).mockReturnValue({
-      getIsConnected: () => false,
-    });
-
-    const { getByText } = await renderDifficultySelector();
-
-    fireEvent.press(getByText("Continuar"));
-
-    await waitFor(() => {
-      expect(changeDifficultyApi).not.toHaveBeenCalled();
-      expect(mockShowStatus).toHaveBeenCalledWith("noInternet");
     });
   });
 });

@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
-import { themeChanger } from "Helpers/themeChanger";
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
+
+import { themeChanger } from "Utils/themeChanger";
 
 import Button from "Components/Buttons/Button";
 import Paragraph from "@Components/Paragraph";
-
-import { GlobalColors } from "Assets/Colors";
 
 export default function WelcomeContainer() {
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function WelcomeContainer() {
 const { buttons, container, text } = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: GlobalColors.contentBackColor.Dark,
+    backgroundColor: colors.contentBackColor.Dark,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -2,8 +2,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useRanking } from "./Contexts/RankingContext";
 
-import { screenValues } from "Config/screenValues";
-const { TABBAR_HEIGHT } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { TABBAR_HEIGHT } = AppConfig;
 
 import PodiumContainer from "./Components/PodiumContainer";
 import OtherUsersContainer from "./Components/OtherUsersContainer";

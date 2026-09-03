@@ -1,19 +1,17 @@
-//#region Importações
-import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { usePathname } from "expo-router";
 import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from "@react-navigation/bottom-tabs";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { colors, TABBAR_HEIGHT } = AppConfig;
 
 import Picture from "@Components/Picture";
 import Paragraph from "../Paragraph";
 
-import { GlobalColors } from "@Assets/Colors";
 import { GlobalImages } from "@Assets/GlobalImages";
-//#endregion
 
 const {
   tabBar: { home, loja, missoes, perfil, ranking },
@@ -92,7 +90,6 @@ function TabItem({ routeName, isFocused, title, onPress }: TabItemProps) {
     </TouchableOpacity>
   );
 }
-const { TABBAR_HEIGHT } = screenValues();
 
 const { container, content, tabItem } = StyleSheet.create({
   container: {
@@ -101,7 +98,7 @@ const { container, content, tabItem } = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: GlobalColors.tabBarBackColor,
+    backgroundColor: colors.tabBarBackColor,
     borderTopWidth: 0,
     overflow: "hidden",
   },

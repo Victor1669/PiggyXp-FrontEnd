@@ -2,11 +2,10 @@ import { useState } from "react";
 import { Modal, Pressable, View } from "react-native";
 import { router } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { deleteUserApi } from "Services/deleteUserApi";
 
@@ -20,19 +19,11 @@ export default function DeleteUserButton() {
 
   const { user, logout } = useAuth();
   const { showStatus, hideStatus } = useStatus();
-  const { getIsConnected } = useInternetConnection();
-
-  const { isPreviewBuild } = screenValues();
 
   async function handleDeleteAccount() {
-    if (isPreviewBuild) {
+    if (AppConfig.isPreviewBuild) {
       await logout();
       router.replace("/Cadastro");
-      return;
-    }
-
-    if (!getIsConnected()) {
-      showStatus("noInternet");
       return;
     }
 

@@ -1,33 +1,31 @@
 import { Stack } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
-
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
+import { AppConfig } from "Config/appConfig";
+const { fontSizes, colors } = AppConfig;
 
 export default function _layout() {
-  const { fontSizes } = screenValues();
   return (
     <Stack
       screenOptions={{
         headerShown: false,
         contentStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
         },
       }}
     >
       <Stack.Screen name="index" />
       <Stack.Screen
-        name="Config"
+        name="ChangeUserInfo"
         options={{
           title: "Editar Perfil",
           headerTitleStyle: {
-            color: GlobalFontColors.Dark,
+            color: "#fff",
             fontSize: fontSizes.TITLE_FONT_SIZE,
           },
           headerTitleAlign: "center",
           headerShown: true,
           headerStyle: {
-            backgroundColor: GlobalColors.contentBackColor.Dark,
+            backgroundColor: colors.contentBackColor.Dark,
           },
           headerTintColor: "#fff",
         }}

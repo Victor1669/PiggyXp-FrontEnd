@@ -1,6 +1,6 @@
 import { Image, ImageBackground, StyleSheet, View } from "react-native";
 
-import { getByPosition } from "../Helpers/getByPosition";
+import { getByPosition } from "../../../Utils/getByPosition";
 
 import Paragraph from "Components/Paragraph";
 

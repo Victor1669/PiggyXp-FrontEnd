@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { router } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { finishPhaseApi, livesApi } from "../../../Services/levelServices";
 import { updateMissionsApi } from "Services/missionServices";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useQuiz } from "../Contexts/useQuiz";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 
 export function useFinishLevel() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { getIsConnected } = useInternetConnection();
   const {
     user: { id },
   } = useAuth();
@@ -46,13 +44,9 @@ export function useFinishLevel() {
   }
 
   async function finishLevel() {
-    const { isPreviewBuild } = screenValues();
-
-    if (!getIsConnected()) return;
-
     setIsLoading(true);
 
-    if (!isPreviewBuild) {
+    if (!AppConfig.isPreviewBuild) {
       if (errors > 0) {
         await livesApi({ erro: errors });
       }

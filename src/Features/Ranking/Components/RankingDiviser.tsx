@@ -1,11 +1,9 @@
 import { StyleSheet, View } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import Paragraph from "Components/Paragraph";
-
-import { GlobalColors } from "Assets/Colors";
 
 export default function Divider() {
   return (
@@ -26,9 +24,9 @@ const { divider, dividerContainer } = StyleSheet.create({
     marginBottom: 30,
   },
   divider: {
-    width: deviceWidth * 0.55,
+    width: AppConfig.deviceWidth * 0.55,
     marginHorizontal: "auto",
     transform: [{ translateY: 15 }],
-    backgroundColor: GlobalColors.contentBackColor.Dark,
+    backgroundColor: colors.contentBackColor.Dark,
   },
 });

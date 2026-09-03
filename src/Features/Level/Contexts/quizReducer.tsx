@@ -1,8 +1,8 @@
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { LevelContextValues } from "../Types/LevelTypes";
 import { PreviewLevel } from "Features/Preview/PreviewLevel";
-import { generateCoinData } from "../Utils/generateCoinData";
+import { generateCoinData } from "@Utils/generateCoinData";
 
 export function quizReducer(
   state: LevelContextValues,
@@ -14,15 +14,13 @@ export function quizReducer(
 
   switch (type) {
     case "DADOS_CARREGADOS": {
-      const { isPreviewBuild } = screenValues();
-
-      const dataToUse = isPreviewBuild ? PreviewLevel : payload;
+      const dataToUse = AppConfig.isPreviewBuild ? PreviewLevel : payload;
 
       return {
         ...state,
         initialText: dataToUse.text || "",
         questions: dataToUse.questions || [],
-        difficulty: isPreviewBuild
+        difficulty: AppConfig.isPreviewBuild
           ? dataToUse.dificulty
           : // O cara usa IA no código mas não consegue escrever um inglês certo pqp
             (dataToUse.dificulty ?? state.difficulty),

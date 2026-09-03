@@ -1,12 +1,11 @@
 import { router } from "expo-router";
 import { jwtDecode } from "jwt-decode";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { STORAGE_KEYS, setStorageItem } from "Utils/securestore";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useStatus } from "Contexts/StatusContext";
 
 import { loginApi, type LoginApiResponse } from "@Services/loginApi";
@@ -20,19 +19,11 @@ import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 export default function LoginForm() {
   const { login } = useAuth();
   const { showStatus, hideStatus } = useStatus();
-  const { getIsConnected } = useInternetConnection();
-
-  const { isPreviewBuild } = screenValues();
 
   async function handleSubmit(data: any) {
-    if (isPreviewBuild) {
+    if (AppConfig.isPreviewBuild) {
       await login(PreviewUserInfo);
       router.push("/Content");
-      return;
-    }
-
-    if (!getIsConnected()) {
-      showStatus("noInternet");
       return;
     }
 
@@ -79,7 +70,7 @@ export default function LoginForm() {
       buttonText="Entrar"
       forgotPasswordText="Esqueceu a senha?"
       forgotPasswordHREF="/SendRecoveryEmail"
-      validationEnabled={!isPreviewBuild}
+      validationEnabled={!AppConfig.isPreviewBuild}
     />
   );
 }

@@ -9,7 +9,7 @@
     renderDifficultySelector(): Função assíncrona que prepara o ambiente do teste, envolvendo o componente nos Providers necessários (Auth e Loading) e esperando o botão "Continuar" aparecer.
 
 * Mocks e Configurações:
-    Jest Mocks: Substituem serviços reais (como DifficultyService e useInternetConnection) por versões controladas. Isso permite simular sucesso, erro ou falta de internet sem depender de uma API real.
+    Jest Mocks: Substituem serviços reais (como DifficultyService) por versões controladas. Isso permite simular sucesso, erro ou falta de internet sem depender de uma API real.
 
     beforeEach():
 

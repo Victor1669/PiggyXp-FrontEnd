@@ -1,5 +1,7 @@
-import { GlobalColors } from "@Assets/Colors";
 import { Stack } from "expo-router";
+
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import { QuizProvider } from "Features/Level/Contexts/useQuiz";
 
@@ -14,7 +16,7 @@ export default function _layout() {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: GlobalColors.contentBackColor.Dark,
+            backgroundColor: colors.contentBackColor.Dark,
           },
         }}
       />

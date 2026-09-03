@@ -1,8 +1,8 @@
 import { useRef, useEffect } from "react";
 import { View, FlatList } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceWidth } = AppConfig;
 
 import { useQuiz } from "../Contexts/useQuiz";
 

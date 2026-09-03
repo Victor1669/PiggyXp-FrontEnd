@@ -4,7 +4,7 @@ import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import { useUpdateUserInfo } from "Hooks/useUpdateUserInfo";
 
-import { calcLivesTimer } from "../Helpers/calcLivesTimer";
+import { calcLivesTimer } from "@Utils/mathHelpers";
 
 export function useLivesTimer() {
   const updateUserInfo = useUpdateUserInfo();

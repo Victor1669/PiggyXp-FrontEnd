@@ -1,8 +1,14 @@
 import { useEffect, useRef } from "react";
-import RN, { Animated, PanResponder, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  PanResponder,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { isDeviceHeigthSmall, deviceHeight, TABBAR_HEIGHT } = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 interface BottomSheetProps {
   children: React.ReactNode;
@@ -10,11 +16,19 @@ interface BottomSheetProps {
   height: number;
   showSheet: boolean;
   setShowSheet?: React.Dispatch<React.SetStateAction<boolean>>;
-  style?: RN.StyleProp<RN.ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   showThumb?: boolean;
   interactive?: boolean;
   startSheetTop?: number;
   finalSheetTop?: number;
+}
+
+interface PanResponderConfig {
+  height: number;
+  interactive: boolean;
+  startSheetTop: number;
+  finalSheetTop: number;
+  setShowSheet?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function BottomSheet({
@@ -29,7 +43,33 @@ export default function BottomSheet({
   startSheetTop = height,
   finalSheetTop = 0,
 }: BottomSheetProps) {
-  function animateTo(y: number) {
+  const { isDeviceHeightSmall, deviceHeight, TABBAR_HEIGHT } = AppConfig;
+
+  const isMounted = useRef(false);
+  const configRef = useRef<PanResponderConfig>({
+    height,
+    interactive,
+    startSheetTop,
+    finalSheetTop,
+    setShowSheet,
+  });
+
+  useEffect(() => {
+    configRef.current = {
+      height,
+      interactive,
+      startSheetTop,
+      finalSheetTop,
+      setShowSheet,
+    };
+  }, [height, interactive, startSheetTop, finalSheetTop, setShowSheet]);
+
+  function animateTo(y: number, immediate = false) {
+    if (immediate) {
+      yPosition.setValue({ x: 0, y });
+      return;
+    }
+
     Animated.spring(yPosition, {
       toValue: { x: 0, y },
       useNativeDriver: true,
@@ -40,21 +80,24 @@ export default function BottomSheet({
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => interactive,
+      onStartShouldSetPanResponder: () => configRef.current.interactive,
       onPanResponderGrant: () => {
         yPosition.stopAnimation();
       },
-      onPanResponderMove: (e, gestureState) => {
+      onPanResponderMove: (_e, gestureState) => {
+        const { finalSheetTop } = configRef.current;
         const newY = finalSheetTop + gestureState.dy;
-        if (newY >= finalSheetTop) {
-          yPosition.setValue({ x: 0, y: newY });
-        } else {
-          yPosition.setValue({ x: 0, y: finalSheetTop });
-        }
+        yPosition.setValue({
+          x: 0,
+          y: newY >= finalSheetTop ? newY : finalSheetTop,
+        });
       },
-      onPanResponderRelease: (e, gestureState) => {
+      onPanResponderRelease: (_e, gestureState) => {
+        const { height, startSheetTop, finalSheetTop, setShowSheet } =
+          configRef.current;
+
         if (gestureState.dy > height / 3 || gestureState.vy > 0.5) {
-          if (setShowSheet) setShowSheet(false);
+          setShowSheet?.(false);
           animateTo(startSheetTop);
         } else {
           animateTo(finalSheetTop);
@@ -64,12 +107,16 @@ export default function BottomSheet({
   ).current;
 
   useEffect(() => {
-    if (showSheet) {
-      animateTo(finalSheetTop);
-    } else {
-      animateTo(startSheetTop);
+    const targetY = showSheet ? finalSheetTop : startSheetTop;
+
+    if (!isMounted.current) {
+      isMounted.current = true;
+      animateTo(targetY, true);
+      return;
     }
-  }, [showSheet]);
+
+    animateTo(targetY);
+  }, [showSheet, startSheetTop, finalSheetTop]);
 
   return (
     <Animated.View
@@ -79,7 +126,7 @@ export default function BottomSheet({
           height,
           transform: yPosition.getTranslateTransform(),
           top:
-            deviceHeight - 3 * TABBAR_HEIGHT + (isDeviceHeigthSmall ? 30 : 0),
+            deviceHeight - 3 * TABBAR_HEIGHT + (isDeviceHeightSmall ? 30 : 0),
         },
         style,
       ]}

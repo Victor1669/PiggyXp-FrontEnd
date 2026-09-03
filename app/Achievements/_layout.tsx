@@ -2,12 +2,10 @@ import { Stack } from "expo-router";
 
 import { AchievementsProvider } from "Features/Achievements/Contexts/useAchievements";
 
-import { screenValues } from "Config/screenValues";
-
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
+import { AppConfig } from "Config/appConfig";
+const { fontSizes, colors } = AppConfig;
 
 export default function _layout() {
-  const { fontSizes } = screenValues();
   return (
     <AchievementsProvider>
       <Stack>
@@ -17,16 +15,16 @@ export default function _layout() {
             title: "Conquistas",
             headerShown: true,
             headerTitleStyle: {
-              color: GlobalFontColors.Dark,
+              color: "#fff",
               fontSize: fontSizes.TITLE_FONT_SIZE,
             },
             headerTitleAlign: "center",
             headerStyle: {
-              backgroundColor: GlobalColors.contentBackColor.Dark,
+              backgroundColor: colors.contentBackColor.Dark,
             },
             headerTintColor: "#fff",
             contentStyle: {
-              backgroundColor: GlobalColors.contentBackColor.Dark,
+              backgroundColor: colors.contentBackColor.Dark,
             },
           }}
         />

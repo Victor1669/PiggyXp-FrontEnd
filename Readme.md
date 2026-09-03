@@ -138,8 +138,7 @@ IDs do cliente android no Google Cloud (Opcional):
 │   └── 📁 Services     -> Conexão com o BackEnd
 │   └── 📁 Contexts     -> Gerenciamento de estado avançado
 │   └── 📁 Services     -> Gerenciamento centralizado de requisições
-│   └── 📁 Utils        -> Funções simples que podem ser usadas independentemente do projeto
-│   └── 📁 Helpers      -> Funções específicas reutilizáveis feitas pro projeto/regra de negócios
+│   └── 📁 Utils        -> Funções simples para abstrações ou utilidades específicas
 │   └── 📁 Tests        -> Testes unitários pro CI/CD
 │   └── 📁 Schemas      -> Validações para formulários
 │   └── 📁 Types        -> Tipos personalizados comuns

@@ -1,9 +1,8 @@
-//#region Importações
 import { useEffect } from "react";
 import { View } from "react-native";
 import { router } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useNativeGoogleAuth } from "@Auth/Hooks/useNativeGoogleAuth";
@@ -16,7 +15,6 @@ import { AuthImages } from "@Assets/AuthImages";
 const {
   logos: { google, facebook },
 } = AuthImages;
-//#endregion
 interface AlternateSigninsProps {
   text: string;
 }
@@ -25,8 +23,6 @@ export default function AlternateSignins({ text }: AlternateSigninsProps) {
   const { login } = useAuth();
   const { signIn: googleSignIn, user: googleUser } = useNativeGoogleAuth();
   const { signIn: facebookSignIn, user: facebookUser } = useFacebookAuth();
-
-  const { isPreviewBuild } = screenValues();
 
   async function handleGoogleLogin() {
     await googleSignIn();
@@ -72,7 +68,7 @@ export default function AlternateSignins({ text }: AlternateSigninsProps) {
           onPress={handleGoogleLogin}
           imageSource={google}
         />
-        {!isPreviewBuild && (
+        {!AppConfig.isPreviewBuild && (
           <ImageButton
             size={50}
             onPress={handleFacebookLogin}

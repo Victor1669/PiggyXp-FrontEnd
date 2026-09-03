@@ -1,11 +1,11 @@
 import Button from "Components/Buttons/Button";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 import { Alert } from "react-native";
 
 export default function ShowPhoneSize() {
-  const { deviceWidth, deviceHeight, isDeviceHeigthSmall, deviceScale } =
-    screenValues();
+  const { deviceWidth, deviceHeight, isDeviceHeightSmall, deviceScale } =
+    AppConfig;
 
   function handleShowInfo() {
     Alert.alert(
@@ -13,7 +13,7 @@ export default function ShowPhoneSize() {
       `\nAltura: ${deviceHeight}px;
       \nLargura: ${deviceWidth}px;
       \nEscala: ${deviceScale};
-      \nPequeno: ${isDeviceHeigthSmall}
+      \nPequeno: ${isDeviceHeightSmall}
       `,
     );
   }

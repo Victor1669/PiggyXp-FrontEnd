@@ -3,7 +3,6 @@ import { router } from "expo-router";
 import { setStorageItem, STORAGE_KEYS } from "Utils/securestore";
 
 import { useStatus } from "Contexts/StatusContext";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { Fields } from "@Auth/Schemas/SchemaFields";
 import { sendRecoveryEmailApi } from "Services/recoveryServices";
@@ -12,14 +11,8 @@ import Form from "Components/Forms/Form";
 
 export default function SendRecoveryEmailForm() {
   const { showStatus, hideStatus } = useStatus();
-  const { getIsConnected } = useInternetConnection();
 
   async function handleSubmit(formData: { Email: string }) {
-    if (!getIsConnected()) {
-      showStatus("noInternet");
-      return;
-    }
-
     showStatus("loading");
 
     const body = { email: formData.Email };

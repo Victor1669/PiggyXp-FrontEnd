@@ -4,8 +4,7 @@ import { useRanking } from "../Contexts/RankingContext";
 
 import PodiumUserContainer from "./PodiumUserContainer";
 
-import { screenValues } from "Config/screenValues";
-const { deviceHeight } = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 const PODIUM_POSITIONS = [2, 1, 3] as const;
 
@@ -35,7 +34,7 @@ const { container } = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 15,
-    height: deviceHeight * 0.35,
+    height: AppConfig.deviceHeight * 0.35,
     marginTop: 20,
   },
 });

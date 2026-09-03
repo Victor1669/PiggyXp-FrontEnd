@@ -1,11 +1,9 @@
 import { useState } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import Button from "Components/Buttons/Button";
-
-import { GlobalFontColors } from "@Assets/Colors";
 
 export default function AnswerButton({
   answerIndex,
@@ -21,10 +19,6 @@ export default function AnswerButton({
   disabled: boolean;
 }) {
   const [buttonPressed, setButtonPressed] = useState(false);
-
-  const {
-    fontSizes: { SMALL_FONT_SIZE },
-  } = screenValues();
 
   const [buttonColor, setButtonColor] = useState({
     backColor: "rgba(217,217,217, 0.28)",
@@ -50,8 +44,8 @@ export default function AnswerButton({
   return (
     <Button
       disabled={disabled || buttonPressed}
-      fontColor={GlobalFontColors.Dark}
-      fontSize={SMALL_FONT_SIZE}
+      fontColor={"#fff"}
+      fontSize={AppConfig.fontSizes.SMALL_FONT_SIZE}
       style={STYLES}
       shadowColor={buttonColor.shadowColor}
       onPress={handlePress}

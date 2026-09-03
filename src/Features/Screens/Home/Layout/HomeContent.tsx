@@ -1,12 +1,12 @@
 import { ActivityIndicator, ScrollView, View } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth, deviceHeight } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceWidth, deviceHeight } = AppConfig;
 
 import { useShowSheet } from "../Contexts/useShowSheet";
 import { useLevels } from "../Contexts/useLevels";
 
-import { getPathDirection } from "../Helpers/getPathDirection";
+import { getPathDirection } from "Utils/homeHelpers";
 
 import SectionLevel from "../Components/SectionLevel";
 import SectionTitle from "../Components/SectionTitle";

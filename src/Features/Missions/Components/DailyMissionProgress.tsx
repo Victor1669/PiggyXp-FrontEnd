@@ -1,11 +1,13 @@
 import { StyleSheet, View } from "react-native";
 
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
+
 import Paragraph from "@Components/Paragraph";
 import ProgressBar from "Components/ProgressBar";
 import Picture from "@Components/Picture";
 
 import { MissionAssets } from "../Assets/MissionAssets";
-import { GlobalColors } from "Assets/Colors";
 
 import { UserMission } from "../Types/MissionsTypes";
 
@@ -47,7 +49,7 @@ const GIFT_SIZE = 90;
 const { barWrapper, container, progressBar, rewardIcon, textContainer } =
   StyleSheet.create({
     container: {
-      backgroundColor: GlobalColors.contentBackColor.Dark,
+      backgroundColor: colors.contentBackColor.Dark,
       padding: 20,
       borderRadius: 12,
       marginVertical: 10,

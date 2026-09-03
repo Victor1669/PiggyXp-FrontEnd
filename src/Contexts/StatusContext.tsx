@@ -1,12 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Tipos de modais disponíveis
-export type ModalType =
-  | "gameOver"
-  | "noInternet"
-  | "loading"
-  | "confirmExit"
-  | null;
+export type ModalType = "gameOver" | "loading" | "confirmExit" | null;
 
 interface StatusContextData {
   modalType: ModalType;

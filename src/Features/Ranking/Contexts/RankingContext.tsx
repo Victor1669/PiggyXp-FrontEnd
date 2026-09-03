@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { screenValues } from "Config/screenValues";
-
 import { fetchApi } from "Utils/fetchApi";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
@@ -23,8 +21,6 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
   const [rankingUsers, setRankingUsers] =
     useState<RankingUserInfoType[]>(PreviewRanking);
 
-  const { isPreviewBuild } = screenValues();
-
   const { user } = useAuth();
   const { showStatus, hideStatus } = useStatus();
 
@@ -41,8 +37,6 @@ export function RankingProvider({ children }: { children: React.ReactNode }) {
     }).length > 0;
 
   useEffect(() => {
-    if (isPreviewBuild) return;
-
     showStatus("loading");
 
     rankingApi()

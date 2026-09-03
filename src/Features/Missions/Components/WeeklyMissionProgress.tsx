@@ -1,9 +1,11 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
+
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import Paragraph from "Components/Paragraph";
 import ProgressBar from "Components/ProgressBar";
 
-import { GlobalColors } from "Assets/Colors";
 import { UserMission } from "../Types/MissionsTypes";
 
 export default function WeeklyMissionProgress({
@@ -30,7 +32,7 @@ export default function WeeklyMissionProgress({
       <ProgressBar
         actualValue={progress}
         maxValue={target}
-        style={{ backgroundColor: GlobalColors.contentBackColor.Dark }}
+        style={{ backgroundColor: colors.contentBackColor.Dark }}
       >
         {`${progress}/${target}`}
       </ProgressBar>

@@ -3,7 +3,7 @@ import { router } from "expo-router";
 
 import { useQuiz } from "Features/Level/Contexts/useQuiz";
 
-import { textFormatter } from "../Utils/textFormatter";
+import { tipsFormatter } from "Utils/formatHelpers";
 
 import Button from "Components/Buttons/Button";
 import Book from "../Components/Book";
@@ -11,7 +11,7 @@ import Book from "../Components/Book";
 export default function LevelTipsContainer() {
   const { initialText } = useQuiz();
 
-  const [string1, string2] = textFormatter(initialText);
+  const [string1, string2] = tipsFormatter(initialText);
 
   function handleContinue() {
     router.replace("/Level/?questionIndex=0");

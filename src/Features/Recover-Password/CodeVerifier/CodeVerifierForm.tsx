@@ -10,7 +10,6 @@ import {
 import { toastMessage } from "Utils/toast";
 
 import { useStatus } from "Contexts/StatusContext";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import {
   resetPasswordApi,
@@ -27,17 +26,11 @@ export default function CodeVerifierForm() {
   const [code, setCode] = useState<string[]>(Array(LENGTH).fill(""));
 
   const { showStatus, hideStatus } = useStatus();
-  const { getIsConnected } = useInternetConnection();
 
   async function handleSubmit(formData: {
     "Confirmar nova senha": string;
     "Nova senha": string;
   }) {
-    if (!getIsConnected()) {
-      showStatus("noInternet");
-      return;
-    }
-
     showStatus("loading");
 
     const codeString = code.join("");
@@ -57,11 +50,6 @@ export default function CodeVerifierForm() {
   }
 
   async function resendEmail() {
-    if (!getIsConnected()) {
-      showStatus("noInternet");
-      return;
-    }
-
     showStatus("loading");
 
     const recoveryEmail = await getStorageItem(STORAGE_KEYS.recoveryEmail);

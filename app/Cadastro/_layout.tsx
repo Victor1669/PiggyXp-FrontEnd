@@ -1,12 +1,10 @@
 import { Stack } from "expo-router";
 
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { fontSizes, colors } = AppConfig;
 
 export default function _layout() {
-  const {
-    fontSizes: { TITLE_FONT_SIZE },
-  } = screenValues();
+  const titleFontSize = fontSizes.TITLE_FONT_SIZE;
 
   return (
     <Stack
@@ -14,15 +12,15 @@ export default function _layout() {
         title: "Cadastro",
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
         },
         headerTitleStyle: {
-          color: GlobalFontColors.Dark,
-          fontSize: TITLE_FONT_SIZE,
+          color: "#fff",
+          fontSize: titleFontSize,
         },
         headerBackVisible: false,
         contentStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
           flex: 1,
         },
       }}
@@ -33,11 +31,11 @@ export default function _layout() {
         options={{
           title: "Personalizar Perfil",
           headerTitleStyle: {
-            color: GlobalFontColors.Dark,
-            fontSize: TITLE_FONT_SIZE,
+            color: "#fff",
+            fontSize: titleFontSize,
           },
           contentStyle: {
-            backgroundColor: GlobalColors.contentBackColor.Dark,
+            backgroundColor: colors.contentBackColor.Dark,
             alignItems: "center",
           },
           headerTitleAlign: "center",

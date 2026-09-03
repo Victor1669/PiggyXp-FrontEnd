@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { screenValues } from "Config/screenValues";
 import {
   getStorageItem,
   setStorageItem,
@@ -26,8 +25,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserType>({} as UserType);
   const [hasVerifiedUserInfo, setHasVerifiedUserInfo] = useState(false);
 
-  const { isPreviewBuild } = screenValues();
-
   const hasUserInfo = Object.values(user).length > 0;
 
   async function login(userData: UserType) {
@@ -43,25 +40,19 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    if (isPreviewBuild) return;
-
-    async function getUserInfoFromStore() {
-      const [storedUser, storedUnit] = await Promise.all([
-        getStorageItem(STORAGE_KEYS.userInfo),
-        getStorageItem(STORAGE_KEYS.userUnit),
-      ]);
-
-      if (!storedUnit) {
-        await setStorageItem(STORAGE_KEYS.userUnit, "1");
+    Promise.all([
+      getStorageItem(STORAGE_KEYS.userInfo),
+      getStorageItem(STORAGE_KEYS.userUnit),
+    ]).then(([userInfo, userUnit]) => {
+      if (!userUnit) {
+        setStorageItem(STORAGE_KEYS.userUnit, "1");
       }
 
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+      if (userInfo) {
+        setUser(JSON.parse(userInfo));
       }
-    }
-
-    getUserInfoFromStore();
-  }, [isPreviewBuild]);
+    });
+  }, []);
 
   const value: AuthProviderValues = {
     user,

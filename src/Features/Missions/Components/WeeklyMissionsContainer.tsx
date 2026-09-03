@@ -1,12 +1,14 @@
 import { StyleSheet, View } from "react-native";
 
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
+
 import { useMissions } from "../Contexts/MissionsContext";
 
 import Picture from "@Components/Picture";
 import WeeklyMissionProgress from "./WeeklyMissionProgress";
 
 import { MissionAssets } from "../Assets/MissionAssets";
-import { GlobalColors } from "Assets/Colors";
 
 export default function WeeklyMissionsContainer() {
   const { weeklyMissions } = useMissions();
@@ -32,7 +34,7 @@ const { cardContainer, picture, topPart } = StyleSheet.create({
   cardContainer: {
     overflow: "visible",
     marginTop: 40,
-    backgroundColor: GlobalColors.sectionBackColor,
+    backgroundColor: colors.sectionBackColor,
     borderRadius: 24,
     borderWidth: 2,
     borderColor: "#ffffff",

@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
 import { api } from "Config/api";
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 type FetchApiProps<TBody> = {
   method: "get" | "post" | "delete" | "put" | "patch";
@@ -28,10 +28,8 @@ export async function fetchApi<TBody = object, TResponse = MessageResponse>({
   showToast = false,
   logError = true,
 }: FetchApiProps<TBody>): Promise<FetchApiResponse<TResponse>> {
-  const { isPreviewBuild } = screenValues();
-
   try {
-    if (isPreviewBuild) {
+    if (AppConfig.isPreviewBuild) {
       return {
         status: 200,
         success: true,

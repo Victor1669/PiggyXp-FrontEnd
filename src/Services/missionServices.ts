@@ -1,11 +1,6 @@
 import { fetchApi } from "Utils/fetchApi";
 import { UserMission } from "../Features/Missions/Types/MissionsTypes";
 
-interface SelectMissionValues {
-  data: UserMission[];
-  status: number;
-}
-
 const selectMissionApi = async () => {
   const res = await fetchApi({
     method: "put",
@@ -16,7 +11,7 @@ const selectMissionApi = async () => {
 };
 
 const getMissionsApi = async (id: number) => {
-  const res = await fetchApi<object, SelectMissionValues>({
+  const res = await fetchApi<object, UserMission[]>({
     method: "get",
     route: `getMission/?id=${id}`,
   });

@@ -1,27 +1,21 @@
 import { useState, useCallback, useMemo } from "react";
 import { usePathname } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { getMissionsApi } from "../../../Services/missionServices";
-
-import { useInternetConnection } from "Contexts/useInternetConnection";
 
 import { UserMission } from "../Types/MissionsTypes";
 
 export function useGetMissions(userId: number) {
   const [missions, setMissions] = useState<UserMission[]>([]);
 
-  const { getIsConnected } = useInternetConnection();
-
   const pathname = usePathname();
-
-  const { isPreviewBuild } = screenValues();
 
   const fetchMissions = useCallback(async () => {
     if (pathname !== "/Content/Missions") return;
 
-    if (!userId || isPreviewBuild || !getIsConnected()) return;
+    if (!userId || AppConfig) return;
 
     try {
       const { data, status } = await getMissionsApi(userId);

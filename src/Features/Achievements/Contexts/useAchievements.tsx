@@ -1,16 +1,14 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+
+import { formatAchievements } from "Utils/formatHelpers";
 
 import { getAchievementsRewards } from "../AchievementsServices";
 
-import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useAuth } from "@Auth/Contexts/useAuth";
-
 import { useAudio } from "Hooks/useAudio";
-
-import { formatAchievements } from "../Helpers/formatAchievements";
 
 import { PreviewUserInfo } from "Features/Preview/PreviewUser";
 import { achievementsProgress } from "../Content/achievementsProgress";
@@ -41,19 +39,14 @@ function AchievementsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
 
   const { load, stop, play } = useAudio();
-  const { getIsConnected } = useInternetConnection();
 
-  const { isPreviewBuild } = screenValues();
-
-  const achievements = isPreviewBuild
+  const achievements = AppConfig.isPreviewBuild
     ? formatAchievements(PreviewUserInfo, achievementsProgress)
     : formatAchievements(user, achievementsProgress);
 
   const selectedAchievement = achievements?.[selectedAchievementIndex];
 
   async function handleReceiveRewards() {
-    if (!getIsConnected()) return;
-
     await getAchievementsRewards(user.id, {
       achievementId: selectedAchievementIndex,
     });

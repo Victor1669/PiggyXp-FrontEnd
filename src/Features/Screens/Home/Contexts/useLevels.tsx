@@ -1,14 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
-import { getTitleApi } from "../../../../Services/homeServices";
+import { getTitleApi } from "@Services/homeServices";
 
 import { getStorageItem, STORAGE_KEYS } from "Utils/securestore";
+import { generateLevels } from "Utils/homeHelpers";
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
-
-import { generateLevels } from "../Helpers/generateLevels";
 
 import { LevelType } from "../Types/LevelType";
 
@@ -27,8 +26,6 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
   const {
     user: { nivel_ph, difficulty },
   } = useAuth();
-
-  const { isPreviewBuild } = screenValues();
 
   const actualLevel = nivel_ph ?? 0 + 1;
 
@@ -65,7 +62,7 @@ export function LevelsProvider({ children }: { children: React.ReactNode }) {
         selectedLevelIndex,
         setSelectedLevelIndex,
         actualLevel,
-        unitTitle: isPreviewBuild ? "Unidade teste" : unitTitle,
+        unitTitle: AppConfig.isPreviewBuild ? "Unidade teste" : unitTitle,
         isLoading,
       }}
     >

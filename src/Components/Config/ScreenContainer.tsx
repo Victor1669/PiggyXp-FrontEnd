@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { router, Stack, usePathname } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { fontSizes, isPreviewBuild, colors } = AppConfig;
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 import { useSplashAnimation } from "@Screens/Splash/Contexts/useSplashAnimation";
-
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
 
 import { PreviewUserType } from "Features/Auth/Types/UserType";
 import { useStatus } from "Contexts/StatusContext";
@@ -16,11 +15,6 @@ export default function ScreenContainer() {
   const { layoutAnimation, animationDuration } = useSplashAnimation();
   const { hasUserInfo, user, hasVerifiedUserInfo } = useAuth();
   const { showStatus } = useStatus();
-
-  const {
-    fontSizes: { TITLE_FONT_SIZE },
-    isPreviewBuild,
-  } = screenValues();
 
   const hideHeaderPages = [
     "index",
@@ -62,15 +56,15 @@ export default function ScreenContainer() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
         },
         headerTitleStyle: {
-          color: GlobalFontColors.Dark,
-          fontSize: TITLE_FONT_SIZE,
+          color: "#fff",
+          fontSize: fontSizes.TITLE_FONT_SIZE,
         },
         headerBackVisible: false,
         contentStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
         },
         animation: hasUserInfo ? "fade" : layoutAnimation,
       }}

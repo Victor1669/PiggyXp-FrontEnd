@@ -5,7 +5,7 @@ import { useStatus } from "Contexts/StatusContext";
 
 import { usePodiumScaleAnimation } from "../Hooks/usePodiumScaleAnimation";
 
-import { getByPosition } from "../Helpers/getByPosition";
+import { getByPosition } from "../../../Utils/getByPosition";
 import { AnimateSpringUtil } from "Utils/animationUtils";
 
 import RankingPodiumUser from "./RankingPodiumUser";

@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { colors, deviceWidth } = AppConfig;
 
 import { usePurchase } from "../Hooks/usePurchase";
 
@@ -9,7 +9,6 @@ import Picture from "Components/Picture";
 import Paragraph from "Components/Paragraph";
 
 import { ProductType } from "../Types/ProductType";
-import { GlobalColors } from "Assets/Colors";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   const purchase = usePurchase();
@@ -36,7 +35,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 
 const { card, cardPicture, purchaseButton } = StyleSheet.create({
   card: {
-    backgroundColor: GlobalColors.sectionBackColor,
+    backgroundColor: colors.sectionBackColor,
     borderRadius: 16,
     padding: 15,
     alignItems: "center",

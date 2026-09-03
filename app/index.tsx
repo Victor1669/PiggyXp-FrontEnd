@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { router } from "expo-router";
 import { useFonts } from "expo-font";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { refreshTokenApi } from "Services/refreshTokenApi";
 
@@ -15,13 +15,12 @@ import {
   setStorageItem,
   STORAGE_KEYS,
 } from "Utils/securestore";
-import { themeChanger } from "Helpers/themeChanger";
 
 import SplashContainer from "@Screens/Splash/SplashContainer";
+import { themeChanger } from "Utils/themeChanger";
 
 export default function SplashScreen() {
   const { user, setHasVerifiedUserInfo } = useAuth();
-  const { isPreviewBuild } = screenValues();
   const { hideStatus } = useStatus();
 
   // CONFIGURAÇÃO DE FONTES
@@ -39,7 +38,7 @@ export default function SplashScreen() {
           STORAGE_KEYS.refreshToken,
         );
 
-        if (storedRefreshToken === null || isPreviewBuild) {
+        if (storedRefreshToken === null || AppConfig.isPreviewBuild) {
           setHasVerifiedUserInfo(true);
           return;
         }
@@ -59,7 +58,8 @@ export default function SplashScreen() {
         }
 
         setHasVerifiedUserInfo(true);
-        await themeChanger("dark");
+
+        themeChanger("dark");
       })();
     },
     [user],

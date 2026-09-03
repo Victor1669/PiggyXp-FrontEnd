@@ -1,7 +1,6 @@
 import { Image, StyleProp, View, ViewStyle } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { isDeviceHeigthSmall } = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 import { AuthImages } from "@Auth/Assets/AuthImages";
 
@@ -25,7 +24,7 @@ export function ImageContainer({ image, style }: ImageContainerTypes) {
           height: TOTAL_CONTAINER_SIZE,
           backgroundColor: "#B4B4B4",
           borderRadius: "50%",
-          marginVertical: isDeviceHeigthSmall ? 10 : 75,
+          marginVertical: AppConfig.isDeviceHeightSmall ? 10 : 75,
         },
         style,
       ]}

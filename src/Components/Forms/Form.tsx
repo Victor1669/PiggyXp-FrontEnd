@@ -14,12 +14,10 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import Button from "Components/Buttons/Button";
 import AnimatedInput from "@Auth/Components/AnimatedInput";
-
-import { GlobalFontColors } from "@Assets/Colors";
 
 export type FieldProps = {
   nomeCampo: string;
@@ -140,19 +138,19 @@ export function Field({
 }
 
 const {
-  isDeviceHeigthSmall,
+  isDeviceHeightSmall,
   fontSizes: { DEFAULT_FONT_SIZE },
-} = screenValues();
+} = AppConfig;
 
 const { button, forgotPassword, form } = StyleSheet.create({
   form: {
     width: "90%",
     margin: "auto",
     alignItems: "center",
-    gap: isDeviceHeigthSmall ? 10 : 20,
+    gap: isDeviceHeightSmall ? 10 : 20,
   },
   forgotPassword: {
-    color: GlobalFontColors.Dark,
+    color: "#fff",
     width: "100%",
     textAlign: "right",
     textDecorationLine: "underline",
@@ -164,21 +162,21 @@ const { button, forgotPassword, form } = StyleSheet.create({
 
 const { error, field, fieldsContainer, input, label } = StyleSheet.create({
   fieldsContainer: {
-    gap: isDeviceHeigthSmall ? 20 : 40,
+    gap: isDeviceHeightSmall ? 20 : 40,
   },
   field: {
     marginTop: 10,
   },
   label: {
-    color: GlobalFontColors.Dark,
+    color: "#fff",
     position: "absolute",
     left: 50,
     fontSize: DEFAULT_FONT_SIZE,
   },
   input: {
     borderRadius: 10,
-    padding: isDeviceHeigthSmall ? 10 : 20,
-    color: GlobalFontColors.Dark,
+    padding: isDeviceHeightSmall ? 10 : 20,
+    color: "#fff",
     paddingLeft: 50,
   },
   error: {

@@ -1,16 +1,22 @@
 import { useState } from "react";
-import RN, { TouchableOpacity, useWindowDimensions } from "react-native";
+import {
+  StyleProp,
+  TouchableOpacity,
+  useWindowDimensions,
+  ViewStyle,
+} from "react-native";
+
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import Paragraph from "../Paragraph";
-
-import { GlobalColors } from "@Assets/Colors";
 
 type ButtonType = "warning" | "danger" | "red";
 
 interface ButtonProps {
   children: string;
   onPress: any;
-  style?: RN.StyleProp<RN.ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   testId?: string;
   fontColor?: string;
   shadowColor?: string;
@@ -65,7 +71,7 @@ export default function Button({
     //@ts-ignore
     style?.backgroundColor ||
     typeStyle?.backgroundColor ||
-    GlobalColors.formButtonBackColor;
+    colors.formButtonBackColor;
 
   return (
     <TouchableOpacity

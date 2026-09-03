@@ -1,13 +1,11 @@
 import { Image, StyleSheet, View } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth, TABBAR_HEIGHT } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceWidth, TABBAR_HEIGHT, colors } = AppConfig;
 
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 import Paragraph from "Components/Paragraph";
-
-import { GlobalColors } from "Assets/Colors";
 
 export default function YourUserOutOfRanking() {
   const { user } = useAuth();
@@ -63,7 +61,7 @@ export const {
   container: {
     width: "90%",
     flexDirection: "row",
-    backgroundColor: GlobalColors.formButtonBackColor,
+    backgroundColor: colors.formButtonBackColor,
     borderRadius: 15,
     position: "absolute",
     bottom: TABBAR_HEIGHT + 10,

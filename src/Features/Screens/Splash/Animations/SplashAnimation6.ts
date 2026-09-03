@@ -1,5 +1,5 @@
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceWidth } = AppConfig;
 
 import {
   AnimationUtil,

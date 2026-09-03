@@ -1,7 +1,6 @@
 import { AnimateXYUtil, AnimationUtil } from "@Utils/animationUtils";
 
-import { screenValues } from "Config/screenValues";
-const { deviceHeight } = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 import { AnimationFunction } from "../Types/SplashAnimationsType";
 
@@ -37,7 +36,7 @@ const SplashAnimation5: AnimationFunction = async function ({
 SplashAnimation5.initialValues = {
   initialLogoScale: 1,
   animationType: "slide_from_right",
-  initialLogoCoords: { x: 0, y: deviceHeight / 2 + 300 },
+  initialLogoCoords: { x: 0, y: AppConfig.deviceHeight / 2 + 300 },
   initialSplashBackColor: 1,
   animationDuration: 3400,
 };

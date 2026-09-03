@@ -1,7 +1,7 @@
 import R, { createContext, useContext, useRef, useState } from "react";
 import { StackAnimationTypes } from "react-native-screens";
 
-import { randomNumber } from "Utils/randomNumber";
+import { generateRandomNumber } from "Utils/mathHelpers";
 
 import { SplashAnimation1 } from "../Animations/SplashAnimation1";
 import { SplashAnimation2 } from "../Animations/SplashAnimation2";
@@ -36,10 +36,10 @@ function SplashAnimationProvider({ children }: { children: R.ReactNode }) {
     SplashAnimation7,
   ];
 
-  // MOSTRAR SÓ A PADRÃO PRA APRESENTAÇÃO
+  const animationIndex = useRef(
+    generateRandomNumber(0, animations.length - 1),
+  ).current;
 
-  //const animationIndex = useRef(randomNumber(0, animations.length - 1)).current;
-  const animationIndex = 0;
   const pickedAnimation = animations[animationIndex];
 
   const [layoutAnimation, setLayoutAnimation] = useState<StackAnimationTypes>(

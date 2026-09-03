@@ -5,22 +5,21 @@ import { router } from "expo-router";
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useAchievements } from "./Contexts/useAchievements";
 
-import { useUpdateUserInfo } from "../../Hooks/useUpdateUserInfo";
+import { generateRandomNumber } from "Utils/mathHelpers";
 
-import { randomNumber } from "Utils/randomNumber";
+import { useUpdateUserInfo } from "../../Hooks/useUpdateUserInfo";
 
 import AchievementModal from "./Components/AchievementsModal";
 import { AchievementCard } from "./Components/AchievementsCard";
 import RewardsModal from "./Components/RewardsModal";
 import Paragraph from "@Components/Paragraph";
-import NotificationButton from "./Components/NotificationButton";
 
 export default function AchievementsContainer() {
   const { user, hasUserInfo } = useAuth();
   const { achievements } = useAchievements();
   const updateUserInfo = useUpdateUserInfo();
 
-  const tipsIndex = useRef(randomNumber());
+  const tipsIndex = useRef(generateRandomNumber());
 
   const tips = [
     "clique nas imagens para ver a descrição da conquista",
@@ -42,7 +41,6 @@ export default function AchievementsContainer() {
   if (hasUserInfo)
     return (
       <>
-        <NotificationButton />
         <Paragraph style={{ marginTop: 25 }}>
           Dica: {tips[tipsIndex.current]}
         </Paragraph>

@@ -6,17 +6,12 @@ import { STORAGE_KEYS, setStorageItem } from "Utils/securestore";
 
 import { useAuth } from "@Auth/Contexts/useAuth";
 import { useStatus } from "Contexts/StatusContext";
-import { useInternetConnection } from "Contexts/useInternetConnection";
 import { useAutoSlider } from "Hooks/useAutoSlider";
 
 import { changeDifficultyApi } from "@Services/changeDifficultyApi";
 
-import { requestNotificationPermission } from "Utils/notifications";
-
 import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
 import Button from "@Components/Buttons/Button";
-
-import { GlobalFontColors } from "@Assets/Colors";
 
 const Images = {
   easy: "easy.png",
@@ -50,7 +45,6 @@ export default function DifficultySelector() {
 
   const { setUser } = useAuth();
   const { showStatus, hideStatus } = useStatus();
-  const { getIsConnected } = useInternetConnection();
 
   const {
     currentIndex: difficulty,
@@ -65,17 +59,10 @@ export default function DifficultySelector() {
   });
 
   useEffect(() => {
-    requestNotificationPermission().then(() =>
-      setStorageItem(STORAGE_KEYS.userUnit, "1"),
-    );
+    setStorageItem(STORAGE_KEYS.userUnit, "1");
   }, []);
 
   async function handleSubmit() {
-    if (!getIsConnected()) {
-      showStatus("noInternet");
-      return;
-    }
-
     showStatus("loading");
 
     const { status } = await changeDifficultyApi({ difficulty });
@@ -101,7 +88,7 @@ export default function DifficultySelector() {
           cardImageWidth={300}
           cardImageHeight={340}
           imgFolder="difficulty"
-          fontColor={GlobalFontColors.Dark}
+          fontColor={"#fff"}
         />
       </View>
       <Button onPress={handleSubmit}>Continuar</Button>

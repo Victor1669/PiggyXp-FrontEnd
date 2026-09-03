@@ -1,20 +1,17 @@
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { Link } from "expo-router";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
+const { colors } = AppConfig;
 
 import Picture from "@Components/Picture";
 import Paragraph from "@Components/Paragraph";
 
-import { GlobalColors, GlobalFontColors } from "Assets/Colors";
 import { ProfileImages } from "@Assets/ProfileImages";
 const { trophy, invest } = ProfileImages;
 
 export default function Achievements() {
   const { height } = useWindowDimensions();
-  const {
-    fontSizes: { BIGGER_FONT_SIZE },
-  } = screenValues();
 
   const achievementsArray = [trophy, invest].slice(0, 2);
 
@@ -42,7 +39,7 @@ export default function Achievements() {
         ))}
         <Link
           href="/Achievements"
-          style={[seeMore, { fontSize: BIGGER_FONT_SIZE }]}
+          style={[seeMore, { fontSize: AppConfig.fontSizes.BIGGER_FONT_SIZE }]}
         >
           Ver mais
         </Link>
@@ -60,10 +57,10 @@ const { achievement, achievementList, achievementsContainer, seeMore } =
     },
     achievementList: {
       width: "100%",
-      backgroundColor: GlobalColors.sectionBackColor,
+      backgroundColor: colors.sectionBackColor,
       borderRadius: 15,
       borderWidth: 2,
-      borderColor: GlobalFontColors.Dark,
+      borderColor: "#fff",
       justifyContent: "space-evenly",
       flexDirection: "row",
     },
@@ -78,7 +75,7 @@ const { achievement, achievementList, achievementsContainer, seeMore } =
     seeMore: {
       flex: 1,
       fontStyle: "italic",
-      color: GlobalFontColors.Dark,
+      color: "#fff",
       textAlignVertical: "center",
       textAlign: "center",
     },

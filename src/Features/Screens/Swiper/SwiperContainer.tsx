@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceHeight, deviceWidth } = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { deviceHeight, deviceWidth, colors } = AppConfig;
 
 import useSplashAnimation from "@Screens/Splash/Contexts/useSplashAnimation";
 import { useAutoSlider } from "@Hooks/useAutoSlider";
@@ -11,8 +11,6 @@ import { CardSwiper } from "@Components/CardSwiper/CardSwiper";
 import { SkipCardsButton } from "./Components/SkipCardsButton";
 
 import { cards } from "./Content/CardsContent";
-
-import { GlobalColors } from "@Assets/Colors";
 
 export default function SwiperContainer() {
   const [isSkipButtonEnabled, setIsSkipButtonEnabled] = useState(false);
@@ -74,7 +72,7 @@ export default function SwiperContainer() {
 const { container, content } = StyleSheet.create({
   container: {
     height: deviceHeight,
-    backgroundColor: GlobalColors.splashBackColor,
+    backgroundColor: colors.splashBackColor,
     justifyContent: "center",
   },
   content: {

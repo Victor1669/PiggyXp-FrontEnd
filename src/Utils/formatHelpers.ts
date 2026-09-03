@@ -1,12 +1,11 @@
-import { AchievementsImages } from "../Assets/AchievementsImages";
-
-import type {
+import { AchievementsImages } from "Features/Achievements/Assets/AchievementsImages";
+import { AchievementsDescriptions } from "Features/Achievements/Content/AchievementsDescriptions";
+import {
   Achievement,
   AchievementProgress,
-} from "../Types/AchievementTypes";
-import type { UserType } from "Features/Auth/Types/UserType";
+} from "Features/Achievements/Types/AchievementTypes";
 
-import { AchievementsDescriptions } from "../Content/AchievementsDescriptions";
+import type { UserType } from "Features/Auth/Types/UserType";
 
 export function formatAchievements(
   user: UserType,
@@ -31,4 +30,18 @@ export function formatAchievements(
       description: AchievementsDescriptions[i],
     };
   });
+}
+
+export function tipsFormatter(text: any) {
+  const data = typeof text === "string" ? JSON.parse(text) : text;
+  const fullText = data.card[0];
+
+  const sentences = fullText.match(/[^.!?]+[.!?]+/g) || [];
+
+  const mid = Math.ceil(sentences.length / 2);
+
+  const string1 = sentences.slice(0, mid).join(" ");
+  const string2 = sentences.slice(mid).join(" ");
+
+  return [string1, string2];
 }

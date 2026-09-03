@@ -1,15 +1,13 @@
 import { useEffect } from "react";
 import { Animated } from "react-native";
 
-import { screenValues } from "Config/screenValues";
+import { AppConfig } from "Config/appConfig";
 
 import { useSplashAnimatedValues } from "../Contexts/useSplashAnimatedValues";
 import { useSplashAnimation } from "../Contexts/useSplashAnimation";
 import { useAuth } from "Features/Auth/Contexts/useAuth";
 
 export default function SplashParticles() {
-  const { deviceHeight } = screenValues();
-
   const { hasVerifiedUserInfo } = useAuth();
   const { animatedValues, CAN_RUN_ANIMATION } = useSplashAnimatedValues();
   const { animationIndex } = useSplashAnimation();
@@ -22,7 +20,7 @@ export default function SplashParticles() {
       animatedValues.forEach((anim, i) => {
         Animated.loop(
           Animated.timing(anim, {
-            toValue: -deviceHeight,
+            toValue: -AppConfig.deviceHeight,
             duration: 1800 + i * 500,
             useNativeDriver: true,
           }),

@@ -1,9 +1,8 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import type { ViewStyle, StyleProp } from "react-native";
 
-import { screenValues } from "Config/screenValues";
-const { deviceWidth } = screenValues();
-const CARD_IMAGE_SIZE = deviceWidth * 0.4;
+import { AppConfig } from "Config/appConfig";
+const CARD_IMAGE_SIZE = AppConfig.deviceWidth * 0.4;
 
 import { useAchievements } from "../Contexts/useAchievements";
 

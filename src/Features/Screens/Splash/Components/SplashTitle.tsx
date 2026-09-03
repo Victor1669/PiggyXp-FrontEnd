@@ -3,10 +3,7 @@ import { Animated } from "react-native";
 import useSplashAnimation from "../Contexts/useSplashAnimation";
 import useSplashAnimatedValues from "../Contexts/useSplashAnimatedValues";
 
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { TITLE_FONT_SIZE },
-} = screenValues();
+import { AppConfig } from "Config/appConfig";
 
 export default function SplashTitle() {
   const { animationIndex } = useSplashAnimation();
@@ -22,7 +19,7 @@ export default function SplashTitle() {
         { translateY: CAN_RUN_ANIMATION ? titleCoords.y : 0 },
       ],
       opacity: CAN_RUN_ANIMATION ? titleOpacity : 0,
-      fontSize: TITLE_FONT_SIZE,
+      fontSize: AppConfig.fontSizes.TITLE_FONT_SIZE,
       color: isWaterAnimation && CAN_RUN_ANIMATION ? "#fff" : "#000",
     },
   ];

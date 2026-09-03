@@ -1,27 +1,23 @@
 import { Stack } from "expo-router";
 
-import { GlobalColors, GlobalFontColors } from "@Assets/Colors";
-
-import { screenValues } from "Config/screenValues";
-const {
-  fontSizes: { TITLE_FONT_SIZE },
-} = screenValues();
+import { AppConfig } from "Config/appConfig";
+const { fontSizes, colors } = AppConfig;
 
 export default function _layout() {
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
         },
         headerTitleStyle: {
-          color: GlobalFontColors.Dark,
-          fontSize: TITLE_FONT_SIZE,
+          color: "#fff",
+          fontSize: fontSizes.TITLE_FONT_SIZE,
         },
         title: "",
-        headerTintColor: GlobalFontColors.Dark,
+        headerTintColor: "#fff",
         contentStyle: {
-          backgroundColor: GlobalColors.contentBackColor.Dark,
+          backgroundColor: colors.contentBackColor.Dark,
           alignItems: "center",
         },
       }}
